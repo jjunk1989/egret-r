@@ -1,0 +1,38 @@
+{
+  "name": "@egret-r/eui",
+  "version": "6.0.0",
+  "description": "Egret Engine R EUI - UI Component Library (Button, List, Scroller, Layouts)",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "clean": "rimraf dist",
+    "watch": "tsc --watch"
+  },
+  "dependencies": {
+    "@egret-r/core": "*"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "rimraf": "^5.0.0"
+  },
+  "keywords": [
+    "egret",
+    "ui",
+    "eui",
+    "components"
+  ],
+  "license": "BSD-2-Clause",
+  "author": "egret-labs"
+}

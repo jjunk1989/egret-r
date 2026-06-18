@@ -1,42 +1,60 @@
-bin-debug/
+# Dependencies
 node_modules/
+
+# Build outputs
+packages/*/dist/
+packages/*/*.tsbuildinfo
+
+# IDE
 .idea/
-tools/node_modules
+.vscode/
+*.swp
+*~
+.DS_Store
+.[Tt]humb
+
+# System files
+Thumbs.db
+
+# Logs
+npm-debug.log
+
+# Old build artifacts (keep for reference but don't track)
+build/
+tools/
+
+# Legacy compiled JS in src
 src/egret/**/*.js
 src/egret/**/**/*.js
 src/extension/**/*.js
 src/extension/**/**/*.js
 
-tools/nodejs/buildTS.local
-*.local
-*.map
-.idea
-/tools/lib/exml/src/code/skins/Panel.js
-/tools/lib/exml/src/code/skins/Panel.ts
-/tools/lib/exml/src/code/components/Button.js
-/tools/lib/exml/src/egret.d.ts
-
-*.swp
-*~
-.DS_Store
-.[Tt]humb
-*.config
+# Old project files
+bin-debug/
+bin/
+built/
+target/
 obj/
 *.user
 *.suo
 *.sln
 *.csproj
 *.ide/
-npm-debug.log
-src/tsc_config_temp.txt
-/bin
-/tsconfig.json
+*.local
+*.config
+tsconfig.debug.json
+/src/tsc_config_temp.txt
 /index.html
 /src/tests
-
-.wing/settings.json
-/built
 /tests**
 /target**
 test-script.js
-tsconfig.debug.json
+
+# Old tooling artifacts
+tools/node_modules
+tools/nodejs/buildTS.local
+/tools/lib/exml/src/code/skins/Panel.js
+/tools/lib/exml/src/code/skins/Panel.ts
+/tools/lib/exml/src/code/components/Button.js
+/tools/lib/exml/src/egret.d.ts
+.wing/settings.json
