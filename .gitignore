@@ -63,3 +63,4 @@ tools/nodejs/buildTS.local
 .wing/settings.json
 
 /backup
+/dist_test
