@@ -246,27 +246,38 @@ async function buildPackage(pkg) {
   entryContent += '\nexport {};\n';
   fs.writeFileSync(entryPath, entryContent, 'utf8');
 
-  // Build normal + minified
-  console.log('  Building index.js...');
-  await esbuild.build({
+  // Common esbuild options
+  var baseOpts = {
     entryPoints: [entryPath],
     bundle: true, format: 'esm', target: 'es2020',
-    outfile: path.join(distDir, 'index.js'),
-    platform: 'browser', minify: false, keepNames: true,
+    platform: 'browser',
     logLevel: 'warning',
     loader: { '.ts': 'ts', '.glsl': 'text' },
-  });
+    // Conditional compilation: inject DEBUG/RELEASE as constants
+    define: {
+      'DEBUG': 'true',   // debug build always has DEBUG=true
+      'RELEASE': 'false',
+    },
+  };
+
+  // Build normal version
+  console.log('  Building index.js...');
+  await esbuild.build(Object.assign({}, baseOpts, {
+    outfile: path.join(distDir, 'index.js'),
+    minify: false, keepNames: true,
+  }));
   console.log('    ' + (fs.statSync(path.join(distDir, 'index.js')).size / 1024).toFixed(1) + ' KB');
 
-  console.log('  Building index.min.js...');
-  await esbuild.build({
-    entryPoints: [entryPath],
-    bundle: true, format: 'esm', target: 'es2020',
+  // Build release (minified) version with DEBUG=false
+  console.log('  Building index.min.js (RELEASE)...');
+  await esbuild.build(Object.assign({}, baseOpts, {
     outfile: path.join(distDir, 'index.min.js'),
-    platform: 'browser', minify: true,
-    logLevel: 'warning',
-    loader: { '.ts': 'ts', '.glsl': 'text' },
-  });
+    minify: true,
+    define: {
+      'DEBUG': 'false',
+      'RELEASE': 'true',
+    },
+  }));
   console.log('    ' + (fs.statSync(path.join(distDir, 'index.min.js')).size / 1024).toFixed(1) + ' KB');
 
   // Generate .d.ts

@@ -59,6 +59,25 @@ const { Tween, Ease } = await import('@egret-r/tween');
 Tween.get(btn).to({ scaleX: 1.2, scaleY: 1.2 }, 300, Ease.elasticOut);
 ```
 
+### 使用 Vite 模板
+
+```bash
+# 从 egret-r 仓库复制模板
+cp -r templates/vite-game my-game
+cd my-game
+
+# 安装依赖
+npm install
+
+# 链接本地包（monorepo 开发模式）
+npm link ../../packages/core ../../packages/eui ../../packages/game ../../packages/tween
+
+# 启动开发服务器
+npm run dev
+```
+
+模板 (`templates/vite-game/`) 包含一个可直接运行的游戏框架，内含 Stage、Button、Label 和 Tween 动画示例。详见 [templates/vite-game/README.md](templates/vite-game/README.md)。
+
 ### 使用 HTML `<script>` 标签
 
 ```html

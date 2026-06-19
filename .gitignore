@@ -5,6 +5,9 @@ node_modules/
 packages/*/dist/
 packages/*/*.tsbuildinfo
 
+# Build intermediate temp copies (generated from src/)
+packages/*/src/
+
 # IDE
 .idea/
 .vscode/

@@ -59,6 +59,25 @@ const { Tween, Ease } = await import('@egret-r/tween');
 Tween.get(btn).to({ scaleX: 1.2, scaleY: 1.2 }, 300, Ease.elasticOut);
 ```
 
+### Using the Vite Template
+
+```bash
+# Copy the template from the egret-r repository
+cp -r templates/vite-game my-game
+cd my-game
+
+# Install dependencies
+npm install
+
+# Link local packages (monorepo dev)
+npm link ../../packages/core ../../packages/eui ../../packages/game ../../packages/tween
+
+# Start dev server
+npm run dev
+```
+
+The template (`templates/vite-game/`) includes a ready-to-run game skeleton with Stage, Button, Label and Tween animation examples. See [templates/vite-game/README.md](templates/vite-game/README.md) for details.
+
 ### Using with HTML `<script>` tag
 
 ```html
