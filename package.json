@@ -14,7 +14,8 @@
     "node": ">=18"
   },
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "examples/*"
   ],
   "devDependencies": {
     "esbuild": "^0.28.1",
