@@ -1,161 +1,228 @@
-<p align="center">
-    <img src="./docs/img/egret_logo.jpg"
-         height="130">
-</p>
-<p align="center">
-    <a href="https://github.com/egret-labs/egret-core/network">
-        <img src="https://img.shields.io/github/forks/egret-labs/egret-core.svg"
-             alt="forks">
-    </a>
-    <a href="https://github.com/egret-labs/egret-core/stargazers">
-        <img src="https://img.shields.io/github/stars/egret-labs/egret-core.svg"
-             alt="stars">
-    </a>
-    <a href="https://github.com/egret-labs/egret-core">
-        <img src="https://img.shields.io/badge/version-5.4.1-green.svg"
-             alt="version">
-    </a>
-    <a href="./LICENSE.md">
-        <img src="https://img.shields.io/badge/license-New%20BSD-blue.svg"
-             alt="license">
-    </a>
-</p>
+# Egret Engine R
 
-[EN](README.md) / [CN](README_CN.md)
+> Modern HTML5 Game Engine — ES Module packages, esbuild powered.
 
-# Egret Engine
+[![License](https://img.shields.io/badge/license-New%20BSD-blue.svg)](./LICENSE.md)
 
-The Egret Engine is a HTML5 game engine. It provides modules to handle common game development tasks such as 2D and 3D rendering, GUI systems, and audio and resource management. The Egret engine is flexible and suitable for 2D or 3D projects. It allows developers to work without worrying about low-level browser impelementation, HTML5 performance, or fragmentation issues.
+Egret Engine R is a modernized version of the Egret HTML5 game engine, repackaged as **ES Module npm packages** with **esbuild** as the build toolchain. It provides 2D rendering (Canvas/WebGL), an EUI component library, audio, networking, resource management, and more.
 
-## Platform Coverage 
+---
 
-### Mobile
+## Packages
 
-![](https://img.shields.io/badge/iOS-8.0%2B-lightgrey.svg)
-![](https://img.shields.io/badge/Android-4.0%2B-brightgreen.svg)
-![](https://img.shields.io/badge/Windows%20Phone-8-orange.svg)
+| Package | Description | Size (min) |
+|---------|-------------|------------|
+| [`@egret-r/core`](./packages/core) | Core engine: DisplayList, Events, Media, Net, Rendering | 309 KB |
+| [`@egret-r/eui`](./packages/eui) | UI component library: Button, List, Scroller, Layouts, EXML | 190 KB |
+| [`@egret-r/game`](./packages/game) | Game extensions: MovieClip, URLLoader, ScrollView | 33 KB |
+| [`@egret-r/tween`](./packages/tween) | Easing animation: Tween, Ease (chain, parallel, wait) | 10 KB |
+| [`@egret-r/socket`](./packages/socket) | WebSocket wrapper | 3 KB |
 
-### PC
+---
 
-![](https://img.shields.io/badge/Chrome--brightgreen.svg)
-![](https://img.shields.io/badge/Safari--yellow.svg)
-![](https://img.shields.io/badge/FireFox--orange.svg)
-![](https://img.shields.io/badge/Edge--red.svg)
-![](https://img.shields.io/badge/IE-9+-blue.svg)
+## Installation
 
-# Installation
+```bash
+npm install @egret-r/core @egret-r/eui @egret-r/game @egret-r/tween
+```
 
-To Install the Egret Engine:
+---
 
-* [Download](https://egret.com/products) the Egret Engine Manager.
+## Quick Start
 
-* Then, follow the [installation and deployment instructions](http://developer.egret.com/cn/github/egret-docs/Engine2D/projectConfig/installation/index.html) 
+### Using with Vite
 
-Once installation is complete, Egret's engine and tools are easy to manage.
+```bash
+npm create vite@latest my-game -- --template vanilla-ts
+cd my-game
+npm install @egret-r/core @egret-r/eui @egret-r/game
+```
 
-# Getting Started
+```typescript
+// src/main.ts
+import { egret } from '@egret-r/core';
+import { eui } from '@egret-r/eui';
 
-#### TypeScript
+// Create stage
+const stage = egret.Stage.getInstance();
+stage.frameRate = 60;
 
-Egret projects are developed using TypeScript, which is a superset of JavaScript. Please refer to the TypeScript manual for more information. The Egret API and ActionScript3 (AS3) are very similar. It will be easy to get started with Egret if you are familiar with AS3.
+// Create a button
+const btn = new eui.Button();
+btn.label = 'Start Game';
+btn.x = 100;
+btn.y = 80;
+stage.addChild(btn);
 
-#### Create a project by command line
+// Add a tween animation
+const { Tween, Ease } = await import('@egret-r/tween');
+Tween.get(btn).to({ scaleX: 1.2, scaleY: 1.2 }, 300, Ease.elasticOut);
+```
 
-Use following command to create a default game object:
+### Using with HTML `<script>` tag
 
-    egret create HelloWorld
+```html
+<script type="module">
+  import { egret } from './node_modules/@egret-r/core/dist/index.js';
+  import { eui } from './node_modules/@egret-r/eui/dist/index.js';
+  
+  const stage = egret.Stage.getInstance();
+  // ...
+</script>
+```
 
-You may also add parameters if required: Use `empty` | `game` | `gui` | `eui` to specify different projects. 
+---
 
-After running this command, you should now see a folder called 'HelloWorld'.
+## API Overview
 
-#### Write your first line of code
+### @egret-r/core
 
-By default, the entry point for an Egret game projects is src / Main.ts. To make write the first line of code for your project, find the createGameScene () function, and add console.log ("Hello World");
+```typescript
+import { egret } from '@egret-r/core';
 
-After making your changes, the code should now look like this:
+// Display objects
+const bitmap = new egret.Bitmap(texture);
+const shape = new egret.Shape();
+shape.graphics.beginFill(0xff0000);
+shape.graphics.drawRect(0, 0, 100, 100);
 
-    private createGameScene():void {
-            // log
-            console.log("Hello World");
-            var sky:egret.Bitmap = this.createBitmapByName("bgImage");
-            this.addChild(sky);
-            var stageW:number = this.stage.stageWidth;
-            var stageH:number = this.stage.stageHeight;
-            sky.width = stageW;
-            sky.height = stageH;
-            //...
-        }
+// Stage
+const stage = egret.Stage.getInstance();
+stage.addChild(bitmap);
 
-Here, we've called `console.log("log content that we'd like to display")`. This will display our log message in the browser's developer tool.
+// Events
+bitmap.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
+  console.log('Tapped!');
+}, this);
 
-    We recommend using Chrome to debug the Egret project.
+// HTTP
+const request = new egret.HttpRequest();
+request.open('https://api.example.com/data.json', egret.HttpMethod.GET);
+request.addEventListener(egret.Event.COMPLETE, () => {
+  const data = JSON.parse(request.response);
+}, this);
+request.send();
 
-Use the following command to build Egret projects:
+// Sound
+const sound = new egret.Sound();
+sound.load('https://example.com/click.mp3');
+sound.play();
+```
 
-    egret build
+### @egret-r/eui
 
-Use the following command to run Egret projects:
+```typescript
+import { eui } from '@egret-r/eui';
 
-    egret startserver
+// Components
+const list = new eui.List();
+const scroller = new eui.Scroller();
+const panel = new eui.Panel();
 
-![](./docs/img/console.png)
+// Layout
+const layout = new eui.HorizontalLayout();
+layout.gap = 10;
+scroller.layout = layout;
 
-For more information, please refer to the Learning Module documentation.
+// Data binding
+const collection = new eui.ArrayCollection([
+  { label: 'Item 1', value: 1 },
+  { label: 'Item 2', value: 2 },
+]);
+list.dataProvider = collection;
+```
 
-# Demos
+### @egret-r/tween
 
-Tower Defence Demo
-![](./docs/img/3d_demo_1.png)
-Click [here](http://developer.egret.com/cn/article/index/id/1074) for online experience.<br/>
+```typescript
+import { Tween, Ease } from '@egret-r/tween';
 
-Click [here](http://developer.egret.com/cn/list/example/id/190) for more 2D/3D demos.<br/>
+// Basic tween
+Tween.get(target)
+  .to({ x: 200, y: 300 }, 500)
+  .to({ scaleX: 1.5, scaleY: 1.5 }, 300, Ease.backOut);
 
-# Show Case
+// Chain
+Tween.get(obj1)
+  .to({ alpha: 0 }, 400)
+  .wait(200)
+  .call(() => console.log('Done!'));
+```
 
-Click here to see [Show Case](https://egret.com/case)<br/>
+### @egret-r/game
 
-# Learn
+```typescript
+import { egret } from '@egret-r/core';
+import { game } from '@egret-r/game';
 
-* Access [Doc](http://developer.egret.com/cn/github/egret-docs/Engine2D/index.html?home=1) to get Engine document
-* Access [Example](http://developer.egret.com/cn/example/egret2d/index.html#010-disp-basic) to learn demo source code
-* Access [API](http://developer.egret.com/cn/apidoc/) to get API document
-* Access [Video](http://developer.egret.com/cn/list/video/) to get videos
-* Access [Community](http://bbs.egret.com/portal.php) to communicate with other developers
+// MovieClip
+const mcData = game.MovieClipDataFactory.generateMovieClipData(jsonData, texture);
+const mc = new game.MovieClip(mcData);
+mc.gotoAndPlay('walk');
 
-# Tools
+// URLLoader
+const loader = new game.URLLoader();
+loader.dataFormat = game.URLLoaderDataFormat.TEXT;
+loader.load(new game.URLRequest('https://example.com/data.txt'));
+```
 
-* Access [Egret Engine](http://www.egret.com/products/engine.html) to get Egret Engine launcher
-* Access [Egret Wing](http://www.egret.com/products/wing.html) to get Egret IDE
-* Access [Dragonbones Pro](http://dragonbones.com/cn/index.html) to get DragonBones
-* Access [Moew Tools](http://www.egret.com/products)
+---
 
-# Third Party Library
+## Development
 
-* Use [base64texture](https://github.com/egret-labs/egret-game-library/tree/master/base64texture) to convert base64 String to egert Texture
-* Use [dcagent](https://github.com/egret-labs/egret-game-library/tree/master/dcagent) DataEye SDK for Egret
-* Use [ecs](https://github.com/egret-labs/egret-game-library/tree/master/ecs) component system
-* Use [euiextension](https://github.com/egret-labs/egret-game-library/tree/master/euiextension) EUI extension
-* Use [gesture](https://github.com/egret-labs/egret-game-library/tree/master/gesture) Gesture library
-* Use [keyboard](https://github.com/egret-labs/egret-game-library/tree/master/keyboard) Keyboard event listener
-* Use [Greensock](https://github.com/egret-labs/egret-game-library/tree/master/greensock) Greensock animation library
-* Use [jszip](https://github.com/egret-labs/egret-game-library/tree/master/jszip) jszip Compression library
-* Use [md5](https://github.com/egret-labs/egret-game-library/tree/master/md5) A simple MD5 Library
-* Use [mouse](https://github.com/egret-labs/egret-game-library/tree/master/mouse) PC mouse support library
-* Use [particle](https://github.com/egret-labs/egret-game-library/tree/master/particle) particle system
-* Use [physics](https://github.com/egret-labs/egret-game-library/tree/master/physics) p2Physics engine，current version 0.7.0
-* Use [socket](https://github.com/egret-labs/egret-game-library/tree/master/socket.io) socket.io
-* Use [tiled](https://github.com/egret-labs/egret-game-library/tree/master/tiled) tiledmap support library
-* Use [weixinapi](https://github.com/egret-labs/egret-game-library/tree/master/weixinapi) WeChat API
-* More third party libraries please visit [here](https://github.com/egret-labs/egret-game-library) 
+### Project Structure
 
-# Contributing
+```
+egret-r/
+├── packages/
+│   ├── core/          # @egret-r/core
+│   ├── eui/           # @egret-r/eui
+│   ├── game/          # @egret-r/game
+│   ├── tween/         # @egret-r/tween
+│   └── socket/        # @egret-r/socket
+├── src/               # Original namespace source (read-only reference)
+├── scripts/           # Build tooling
+└── package.json       # Monorepo root (npm workspaces)
+```
 
-Asking a question is the first step to participating in an open-source community. You can report Egret issues [here](https://github.com/egret-labs/egret-core/issues).
-It is recommended that issues be discussed in the [official community portal](http://bbs.egret.com/portal.php), as it can help with solving problems efficiently.
+### Commands
 
-# License
+```bash
+npm install           # Install dependencies
+npm run build         # Build all packages (index.js + index.min.js + index.d.ts)
+npm run build:core    # Build only @egret-r/core
+npm run watch         # Watch mode — auto-rebuild on source changes
+npm run clean         # Remove all dist/ directories
+npm run verify        # Check build outputs
+```
 
-This content is released under the (https://opensource.org/licenses/BSD-2-Clause) BSD License.
+### Build Pipeline
 
-![](https://img.shields.io/badge/license-New%20BSD-blue.svg)
+```
+src/egret/*.ts (namespace source)
+    │
+    ├── Defines.debug.ts → preamble (ambient declarations)
+    ├── Topological sort by /// <reference> dependencies
+    │
+    └── esbuild
+          ├── bundle + ESM → dist/index.js
+          ├── --minify → dist/index.min.js
+          └── namespace concatenation → dist/index.d.ts
+```
+
+---
+
+## Platform Support
+
+| Platform | Status |
+|----------|--------|
+| Chrome, Edge, Firefox, Safari | ✅ Full |
+| iOS Safari, Android Chrome | ✅ Full |
+| WeChat Mini Game | ✅ (via Web API) |
+| Facebook Instant Games | ✅ |
+
+---
+
+## License
+
+BSD License — see [LICENSE.md](./LICENSE.md) for details.
