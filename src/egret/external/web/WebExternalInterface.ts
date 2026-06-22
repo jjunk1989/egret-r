@@ -52,7 +52,7 @@ namespace egret.web {
     let ua:string = navigator.userAgent.toLowerCase();
 
     if (ua.indexOf("egretnative") < 0) {
-        ExternalInterface = WebExternalInterface;
+        egret.ExternalInterface = WebExternalInterface;
     }
 }
 
@@ -96,7 +96,7 @@ namespace egret.web {
     let ua:string = navigator.userAgent.toLowerCase();
 
     if (ua.indexOf("egretnative") >= 0) {
-        ExternalInterface = NativeExternalInterface;
+        egret.ExternalInterface = NativeExternalInterface;
         egret_native.receivedPluginInfo = onReceivedPluginInfo;
     }
 }
@@ -131,6 +131,6 @@ namespace egret.web {
     let ua:string = navigator.userAgent.toLowerCase();
 
     if (ua.indexOf("egretwebview") >= 0) {
-        ExternalInterface = WebViewExternalInterface;
+        egret.ExternalInterface = WebViewExternalInterface;
     }
 }

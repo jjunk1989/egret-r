@@ -221,5 +221,5 @@ namespace egret.web {
 
     }
 
-    ImageLoader = WebImageLoader;
+    egret.ImageLoader = WebImageLoader;
 }

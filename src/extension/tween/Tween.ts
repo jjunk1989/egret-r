@@ -46,7 +46,7 @@ namespace egret {
      * @includeExample extension/tween/Tween.ts
      * @language zh_CN
 	 */
-    export class Tween extends EventDispatcher {
+    export class Tween extends egret.EventDispatcher {
 		/**
          * 不做特殊处理
 		 * @constant {number} egret.Tween.NONE

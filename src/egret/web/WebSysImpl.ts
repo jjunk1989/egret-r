@@ -327,7 +327,7 @@ namespace egret.web {
     }
 
 
-    isIOS14Device = function () {
+    egret.web.isIOS14Device = function () {
         return egret.Capabilities.runtimeType == egret.RuntimeType.WEB
             && egret.Capabilities.os == "iOS"
             && egret.Capabilities.isMobile

@@ -314,6 +314,6 @@ namespace egret.web {
             }, 0);
         }
     }
-    HttpRequest = WebHttpRequest;
+    egret.HttpRequest = WebHttpRequest;
 
 }

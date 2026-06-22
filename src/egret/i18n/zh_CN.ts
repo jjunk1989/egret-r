@@ -1,8 +1,8 @@
 namespace egret {
 
-    $locale_strings = $locale_strings || {};
-    $locale_strings["zh_CN"] = $locale_strings["zh_CN"] || {};
-    let locale_strings = $locale_strings["zh_CN"];
+    egret.$locale_strings = egret.$locale_strings || {};
+    egret.$locale_strings["zh_CN"] = egret.$locale_strings["zh_CN"] || {};
+    let locale_strings = egret.$locale_strings["zh_CN"];
 
     //eui 2000-2999    
 

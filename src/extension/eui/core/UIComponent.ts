@@ -1820,14 +1820,14 @@ namespace eui.sys {
         }
         let prototype = target.prototype;
         let protoBase = template.prototype;
-        let keys = Object.keys(protoBase);
+        let keys = Object.getOwnPropertyNames(protoBase);
         let length = keys.length;
         for (let i = 0; i < length; i++) {
             let key = keys[i];
-            if (key == "__meta__") {
+            if (key == "__meta__" || key == "constructor") {
                 continue;
             }
-            if (!prototype.hasOwnProperty(key) || isEmptyFunction(prototype, key)) {
+            if (!Object.prototype.hasOwnProperty.call(prototype, key) || isEmptyFunction(prototype, key)) {
                 let value = Object.getOwnPropertyDescriptor(protoBase, key);
                 Object.defineProperty(prototype, key, value);
             }

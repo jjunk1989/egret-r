@@ -80,7 +80,72 @@ function parseRefs(content) {
   return refs;
 }
 
+function extractDefinedClasses(content) {
+  var classes = [];
+  var re = /(?:export\s+)?class\s+(\w+)/g;
+  var m;
+  while ((m = re.exec(content)) !== null) {
+    classes.push(m[1]);
+  }
+  return classes;
+}
+
+function extractExtendedClasses(content) {
+  var classes = [];
+  var re = /extends\s+(?:egret\.)?(\w+)\b/g;
+  var m;
+  while ((m = re.exec(content)) !== null) {
+    classes.push(m[1]);
+  }
+  return classes;
+}
+
+function extractDefinedSymbols(content) {
+  var symbols = [];
+  var fnRe = /(?:export\s+)?function\s+(\w+)\s*(?:<[^>]*>)?\s*\(/g;
+  var varRe = /(?:export\s+)?(?:let|var|const)\s+([\$\w]+)\s*(?::\s*[^=]+)?\s*=/g;
+  var m;
+  while ((m = fnRe.exec(content)) !== null) {
+    symbols.push(m[1]);
+  }
+  while ((m = varRe.exec(content)) !== null) {
+    symbols.push(m[1]);
+  }
+  return symbols;
+}
+
+function extractNamespaceSymbolRefs(content, nsName) {
+  var refs = [];
+  var re = new RegExp('\\b' + nsName + '\\.(\\w+)\\b', 'g');
+  var m;
+  while ((m = re.exec(content)) !== null) {
+    refs.push(m[1]);
+  }
+  return refs;
+}
+
 function buildDepGraph(files, srcDir) {
+  var classToFile = {};
+  var symbolToFile = {};
+  var nsName = srcDir.indexOf('extension/eui') !== -1 ? 'eui' : 'egret';
+
+  for (var i = 0; i < files.length; i++) {
+    var fileContent = fs.readFileSync(files[i], 'utf8');
+    var definedClasses = extractDefinedClasses(fileContent);
+    for (var c = 0; c < definedClasses.length; c++) {
+      if (!classToFile[definedClasses[c]]) {
+        classToFile[definedClasses[c]] = files[i];
+      }
+    }
+
+    var definedSymbols = extractDefinedSymbols(fileContent);
+    for (var s = 0; s < definedSymbols.length; s++) {
+      if (!symbolToFile[definedSymbols[s]]) {
+        symbolToFile[definedSymbols[s]] = files[i];
+      }
+    }
+  }
+
   var graph = {};
   for (var i = 0; i < files.length; i++) {
     var f = files[i];
@@ -93,6 +158,23 @@ function buildDepGraph(files, srcDir) {
         resolvedRefs.push(resolved);
       }
     }
+
+    var extendsClasses = extractExtendedClasses(content);
+    for (var e = 0; e < extendsClasses.length; e++) {
+      var baseFile = classToFile[extendsClasses[e]];
+      if (baseFile && baseFile !== f && resolvedRefs.indexOf(baseFile) === -1) {
+        resolvedRefs.push(baseFile);
+      }
+    }
+
+    var symbolRefs = extractNamespaceSymbolRefs(content, nsName);
+    for (var r = 0; r < symbolRefs.length; r++) {
+      var symbolFile = symbolToFile[symbolRefs[r]];
+      if (symbolFile && symbolFile !== f && resolvedRefs.indexOf(symbolFile) === -1) {
+        resolvedRefs.push(symbolFile);
+      }
+    }
+
     graph[f] = { resolvedRefs: resolvedRefs };
   }
   return graph;
@@ -233,14 +315,20 @@ async function buildPackage(pkg) {
   var entryPath = path.join(pkgSrc, '_entry.ts');
   var entryContent = '';
 
+  if (pkg.preambles && pkg.preambles.length > 0) {
+    entryContent += 'var global = globalThis;\n';
+  }
+
   // Add preamble code directly (contains declare functions, namespace assignments)
   entryContent += preambleCodes + '\n';
 
-  // Add imports in dependency order
+  // Concatenate source files in dependency order so namespace symbols share one module scope.
   for (var j = 0; j < order.length; j++) {
-    var relImport = path.relative(pkgSrc, order[j]).replace(/\\/g, '/');
-    var importPath = './' + relImport.replace(/\.ts$/, '');
-    entryContent += 'import \'' + importPath + '\';\n';
+    var rel = path.relative(pkgSrc, order[j]).replace(/\\/g, '/');
+    var srcCode = fs.readFileSync(order[j], 'utf8');
+    srcCode = srcCode.replace(/\/\/\/\s*<reference\s+path\s*=\s*["'][^"']+["']\s*\/>\s*\n?/g, '');
+    entryContent += '\n// === ' + rel + ' ===\n';
+    entryContent += srcCode + '\n';
   }
 
   entryContent += '\nexport {};\n';
@@ -260,11 +348,19 @@ async function buildPackage(pkg) {
     },
   };
 
+  var exportFooter = '';
+  if (pkg.name === 'core') {
+    exportFooter = '\nif (typeof globalThis !== "undefined") { globalThis.egret = egret; }\nexport { egret };\n';
+  } else if (pkg.name === 'eui') {
+    exportFooter = '\nif (typeof globalThis !== "undefined") { globalThis.eui = eui; }\nexport { eui };\n';
+  }
+
   // Build normal version
   console.log('  Building index.js...');
   await esbuild.build(Object.assign({}, baseOpts, {
     outfile: path.join(distDir, 'index.js'),
     minify: false, keepNames: true,
+    footer: { js: exportFooter },
   }));
   console.log('    ' + (fs.statSync(path.join(distDir, 'index.js')).size / 1024).toFixed(1) + ' KB');
 

@@ -155,9 +155,6 @@ namespace egret.web {
                     }
                     (this.inputElement as any).type = this.$textfield.inputType;
                 }
-                else {
-                    (this.inputElement as any).type = "text";
-                }
                 this.inputDiv = this.htmlInput._inputDIV;
             }
             else {
@@ -479,7 +476,7 @@ namespace egret.web {
         }
     }
 
-    StageText = HTML5StageText;
+    egret.StageText = HTML5StageText;
 }
 
 namespace egret.web {
@@ -686,7 +683,9 @@ namespace egret.web {
                 inputElement.id = "egretInput";
             }
 
-            (inputElement as any).type = "text";
+            if (!multiline) {
+                (inputElement as any).type = "text";
+            }
 
             self._inputDIV.appendChild(inputElement);
             inputElement.setAttribute("tabindex", "-1");

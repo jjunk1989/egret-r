@@ -53,7 +53,7 @@ namespace egret.tween {
      * @platform Web,Native
      * @language zh_CN
      */
-    export abstract class BasePath extends EventDispatcher {
+    export abstract class BasePath extends egret.EventDispatcher {
         /**
          * the name of this action.
          * @version Egret 3.1.8
@@ -283,7 +283,7 @@ namespace egret.tween {
      * 	</tween:TweenItem>
      * ```
      */
-    export class TweenItem extends EventDispatcher {
+    export class TweenItem extends egret.EventDispatcher {
 
         private tween: Tween;
 
@@ -492,7 +492,7 @@ namespace egret.tween {
      * @includeExample extension/tween/TweenWrapper.ts
      * @language zh_CN
      */
-    export class TweenGroup extends EventDispatcher {
+    export class TweenGroup extends egret.EventDispatcher {
 
         private completeCount: number = 0;
 
