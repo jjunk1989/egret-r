@@ -38,7 +38,7 @@ namespace egret {
      * @version Egret 2.4
      * @platform Web,Native
      */
-    export class MainContext extends EventDispatcher {
+    export class MainContext extends egret.EventDispatcher {
 
         /**
          * @version Egret 2.4

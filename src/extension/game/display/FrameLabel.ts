@@ -35,7 +35,7 @@ namespace egret {
      * @platform Web,Native
      * @private
      */
-    export class FrameLabel extends EventDispatcher {
+    export class FrameLabel extends egret.EventDispatcher {
         /**
          * @private
          */

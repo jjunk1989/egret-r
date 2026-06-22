@@ -42,7 +42,7 @@ namespace egret {
      * @platform Web,Native
      * @language zh_CN
   	 */
-    export class MovieClipEvent extends Event {
+    export class MovieClipEvent extends egret.Event {
 
         /**
          * TextEvent create an object that contains information about movieClip events.

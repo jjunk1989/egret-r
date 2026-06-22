@@ -5,6 +5,8 @@
 
 import { egret } from '@egret-r/core';
 import '@egret-r/eui';
+import '@egret-r/game';
+import '@egret-r/tween';
 
 type TestCaseContext = {
   root: egret.DisplayObjectContainer;

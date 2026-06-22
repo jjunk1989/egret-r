@@ -95,7 +95,7 @@ namespace egret {
 	/**
      * @private
 	 */
-    export class ScrollTween extends EventDispatcher {
+    export class ScrollTween extends egret.EventDispatcher {
 
         /**
          * @private

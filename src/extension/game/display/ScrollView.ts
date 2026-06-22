@@ -43,7 +43,7 @@ namespace egret {
      * @includeExample extension/game/display/ScrollView.ts
      * @language zh_CN
      */
-    export class ScrollView extends DisplayObjectContainer {
+    export class ScrollView extends egret.DisplayObjectContainer {
 
         /**
          * @private

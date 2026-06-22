@@ -46,7 +46,7 @@ namespace egret {
      * @includeExample extension/game/net/URLRequest.ts
      * @language zh_CN
      */
-    export class URLRequest extends HashObject {
+    export class URLRequest extends egret.HashObject {
 
         /**
          * Create an egret.URLRequest object

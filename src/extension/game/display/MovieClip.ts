@@ -47,7 +47,7 @@ namespace egret {
      * @includeExample extension/game/display/MovieClip.ts
      * @language zh_CN
      */
-    export class MovieClip extends DisplayObject {
+    export class MovieClip extends egret.DisplayObject {
 
         //Render Property
         $texture: Texture = null;

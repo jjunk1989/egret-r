@@ -40,7 +40,7 @@ namespace egret {
      * @includeExample extension/game/player/Ticker.ts
      * @language zh_CN
      */
-    export class Ticker extends EventDispatcher {
+    export class Ticker extends egret.EventDispatcher {
         /**
          * @deprecated
          * @version Egret 2.4

@@ -34,7 +34,7 @@ namespace egret {
      * @version Egret 2.4
      * @platform Web,Native
      */
-    export class MovieClipDataFactory extends EventDispatcher {
+    export class MovieClipDataFactory extends egret.EventDispatcher {
         /**
          * 是否开启缓存
          * @version Egret 2.4

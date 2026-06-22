@@ -34,7 +34,7 @@ namespace egret {
      * @version Egret 2.4
      * @platform Web,Native
      */
-    export class MovieClipData extends HashObject {
+    export class MovieClipData extends egret.HashObject {
         /**
          * @private
          * MovieClip数据

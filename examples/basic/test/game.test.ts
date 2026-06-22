@@ -1,9 +1,10 @@
 import { describe, expect, it } from 'vitest';
 import { egret } from '@egret-r/core';
 
-describe.skip('game module (pending package ESM bare-symbol fix)', () => {
+describe('game module', () => {
   it('URLVariables should decode key-value pairs', async () => {
     await import('@egret-r/game');
+    expect((egret as any).URLVariables).toBeTruthy();
     const vars = new egret.URLVariables('name=egret&mode=debug');
     const parsed = vars.variables as Record<string, string>;
 
@@ -13,6 +14,7 @@ describe.skip('game module (pending package ESM bare-symbol fix)', () => {
 
   it('URLVariables should collect duplicated keys into arrays', async () => {
     await import('@egret-r/game');
+    expect((egret as any).URLVariables).toBeTruthy();
     const vars = new egret.URLVariables('feature=core&feature=eui&feature=tween');
     const parsed = vars.variables as Record<string, string | string[]>;
 

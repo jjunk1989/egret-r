@@ -48,7 +48,7 @@ namespace egret {
      * @includeExample extension/game/net/URLVariables.ts
      * @language zh_CN
      */
-    export class URLVariables extends HashObject {
+    export class URLVariables extends egret.HashObject {
 
         /**
          * Create an egret.URLVariable object

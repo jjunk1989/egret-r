@@ -394,6 +394,14 @@ async function buildPackage(pkg) {
     },
   };
 
+  var runtimeBanner = '';
+  if (pkg.name === 'game' || pkg.name === 'tween' || pkg.name === 'socket') {
+    runtimeBanner = [
+      'var egret = (typeof globalThis !== "undefined" && globalThis.egret) ? globalThis.egret : undefined;',
+      'var ticker = egret && (egret.ticker || (egret.sys && egret.sys.$ticker));',
+    ].join('\n') + '\n';
+  }
+
   var exportFooter = '';
   if (pkg.name === 'core') {
     exportFooter = '\nif (typeof globalThis !== "undefined") { globalThis.egret = egret; }\nexport { egret };\n';
@@ -406,6 +414,7 @@ async function buildPackage(pkg) {
   await esbuild.build(Object.assign({}, baseOpts, {
     outfile: path.join(distDir, 'index.js'),
     minify: false, keepNames: true,
+    banner: { js: runtimeBanner },
     footer: { js: exportFooter },
   }));
   console.log('    ' + (fs.statSync(path.join(distDir, 'index.js')).size / 1024).toFixed(1) + ' KB');
@@ -415,6 +424,7 @@ async function buildPackage(pkg) {
   await esbuild.build(Object.assign({}, baseOpts, {
     outfile: path.join(distDir, 'index.min.js'),
     minify: true,
+    banner: { js: runtimeBanner },
     define: {
       'DEBUG': 'false',
       'RELEASE': 'true',

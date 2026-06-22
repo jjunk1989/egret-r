@@ -45,7 +45,7 @@ namespace egret {
      * @private
      * @language zh_CN
      */
-    export class Recycler extends HashObject{
+    export class Recycler extends egret.HashObject{
 
 		/**
          * Create an egret.Recycler object

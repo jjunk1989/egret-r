@@ -63,7 +63,7 @@ namespace egret {
      * @includeExample extension/game/net/URLLoader.ts
      * @language zh_CN
 	 */
-    export class URLLoader extends EventDispatcher {
+    export class URLLoader extends egret.EventDispatcher {
 
 		/**
          * Create an egret.URLLoader object
