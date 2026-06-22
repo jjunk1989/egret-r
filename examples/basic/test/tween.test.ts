@@ -29,4 +29,26 @@ describe('tween module', () => {
     expect(Ease.quadInOut(0.5)).toBeCloseTo(0.5, 6);
     expect(Ease.quadInOut(0.75)).toBeCloseTo(0.875, 6);
   });
+
+  it('Ease.get should clamp amount into [-1, 1]', async () => {
+    await import('@egret-r/tween');
+    const Ease = (globalThis as any).egret?.Ease;
+    expect(Ease).toBeTruthy();
+
+    const over = Ease.get(2);
+    const under = Ease.get(-2);
+    expect(over(0.5)).toBeCloseTo(0.75, 6);
+    expect(under(0.5)).toBeCloseTo(0.25, 6);
+  });
+
+  it('Ease.sineInOut and Ease.bounceOut should keep endpoint invariants', async () => {
+    await import('@egret-r/tween');
+    const Ease = (globalThis as any).egret?.Ease;
+    expect(Ease).toBeTruthy();
+
+    expect(Ease.sineInOut(0)).toBeCloseTo(0, 6);
+    expect(Ease.sineInOut(1)).toBeCloseTo(1, 6);
+    expect(Ease.bounceOut(0)).toBeCloseTo(0, 6);
+    expect(Ease.bounceOut(1)).toBeCloseTo(1, 6);
+  });
 });
