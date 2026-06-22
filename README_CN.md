@@ -41,23 +41,47 @@ npm install @egret-r/core @egret-r/eui @egret-r/game
 ```typescript
 // src/main.ts
 import { egret } from '@egret-r/core';
-import { eui } from '@egret-r/eui';
+import '@egret-r/eui';
 
-// 创建舞台
-const stage = egret.Stage.getInstance();
-stage.frameRate = 60;
+class Main extends egret.DisplayObjectContainer {
+  constructor() {
+    super();
+    this.once(egret.Event.ADDED_TO_STAGE, () => {
+      this.stage.frameRate = 60;
+    }, this);
+  }
+}
 
-// 创建按钮
-const btn = new eui.Button();
-btn.label = '开始游戏';
-btn.x = 100;
-btn.y = 80;
-stage.addChild(btn);
+window.Main = Main;
 
-// 添加缓动动画
-const { Tween, Ease } = await import('@egret-r/tween');
-Tween.get(btn).to({ scaleX: 1.2, scaleY: 1.2 }, 300, Ease.elasticOut);
+window.addEventListener('DOMContentLoaded', () => {
+  const container = document.getElementById('game-container') as HTMLDivElement | null;
+  if (!container) return;
+
+  container.classList.add('egret-player');
+  container.setAttribute('data-entry-class', 'Main');
+  container.setAttribute('data-scale-mode', egret.StageScaleMode.NO_SCALE);
+  container.setAttribute('data-frame-rate', '60');
+  container.setAttribute('data-content-width', String(container.clientWidth || window.innerWidth));
+  container.setAttribute('data-content-height', String(container.clientHeight || window.innerHeight));
+
+  egret.runEgret({ renderMode: 'webgl' });
+});
 ```
+
+### 运行 Basic 示例
+
+```bash
+# 在仓库根目录执行
+npm install
+npm run build
+
+# 启动官方 basic 示例
+cd examples/basic
+npx vite --host 127.0.0.1 --port 3005 --strictPort
+```
+
+浏览器打开 `http://127.0.0.1:3005/`。
 
 ### 使用 Vite 模板
 

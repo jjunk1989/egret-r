@@ -80,6 +80,10 @@ function parseRefs(content) {
   return refs;
 }
 
+function escapeRegExp(text) {
+  return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
 function extractDefinedClasses(content) {
   var classes = [];
   var re = /(?:export\s+)?class\s+(\w+)/g;
@@ -330,6 +334,48 @@ async function buildPackage(pkg) {
     entryContent += '\n// === ' + rel + ' ===\n';
     entryContent += srcCode + '\n';
   }
+
+  // Guard against namespace-era bare assignments becoming ReferenceError in ESM strict mode.
+  var bareAssignSet = {};
+  var bareAssignRe = /^[ \t]+([A-Za-z_$][\w$]*)\s*=\s*[^=]/gm;
+  var match;
+  while ((match = bareAssignRe.exec(entryContent)) !== null) {
+    bareAssignSet[match[1]] = true;
+  }
+
+  var skipNames = {
+    egret: true,
+    eui: true,
+    sys: true,
+    this: true,
+    window: true,
+    global: true,
+    globalThis: true,
+    __global: true,
+  };
+  var KEYWORDS = {
+    var: true, let: true, const: true, function: true, class: true, return: true,
+    if: true, else: true, for: true, while: true, switch: true, case: true,
+    default: true, break: true, continue: true, try: true, catch: true,
+    finally: true, throw: true, new: true, delete: true, typeof: true,
+    instanceof: true, in: true, do: true, void: true, yield: true, await: true,
+    true: true, false: true, null: true, undefined: true,
+  };
+
+  var bareDecls = '';
+  var bareNames = Object.keys(bareAssignSet);
+  for (var bi = 0; bi < bareNames.length; bi++) {
+    var name = bareNames[bi];
+    if (skipNames[name] || KEYWORDS[name]) {
+      continue;
+    }
+    var declaredRe = new RegExp('(?:^|[^\\w$])(?:var|let|const|function|class)\\s+' + escapeRegExp(name) + '\\b');
+    if (declaredRe.test(entryContent)) {
+      continue;
+    }
+    bareDecls += 'var ' + name + ' = void 0;\n';
+  }
+  entryContent = bareDecls + entryContent;
 
   entryContent += '\nexport {};\n';
   fs.writeFileSync(entryPath, entryContent, 'utf8');
