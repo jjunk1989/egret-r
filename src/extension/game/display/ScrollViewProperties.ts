@@ -64,11 +64,11 @@ namespace egret {
         /**
          * @private
          */
-        public _lastTouchPosition:egret.Point = new Point(0, 0);
+        public _lastTouchPosition:egret.Point = new egret.Point(0, 0);
         /**
          * @private
          */
-        public _touchStartPosition:egret.Point = new Point(0, 0);
+        public _touchStartPosition:egret.Point = new egret.Point(0, 0);
         /**
          * @private
          */

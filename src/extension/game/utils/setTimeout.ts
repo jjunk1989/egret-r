@@ -62,9 +62,9 @@ namespace egret {
         let data = { listener, thisObject, delay: delay, params: args };
 
         setTimeoutCount++;
-        if (setTimeoutCount == 1 && ticker) {
+        if (setTimeoutCount == 1 && egret.ticker) {
             lastTime = egret.getTimer();
-            ticker.$startTick(timeoutUpdate, null);
+            egret.ticker.$startTick(timeoutUpdate, null);
         }
 
         setTimeoutIndex++;
@@ -91,8 +91,8 @@ namespace egret {
             setTimeoutCount--;
             delete setTimeoutCache[key];
 
-            if (setTimeoutCount == 0 && ticker) {
-                ticker.$stopTick(timeoutUpdate, null);
+            if (setTimeoutCount == 0 && egret.ticker) {
+                egret.ticker.$stopTick(timeoutUpdate, null);
             }
         }
 

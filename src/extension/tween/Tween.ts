@@ -292,7 +292,7 @@ namespace egret {
                 tweens.push(tween);
                 if (!Tween._inited) {
                     Tween._lastTime = egret.getTimer();
-                    ticker.$startTick(Tween.tick, null);
+                    egret.ticker.$startTick(Tween.tick, null);
                     Tween._inited = true;
                 }
             } else {

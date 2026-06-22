@@ -7,6 +7,7 @@
     "build": "node scripts/build-esm-v3.js",
     "build:core": "node scripts/build-esm-v3.js --only core",
     "clean": "node scripts/clean-dist.js",
+    "check:bare": "node scripts/check-bare-symbols.js",
     "verify": "node scripts/verify-dist.js",
     "watch": "node scripts/build-esm-v2.js --watch"
   },

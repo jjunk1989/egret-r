@@ -53,7 +53,7 @@ namespace egret {
         $texture: Texture = null;
 
         //Render Property
-        private offsetPoint: Point = Point.create(0, 0);
+        private offsetPoint: egret.Point = egret.Point.create(0, 0);
 
         //Data Property
         $movieClipData: MovieClipData = null;
@@ -768,11 +768,11 @@ namespace egret {
             }
             this.isStopped = value;
             if (value) {
-                ticker.$stopTick(this.advanceTime, this);
+                egret.ticker.$stopTick(this.advanceTime, this);
             } else {
                 this.playTimes = this.playTimes == 0 ? 1 : this.playTimes;
                 this.lastTime = egret.getTimer();
-                ticker.$startTick(this.advanceTime, this);
+                egret.ticker.$startTick(this.advanceTime, this);
             }
         }
     }

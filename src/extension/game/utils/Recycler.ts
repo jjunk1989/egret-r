@@ -75,7 +75,7 @@ namespace egret {
         public static _callBackList:any[] = [];
 
         public static $init():void {
-            ticker.$startTick(Recycler.onUpdate, Recycler);
+            egret.ticker.$startTick(Recycler.onUpdate, Recycler);
         }
 
         public static onUpdate(timeStamp:number):boolean {
