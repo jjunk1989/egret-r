@@ -113,7 +113,7 @@ namespace egret.web {
             option.maxTouches = +container.getAttribute("data-multi-fingered") || 2;
             option.textureScaleFactor = +container.getAttribute("texture-scale-factor") || 1;
 
-            option.showFPS = container.getAttribute("data-show-fps") == "true";
+            option.showFPS = container.getAttribute("data-show-fps") === "true";
 
             let styleStr = container.getAttribute("data-show-fps-style") || "";
             let stylesArr = styleStr.split(",");
@@ -124,7 +124,7 @@ namespace egret.web {
             }
             option.fpsStyles = styles;
 
-            option.showLog = container.getAttribute("data-show-log") == "true";
+            option.showLog = container.getAttribute("data-show-log") === "true";
             option.logFilter = container.getAttribute("data-log-filter");
             return option;
         }
@@ -189,7 +189,7 @@ namespace egret.web {
             let top = 0;
             let boundingClientWidth = screenRect.width;
             let boundingClientHeight = screenRect.height;
-            if (boundingClientWidth == 0 || boundingClientHeight == 0) {
+            if (boundingClientWidth === 0 || boundingClientHeight === 0) {
                 return;
             }
             if (screenRect.top < 0) {
@@ -199,9 +199,9 @@ namespace egret.web {
             let shouldRotate = false;
 
             let orientation: string = this.stage.$orientation;
-            if (orientation != OrientationMode.AUTO) {
-                shouldRotate = orientation != OrientationMode.PORTRAIT && boundingClientHeight > boundingClientWidth
-                    || orientation == OrientationMode.PORTRAIT && boundingClientWidth > boundingClientHeight;
+            if (orientation !== OrientationMode.AUTO) {
+                shouldRotate = orientation !== OrientationMode.PORTRAIT && boundingClientHeight > boundingClientWidth
+                    || orientation === OrientationMode.PORTRAIT && boundingClientWidth > boundingClientHeight;
             }
             let screenWidth = shouldRotate ? boundingClientHeight : boundingClientWidth;
             let screenHeight = shouldRotate ? boundingClientWidth : boundingClientHeight;
@@ -214,15 +214,15 @@ namespace egret.web {
             let displayWidth = stageSize.displayWidth;
             let displayHeight = stageSize.displayHeight;
             canvas.style[egret.web.getPrefixStyleName("transformOrigin")] = "0% 0% 0px";
-            if (canvas.width != stageWidth) {
+            if (canvas.width !== stageWidth) {
                 canvas.width = stageWidth;
             }
-            if (canvas.height != stageHeight) {
+            if (canvas.height !== stageHeight) {
                 canvas.height = stageHeight;
             }
             let rotation = 0;
             if (shouldRotate) {
-                if (orientation == OrientationMode.LANDSCAPE) {//
+                if (orientation === OrientationMode.LANDSCAPE) {//
                     rotation = 90;
                     canvas.style.top = top + (boundingClientHeight - displayWidth) / 2 + "px";
                     canvas.style.left = (boundingClientWidth + displayHeight) / 2 + "px";

@@ -167,10 +167,10 @@ namespace egret {
             let length = list.length;
             for (let i = 0; i < length; i++) {
                 let bin = list[i];
-                if (bin.listener == listener && bin.thisObject == thisObject && bin.target == this) {
+                if (bin.listener === listener && bin.thisObject === thisObject && bin.target === this) {
                     return false;
                 }
-                if (insertIndex == -1 && bin.priority < priority) {
+                if (insertIndex === -1 && bin.priority < priority) {
                     insertIndex = i;
                 }
             }
@@ -206,7 +206,7 @@ namespace egret {
 
             this.$removeEventBin(list, listener, thisObject);
 
-            if (list.length == 0) {
+            if (list.length === 0) {
                 eventMap[type] = null;
             }
         }
@@ -215,7 +215,7 @@ namespace egret {
             let length = list.length;
             for (let i = 0; i < length; i++) {
                 let bin = list[i];
-                if (bin.listener == listener && bin.thisObject == thisObject && bin.target == this) {
+                if (bin.listener === listener && bin.thisObject === thisObject && bin.target === this) {
                     list.splice(i, 1);
                     return true;
                 }
@@ -266,7 +266,7 @@ namespace egret {
                 return true;
             }
             let length = list.length;
-            if (length == 0) {
+            if (length === 0) {
                 return true;
             }
             let onceList = ONCE_EVENT_LIST;

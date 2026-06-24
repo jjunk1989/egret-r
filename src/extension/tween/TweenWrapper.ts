@@ -382,7 +382,7 @@ namespace egret.tween {
                 this.createTween(position);
             } else {
                 this.tween.setPaused(false);
-                if(this.isStop && position == undefined) {
+                if(this.isStop && position === undefined) {
                     position = 0;
                     this.isStop = false;
                 }

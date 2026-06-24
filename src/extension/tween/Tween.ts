@@ -193,7 +193,7 @@ namespace egret {
             }
             let tweens: Tween[] = Tween._tweens;
             for (let i = tweens.length - 1; i >= 0; i--) {
-                if (tweens[i]._target == target) {
+                if (tweens[i]._target === target) {
                     tweens[i].paused = true;
                     tweens.splice(i, 1);
                 }
@@ -221,7 +221,7 @@ namespace egret {
             }
             let tweens: egret.Tween[] = egret.Tween._tweens;
             for (let i = tweens.length - 1; i >= 0; i--) {
-                if (tweens[i]._target == target) {
+                if (tweens[i]._target === target) {
                     tweens[i].paused = true;
                 }
             }
@@ -247,7 +247,7 @@ namespace egret {
             }
             let tweens: egret.Tween[] = egret.Tween._tweens;
             for (let i = tweens.length - 1; i >= 0; i--) {
-                if (tweens[i]._target == target) {
+                if (tweens[i]._target === target) {
                     tweens[i].paused = false;
                 }
             }
@@ -301,7 +301,7 @@ namespace egret {
                 }
                 let i = tweens.length;
                 while (i--) {
-                    if (tweens[i] == tween) {
+                    if (tweens[i] === tween) {
                         tweens.splice(i, 1);
                         return;
                     }
@@ -405,7 +405,7 @@ namespace egret {
                     end = true;
                 }
             }
-            if (t == this._prevPos) {
+            if (t === this._prevPos) {
                 return end;
             }
 
@@ -423,7 +423,7 @@ namespace egret {
                     let l = this._steps.length;
                     let stepIndex = -1;
                     for (let i = 0; i < l; i++) {
-                        if (this._steps[i].type == "step") {
+                        if (this._steps[i].type === "step") {
                             stepIndex = i;
                             if (this._steps[i].t <= t && this._steps[i].t + this._steps[i].d >= t) {
                                 break;
@@ -431,14 +431,14 @@ namespace egret {
                         }
                     }
                     for (let i = 0; i < l; i++) {
-                        if (this._steps[i].type == "action") {
+                        if (this._steps[i].type === "action") {
                             //执行actions
-                            if (actionsMode != 0) {
+                            if (actionsMode !== 0) {
                                 if (this._useTicks) {
                                     this._runAction(this._steps[i], t, t);
                                 }
-                                else if (actionsMode == 1 && t < prevPos) {
-                                    if (prevPos != this.duration) {
+                                else if (actionsMode === 1 && t < prevPos) {
+                                    if (prevPos !== this.duration) {
                                         this._runAction(this._steps[i], prevPos, this.duration);
                                     }
                                     this._runAction(this._steps[i], 0, t, true);
@@ -448,8 +448,8 @@ namespace egret {
                                 }
                             }
                         }
-                        else if (this._steps[i].type == "step") {
-                            if (stepIndex == i) {
+                        else if (this._steps[i].type === "step") {
+                            if (stepIndex === i) {
                                 let step = this._steps[stepIndex];
                                 this._updateTargetProps(step, Math.min((this._stepPosition = t - step.t) / step.d, 1));
                             }
@@ -478,7 +478,7 @@ namespace egret {
                 ePos = startPos;
             }
             let pos = action.t;
-            if (pos == ePos || (pos > sPos && pos < ePos) || (includeStart && pos == startPos)) {
+            if (pos === ePos || (pos > sPos && pos < ePos) || (includeStart && pos === startPos)) {
                 action.f.apply(action.o, action.p);
             }
         }
@@ -491,7 +491,7 @@ namespace egret {
          */
         private _updateTargetProps(step: any, ratio: number) {
             let p0, p1, v, v0, v1, arr;
-            if (!step && ratio == 1) {
+            if (!step && ratio === 1) {
                 this.passive = false;
                 p0 = p1 = this._curQueueProps;
             } else {
@@ -515,8 +515,8 @@ namespace egret {
                 if ((v1 = p1[n]) == null) {
                     p1[n] = v1 = v0;
                 }
-                if (v0 == v1 || ratio == 0 || ratio == 1 || (typeof (v0) != "number")) {
-                    v = ratio == 1 ? v1 : v0;
+                if (v0 === v1 || ratio === 0 || ratio === 1 || (typeof (v0) !== "number")) {
+                    v = ratio === 1 ? v1 : v0;
                 } else {
                     v = v0 + (v1 - v0) * ratio;
                 }

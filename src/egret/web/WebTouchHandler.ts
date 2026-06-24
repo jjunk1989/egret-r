@@ -99,28 +99,28 @@ namespace egret.web {
          */
         private addTouchListener():void {
             this.canvas.addEventListener("touchstart", (event:any)=> {
-                let l = event.changedTouches.length;
+                const l = event.changedTouches.length;
                 for (let i:number = 0; i < l; i++) {
                     this.onTouchBegin(event.changedTouches[i]);
                 }
                 this.prevent(event);
             }, false);
             this.canvas.addEventListener("touchmove", (event:any)=> {
-                let l = event.changedTouches.length;
+                const l = event.changedTouches.length;
                 for (let i:number = 0; i < l; i++) {
                     this.onTouchMove(event.changedTouches[i]);
                 }
                 this.prevent(event);
             }, false);
             this.canvas.addEventListener("touchend", (event:any)=> {
-                let l = event.changedTouches.length;
+                const l = event.changedTouches.length;
                 for (let i:number = 0; i < l; i++) {
                     this.onTouchEnd(event.changedTouches[i]);
                 }
                 this.prevent(event);
             }, false);
             this.canvas.addEventListener("touchcancel", (event:any)=> {
-                let l = event.changedTouches.length;
+                const l = event.changedTouches.length;
                 for (let i:number = 0; i < l; i++) {
                     this.onTouchEnd(event.changedTouches[i]);
                 }
@@ -133,7 +133,7 @@ namespace egret.web {
          */
         private prevent(event):void {
             event.stopPropagation();
-            if (event["isScroll"] != true && !this.canvas['userTyping']) {
+            if (event["isScroll"] !== true && !this.canvas['userTyping']) {
                 event.preventDefault();
             }
         }
@@ -142,13 +142,13 @@ namespace egret.web {
          * @private
          */
         private onTouchBegin = (event:any):void => {
-            let location = this.getLocation(event);
-            let id = this.getTouchIdentifier(event);
+            const location = this.getLocation(event);
+            const id = this.getTouchIdentifier(event);
             this.touch.onTouchBegin(location.x, location.y, id);
         }
 
         private onMouseMove = (event:MouseEvent) => {
-            if (event.buttons == 0) {//在外面松开按键
+            if (event.buttons === 0) {//在外面松开按键
                 this.onTouchEnd(event);
             } else {
                 this.onTouchMove(event);
@@ -159,8 +159,8 @@ namespace egret.web {
          * @private
          */
         private onTouchMove = (event:any):void => {
-            let location = this.getLocation(event);
-            let id = this.getTouchIdentifier(event);
+            const location = this.getLocation(event);
+            const id = this.getTouchIdentifier(event);
             this.touch.onTouchMove(location.x, location.y, id);
 
         }
@@ -169,8 +169,8 @@ namespace egret.web {
          * @private
          */
         private onTouchEnd = (event:any):void => {
-            let location = this.getLocation(event);
-            let id = this.getTouchIdentifier(event);
+            const location = this.getLocation(event);
+            const id = this.getTouchIdentifier(event);
             this.touch.onTouchEnd(location.x, location.y, id);
         }
 
@@ -186,17 +186,19 @@ namespace egret.web {
          * @private
          */
         private getLocation(event:any):Point {
-            let doc = document.documentElement;
-            let box = this.canvas.getBoundingClientRect();
-            let left = box.left + window.pageXOffset - doc.clientLeft;
-            let top = box.top + window.pageYOffset - doc.clientTop;
-            let x = event.pageX - left, newx = x;
-            let y = event.pageY - top, newy = y;
-            if (this.rotation == 90) {
+            const doc = document.documentElement;
+            const box = this.canvas.getBoundingClientRect();
+            const left = box.left + window.pageXOffset - doc.clientLeft;
+            const top = box.top + window.pageYOffset - doc.clientTop;
+            const x = event.pageX - left;
+            let newx = x;
+            const y = event.pageY - top;
+            let newy = y;
+            if (this.rotation === 90) {
                 newx = y;
                 newy = box.width - x;
             }
-            else if (this.rotation == -90) {
+            else if (this.rotation === -90) {
                 newx = box.height - y;
                 newy = x;
             }
