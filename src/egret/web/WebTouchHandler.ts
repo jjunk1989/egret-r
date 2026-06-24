@@ -143,7 +143,8 @@ namespace egret.web {
          */
         private onTouchBegin = (event:any):void => {
             let location = this.getLocation(event);
-            this.touch.onTouchBegin(location.x, location.y, event.identifier);
+            let id = this.getTouchIdentifier(event);
+            this.touch.onTouchBegin(location.x, location.y, id);
         }
 
         private onMouseMove = (event:MouseEvent) => {
@@ -159,7 +160,8 @@ namespace egret.web {
          */
         private onTouchMove = (event:any):void => {
             let location = this.getLocation(event);
-            this.touch.onTouchMove(location.x, location.y, event.identifier);
+            let id = this.getTouchIdentifier(event);
+            this.touch.onTouchMove(location.x, location.y, id);
 
         }
 
@@ -168,14 +170,22 @@ namespace egret.web {
          */
         private onTouchEnd = (event:any):void => {
             let location = this.getLocation(event);
-            this.touch.onTouchEnd(location.x, location.y, event.identifier);
+            let id = this.getTouchIdentifier(event);
+            this.touch.onTouchEnd(location.x, location.y, id);
+        }
+
+        /**
+         * @private
+         * Touch.identifier is read-only in modern browsers, read it instead of writing.
+         */
+        private getTouchIdentifier(event:any):number {
+            return event.identifier !== undefined ? event.identifier : 0;
         }
 
         /**
          * @private
          */
         private getLocation(event:any):Point {
-            event.identifier = +event.identifier || 0;
             let doc = document.documentElement;
             let box = this.canvas.getBoundingClientRect();
             let left = box.left + window.pageXOffset - doc.clientLeft;
