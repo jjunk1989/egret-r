@@ -133,8 +133,7 @@ namespace egret.web {
         aLink['download'] = filePath;
         aLink.href = href;
 
-        var evt = document.createEvent('MouseEvents');
-        evt.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+        var evt = new MouseEvent('click', { bubbles: true, cancelable: true, view: window });
         aLink.dispatchEvent(evt);
     }
 

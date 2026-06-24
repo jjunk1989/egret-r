@@ -466,24 +466,51 @@ async function watchAll() {
   await buildAll();
 
   console.log('Watching for changes... (Ctrl+C to stop)\n');
-  var lastTimes = {};
-  setInterval(async function() {
-    var changed = false;
-    for (var d = 0; d < watchedDirs.length; d++) {
-      var files = walkTsFiles(watchedDirs[d]);
-      for (var f = 0; f < files.length; f++) {
-        var stat = fs.statSync(files[f]);
-        if (lastTimes[files[f]] && lastTimes[files[f]] !== stat.mtimeMs) {
-          changed = true;
-        }
-        lastTimes[files[f]] = stat.mtimeMs;
-      }
-    }
-    if (changed) {
+
+  var debounceTimer = null;
+  var pendingRebuild = false;
+  var DEBOUNCE_MS = 300;
+
+  function scheduleRebuild() {
+    if (debounceTimer) clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(async function() {
+      if (pendingRebuild) return;
+      pendingRebuild = true;
       console.log('\nRebuilding...');
-      await buildAll();
+      try {
+        await buildAll();
+      } catch (e) {
+        console.error('Build error:', e.message);
+      }
+      pendingRebuild = false;
+    }, DEBOUNCE_MS);
+  }
+
+  for (var d = 0; d < watchedDirs.length; d++) {
+    try {
+      fs.watch(watchedDirs[d], { recursive: true }, function(eventType, filename) {
+        if (filename && filename.endsWith('.ts') && !filename.endsWith('.d.ts')) {
+          scheduleRebuild();
+        }
+      });
+    } catch (e) {
+      console.warn('  fs.watch not available for ' + watchedDirs[d] + ', falling back to polling');
+      // Fallback: poll every 2s for this directory
+      var lastTimes = {};
+      setInterval(function() {
+        var files = walkTsFiles(watchedDirs[d]);
+        var changed = false;
+        for (var f = 0; f < files.length; f++) {
+          var stat = fs.statSync(files[f]);
+          if (lastTimes[files[f]] && lastTimes[files[f]] !== stat.mtimeMs) {
+            changed = true;
+          }
+          lastTimes[files[f]] = stat.mtimeMs;
+        }
+        if (changed) scheduleRebuild();
+      }, 2000);
     }
-  }, 2000);
+  }
 }
 
 // ===== Main =====
