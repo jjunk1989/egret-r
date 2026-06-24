@@ -4,7 +4,7 @@ namespace egret {
      *
      * @see egret.Graphics#beginGradientFill()
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @language en_US
      */
     /**
@@ -12,33 +12,33 @@ namespace egret {
      *
      * @see egret.Graphics#beginGradientFill()
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export class GradientType {
         /**
          * Value used to specify a linear gradient fill.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 用于指定线性渐变填充的值
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static LINEAR:string = "linear";
         /**
          * Value used to specify a radial gradient fill.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 用于指定放射状渐变填充的值
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static RADIAL:string = "radial";

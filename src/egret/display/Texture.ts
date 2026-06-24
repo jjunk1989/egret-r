@@ -1,31 +1,5 @@
-//////////////////////////////////////////////////////////////////////////////////////
-//
-//  Copyright (c) 2014-present, Egret Technology.
-//  All rights reserved.
-//  Redistribution and use in source and binary forms, with or without
-//  modification, are permitted provided that the following conditions are met:
-//
-//     * Redistributions of source code must retain the above copyright
-//       notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above copyright
-//       notice, this list of conditions and the following disclaimer in the
-//       documentation and/or other materials provided with the distribution.
-//     * Neither the name of the Egret nor the
-//       names of its contributors may be used to endorse or promote products
-//       derived from this software without specific prior written permission.
-//
-//  THIS SOFTWARE IS PROVIDED BY EGRET AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
-//  OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-//  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-//  IN NO EVENT SHALL EGRET AND CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-//  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-//  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;LOSS OF USE, DATA,
-//  OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-//  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-//  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
-//  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-//////////////////////////////////////////////////////////////////////////////////////
+// SPDX-License-Identifier: BSD-2-Clause
+// Copyright (c) 2014-present, Egret Technology.
 
 
 namespace egret {
@@ -38,7 +12,7 @@ namespace egret {
      * @see http://edn.egret.com/cn/docs/page/135 The use of texture packs
      * @see http://edn.egret.com/cn/docs/page/123 Several ways of access to resources
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @includeExample egret/display/Texture.ts
      * @language en_US
      */
@@ -50,7 +24,7 @@ namespace egret {
      * @see http://edn.egret.com/cn/docs/page/135 纹理集的使用
      * @see http://edn.egret.com/cn/docs/page/123 获取资源的几种方式
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @includeExample egret/display/Texture.ts
      * @language zh_CN
      */
@@ -59,13 +33,13 @@ namespace egret {
         /**
          * Create an egret.Texture object
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 创建一个 egret.Texture 对象
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public constructor() {
@@ -75,13 +49,13 @@ namespace egret {
         /**
          * Whether to destroy the corresponding BitmapData when the texture is destroyed
          * @version Egret 5.0.8
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 销毁纹理时是否销毁对应BitmapData
          * @version Egret 5.0.8
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public disposeBitmapData: boolean = true;
@@ -127,13 +101,13 @@ namespace egret {
         /**
          * Texture width, read only
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 纹理宽度，只读属性，不可以设置
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get textureWidth(): number {
@@ -153,13 +127,13 @@ namespace egret {
         /**
          * Texture height, read only
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 纹理高度，只读属性，不可以设置
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get textureHeight(): number {
@@ -207,13 +181,13 @@ namespace egret {
         /**
          * The BitmapData object being referenced.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 被引用的 BitmapData 对象。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get bitmapData(): BitmapData {
@@ -227,13 +201,13 @@ namespace egret {
         /**
         * Set the BitmapData object.
         * @version Egret 3.2.1
-        * @platform Web,Native
+        * @platform Web
         * @language en_US
         */
         /**
          * 设置 BitmapData 对象。
          * @version Egret 3.2.1
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public _setBitmapData(value: BitmapData) {
@@ -246,13 +220,13 @@ namespace egret {
         /**
          * The KTX object being referenced.
         * @version Egret 5.2.21
-        * @platform Web,Native
+        * @platform Web
         * @language en_US
         */
         /**
          * 被引用的 KTXData 对象。
          * @version Egret 5.2.21
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get ktxData(): ArrayBuffer {
@@ -266,13 +240,13 @@ namespace egret {
         /**
         * Set the KTXData object.
         * @version Egret 3.2.1
-        * @platform Web,Native
+        * @platform Web
         * @language en_US
         */
         /**
          * 设置 KTXData 对象。
          * @version Egret 3.2.1
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public _setKtxData(value: ArrayBuffer) {
@@ -346,7 +320,7 @@ namespace egret {
          * @param height  The height of the pixel region
          * @returns  Specifies the color value for the pixel region
          * @version Egret 3.2.1
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -413,13 +387,13 @@ namespace egret {
         /**
          * dispose texture
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 释放纹理
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public dispose(): void {

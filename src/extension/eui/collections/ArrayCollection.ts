@@ -1,31 +1,5 @@
-//////////////////////////////////////////////////////////////////////////////////////
-//
-//  Copyright (c) 2014-present, Egret Technology.
-//  All rights reserved.
-//  Redistribution and use in source and binary forms, with or without
-//  modification, are permitted provided that the following conditions are met:
-//
-//     * Redistributions of source code must retain the above copyright
-//       notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above copyright
-//       notice, this list of conditions and the following disclaimer in the
-//       documentation and/or other materials provided with the distribution.
-//     * Neither the name of the Egret nor the
-//       names of its contributors may be used to endorse or promote products
-//       derived from this software without specific prior written permission.
-//
-//  THIS SOFTWARE IS PROVIDED BY EGRET AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
-//  OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-//  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-//  IN NO EVENT SHALL EGRET AND CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-//  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-//  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;LOSS OF USE, DATA,
-//  OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-//  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-//  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
-//  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-//////////////////////////////////////////////////////////////////////////////////////
+// SPDX-License-Identifier: BSD-2-Clause
+// Copyright (c) 2014-present, Egret Technology.
 
 /// <reference path="../utils/registerProperty.ts" />
 /// <reference path="../utils/registerBindable.ts" />
@@ -42,7 +16,7 @@ namespace eui {
      * @defaultProperty source
      * @version Egret 2.4
      * @version eui 1.0
-     * @platform Web,Native
+     * @platform Web
      * @includeExample extension/eui/collections/ArrayCollectionExample.ts
      * @language en_US
      */
@@ -55,7 +29,7 @@ namespace eui {
      * @defaultProperty source
      * @version Egret 2.4
      * @version eui 1.0
-     * @platform Web,Native
+     * @platform Web
      * @includeExample extension/eui/collections/ArrayCollectionExample.ts
      * @language zh_CN
      */
@@ -66,7 +40,7 @@ namespace eui {
          * If no array is specified an empty array will be used.
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -74,7 +48,7 @@ namespace eui {
          * 用指定的原始数组创建一个 ArrayCollection 实例。
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public constructor(source?:any[]) {
@@ -97,7 +71,7 @@ namespace eui {
          * directly to the source array. Always use the ICollection methods to view the collection.
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -106,7 +80,7 @@ namespace eui {
          * 若对数据源进行了修改，请手动调用refresh()方法刷新数据。
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get source():any[] {
@@ -127,7 +101,7 @@ namespace eui {
          * method to update the view after changing the source data.
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -135,7 +109,7 @@ namespace eui {
          * ArrayCollection 不会自动检原始数据进行了改变,所以你必须调用<code>refresh()</code>方法去更新显示。
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public refresh():void {
@@ -153,7 +127,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public get length():number {
             return this._source.length;
@@ -165,7 +139,7 @@ namespace eui {
          * @param item The item to add.
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -173,7 +147,7 @@ namespace eui {
          * @param item 要被添加的项。
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public addItem(item:any):void {
@@ -190,7 +164,7 @@ namespace eui {
          * @param index The index at which to place the item.
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -201,7 +175,7 @@ namespace eui {
          * @param index 要添加的指定索引位置
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public addItemAt(item:any, index:number):void {
@@ -217,7 +191,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public getItemAt(index:number):any {
             return this._source[index];
@@ -228,7 +202,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public getItemIndex(item:any):number {
             let length:number = this._source.length;
@@ -245,7 +219,7 @@ namespace eui {
          * @param item The item within the view that was updated.
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -253,7 +227,7 @@ namespace eui {
          * @param item 视图中需要被更新的项。
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public itemUpdated(item:any):void {
@@ -267,14 +241,14 @@ namespace eui {
          * Removes all items from the list.
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 删除列表中的所有项目。
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public removeAll():void {
@@ -290,7 +264,7 @@ namespace eui {
          * @return The item that was removed.
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -299,7 +273,7 @@ namespace eui {
          * @return 被移除的项。
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public removeItemAt(index:number):any {
@@ -319,7 +293,7 @@ namespace eui {
          * @return The item that was replaced, or <code>null</code> if none.
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -329,7 +303,7 @@ namespace eui {
          * @return 被替换的项目，如果没有该项则返回<code>null</code> 。
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public replaceItemAt(item:any, index:number):any {
@@ -347,7 +321,7 @@ namespace eui {
          * @param newSource new source data.
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -355,7 +329,7 @@ namespace eui {
          * @param newSource 新数据。
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public replaceAll(newSource:any[]):void {

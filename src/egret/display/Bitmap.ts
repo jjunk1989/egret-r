@@ -1,31 +1,5 @@
-//////////////////////////////////////////////////////////////////////////////////////
-//
-//  Copyright (c) 2014-present, Egret Technology.
-//  All rights reserved.
-//  Redistribution and use in source and binary forms, with or without
-//  modification, are permitted provided that the following conditions are met:
-//
-//     * Redistributions of source code must retain the above copyright
-//       notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above copyright
-//       notice, this list of conditions and the following disclaimer in the
-//       documentation and/or other materials provided with the distribution.
-//     * Neither the name of the Egret nor the
-//       names of its contributors may be used to endorse or promote products
-//       derived from this software without specific prior written permission.
-//
-//  THIS SOFTWARE IS PROVIDED BY EGRET AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
-//  OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-//  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-//  IN NO EVENT SHALL EGRET AND CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-//  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-//  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;LOSS OF USE, DATA,
-//  OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-//  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-//  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
-//  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-//////////////////////////////////////////////////////////////////////////////////////
+// SPDX-License-Identifier: BSD-2-Clause
+// Copyright (c) 2014-present, Egret Technology.
 
 namespace egret {
 
@@ -40,7 +14,7 @@ namespace egret {
      *
      * @see egret.Texture
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @includeExample egret/display/Bitmap.ts
      * @language en_US
      */
@@ -54,7 +28,7 @@ namespace egret {
      *
      * @see egret.Texture
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @includeExample egret/display/Bitmap.ts
      * @language zh_CN
      */
@@ -64,14 +38,14 @@ namespace egret {
          * Initializes a Bitmap object to refer to the specified Texture object.
          * @param value The Texture object being referenced.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 创建一个引用指定 Texture 实例的 Bitmap 对象
          * @param value 被引用的 Texture 实例
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public constructor(value?: Texture) {
@@ -133,14 +107,14 @@ namespace egret {
          * The Texture object being referenced.
          * If you pass the constructor of type BitmapData or last set for bitmapData, this value returns null.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 被引用的 Texture 对象。
          * 如果传入构造函数的类型为 BitmapData 或者最后设置的为 bitmapData，则此值返回 null。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get texture(): Texture {
@@ -290,7 +264,7 @@ namespace egret {
          * is <code>BitmapFillMode.SCALE</code>.
          *
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -298,7 +272,7 @@ namespace egret {
          * 注意:此属性仅在<code>fillMode</code>为<code>BitmapFillMode.SCALE</code>时有效。
          *
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get scale9Grid(): egret.Rectangle {
@@ -585,7 +559,7 @@ namespace egret {
          * the pixelHitTest property invalid.
          * @default false
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -593,7 +567,7 @@ namespace egret {
          * 注意：若图片资源是以跨域方式从外部服务器加载的，将无法访问图片的像素数据，而导致此属性失效。
          * @default false
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get pixelHitTest(): boolean {

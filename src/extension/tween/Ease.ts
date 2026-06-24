@@ -1,31 +1,5 @@
-//////////////////////////////////////////////////////////////////////////////////////
-//
-//  Copyright (c) 2014-present, Egret Technology.
-//  All rights reserved.
-//  Redistribution and use in source and binary forms, with or without
-//  modification, are permitted provided that the following conditions are met:
-//
-//     * Redistributions of source code must retain the above copyright
-//       notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above copyright
-//       notice, this list of conditions and the following disclaimer in the
-//       documentation and/or other materials provided with the distribution.
-//     * Neither the name of the Egret nor the
-//       names of its contributors may be used to endorse or promote products
-//       derived from this software without specific prior written permission.
-//
-//  THIS SOFTWARE IS PROVIDED BY EGRET AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
-//  OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-//  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-//  IN NO EVENT SHALL EGRET AND CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-//  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-//  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;LOSS OF USE, DATA,
-//  OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-//  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-//  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
-//  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-//////////////////////////////////////////////////////////////////////////////////////
+// SPDX-License-Identifier: BSD-2-Clause
+// Copyright (c) 2014-present, Egret Technology.
 
 
 namespace egret {
@@ -33,20 +7,20 @@ namespace egret {
      * Easing function set. Different easing functions are used to make an animation proceed according to the corresponding equation
      * @see http://edn.egret.com/cn/index.php/article/index/id/53 Easing effect Demo
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @language en_US
      */
     /**
      * 缓动函数集合，使用不同的缓动函数使得动画按照对应的方程进行
      * @see http://edn.egret.com/cn/index.php/article/index/id/53 缓动效果演示
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export class Ease {
         /**
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          */
         constructor() {
             egret.$error(1014);
@@ -55,13 +29,13 @@ namespace egret {
         /**
          * get.See example.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * get。请查看示例
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static get(amount: number) {
@@ -85,13 +59,13 @@ namespace egret {
         /**
          * get pow in.See example.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * get pow in。请查看示例
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static getPowIn(pow: number) {
@@ -103,13 +77,13 @@ namespace egret {
         /**
          * get pow out.See example.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * get pow out。请查看示例
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static getPowOut(pow: number) {
@@ -121,13 +95,13 @@ namespace egret {
         /**
          * get pow in out.See example.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * get pow in out。请查看示例
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static getPowInOut(pow: number) {
@@ -140,156 +114,156 @@ namespace egret {
         /**
          * quad in.See example.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * quad in。请查看示例
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static quadIn = Ease.getPowIn(2);
         /**
          * quad out.See example.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * quad out。请查看示例
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static quadOut = Ease.getPowOut(2);
         /**
          * quad in out.See example.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * quad in out。请查看示例
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static quadInOut = Ease.getPowInOut(2);
         /**
          * cubic in.See example.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * cubic in。请查看示例
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static cubicIn = Ease.getPowIn(3);
         /**
          * cubic out.See example.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * cubic out。请查看示例
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static cubicOut = Ease.getPowOut(3);
         /**
          * cubic in out.See example.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * cubic in out。请查看示例
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static cubicInOut = Ease.getPowInOut(3);
         /**
          * quart in.See example.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * quart in。请查看示例
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static quartIn = Ease.getPowIn(4);
         /**
          * quart out.See example.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * quart out。请查看示例
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static quartOut = Ease.getPowOut(4);
         /**
          * quart in out.See example.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * quart in out。请查看示例
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static quartInOut = Ease.getPowInOut(4);
         /**
          * quint in.See example.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * quint in。请查看示例
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static quintIn = Ease.getPowIn(5);
         /**
          * quint out.See example.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * quint out。请查看示例
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static quintOut = Ease.getPowOut(5);
         /**
          * quint in out.See example.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * quint in out。请查看示例
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static quintInOut = Ease.getPowInOut(5);
@@ -297,13 +271,13 @@ namespace egret {
         /**
          * sine in.See example.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * sine in。请查看示例
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static sineIn(t: number) {
@@ -313,13 +287,13 @@ namespace egret {
         /**
          * sine out.See example.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * sine out。请查看示例
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static sineOut(t: number) {
@@ -329,13 +303,13 @@ namespace egret {
         /**
          * sine in out.See example.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * sine in out。请查看示例
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static sineInOut(t: number) {
@@ -345,13 +319,13 @@ namespace egret {
         /**
          * get back in.See example.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * get back in。请查看示例
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static getBackIn(amount: number) {
@@ -363,13 +337,13 @@ namespace egret {
         /**
          * back in.See example.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * back in。请查看示例
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static backIn = Ease.getBackIn(1.7);
@@ -377,13 +351,13 @@ namespace egret {
         /**
          * get back out.See example.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * get back out。请查看示例
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static getBackOut(amount: number) {
@@ -395,13 +369,13 @@ namespace egret {
         /**
          * back out.See example.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * back out。请查看示例
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static backOut = Ease.getBackOut(1.7);
@@ -409,13 +383,13 @@ namespace egret {
         /**
          * get back in out.See example.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * get back in out。请查看示例
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static getBackInOut(amount: number) {
@@ -429,13 +403,13 @@ namespace egret {
         /**
          * back in out.See example.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * back in out。请查看示例
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static backInOut = Ease.getBackInOut(1.7);
@@ -443,13 +417,13 @@ namespace egret {
         /**
          * circ in.See example.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * circ in。请查看示例
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static circIn(t: number) {
@@ -459,13 +433,13 @@ namespace egret {
         /**
          * circ out.See example.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * circ out。请查看示例
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static circOut(t: number) {
@@ -475,13 +449,13 @@ namespace egret {
         /**
          * circ in out.See example.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * circ in out。请查看示例
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static circInOut(t: number) {
@@ -494,13 +468,13 @@ namespace egret {
         /**
          * bounce in.See example.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * bounce in。请查看示例
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static bounceIn(t: number) {
@@ -510,13 +484,13 @@ namespace egret {
         /**
          * bounce out.See example.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * bounce out。请查看示例
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static bounceOut(t: number) {
@@ -534,13 +508,13 @@ namespace egret {
         /**
          * bounce in out.See example.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * bounce in out。请查看示例
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static bounceInOut(t: number) {
@@ -551,13 +525,13 @@ namespace egret {
         /**
          * get elastic in.See example.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * get elastic in。请查看示例
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static getElasticIn(amplitude: number, period: number) {
@@ -572,13 +546,13 @@ namespace egret {
         /**
          * elastic in.See example.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * elastic in。请查看示例
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static elasticIn = Ease.getElasticIn(1, 0.3);
@@ -586,13 +560,13 @@ namespace egret {
         /**
          * get elastic out.See example.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * get elastic out。请查看示例
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static getElasticOut(amplitude: number, period: number) {
@@ -607,13 +581,13 @@ namespace egret {
         /**
          * elastic out.See example.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * elastic out。请查看示例
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static elasticOut = Ease.getElasticOut(1, 0.3);
@@ -621,13 +595,13 @@ namespace egret {
         /**
          * get elastic in out.See example.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * get elastic in out。请查看示例
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static getElasticInOut(amplitude: number, period: number) {
@@ -642,13 +616,13 @@ namespace egret {
         /**
          * elastic in out.See example.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * elastic in out。请查看示例
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static elasticInOut = Ease.getElasticInOut(1, 0.3 * 1.5);

@@ -1,31 +1,5 @@
-//////////////////////////////////////////////////////////////////////////////////////
-//
-//  Copyright (c) 2014-present, Egret Technology.
-//  All rights reserved.
-//  Redistribution and use in source and binary forms, with or without
-//  modification, are permitted provided that the following conditions are met:
-//
-//     * Redistributions of source code must retain the above copyright
-//       notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above copyright
-//       notice, this list of conditions and the following disclaimer in the
-//       documentation and/or other materials provided with the distribution.
-//     * Neither the name of the Egret nor the
-//       names of its contributors may be used to endorse or promote products
-//       derived from this software without specific prior written permission.
-//
-//  THIS SOFTWARE IS PROVIDED BY EGRET AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
-//  OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-//  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-//  IN NO EVENT SHALL EGRET AND CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-//  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-//  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;LOSS OF USE, DATA,
-//  OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-//  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-//  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
-//  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-//////////////////////////////////////////////////////////////////////////////////////
+// SPDX-License-Identifier: BSD-2-Clause
+// Copyright (c) 2014-present, Egret Technology.
 
 
 namespace egret {
@@ -34,7 +8,7 @@ namespace egret {
      * The URLRequest class captures all of the information in a single HTTP request.
      * @see http://edn.egret.com/cn/index.php/article/index/id/601 Build communication request
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @includeExample extension/game/net/URLRequest.ts
      * @language en_US
      */
@@ -42,7 +16,7 @@ namespace egret {
      * URLRequest 类可捕获单个 HTTP 请求中的所有信息。
      * @see http://edn.egret.com/cn/index.php/article/index/id/601 构建通信请求
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @includeExample extension/game/net/URLRequest.ts
      * @language zh_CN
      */
@@ -52,14 +26,14 @@ namespace egret {
          * Create an egret.URLRequest object
          * @param url {string} Addresses for URL requests
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 创建一个 egret.URLRequest 对象
          * @param url {string} 进行网络请求的地址
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public constructor(url:string = null) {
@@ -78,7 +52,7 @@ namespace egret {
          * If the object is a URLVariables object and the method is GET, the URLVariables object will define variables to be sent with the URLRequest object.
          * Otherwise, the object is converted into a string, and the string is used as the POST or GET data.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -92,7 +66,7 @@ namespace egret {
          * 如果该对象是 URLVariables 对象，并且该方法是 GET，则 URLVariables 对象将定义要随 URLRequest 对象一起发送的变量。
          * 否则，该对象会转换为字符串，并且该字符串会用作 POST 或 GET 数据。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public data:any = null;
@@ -100,13 +74,13 @@ namespace egret {
         /**
          * Request method, valid values are URLRequestMethod.GET or URLRequestMethod.POST.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 请求方式，有效值为URLRequestMethod.GET 或 URLRequestMethod.POST。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public method:string = URLRequestMethod.GET;
@@ -114,13 +88,13 @@ namespace egret {
         /**
          * The requested URL.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 所请求的 URL。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public url:string = "";
@@ -130,7 +104,7 @@ namespace egret {
          * Each object in the array must be a URLRequestHeader object that contains a name string and a value string.
          * Because of browser compatibility, this property has not been achieved in html5
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -138,7 +112,7 @@ namespace egret {
          * 数组中的每一对象必须是包含一个名称字符串和一个值字符串的 URLRequestHeader 对象。
          * 由于浏览器兼容性原因，该属性在 html5 中并未实现
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public requestHeaders:Array<URLRequestHeader> = [];

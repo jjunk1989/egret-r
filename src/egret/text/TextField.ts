@@ -1,31 +1,5 @@
-//////////////////////////////////////////////////////////////////////////////////////
-//
-//  Copyright (c) 2014-present, Egret Technology.
-//  All rights reserved.
-//  Redistribution and use in source and binary forms, with or without
-//  modification, are permitted provided that the following conditions are met:
-//
-//     * Redistributions of source code must retain the above copyright
-//       notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above copyright
-//       notice, this list of conditions and the following disclaimer in the
-//       documentation and/or other materials provided with the distribution.
-//     * Neither the name of the Egret nor the
-//       names of its contributors may be used to endorse or promote products
-//       derived from this software without specific prior written permission.
-//
-//  THIS SOFTWARE IS PROVIDED BY EGRET AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
-//  OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-//  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-//  IN NO EVENT SHALL EGRET AND CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-//  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-//  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;LOSS OF USE, DATA,
-//  OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-//  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-//  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
-//  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-//////////////////////////////////////////////////////////////////////////////////////
+// SPDX-License-Identifier: BSD-2-Clause
+// Copyright (c) 2014-present, Egret Technology.
 
 namespace egret.sys {
     /**
@@ -331,7 +305,7 @@ namespace egret {
      * @event egret.FocusEvent.FOCUS_IN Dispatched after the focus to enter text.
      * @event egret.FocusEvent.FOCUS_OUT Enter the text loses focus after dispatch.
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @includeExample egret/text/TextField.ts
      * @language en_US
      */
@@ -344,7 +318,7 @@ namespace egret {
      * @event egret.FocusEvent.FOCUS_IN 聚焦输入文本后调度。
      * @event egret.FocusEvent.FOCUS_OUT 输入文本失去焦点后调度。
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @includeExample egret/text/TextField.ts
      * @language zh_CN
      */
@@ -353,13 +327,13 @@ namespace egret {
         /**
          * default fontFamily
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 默认文本字体
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static default_fontFamily: string = "Arial";
@@ -367,13 +341,13 @@ namespace egret {
         /**
          * default size in pixels of text
          * @version Egret 3.2.1
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 默认文本字号大小
          * @version Egret 3.2.1
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static default_size: number = 30;
@@ -381,20 +355,20 @@ namespace egret {
         /**
          * default color of the text.
          * @version Egret 3.2.1
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 默认文本颜色
          * @version Egret 3.2.1
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static default_textColor: number = 0xffffff;
 
         /**
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          */
         constructor() {
             super();
@@ -479,14 +453,14 @@ namespace egret {
          * The name of the font to use, or a comma-separated list of font names.
          * @default "Arial"
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 要使用的字体的名称或用逗号分隔的字体名称列表。
          * @default "Arial"
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get fontFamily(): string {
@@ -515,14 +489,14 @@ namespace egret {
          * The size in pixels of text
          * @default 30
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 文本的字号大小。
          * @default 30
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get size(): number {
@@ -551,14 +525,14 @@ namespace egret {
          * Specifies whether the text is boldface.
          * @default false
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 是否显示为粗体。
          * @default false
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get bold(): boolean {
@@ -587,14 +561,14 @@ namespace egret {
          * Determines whether the text is italic font.
          * @default false
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 是否显示为斜体。
          * @default false
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get italic(): boolean {
@@ -632,14 +606,14 @@ namespace egret {
          * Horizontal alignment of text.
          * @default：egret.HorizontalAlign.LEFT
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 文本的水平对齐方式。
          * @default：egret.HorizontalAlign.LEFT
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get textAlign(): string {
@@ -668,14 +642,14 @@ namespace egret {
          * Vertical alignment of text.
          * @default：egret.VerticalAlign.TOP
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 文字的垂直对齐方式。
          * @default：egret.VerticalAlign.TOP
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get verticalAlign(): string {
@@ -704,14 +678,14 @@ namespace egret {
          * An integer representing the amount of vertical space between lines.
          * @default 0
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 一个整数，表示行与行之间的垂直间距量
          * @default 0
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get lineSpacing(): number {
@@ -740,14 +714,14 @@ namespace egret {
          * Color of the text.
          * @default 0x000000
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 文本颜色
          * @default 0x000000
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get textColor(): number {
@@ -779,7 +753,7 @@ namespace egret {
          * if the value is false, the text field by newline characters.
          * @default false
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -787,7 +761,7 @@ namespace egret {
          * 如果值为 false，则该文本字段按字符换行。
          * @default false
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get wordWrap(): boolean {
@@ -880,7 +854,7 @@ namespace egret {
 
         /**
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          */
         public get type(): string {
             return this.$TextField[sys.TextKeys.type];
@@ -908,7 +882,7 @@ namespace egret {
 
         /**
          * @version Egret 3.1.2
-         * @platform Web,Native
+         * @platform Web
          */
         public get inputType(): string {
             return this.$TextField[sys.TextKeys.inputType];
@@ -916,7 +890,7 @@ namespace egret {
 
         /**
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          */
         public get text(): string {
             return this.$getText();
@@ -1052,7 +1026,7 @@ namespace egret {
 
         /**
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          */
         public get strokeColor(): number {
             return this.$TextField[sys.TextKeys.strokeColor];
@@ -1098,7 +1072,7 @@ namespace egret {
 
         /**
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          */
         public get stroke(): number {
             return this.$TextField[sys.TextKeys.stroke];
@@ -1203,7 +1177,7 @@ namespace egret {
 
         /**
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          */
         public get scrollV(): number {
             return Math.min(Math.max(this.$TextField[sys.TextKeys.scrollV], 1), this.maxScrollV);
@@ -1212,13 +1186,13 @@ namespace egret {
         /**
          * The maximum value of scrollV
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * scrollV 的最大值
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get maxScrollV(): number {
@@ -1229,7 +1203,7 @@ namespace egret {
         /**
          * @private
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          */
         public get selectionBeginIndex(): number {
             return 0;
@@ -1238,7 +1212,7 @@ namespace egret {
         /**
          * @private
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          */
         public get selectionEndIndex(): number {
             return 0;
@@ -1247,7 +1221,7 @@ namespace egret {
         /**
          * @private
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          */
         public get caretIndex(): number {
             return 0;
@@ -1275,13 +1249,13 @@ namespace egret {
         /**
          * Number of lines of text.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 文本行数。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get numLines(): number {
@@ -1337,7 +1311,7 @@ namespace egret {
                   * Can be used anywhere in the string ^ to rule out including characters and switch between characters, but can only be used to exclude a ^. The following code includes only uppercase letters except uppercase Q: <br/>
                   * My_txt.restrict = "A-Z ^ Q"; <br/>
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @default null
          * @language en_US
          */
@@ -1352,7 +1326,7 @@ namespace egret {
          * 可在字符串中的任何位置使用 ^，以在包含字符与排除字符之间进行切换，但是最多只能有一个 ^ 用来排除。下面的代码只包含除大写字母 Q 之外的大写字母：<br/>
          * my_txt.restrict = "A-Z^Q";<br/>
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @default null
          * @language zh_CN
          */
@@ -1543,7 +1517,7 @@ namespace egret {
 
         /**
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          */
         public get border(): boolean {
             return this.$TextField[sys.TextKeys.border];
@@ -1582,7 +1556,7 @@ namespace egret {
 
         /**
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          */
         public get borderColor(): number {
             return this.$TextField[sys.TextKeys.borderColor];
@@ -1622,7 +1596,7 @@ namespace egret {
 
         /**
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          */
         public get background(): boolean {
             return this.$TextField[sys.TextKeys.background];
@@ -1660,7 +1634,7 @@ namespace egret {
 
         /**
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          */
         public get backgroundColor(): number {
             return this.$TextField[sys.TextKeys.backgroundColor];
@@ -1734,13 +1708,13 @@ namespace egret {
         /**
          * Enter the text automatically entered into the input state, the input type is text only and may only be invoked in the user interaction.
          * @version Egret 3.0.8
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 输入文本自动进入到输入状态，仅在类型是输入文本并且是在用户交互下才可以调用。
          * @version Egret 3.0.8
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public setFocus(): void {
@@ -1913,7 +1887,7 @@ namespace egret {
 
         /**
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          */
         public get textFlow(): Array<egret.ITextElement> {
             return this.textArr;
@@ -1964,13 +1938,13 @@ namespace egret {
         /**
          * Get the text measured width
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 获取文本测量宽度
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get textWidth(): number {
@@ -1984,13 +1958,13 @@ namespace egret {
         /**
          * Get Text measuring height
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 获取文本测量高度
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get textHeight(): number {
@@ -2005,7 +1979,7 @@ namespace egret {
          * @private
          * @param text
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          */
         public appendText(text: string): void {
             this.appendElement(<egret.ITextElement>{ text: text });
@@ -2015,7 +1989,7 @@ namespace egret {
          * @private
          * @param element
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          */
         public appendElement(element: egret.ITextElement): void {
             const text: string = this.$TextField[sys.TextKeys.text] + element.text;

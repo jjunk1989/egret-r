@@ -1,31 +1,5 @@
-//////////////////////////////////////////////////////////////////////////////////////
-//
-//  Copyright (c) 2014-present, Egret Technology.
-//  All rights reserved.
-//  Redistribution and use in source and binary forms, with or without
-//  modification, are permitted provided that the following conditions are met:
-//
-//     * Redistributions of source code must retain the above copyright
-//       notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above copyright
-//       notice, this list of conditions and the following disclaimer in the
-//       documentation and/or other materials provided with the distribution.
-//     * Neither the name of the Egret nor the
-//       names of its contributors may be used to endorse or promote products
-//       derived from this software without specific prior written permission.
-//
-//  THIS SOFTWARE IS PROVIDED BY EGRET AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
-//  OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-//  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-//  IN NO EVENT SHALL EGRET AND CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-//  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-//  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;LOSS OF USE, DATA,
-//  OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-//  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-//  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
-//  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-//////////////////////////////////////////////////////////////////////////////////////
+// SPDX-License-Identifier: BSD-2-Clause
+// Copyright (c) 2014-present, Egret Technology.
 
 
 namespace eui {
@@ -41,7 +15,7 @@ namespace eui {
      *
      * @version Egret 2.4
      * @version eui 1.0
-     * @platform Web,Native
+     * @platform Web
      * @includeExample  extension/eui/layout/TileLayoutExample.ts
      * @language en_US
      */
@@ -51,7 +25,7 @@ namespace eui {
      *
      * @version Egret 2.4
      * @version eui 1.0
-     * @platform Web,Native
+     * @platform Web
      * @includeExample  extension/eui/layout/TileLayoutExample.ts
      * @language zh_CN
      */
@@ -61,14 +35,14 @@ namespace eui {
          * Constructor.
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 构造函数。
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public constructor() {
@@ -92,7 +66,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -102,7 +76,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get horizontalGap():number {
@@ -137,7 +111,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -147,7 +121,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get verticalGap():number {
@@ -175,7 +149,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -185,7 +159,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get columnCount():number {
@@ -209,7 +183,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -222,7 +196,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get requestedColumnCount():number {
@@ -248,7 +222,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -256,7 +230,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get rowCount():number {
@@ -280,7 +254,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -293,7 +267,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get requestedRowCount():number {
@@ -329,7 +303,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -340,7 +314,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get columnWidth():number {
@@ -375,7 +349,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -386,7 +360,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get rowHeight():number {
@@ -412,7 +386,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public get paddingLeft():number {
             return this._paddingLeft;
@@ -436,7 +410,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public get paddingRight():number {
             return this._paddingRight;
@@ -460,7 +434,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public get paddingTop():number {
             return this._paddingTop;
@@ -483,7 +457,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public get paddingBottom():number {
             return this._paddingBottom;
@@ -512,7 +486,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -524,7 +498,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get horizontalAlign():string {
@@ -554,7 +528,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -567,7 +541,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get verticalAlign():string {
@@ -615,7 +589,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -637,7 +611,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get columnAlign():string {
@@ -683,7 +657,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -705,7 +679,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get rowAlign():string {
@@ -732,7 +706,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -742,7 +716,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get orientation():string {
@@ -774,7 +748,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public measure():void {
             let target = this.$target;
@@ -968,7 +942,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public clearVirtualLayoutCache():void {
             super.clearVirtualLayoutCache();
@@ -997,7 +971,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public scrollPositionChanged():void {
             if (this.$useVirtualLayout) {
@@ -1084,7 +1058,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public updateDisplayList(width:number, height:number):void {
             super.updateDisplayList(width, height);

@@ -1,43 +1,18 @@
-//////////////////////////////////////////////////////////////////////////////////////
-//
-//  Copyright (c) 2014-present, Egret Technology.
-//  All rights reserved.
-//  Redistribution and use in source and binary forms, with or without
-//  modification, are permitted provided that the following conditions are met:
-//
-//     * Redistributions of source code must retain the above copyright
-//       notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above copyright
-//       notice, this list of conditions and the following disclaimer in the
-//       documentation and/or other materials provided with the distribution.
-//     * Neither the name of the Egret nor the
-//       names of its contributors may be used to endorse or promote products
-//       derived from this software without specific prior written permission.
-//
-//  THIS SOFTWARE IS PROVIDED BY EGRET AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
-//  OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-//  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-//  IN NO EVENT SHALL EGRET AND CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-//  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-//  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;LOSS OF USE, DATA,
-//  OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-//  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-//  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
-//  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-//////////////////////////////////////////////////////////////////////////////////////
+// SPDX-License-Identifier: BSD-2-Clause
+// Copyright (c) 2014-present, Egret Technology.
+
 namespace egret {
     /**
      * Bitmap font adopts the Bitmap+SpriteSheet mode to render text.
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @includeExample egret/text/BitmapText.ts
      * @language en_US
      */
     /**
      * 位图字体采用了Bitmap+SpriteSheet的方式来渲染文字。
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @includeExample egret/text/BitmapText.ts
      * @language zh_CN
      */
@@ -46,13 +21,13 @@ namespace egret {
         /**
          * Create an egret.BitmapText object
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 创建一个 egret.BitmapText 对象
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public constructor() {
@@ -113,13 +88,13 @@ namespace egret {
         /**
          * A string to display in the text field.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 要显示的文本内容
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get text(): string {
@@ -227,14 +202,14 @@ namespace egret {
          * The name of the font to use, or a comma-separated list of font names, the type of value must be BitmapFont.
          * @default null
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 要使用的字体的名称或用逗号分隔的字体名称列表，类型必须是 BitmapFont。
          * @default null
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get font(): Object {
@@ -263,14 +238,14 @@ namespace egret {
          * An integer representing the amount of vertical space between lines.
          * @default 0
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 一个整数，表示行与行之间的垂直间距量
          * @default 0
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get lineSpacing(): number {
@@ -296,14 +271,14 @@ namespace egret {
          * An integer representing the amount of distance between characters.
          * @default 0
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 一个整数，表示字符之间的距离。
          * @default 0
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get letterSpacing(): number {
@@ -330,14 +305,14 @@ namespace egret {
          * Horizontal alignment of text.
          * @default：egret.HorizontalAlign.LEFT
          * @version Egret 2.5.6
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 文本的水平对齐方式。
          * @default：egret.HorizontalAlign.LEFT
          * @version Egret 2.5.6
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get textAlign(): string {
@@ -364,14 +339,14 @@ namespace egret {
          * Vertical alignment of text.
          * @default：egret.VerticalAlign.TOP
          * @version Egret 2.5.6
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 文字的垂直对齐方式。
          * @default：egret.VerticalAlign.TOP
          * @version Egret 2.5.6
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get verticalAlign(): string {
@@ -396,14 +371,14 @@ namespace egret {
          * A ratio of the width of the space character. This value is multiplied by the height of the first character is the space character width.
          * @default 0.33
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 一个空格字符的宽度比例。这个数值乘以第一个字符的高度即为空格字符的宽。
          * @default 0.33
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static EMPTY_FACTOR: number = 0.33;
@@ -519,13 +494,13 @@ namespace egret {
         /**
          * Get the BitmapText measured width
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 获取位图文本测量宽度
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get textWidth(): number {
@@ -538,13 +513,13 @@ namespace egret {
         /**
          * Get Text BitmapText height
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 获取位图文本测量高度
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get textHeight(): number {

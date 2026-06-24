@@ -1,31 +1,5 @@
-//////////////////////////////////////////////////////////////////////////////////////
-//
-//  Copyright (c) 2014-present, Egret Technology.
-//  All rights reserved.
-//  Redistribution and use in source and binary forms, with or without
-//  modification, are permitted provided that the following conditions are met:
-//
-//     * Redistributions of source code must retain the above copyright
-//       notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above copyright
-//       notice, this list of conditions and the following disclaimer in the
-//       documentation and/or other materials provided with the distribution.
-//     * Neither the name of the Egret nor the
-//       names of its contributors may be used to endorse or promote products
-//       derived from this software without specific prior written permission.
-//
-//  THIS SOFTWARE IS PROVIDED BY EGRET AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
-//  OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-//  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-//  IN NO EVENT SHALL EGRET AND CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-//  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-//  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;LOSS OF USE, DATA,
-//  OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-//  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-//  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
-//  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-//////////////////////////////////////////////////////////////////////////////////////
+// SPDX-License-Identifier: BSD-2-Clause
+// Copyright (c) 2014-present, Egret Technology.
 
 module RES {
 
@@ -36,7 +10,7 @@ module RES {
     * @param url Resource Name.
     * @returns The key value used in the project
     * @version Egret 5.2
-    * @platform Web,Native
+    * @platform Web
     * @language en_US
     */
     /**
@@ -46,7 +20,7 @@ module RES {
      * @param url 资源名称。
      * @returns 项目中所用的key值
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export function nameSelector(url): string {
@@ -59,7 +33,7 @@ module RES {
     * @param path file path.
     * @returns Processor type used to read the file
     * @version Egret 5.2
-    * @platform Web,Native
+    * @platform Web
     * @language en_US
     */
     /**
@@ -69,7 +43,7 @@ module RES {
      * @param path 文件路径
      * @returns 读取文件所用的Processor类型
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export function typeSelector(path: string): string {
@@ -138,7 +112,7 @@ module RES {
     * When the value is true, the assetsManager will output the design of Res. When it is false, all the loaded resources will be returned as promises.
     * The default is false, run in strict assetsManager mode
     * @version Egret 5.2.9
-    * @platform Web,Native
+    * @platform Web
     * @language en_US
     */
     /**
@@ -146,7 +120,7 @@ module RES {
      * 当值为true时，assetsManager会以Res的设计输出，当为false时候，所有的加载资源都会以promise的方式返回
      * 默认是false，以严格assetsManager方式运行
      * @version Egret 5.2.9
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export function setIsCompatible(value: boolean) {
@@ -163,7 +137,7 @@ module RES {
      * @returns Promise
      * @see #setMaxRetryTimes
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language en_US
      */
     /**
@@ -173,7 +147,7 @@ module RES {
      * @returns Promise 
      * @see #setMaxRetryTimes
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export function loadConfig(url: string, resourceRoot: string): Promise<void> {
@@ -207,7 +181,7 @@ module RES {
      * @param reporter Resource group loading progress prompt
      * @see #setMaxRetryTimes
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language en_US
      */
     /**
@@ -218,7 +192,7 @@ module RES {
      * @param reporter 资源组的加载进度提示
      * @see #setMaxRetryTimes
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export function loadGroup(name: string, priority: number = 0, reporter?: PromiseTaskReporter): Promise<void> {
@@ -230,7 +204,7 @@ module RES {
      * @returns Is loading or not.
      * @see #setMaxRetryTimes
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language en_US
      */
     /**
@@ -239,7 +213,7 @@ module RES {
      * @returns 是否正在加载。
      * @see #setMaxRetryTimes
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export function isGroupLoaded(name: string): boolean {
@@ -252,7 +226,7 @@ module RES {
      * @see RES.ResourceItem
      * @see #setMaxRetryTimes
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language en_US
      */
     /**
@@ -262,7 +236,7 @@ module RES {
      * @see RES.ResourceItem
      * @see #setMaxRetryTimes
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export function getGroupByName(name: string): Array<ResourceItem> {
@@ -277,7 +251,7 @@ module RES {
      * @returns Create success or fail.
      * @see #setMaxRetryTimes
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language en_US
      */
     /**
@@ -289,7 +263,7 @@ module RES {
      * @returns 是否创建成功。
      * @see #setMaxRetryTimes
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export function createGroup(name: string, keys: Array<string>, override: boolean = false): boolean {
@@ -301,7 +275,7 @@ module RES {
      * @returns Whether you have the specified resource
      * @see #setMaxRetryTimes
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language en_US
      */
     /**
@@ -310,7 +284,7 @@ module RES {
      * @returns 是否拥有指定资源
      * @see #setMaxRetryTimes
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export function hasRes(key: string): boolean {
@@ -334,7 +308,7 @@ module RES {
      * @see RES.ResourceItem
      * @see #setMaxRetryTimes
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language en_US
      */
     /**
@@ -353,7 +327,7 @@ module RES {
      * @see RES.ResourceItem
      * @see #setMaxRetryTimes
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export function getRes(key: string): any {
@@ -364,7 +338,7 @@ module RES {
      * @param key A sbuKeys attribute or name property in a configuration file.
      * @see #setMaxRetryTimes
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language en_US
     */
     /**
@@ -372,7 +346,7 @@ module RES {
      * @param key 对应配置文件里的 name 属性或 sbuKeys 属性的一项。
      * @see #setMaxRetryTimes
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export function getResAsync(key: string): Promise<any>
@@ -383,7 +357,7 @@ module RES {
      * @param thisObject This pointer of call back function.
      * @see #setMaxRetryTimes
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language en_US
      */
     /**
@@ -393,7 +367,7 @@ module RES {
      * @param thisObject 回调函数的 this 引用。
      * @see #setMaxRetryTimes
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export function getResAsync(key: string, compFunc: GetResAsyncCallback, thisObject: any): Promise<any> | void
@@ -412,7 +386,7 @@ module RES {
      *       }, this) //Pass in the key value, compFunc and thisObject get the resource, the latter two must appear at the same time
      * </pre>
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language en_US
      */
     /**
@@ -430,7 +404,7 @@ module RES {
      *       }, this) //传入key值，compFunc和thisObject获取资源，后两个必须同时出现
      * </pre>
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export function getResAsync(key: string, compFunc?: GetResAsyncCallback, thisObject?: any): Promise<any> {
@@ -444,7 +418,7 @@ module RES {
      * @param thisObject This pointer of call back function.
      * @param type File type (optional). Use the static constants defined in the ResourceItem class. If you do not set the file name extension.
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language en_US
      */
     /**
@@ -454,7 +428,7 @@ module RES {
      * @param thisObject 回调函数的 this 引用。
      * @param type 文件类型(可选)。请使用 ResourceItem 类中定义的静态常量。若不设置将根据文件扩展名生成。
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export function getResByUrl(url: string, compFunc?: Function, thisObject?: any, type: string = ""): Promise<any> {
@@ -472,7 +446,7 @@ module RES {
      * @returns Are successful destruction.
      * @see #setMaxRetryTimes
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language en_US
      */
     /**
@@ -482,7 +456,7 @@ module RES {
      * @see #setMaxRetryTimes
      * @returns 是否销毁成功。
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export function destroyRes(name: string, force?: boolean): boolean {
@@ -493,7 +467,7 @@ module RES {
      * @param thread The number of concurrent loads to be set.
      * @see #setMaxRetryTimes
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language en_US
      */
     /**
@@ -501,7 +475,7 @@ module RES {
      * @param thread 要设置的并发加载数。
      * @see #setMaxRetryTimes
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export function setMaxLoadingThread(thread: number): void {
@@ -514,7 +488,7 @@ module RES {
      * @param retry To set the retry count.
      * @includeExample extension/resource/Resource.ts
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language en_US
      */
     /**
@@ -522,7 +496,7 @@ module RES {
      * @param retry 要设置的重试次数。
      * @includeExample extension/resource/Resource.ts
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export function setMaxRetryTimes(retry: number): void {
@@ -544,7 +518,7 @@ module RES {
      * If two or more listeners share the same priority, they are processed in accordance with the order of their added. The default priority is 0.
      * @see RES.ResourceEvent
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language en_US
      */
     /**
@@ -561,7 +535,7 @@ module RES {
      * @see RES.ResourceEvent
      * @see #setMaxRetryTimes
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export function addEventListener(type: string, listener: (event: egret.Event) => void, thisObject: any, useCapture: boolean = false, priority: number = 0): void {
@@ -575,7 +549,7 @@ module RES {
      * @param thisObject The this object that is bound to a function.
      * @param useCapture Is used to capture, and this property is only valid in the display list.
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language en_US
      */
     /**
@@ -585,7 +559,7 @@ module RES {
      * @param thisObject 侦听函数绑定的this对象。
      * @param useCapture 是否使用捕获，这个属性只在显示列表中生效。
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export function removeEventListener(type: string, listener: (event: egret.Event) => void, thisObject: any, useCapture: boolean = false): void {
@@ -597,14 +571,14 @@ module RES {
      * Adding a custom resource configuration.
      * @param data To add configuration.
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language en_US
      */
     /**
      * 自定义添加一项资源配置。
      * @param data 要添加的配置。
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export function $addResourceData(data: { name: string, type: string, url: string }): void {
@@ -615,13 +589,13 @@ module RES {
     /**
     * Returns the VersionController
     * @version Egret 5.2
-    * @platform Web,Native
+    * @platform Web
     * @language en_US
     */
     /**
      * 获得版本控制器.
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export function getVersionController(): VersionController {
@@ -633,14 +607,14 @@ module RES {
      * Register the VersionController
      * @param vcs The VersionController to register.
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language en_US
      */
     /**
      * 注册版本控制器,通过RES模块加载资源时会从版本控制器获取真实url
      * @param vcs 注入的版本控制器。
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export function registerVersionController(vcs: VersionController): void {
@@ -652,7 +626,7 @@ module RES {
      * @param url path to the original resource
      * @returns converted address
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language en_US
      */
     /**
@@ -660,7 +634,7 @@ module RES {
      * @param url 原始资源的路径
      * @returns 转换后的地址
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export function getVirtualUrl(url) {

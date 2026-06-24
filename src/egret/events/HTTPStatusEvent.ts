@@ -1,31 +1,5 @@
-//////////////////////////////////////////////////////////////////////////////////////
-//
-//  Copyright (c) 2014-present, Egret Technology.
-//  All rights reserved.
-//  Redistribution and use in source and binary forms, with or without
-//  modification, are permitted provided that the following conditions are met:
-//
-//     * Redistributions of source code must retain the above copyright
-//       notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above copyright
-//       notice, this list of conditions and the following disclaimer in the
-//       documentation and/or other materials provided with the distribution.
-//     * Neither the name of the Egret nor the
-//       names of its contributors may be used to endorse or promote products
-//       derived from this software without specific prior written permission.
-//
-//  THIS SOFTWARE IS PROVIDED BY EGRET AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
-//  OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-//  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-//  IN NO EVENT SHALL EGRET AND CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-//  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-//  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;LOSS OF USE, DATA,
-//  OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-//  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-//  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
-//  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-//////////////////////////////////////////////////////////////////////////////////////
+// SPDX-License-Identifier: BSD-2-Clause
+// Copyright (c) 2014-present, Egret Technology.
 
 
 namespace egret {
@@ -34,14 +8,14 @@ namespace egret {
      * When a network request returns an HTTP status code, the application dispatches HTTPStatusEvent objects.
      * Before error or completion events will always send HTTPStatusEvent object. HTTPStatusEvent object does not necessarily indicate an error condition; it simply reflects the HTTP status code provided by the network stack (if any).
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @language en_US
      */
     /**
      * 在网络请求返回 HTTP 状态代码时，应用程序将调度 HTTPStatusEvent 对象。
      * 在错误或完成事件之前，将始终发送 HTTPStatusEvent 对象。HTTPStatusEvent 对象不一定表示错误条件；它仅反映网络堆栈提供的 HTTP 状态代码（如果有的话）。
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export class HTTPStatusEvent extends Event {
@@ -49,13 +23,13 @@ namespace egret {
         /**
          * HTTPStatusEvent.HTTP_STATUS constant defines the value of the type property httpStatus event object.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * HTTPStatusEvent.HTTP_STATUS 常量定义 httpStatus 事件对象的 type 属性值。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static HTTP_STATUS:"httpStatus" = "httpStatus";
@@ -66,7 +40,7 @@ namespace egret {
          * @param bubbles  Determines whether the Event object participates in the bubbling stage of the event flow. The default value is false.
          * @param cancelable Determines whether the Event object can be canceled. The default values is false.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -75,7 +49,7 @@ namespace egret {
          * @param bubbles  确定 Event 对象是否参与事件流的冒泡阶段。默认值为 false。
          * @param cancelable 确定是否可以取消 Event 对象。默认值为 false。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public constructor(type:string, bubbles:boolean = false, cancelable:boolean = false) {
@@ -89,13 +63,13 @@ namespace egret {
         /**
          * he server returns the HTTP status code.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 由服务器返回的 HTTP 状态代码。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get status():number {
@@ -107,7 +81,7 @@ namespace egret {
          * @param target {egret.IEventDispatcher} Distribute event target
          * @param status {number} The server returns the HTTP status code
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -115,7 +89,7 @@ namespace egret {
          * @param target {egret.IEventDispatcher} 派发事件目标
          * @param status {number} 由服务器返回的 HTTP 状态代码
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static dispatchHTTPStatusEvent(target:IEventDispatcher, status:number):boolean {

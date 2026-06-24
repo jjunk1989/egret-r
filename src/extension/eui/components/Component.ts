@@ -1,31 +1,5 @@
-//////////////////////////////////////////////////////////////////////////////////////
-//
-//  Copyright (c) 2014-present, Egret Technology.
-//  All rights reserved.
-//  Redistribution and use in source and binary forms, with or without
-//  modification, are permitted provided that the following conditions are met:
-//
-//     * Redistributions of source code must retain the above copyright
-//       notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above copyright
-//       notice, this list of conditions and the following disclaimer in the
-//       documentation and/or other materials provided with the distribution.
-//     * Neither the name of the Egret nor the
-//       names of its contributors may be used to endorse or promote products
-//       derived from this software without specific prior written permission.
-//
-//  THIS SOFTWARE IS PROVIDED BY EGRET AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
-//  OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-//  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-//  IN NO EVENT SHALL EGRET AND CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-//  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-//  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;LOSS OF USE, DATA,
-//  OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-//  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-//  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
-//  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-//////////////////////////////////////////////////////////////////////////////////////
+// SPDX-License-Identifier: BSD-2-Clause
+// Copyright (c) 2014-present, Egret Technology.
 
 /// <reference path="../core/UIComponent.ts" />
 /// <reference path="../utils/registerProperty.ts" />
@@ -62,7 +36,7 @@ namespace eui {
      * @includeExample  extension/eui/components/ComponentExample.ts
      * @version Egret 2.4
      * @version eui 1.0
-     * @platform Web,Native
+     * @platform Web
      * @language en_US
      */
     /**
@@ -73,7 +47,7 @@ namespace eui {
      * @includeExample  extension/eui/components/ComponentExample.ts
      * @version Egret 2.4
      * @version eui 1.0
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export class Component extends egret.DisplayObjectContainer implements UIComponent {
@@ -82,7 +56,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -90,7 +64,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public constructor() {
@@ -121,7 +95,7 @@ namespace eui {
          * @see eui.Theme#getSkinName()
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -131,7 +105,7 @@ namespace eui {
          * @see eui.Theme#getSkinName()
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get hostComponentKey(): string {
@@ -147,14 +121,14 @@ namespace eui {
          * class name of skin, instance of skin, EXML or external EXML file path.
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 皮肤标识符。有效值可为：皮肤类定义,皮肤类名,皮肤实例,EXML文件内容,或外部EXML文件路径，
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get skinName(): any {
@@ -232,14 +206,14 @@ namespace eui {
          * The instance of the skin class for this component instance.
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 皮肤对象实例。
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get skin(): Skin {
@@ -250,14 +224,14 @@ namespace eui {
          * Setter for the skin instance.
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 设置皮肤实例
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         protected setSkin(skin: Skin): void {
@@ -322,7 +296,7 @@ namespace eui {
          * @param instance instance of a skin part
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -332,7 +306,7 @@ namespace eui {
          * @param instance 皮肤部件实例
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public setSkinPart(partName: string, instance: any): void {
@@ -357,7 +331,7 @@ namespace eui {
          * @param instance instance of a skin part to add.
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -370,7 +344,7 @@ namespace eui {
          * @param instance 要附加的皮肤部件实例。
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         protected partAdded(partName: string, instance: any): void {
@@ -388,7 +362,7 @@ namespace eui {
          * @param instance instance of a skin part to remove.
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -401,7 +375,7 @@ namespace eui {
          * @param instance 要卸载的皮肤部件实例
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         protected partRemoved(partName: string, instance: any): void {
@@ -449,7 +423,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -462,7 +436,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get enabled(): boolean {
@@ -508,7 +482,7 @@ namespace eui {
          * Set to <code>""</code> or <code>null</code> to reset the component back to its base state.
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -518,7 +492,7 @@ namespace eui {
          * 将其设置为 "" 或 null 可将取消组件外部显式设置的视图状态名称，从而采用内部 getCurrentState() 方法返回的状态。
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get currentState(): string {
@@ -541,14 +515,14 @@ namespace eui {
          * A subclass of SkinnableComponent must override <code>getCurrentState()</code> to return a value.
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 标记组件当前的视图状态失效，调用此方法后，子类应该覆盖 <code>getCurrentState()</code> 方法来返回当前的视图状态名称。
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public invalidateState(): void {
@@ -565,14 +539,14 @@ namespace eui {
          * A subclass of SkinnableComponent must override this method to return a value.
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 返回组件当前的皮肤状态名称,子类覆盖此方法定义各种状态名
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         protected getCurrentState(): string {
@@ -595,7 +569,7 @@ namespace eui {
          * You must invoke <code>super.createChildren()</code> to complete initialization of the parent class
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -603,7 +577,7 @@ namespace eui {
          * 请务必调用super.createChildren()以完成父类组件的初始化
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         protected createChildren(): void {
@@ -626,14 +600,14 @@ namespace eui {
          * when creating a subclass of Component.
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 创建子对象后执行任何最终处理。此方法在创建 Component 的子类时覆盖。
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         protected childrenCreated(): void {
@@ -645,14 +619,14 @@ namespace eui {
          * You can override this method when creating a subclass of Component.
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 提交属性，子类在调用完invalidateProperties()方法后，应覆盖此方法以应用属性
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         protected commitProperties(): void {
@@ -670,14 +644,14 @@ namespace eui {
          * Calculates the default size.
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 测量组件尺寸
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         protected measure(): void {
@@ -716,14 +690,14 @@ namespace eui {
          * Draws the object and/or sizes and positions its children.
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 更新显示列表
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         protected updateDisplayList(unscaledWidth: number, unscaledHeight: number): void {
@@ -735,14 +709,14 @@ namespace eui {
          * this object affects its layout (includeInLayout is true).
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 此对象影响其布局时（includeInLayout 为 true），使父代大小和显示列表失效的方法。
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         protected invalidateParentLayout(): void {
@@ -763,7 +737,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public includeInLayout: boolean;
         /**
@@ -771,7 +745,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public left: any;
 
@@ -780,7 +754,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public right: any;
 
@@ -789,7 +763,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public top: any;
 
@@ -798,7 +772,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public bottom: any;
 
@@ -807,7 +781,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public horizontalCenter: any;
 
@@ -816,7 +790,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public verticalCenter: any;
 
@@ -825,7 +799,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public percentWidth: number;
 
@@ -834,7 +808,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public percentHeight: number;
 
@@ -843,7 +817,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public explicitWidth: number;
 
@@ -852,7 +826,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public explicitHeight: number;
 
@@ -861,7 +835,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public minWidth: number;
 
@@ -870,7 +844,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public maxWidth: number;
 
@@ -879,7 +853,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public minHeight: number;
 
@@ -888,7 +862,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public maxHeight: number;
 
@@ -897,7 +871,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public setMeasuredSize(width: number, height: number): void {
         }
@@ -907,7 +881,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public invalidateProperties(): void {
         }
@@ -917,7 +891,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public validateProperties(): void {
         }
@@ -927,7 +901,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public invalidateSize(): void {
         }
@@ -937,7 +911,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public validateSize(recursive?: boolean): void {
         }
@@ -947,7 +921,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public invalidateDisplayList(): void {
         }
@@ -957,7 +931,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public validateDisplayList(): void {
         }
@@ -967,7 +941,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public validateNow(): void {
         }
@@ -977,7 +951,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public setLayoutBoundsSize(layoutWidth: number, layoutHeight: number): void {
         }
@@ -987,7 +961,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public setLayoutBoundsPosition(x: number, y: number): void {
         }
@@ -997,7 +971,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public getLayoutBounds(bounds: egret.Rectangle): void {
         }
@@ -1007,7 +981,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public getPreferredBounds(bounds: egret.Rectangle): void {
         }

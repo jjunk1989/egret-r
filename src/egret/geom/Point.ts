@@ -1,31 +1,5 @@
-//////////////////////////////////////////////////////////////////////////////////////
-//
-//  Copyright (c) 2014-present, Egret Technology.
-//  All rights reserved.
-//  Redistribution and use in source and binary forms, with or without
-//  modification, are permitted provided that the following conditions are met:
-//
-//     * Redistributions of source code must retain the above copyright
-//       notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above copyright
-//       notice, this list of conditions and the following disclaimer in the
-//       documentation and/or other materials provided with the distribution.
-//     * Neither the name of the Egret nor the
-//       names of its contributors may be used to endorse or promote products
-//       derived from this software without specific prior written permission.
-//
-//  THIS SOFTWARE IS PROVIDED BY EGRET AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
-//  OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-//  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-//  IN NO EVENT SHALL EGRET AND CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-//  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-//  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;LOSS OF USE, DATA,
-//  OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-//  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-//  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
-//  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-//////////////////////////////////////////////////////////////////////////////////////
+// SPDX-License-Identifier: BSD-2-Clause
+// Copyright (c) 2014-present, Egret Technology.
 
 
 namespace egret {
@@ -37,14 +11,14 @@ namespace egret {
      * The Point object represents a location in a two-dimensional coordinate system, where x represents the horizontal
      * axis and y represents the vertical axis.
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @includeExample egret/geom/Point.ts
      * @language en_US
      */
     /**
      * Point 对象表示二维坐标系统中的某个位置，其中 x 表示水平轴，y 表示垂直轴。
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @includeExample egret/geom/Point.ts
      * @language zh_CN
      */
@@ -53,13 +27,13 @@ namespace egret {
         /**
          * Releases a point instance to the object pool
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 释放一个Point实例到对象池
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static release(point:Point):void {
@@ -74,7 +48,7 @@ namespace egret {
          * @param x The horizontal coordinate.
          * @param y The vertical coordinate.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -82,7 +56,7 @@ namespace egret {
          * @param x 该对象的x属性值，默认为0
          * @param y 该对象的y属性值，默认为0
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static create(x:number,y:number):Point {
@@ -97,7 +71,7 @@ namespace egret {
          * @param x The horizontal coordinate.
          * @param y The vertical coordinate.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -105,7 +79,7 @@ namespace egret {
          * @param x 该对象的x属性值，默认为0
          * @param y 该对象的y属性值，默认为0
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public constructor(x:number = 0, y:number = 0) {
@@ -118,14 +92,14 @@ namespace egret {
          * The horizontal coordinate.
          * @default 0
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 该点的水平坐标。
          * @default 0
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public x:number;
@@ -133,14 +107,14 @@ namespace egret {
          * The vertical coordinate.
          * @default 0
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 该点的垂直坐标。
          * @default 0
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public y:number;
@@ -148,13 +122,13 @@ namespace egret {
         /**
          * The length of the line segment from (0,0) to this point.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 从 (0,0) 到此点的线段长度。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get length():number{
@@ -165,7 +139,7 @@ namespace egret {
          * @param x The horizontal coordinate.
          * @param y The vertical coordinate.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -173,7 +147,7 @@ namespace egret {
          * @param x 该对象的x属性值
          * @param y 该对象的y属性值
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public setTo(x:number, y:number):Point {
@@ -185,13 +159,13 @@ namespace egret {
         /**
          * Creates a copy of this Point object.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 克隆点对象
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public clone():Point {
@@ -204,7 +178,7 @@ namespace egret {
          * @param toCompare The point to be compared.
          * @returns A value of true if the object is equal to this Point object; false if it is not equal.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -212,7 +186,7 @@ namespace egret {
          * @param toCompare 要比较的点。
          * @returns 如果该对象与此 Point 对象相同，则为 true 值，如果不相同，则为 false。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public equals(toCompare:Point):boolean {
@@ -225,7 +199,7 @@ namespace egret {
          * @param p2 The second point.
          * @returns The distance between the first and second points.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -234,7 +208,7 @@ namespace egret {
          * @param p2 第二个点
          * @returns 第一个点和第二个点之间的距离。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static distance(p1:Point, p2:Point):number {
@@ -245,14 +219,14 @@ namespace egret {
          * Copies all of the point data from the source Point object into the calling Point object.
          * @param sourcePoint The Point object from which to copy the data.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 将源 Point 对象中的所有点数据复制到调用方 Point 对象中。
          * @param sourcePoint 要从中复制数据的 Point 对象。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public copyFrom(sourcePoint:Point):void {
@@ -265,7 +239,7 @@ namespace egret {
          * @param v The point to be added.
          * @returns The new point.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -273,7 +247,7 @@ namespace egret {
          * @param v 要添加的点。
          * @returns 新点。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public add(v:Point):Point {
@@ -288,7 +262,7 @@ namespace egret {
          * @param f The level of interpolation between the two points. Indicates where the new point will be, along the line between pt1 and pt2. If f=1, pt1 is returned; if f=0, pt2 is returned.
          * @returns The new interpolated point.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -299,7 +273,7 @@ namespace egret {
          * @param f 两个点之间的内插级别。表示新点将位于 pt1 和 pt2 连成的直线上的什么位置。如果 f=1，则返回 pt1；如果 f=0，则返回 pt2。
          * @returns 新的内插点。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static interpolate(pt1:Point, pt2:Point, f:number):Point {
@@ -311,14 +285,14 @@ namespace egret {
          * Scales the line segment between (0,0) and the current point to a set length.
          * @param thickness The scaling value. For example, if the current point is (0,5), and you normalize it to 1, the point returned is at (0,1).
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 将 (0,0) 和当前点之间的线段缩放为设定的长度。
          * @param thickness 缩放值。例如，如果当前点为 (0,5) 并且您将它规范化为 1，则返回的点位于 (0,1) 处。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public normalize(thickness:number):void {
@@ -334,7 +308,7 @@ namespace egret {
          * @param dx The amount by which to offset the horizontal coordinate, x.
          * @param dy The amount by which to offset the vertical coordinate, y.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -342,7 +316,7 @@ namespace egret {
          * @param dx 水平坐标 x 的偏移量。
          * @param dy 水平坐标 y 的偏移量。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public offset(dx:number, dy:number):void {
@@ -355,7 +329,7 @@ namespace egret {
          * @param len The length coordinate of the polar pair.
          * @param angle The angle, in radians, of the polar pair.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -363,7 +337,7 @@ namespace egret {
          * @param len 极坐标对的长度。
          * @param angle 极坐标对的角度（以弧度表示）。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static polar(len:number, angle:number):Point {
@@ -375,7 +349,7 @@ namespace egret {
          * @param v The point to be subtracted.
          * @returns The new point.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -383,7 +357,7 @@ namespace egret {
          * @param v 要减去的点。
          * @returns 新点。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public subtract(v:Point):Point {
@@ -394,14 +368,14 @@ namespace egret {
          * Returns a string that contains the values of the x and y coordinates. The string has the form "(x=x, y=y)", so calling the toString() method for a point at 23,17 would return "(x=23, y=17)".
          * @returns The string representation of the coordinates.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 返回包含 x 和 y 坐标的值的字符串。该字符串的格式为 "(x=x, y=y)"，因此为点 23,17 调用 toString() 方法将返回 "(x=23, y=17)"。
          * @returns 坐标的字符串表示形式。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public toString():string {

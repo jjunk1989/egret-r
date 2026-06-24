@@ -1,31 +1,5 @@
-//////////////////////////////////////////////////////////////////////////////////////
-//
-//  Copyright (c) 2014-present, Egret Technology.
-//  All rights reserved.
-//  Redistribution and use in source and binary forms, with or without
-//  modification, are permitted provided that the following conditions are met:
-//
-//     * Redistributions of source code must retain the above copyright
-//       notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above copyright
-//       notice, this list of conditions and the following disclaimer in the
-//       documentation and/or other materials provided with the distribution.
-//     * Neither the name of the Egret nor the
-//       names of its contributors may be used to endorse or promote products
-//       derived from this software without specific prior written permission.
-//
-//  THIS SOFTWARE IS PROVIDED BY EGRET AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
-//  OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-//  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-//  IN NO EVENT SHALL EGRET AND CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-//  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-//  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;LOSS OF USE, DATA,
-//  OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-//  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-//  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
-//  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-//////////////////////////////////////////////////////////////////////////////////////
+// SPDX-License-Identifier: BSD-2-Clause
+// Copyright (c) 2014-present, Egret Technology.
 
 namespace eui {
 
@@ -77,7 +51,7 @@ namespace eui {
      *
      * @version Egret 2.4
      * @version eui 1.0
-     * @platform Web,Native
+     * @platform Web
      * @includeExample extension/eui/binding/WatcherExample.ts
      * @language en_US
      */
@@ -86,7 +60,7 @@ namespace eui {
      *
      * @version Egret 2.4
      * @version eui 1.0
-     * @platform Web,Native
+     * @platform Web
      * @includeExample extension/eui/binding/WatcherExample.ts
      * @language zh_CN
      */
@@ -109,7 +83,7 @@ namespace eui {
          * the <code>chain</code> argument; null otherwise.
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -124,7 +98,7 @@ namespace eui {
          * @returns 如果已为 chain 参数至少指定了一个属性名称，则返回 Watcher 实例；否则返回 null。
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static watch(host:any, chain:string[], handler:(value:any)=>void, thisObject:any):Watcher {
@@ -206,14 +180,14 @@ namespace eui {
          * See the <code>watch()</code> method for parameter usage.
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 构造函数，非公开。只能从 watch() 方法中调用此方法。有关参数用法，请参阅 watch() 方法。
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public constructor(property:string, handler:(value:any)=>void, thisObject:any, next?:Watcher) {
@@ -257,14 +231,14 @@ namespace eui {
          * Detaches this Watcher instance, and its handler function, from the current host.
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 从当前宿主中断开此 Watcher 实例及其处理函数。
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public unwatch():void {
@@ -283,7 +257,7 @@ namespace eui {
          * </pre>
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -294,7 +268,7 @@ namespace eui {
          * </pre>
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public getValue():any {
@@ -309,7 +283,7 @@ namespace eui {
          * @param handler The handler function. This argument must not be null.
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -317,7 +291,7 @@ namespace eui {
          * @param handler 处理函数，此参数必须为非空。
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public setHandler(handler:(value:any)=>void, thisObject:any):void {
@@ -334,7 +308,7 @@ namespace eui {
          * You can call this method to reuse a watcher instance on a different host.
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -342,7 +316,7 @@ namespace eui {
          * 您可以通过该方法实现一个Watcher实例用于不同的宿主。
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public reset(newHost:egret.IEventDispatcher):void {

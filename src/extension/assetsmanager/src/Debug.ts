@@ -3,14 +3,14 @@ module RES {
      * Decorator, determine if the parameter is null
      * @internal
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language en_US
      */
     /**
      * 装饰器，判断参数是否为null
      * @internal
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export let checkNull: MethodDecorator = <Function>(target, propertyKey, descriptor) => {

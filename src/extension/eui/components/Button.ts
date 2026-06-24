@@ -1,31 +1,5 @@
-//////////////////////////////////////////////////////////////////////////////////////
-//
-//  Copyright (c) 2014-present, Egret Technology.
-//  All rights reserved.
-//  Redistribution and use in source and binary forms, with or without
-//  modification, are permitted provided that the following conditions are met:
-//
-//     * Redistributions of source code must retain the above copyright
-//       notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above copyright
-//       notice, this list of conditions and the following disclaimer in the
-//       documentation and/or other materials provided with the distribution.
-//     * Neither the name of the Egret nor the
-//       names of its contributors may be used to endorse or promote products
-//       derived from this software without specific prior written permission.
-//
-//  THIS SOFTWARE IS PROVIDED BY EGRET AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
-//  OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-//  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-//  IN NO EVENT SHALL EGRET AND CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-//  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-//  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;LOSS OF USE, DATA,
-//  OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-//  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-//  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
-//  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-//////////////////////////////////////////////////////////////////////////////////////
+// SPDX-License-Identifier: BSD-2-Clause
+// Copyright (c) 2014-present, Egret Technology.
 
 namespace eui {
 
@@ -41,7 +15,7 @@ namespace eui {
      * @state disabled Button disabled state
      * @version Egret 2.4
      * @version eui 1.0
-     * @platform Web,Native
+     * @platform Web
      * @includeExample extension/eui/components/ButtonExample.ts
      * @language en_US
      */
@@ -55,7 +29,7 @@ namespace eui {
      * @state disabled 按钮禁用状态
      * @version Egret 2.4
      * @version eui 1.0
-     * @platform Web,Native
+     * @platform Web
      * @includeExample extension/eui/components/ButtonExample.ts
      * @language zh_CN
      */
@@ -64,14 +38,14 @@ namespace eui {
          * Constructor.
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 创建一个按钮实例
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public constructor() {
@@ -85,7 +59,7 @@ namespace eui {
          * @skinPart
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -93,7 +67,7 @@ namespace eui {
          * @skinPart
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public labelDisplay:IDisplayText = null;
@@ -106,14 +80,14 @@ namespace eui {
          * Text to appear on the Button control.
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 要在按钮上显示的文本。
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get label():string {
@@ -132,7 +106,7 @@ namespace eui {
          * @skinPart
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -140,7 +114,7 @@ namespace eui {
          * @skinPart
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public iconDisplay:Image = null;
@@ -153,14 +127,14 @@ namespace eui {
          * Icon to appear on the Button control.
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 要在按钮上显示的图标数据
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get icon():string|egret.Texture {
@@ -184,7 +158,7 @@ namespace eui {
          * @param  The <code>egret.TouchEvent</code> object.
          * @version Egret 3.0.1
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -192,7 +166,7 @@ namespace eui {
          * @param event 事件 <code>egret.TouchEvent</code> 的对象。
          * @version Egret 3.0.1
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         protected onTouchCancle(event:egret.TouchEvent):void {
@@ -207,7 +181,7 @@ namespace eui {
          * @param  The <code>egret.TouchEvent</code> object.
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -215,7 +189,7 @@ namespace eui {
          * @param event 事件 <code>egret.TouchEvent</code> 的对象。
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         protected onTouchBegin(event:egret.TouchEvent):void {
@@ -246,7 +220,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         protected getCurrentState():string {
             if (!this.enabled)
@@ -263,7 +237,7 @@ namespace eui {
          *
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         protected partAdded(partName:string, instance:any):void {
             if (instance === this.labelDisplay) {
@@ -280,7 +254,7 @@ namespace eui {
          * is the target and when <code>touchCaptured</code> is <code>true</code>.
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -288,7 +262,7 @@ namespace eui {
          * 仅当以按钮为目标，并且 <code>touchCaptured</code> 为 <code>true</code> 时，才会调用此方法。
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         protected buttonReleased():void {

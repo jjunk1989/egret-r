@@ -1,45 +1,19 @@
-//////////////////////////////////////////////////////////////////////////////////////
-//
-//  Copyright (c) 2014-present, Egret Technology.
-//  All rights reserved.
-//  Redistribution and use in source and binary forms, with or without
-//  modification, are permitted provided that the following conditions are met:
-//
-//     * Redistributions of source code must retain the above copyright
-//       notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above copyright
-//       notice, this list of conditions and the following disclaimer in the
-//       documentation and/or other materials provided with the distribution.
-//     * Neither the name of the Egret nor the
-//       names of its contributors may be used to endorse or promote products
-//       derived from this software without specific prior written permission.
-//
-//  THIS SOFTWARE IS PROVIDED BY EGRET AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
-//  OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-//  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-//  IN NO EVENT SHALL EGRET AND CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-//  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-//  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;LOSS OF USE, DATA,
-//  OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-//  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-//  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
-//  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-//////////////////////////////////////////////////////////////////////////////////////
+// SPDX-License-Identifier: BSD-2-Clause
+// Copyright (c) 2014-present, Egret Technology.
 
 
 namespace egret {
     /**
      * ScrollView auxiliary classes for slides, you will pass a display object constructor. It can display more than the range display object within the specified size range. And can easily drag in this range.
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @includeExample extension/game/display/ScrollView.ts
      * @language en_US
      */
     /**
      * ScrollView 是用于滑动的辅助类，将一个显示对象传入构造函数即可。可以在指定的尺寸范围内显示超过该范围的显示对象。并可以在此范围内随意拖动。
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @includeExample extension/game/display/ScrollView.ts
      * @language zh_CN
      */
@@ -53,13 +27,13 @@ namespace egret {
         /**
          * Start rolling threshold when the touch point from the initial touch point at a distance exceeding this value will trigger roll
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 开始滚动的阈值，当触摸点偏离初始触摸点的距离超过这个值时才会触发滚动
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public scrollBeginThreshold: number = 10;
@@ -69,14 +43,14 @@ namespace egret {
          * Scrolling speed, the speed is required and the default speed ratio.
          * The range of scrollSpeed> 0 assigned to 2:00, the speed is 2 times the default speed
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 滚动速度，这个值为需要的速度与默认速度的比值。
          * 取值范围为 scrollSpeed > 0 赋值为 2 时，速度是默认速度的 2 倍
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public scrollSpeed: number = 1;
@@ -106,14 +80,14 @@ namespace egret {
          * Create a egret.ScrollView objects
          * @param content {egret.DisplayObject} You need to scroll object
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 创建一个 egret.ScrollView 对象
          * @param content {egret.DisplayObject} 需要滚动的对象
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         constructor(content: DisplayObject = null) {
@@ -134,14 +108,14 @@ namespace egret {
          * Set to scroll object
          * @param content {egret.DisplayObject} You need to scroll object
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 设置需要滚动的对象
          * @param content {egret.DisplayObject} 需要滚动的对象
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public setContent(content: DisplayObject): void {
@@ -158,13 +132,13 @@ namespace egret {
         /**
          * Remove rolling objects
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 移除滚动的对象
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public removeContent(): void {
@@ -178,13 +152,13 @@ namespace egret {
         /**
          * Vertical scroll bar display policy, on / off / auto.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 垂直滚动条显示策略，on/off/auto。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get verticalScrollPolicy(): string {
@@ -201,13 +175,13 @@ namespace egret {
         /**
          * The horizontal scroll bar display policy, on / off / auto.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 水平滚动条显示策略，on/off/auto。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get horizontalScrollPolicy(): string {
@@ -224,14 +198,14 @@ namespace egret {
          * Gets or sets the horizontal scroll position
          * @returns {number}
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 获取或设置水平滚动位置,
          * @returns {number}
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get scrollLeft(): number {
@@ -250,14 +224,14 @@ namespace egret {
          * Gets or sets the vertical scroll position
          * @returns {number}
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 获取或设置垂直滚动位置,
          * @returns {number}
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get scrollTop(): number {
@@ -278,7 +252,7 @@ namespace egret {
          * @param left {number} The horizontal scroll position
          * @param isOffset {boolean} Optional parameter, the default is false, whether it is the amount of scrolling increase as top = 1 on behalf of one pixel scroll up
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -287,7 +261,7 @@ namespace egret {
          * @param left {number} 水平滚动位置
          * @param isOffset {boolean} 可选参数，默认是false，是否是滚动增加量，如 top=1 代表往上滚动1像素
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public setScrollPosition(top: number, left: number, isOffset: boolean = false): void {
@@ -699,14 +673,14 @@ namespace egret {
          * The left side of the maximum distance
          * @returns The left side of the maximum distance
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 距离左侧的最大值
          * @returns 距离左侧最大值
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public getMaxScrollLeft(): number {
@@ -718,14 +692,14 @@ namespace egret {
          * Above the maximum distance
          * @returns Above the maximum distance
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 距离上方最大值
          * @returns 距离上方最大值
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public getMaxScrollTop(): number {
@@ -817,7 +791,7 @@ namespace egret {
          * @param duration Easing of time, in milliseconds
          * @returns Get tween vertical scrolling
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -826,7 +800,7 @@ namespace egret {
          * @param duration 缓动时间，毫秒单位
          * @returns 获取垂直滚动的tween
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public setScrollTop(scrollTop: number, duration: number = 0): void {
@@ -854,7 +828,7 @@ namespace egret {
          * @param duration Get tween vertical scrolling
          * @returns Gets the horizontal scroll tween
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -863,7 +837,7 @@ namespace egret {
          * @param duration 缓动时间，毫秒单位
          * @returns 获取水平滚动的tween
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public setScrollLeft(scrollLeft: number, duration: number = 0): void {
@@ -958,7 +932,7 @@ namespace egret {
          * @inheritDoc
          * @inheritDoc
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          */
         public addChild(child: DisplayObject): DisplayObject {
             this.throwNotSupportedError();
@@ -969,7 +943,7 @@ namespace egret {
          * @deprecated
          * @inheritDoc
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          */
         public addChildAt(child: DisplayObject, index: number): DisplayObject {
             this.throwNotSupportedError();
@@ -980,7 +954,7 @@ namespace egret {
          * @deprecated
          * @inheritDoc
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          */
         public removeChild(child: DisplayObject): DisplayObject {
             this.throwNotSupportedError();
@@ -991,7 +965,7 @@ namespace egret {
          * @deprecated
          * @inheritDoc
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          */
         public removeChildAt(index: number): DisplayObject {
             this.throwNotSupportedError();
@@ -1002,7 +976,7 @@ namespace egret {
          * @deprecated
          * @inheritDoc
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          */
         public setChildIndex(child: DisplayObject, index: number): void {
             this.throwNotSupportedError();
@@ -1012,7 +986,7 @@ namespace egret {
          * @deprecated
          * @inheritDoc
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          */
         public swapChildren(child1: DisplayObject, child2: DisplayObject): void {
             this.throwNotSupportedError();
@@ -1022,7 +996,7 @@ namespace egret {
          * @deprecated
          * @inheritDoc
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          */
         public swapChildrenAt(index1: number, index2: number): void {
             this.throwNotSupportedError();

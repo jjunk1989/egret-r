@@ -1,31 +1,6 @@
-//////////////////////////////////////////////////////////////////////////////////////
-//
-//  Copyright (c) 2014-present, Egret Technology.
-//  All rights reserved.
-//  Redistribution and use in source and binary forms, with or without
-//  modification, are permitted provided that the following conditions are met:
-//
-//     * Redistributions of source code must retain the above copyright
-//       notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above copyright
-//       notice, this list of conditions and the following disclaimer in the
-//       documentation and/or other materials provided with the distribution.
-//     * Neither the name of the Egret nor the
-//       names of its contributors may be used to endorse or promote products
-//       derived from this software without specific prior written permission.
-//
-//  THIS SOFTWARE IS PROVIDED BY EGRET AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
-//  OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-//  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-//  IN NO EVENT SHALL EGRET AND CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-//  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-//  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;LOSS OF USE, DATA,
-//  OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-//  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-//  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
-//  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-//////////////////////////////////////////////////////////////////////////////////////
+// SPDX-License-Identifier: BSD-2-Clause
+// Copyright (c) 2014-present, Egret Technology.
+
 namespace egret {
     export interface HttpRequest{
         addEventListener<Z>(type: "progress"
@@ -36,14 +11,14 @@ namespace egret {
      * When a load operation has begun or a socket has received data, ProgressEvent object is dispatched.
      * There are two types of progress events: ProgressEvent.PROGRESS and ProgressEvent.SOCKET_DATA.
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @language en_US
      */
     /**
      * 当加载操作已开始或套接字已接收到数据时，将调度 ProgressEvent 对象。
      * 有两种类型的进程事件：ProgressEvent.PROGRESS 和 ProgressEvent.SOCKET_DATA。
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export class ProgressEvent extends egret.Event {
@@ -51,13 +26,13 @@ namespace egret {
         /**
          * Changes in the loading progress
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 加载进度发生变化
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static PROGRESS:"progress" = "progress";
@@ -65,13 +40,13 @@ namespace egret {
         /**
          * Get the data
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 获取到数据
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static SOCKET_DATA:"socketData" = "socketData";
@@ -79,13 +54,13 @@ namespace egret {
         /**
          * Number of items or bytes when the listener processes the event。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 在侦听器处理事件时加载的项数或字节数。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public bytesLoaded:number = 0;
@@ -93,13 +68,13 @@ namespace egret {
         /**
          * If the loading process succeeds, the total number or the total number of bytes that will be loaded term.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 如果加载过程成功，将加载的总项数或总字节数。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public bytesTotal:number = 0;
@@ -112,7 +87,7 @@ namespace egret {
          * @param bytesLoaded {number} Number of items or bytes loaded
          * @param bytesTotal {number} The total number of items or bytes loaded
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -123,7 +98,7 @@ namespace egret {
          * @param bytesLoaded {number} 加载的项数或字节数
          * @param bytesTotal {number} 加载的总项数或总字节数
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public constructor(type:string, bubbles:boolean = false, cancelable:boolean = false, bytesLoaded:number = 0, bytesTotal:number = 0) {
@@ -140,7 +115,7 @@ namespace egret {
          * @param bytesLoaded {number} Number of items or bytes loaded
          * @param bytesTotal {number} The total number of items or bytes loaded
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -150,7 +125,7 @@ namespace egret {
          * @param bytesLoaded {number} 加载的项数或字节数
          * @param bytesTotal {number} 加载的总项数或总字节数
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static dispatchProgressEvent(target:IEventDispatcher, type:string, bytesLoaded:number = 0, bytesTotal:number = 0):boolean {

@@ -1,31 +1,5 @@
-//////////////////////////////////////////////////////////////////////////////////////
-//
-//  Copyright (c) 2014-present, Egret Technology.
-//  All rights reserved.
-//  Redistribution and use in source and binary forms, with or without
-//  modification, are permitted provided that the following conditions are met:
-//
-//     * Redistributions of source code must retain the above copyright
-//       notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above copyright
-//       notice, this list of conditions and the following disclaimer in the
-//       documentation and/or other materials provided with the distribution.
-//     * Neither the name of the Egret nor the
-//       names of its contributors may be used to endorse or promote products
-//       derived from this software without specific prior written permission.
-//
-//  THIS SOFTWARE IS PROVIDED BY EGRET AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
-//  OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-//  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-//  IN NO EVENT SHALL EGRET AND CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-//  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-//  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;LOSS OF USE, DATA,
-//  OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-//  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-//  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
-//  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-//////////////////////////////////////////////////////////////////////////////////////
+// SPDX-License-Identifier: BSD-2-Clause
+// Copyright (c) 2014-present, Egret Technology.
 
 /// <reference path="../geom/Point.ts" />
 
@@ -59,7 +33,7 @@ namespace egret {
      * on the ancestor node with the type parameter set to the specific touch event you want to detect.
      *
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @includeExample egret/events/TouchEvent.ts
      * @language en_US
      */
@@ -72,7 +46,7 @@ namespace egret {
      * 接收触摸事件的通知，请对祖代节点使用 EventDispatcher.on() 并将 type 参数设置为要检测的特定触摸事件。
      *
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @includeExample egret/events/TouchEvent.ts
      * @language zh_CN
      */
@@ -81,13 +55,13 @@ namespace egret {
         /**
          * Dispatched when the user touches the device, and is continuously dispatched until the point of contact is removed.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 当用户触碰设备时进行调度，而且会连续调度，直到接触点被删除。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static TOUCH_MOVE: "touchMove" = "touchMove";
@@ -95,13 +69,13 @@ namespace egret {
         /**
          * Dispatched when the user first contacts a touch-enabled device (such as touches a finger to a mobile phone or tablet with a touch screen).
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 当用户第一次触摸启用触摸的设备时（例如，用手指触摸配有触摸屏的移动电话或平板电脑）调度。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static TOUCH_BEGIN: "touchBegin" = "touchBegin";
@@ -110,13 +84,13 @@ namespace egret {
          * Dispatched when the user removes contact with a touch-enabled device (such as lifts a finger off a mobile phone
          * or tablet with a touch screen).
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 当用户移除与启用触摸的设备的接触时（例如，将手指从配有触摸屏的移动电话或平板电脑上抬起）调度。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static TOUCH_END: "touchEnd" = "touchEnd";
@@ -124,13 +98,13 @@ namespace egret {
          * Dispatched when an event of some kind occurred that canceled the touch.
          * Such as the eui.Scroller will dispatch 'TOUCH_CANCEL' when it start move, the 'TOUCH_END' and 'TOUCH_TAP' will not be triggered.
          * @version Egret 3.0.1
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 由于某个事件取消了触摸时触发。比如 eui.Scroller 在开始滚动后会触发 'TOUCH_CANCEL' 事件，不再触发后续的 'TOUCH_END' 和 'TOUCH_TAP' 事件
          * @version Egret 3.0.1
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static TOUCH_CANCEL: "touchCancel" = "touchCancel";
@@ -139,13 +113,13 @@ namespace egret {
          * Dispatched when the user lifts the point of contact over the same DisplayObject instance on which the contact
          * was initiated on a touch-enabled device.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 当用户在触摸设备上与开始触摸的同一 DisplayObject 实例上抬起接触点时调度。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static TOUCH_TAP: "touchTap" = "touchTap";
@@ -154,13 +128,13 @@ namespace egret {
          * was initiated on a touch-enabled device (such as presses and releases a finger from a single point over a display
          * object on a mobile phone or tablet with a touch screen).
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 当用户在触摸设备上与开始触摸的不同 DisplayObject 实例上抬起接触点时调度。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static TOUCH_RELEASE_OUTSIDE: "touchReleaseOutside" = "touchReleaseOutside";
@@ -174,7 +148,7 @@ namespace egret {
          * @param stageY The vertical coordinate at which the event occurred in global Stage coordinates.
          * @param touchPointID A unique identification number assigned to the touch point.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -186,7 +160,7 @@ namespace egret {
          * @param stageY 事件发生点在全局舞台坐标系中的垂直坐标
          * @param touchPointID 分配给触摸点的唯一标识号
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public constructor(type: string, bubbles?: boolean, cancelable?: boolean, stageX?: number,
@@ -212,13 +186,13 @@ namespace egret {
         /**
          * The horizontal coordinate at which the event occurred in global Stage coordinates.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 事件发生点在全局舞台坐标中的水平坐标。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get stageX(): number {
@@ -233,13 +207,13 @@ namespace egret {
         /**
          * The vertical coordinate at which the event occurred in global Stage coordinates.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 事件发生点在全局舞台坐标中的垂直坐标。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get stageY(): number {
@@ -250,13 +224,13 @@ namespace egret {
         /**
          * The horizontal coordinate at which the event occurred relative to the display object.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 事件发生点相对于所属显示对象的水平坐标。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get localX(): number {
@@ -270,13 +244,13 @@ namespace egret {
         /**
          * The vertical coordinate at which the event occurred relative to the display object.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 事件发生点相对于所属显示对象的垂直坐标。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get localY(): number {
@@ -308,13 +282,13 @@ namespace egret {
         /**
          * A unique identification number assigned to the touch point.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 分配给触摸点的唯一标识号
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public touchPointID: number;
@@ -322,13 +296,13 @@ namespace egret {
         /**
          * Instructs Egret runtime to render after processing of this event completes, if the display list has been modified.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 如果已修改显示列表，调用此方法将会忽略帧频限制，在此事件处理完成后立即重绘屏幕。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public updateAfterEvent(): void {
@@ -338,13 +312,13 @@ namespace egret {
         /**
          * Whether the touch is pressed (true) or not pressed (false).
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 表示触摸已按下 (true) 还是未按下 (false)。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public touchDown: boolean = false;
@@ -364,7 +338,7 @@ namespace egret {
          * @see egret.Event.release()
          *
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -381,7 +355,7 @@ namespace egret {
          * @see egret.Event.release()
          *
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static dispatchTouchEvent(target: IEventDispatcher, type: string, bubbles?: boolean, cancelable?: boolean,

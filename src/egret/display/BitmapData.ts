@@ -1,31 +1,5 @@
-//////////////////////////////////////////////////////////////////////////////////////
-//
-//  Copyright (c) 2014-present, Egret Technology.
-//  All rights reserved.
-//  Redistribution and use in source and binary forms, with or without
-//  modification, are permitted provided that the following conditions are met:
-//
-//     * Redistributions of source code must retain the above copyright
-//       notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above copyright
-//       notice, this list of conditions and the following disclaimer in the
-//       documentation and/or other materials provided with the distribution.
-//     * Neither the name of the Egret nor the
-//       names of its contributors may be used to endorse or promote products
-//       derived from this software without specific prior written permission.
-//
-//  THIS SOFTWARE IS PROVIDED BY EGRET AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
-//  OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-//  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-//  IN NO EVENT SHALL EGRET AND CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-//  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-//  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;LOSS OF USE, DATA,
-//  OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-//  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-//  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
-//  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-//////////////////////////////////////////////////////////////////////////////////////
+// SPDX-License-Identifier: BSD-2-Clause
+// Copyright (c) 2014-present, Egret Technology.
 
 namespace egret {
 
@@ -56,7 +30,7 @@ namespace egret {
      * alpha channel value, followed by red, green, and blue.)
      * @see egret.Bitmap
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @language en_US
      */
     /**
@@ -66,7 +40,7 @@ namespace egret {
      * （对于 ARGB 值，最高有效字节代表 Alpha 通道值，其后的有效字节分别代表红色、绿色和蓝色通道值。）
      * @see egret.Bitmap
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export class BitmapData extends HashObject {
@@ -74,14 +48,14 @@ namespace egret {
          * The width of the bitmap image in pixels.
          * @readOnly
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 位图图像的宽度，以像素为单位。
          * @readOnly
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         width: number;
@@ -89,14 +63,14 @@ namespace egret {
          * The height of the bitmap image in pixels.
          * @readOnly
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 位图图像的高度，以像素为单位。
          * @readOnly
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         height: number;
@@ -105,7 +79,7 @@ namespace egret {
          * Original bitmap image.
          * HTMLImageElement|HTMLCanvasElement|HTMLVideoElement
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @private
          * @language en_US
          */
@@ -113,7 +87,7 @@ namespace egret {
          * 原始位图图像。
          * HTMLImageElement|HTMLCanvasElement|HTMLVideoElement
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @private
          * @language zh_CN
          */
@@ -122,14 +96,14 @@ namespace egret {
         /**
          * WebGL texture.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @private
          * @language en_US
          */
         /**
          * WebGL纹理。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @private
          * @language zh_CN
          */
@@ -138,13 +112,13 @@ namespace egret {
         /**
          * Texture format.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 纹理格式。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         format: string = "image";
@@ -173,14 +147,14 @@ namespace egret {
          * Initializes a BitmapData object to refer to the specified source object.
          * @param source The source object being referenced.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 创建一个引用指定 source 实例的 BitmapData 对象
          * @param source 被引用的 source 实例
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         constructor(source: any) {

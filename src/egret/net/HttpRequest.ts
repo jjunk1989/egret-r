@@ -1,31 +1,5 @@
-//////////////////////////////////////////////////////////////////////////////////////
-//
-//  Copyright (c) 2014-present, Egret Technology.
-//  All rights reserved.
-//  Redistribution and use in source and binary forms, with or without
-//  modification, are permitted provided that the following conditions are met:
-//
-//     * Redistributions of source code must retain the above copyright
-//       notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above copyright
-//       notice, this list of conditions and the following disclaimer in the
-//       documentation and/or other materials provided with the distribution.
-//     * Neither the name of the Egret nor the
-//       names of its contributors may be used to endorse or promote products
-//       derived from this software without specific prior written permission.
-//
-//  THIS SOFTWARE IS PROVIDED BY EGRET AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
-//  OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-//  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-//  IN NO EVENT SHALL EGRET AND CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-//  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-//  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;LOSS OF USE, DATA,
-//  OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-//  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-//  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
-//  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-//////////////////////////////////////////////////////////////////////////////////////
+// SPDX-License-Identifier: BSD-2-Clause
+// Copyright (c) 2014-present, Egret Technology.
 
 namespace egret {
     /**
@@ -41,7 +15,7 @@ namespace egret {
      * @see egret.HttpResponseType
      * @includeExample egret/net/HttpRequestExample.ts
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @language en_US
      */
     /**
@@ -55,7 +29,7 @@ namespace egret {
      * @see egret.HttpResponseType
      * @includeExample egret/net/HttpRequestExample.ts
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export interface HttpRequest extends EventDispatcher {
@@ -63,14 +37,14 @@ namespace egret {
          * The data received from the load operation.  The format of the data depends on the setting of the responseType property.
          * @readOnly
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 本次请求返回的数据，数据类型根据 responseType 设置的值确定。
          * @readOnly
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         response: any;
@@ -79,7 +53,7 @@ namespace egret {
          * Note:If you attempt to set this property to an invalid value, Egret runtime set the value to HttpResponseType.TEXT.
          * @default egret.HttpResponseType.TEXT
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -87,7 +61,7 @@ namespace egret {
          * 注意：若尝试设置此属性为一个非法的值，运行时将使用HttpResponseType.TEXT。
          * @default egret.HttpResponseType.TEXT
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         responseType: string;
@@ -95,14 +69,14 @@ namespace egret {
          * Can be set to a time in milliseconds.When set to a non-zero value will cause fetching to terminate after the given time has passed.
          * @default egret.HttpResponseType.TEXT
          * @version Egret 5.2.15
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 代表着一个请求在被自动终止前所消耗的毫秒数。默认值为 0，意味着没有超时。
          * @default egret.HttpResponseType.TEXT
          * @version Egret 5.2.15
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         timeout:number;
@@ -111,14 +85,14 @@ namespace egret {
          * or authorization headers. (This never affects same-site requests.)
          * @default false
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 表明在进行跨站(cross-site)的访问控制(Access-Control)请求时，是否使用认证信息(例如cookie或授权的header)。(这个标志不会影响同站的请求)
          * @default false
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         withCredentials: boolean;
@@ -130,7 +104,7 @@ namespace egret {
          * @param method The HTTP method to use, please use the const value in the HttpMethod class.
          * @see egret.HttpMethod
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -140,7 +114,7 @@ namespace egret {
          * @param method 请求所使用的HTTP方法， 请使用 HttpMethod 定义的枚举值.
          * @see egret.HttpMethod
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         open(url:string, method?:string): void;
@@ -148,40 +122,40 @@ namespace egret {
          * Sends the request.
          * @param data the data to send.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 发送请求.
          * @param data 需要发送的数据
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         send(data?:any): void;
         /**
          * Aborts the request if it has already been sent.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 如果请求已经被发送,则立刻中止请求.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         abort(): void;
         /**
          * Returns all the response headers as a string, or null if no response has been received.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 返回所有响应头信息(响应头名和值), 如果响应头还没接受,则返回"".
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         getAllResponseHeaders(): string;
@@ -190,7 +164,7 @@ namespace egret {
          * @param header The name of the header whose value is to be set.
          * @param value The value to set as the body of the header.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -198,7 +172,7 @@ namespace egret {
          * @param header 将要被赋值的请求头名称.
          * @param value 给指定的请求头赋的值.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         setRequestHeader(header:string, value:string): void;
@@ -207,14 +181,14 @@ namespace egret {
          * received or the header doesn't exist in the response.
          * @param header The name of the header whose value is to be get.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 返回指定的响应头的值, 如果响应头还没被接受,或该响应头不存在,则返回"".
          * @param header 要返回的响应头名称
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         getResponseHeader(header:string): string;
@@ -224,13 +198,13 @@ namespace egret {
     /**
      * Creates a HttpRequest object.
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @language en_US
      */
     /**
      * 创建一个 HttpRequest 实例。
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export let HttpRequest:{ new (): HttpRequest };

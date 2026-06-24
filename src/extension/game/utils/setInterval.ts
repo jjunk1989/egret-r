@@ -13,7 +13,7 @@ namespace egret {
      * @param ...args {any} Parameter list
      * @returns {number} Return index which can be used for clearInterval
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @includeExample extension/game/utils/setInterval.ts
      * @language en_US
      */
@@ -25,7 +25,7 @@ namespace egret {
      * @param ...args {any} 参数列表
      * @returns {number} 返回索引，可以用于 clearInterval
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @includeExample extension/game/utils/setInterval.ts
      * @language zh_CN
      */
@@ -46,7 +46,7 @@ namespace egret {
      * Clear function to run after a specified delay.
      * @param key {number} Index that egret.setInterval returns
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @includeExample egret/utils/setInterval.ts
      * @language en_US
      */
@@ -54,7 +54,7 @@ namespace egret {
      * 清除指定延迟后运行的函数。
      * @param key {number} egret.setInterval所返回的索引
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @includeExample egret/utils/setInterval.ts
      * @language zh_CN
      */

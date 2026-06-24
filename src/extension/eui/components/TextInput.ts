@@ -24,7 +24,7 @@ namespace eui {
      *
      * @version Egret 2.5.7
      * @version eui 1.0
-     * @platform Web,Native
+     * @platform Web
      * @includeExample  extension/eui/components/TextInputExample.ts
      * @language en_US
      */
@@ -33,7 +33,7 @@ namespace eui {
      *
      * @version Egret 2.5.7
      * @version eui 1.0
-     * @platform Web,Native
+     * @platform Web
      * @includeExample  extension/eui/components/TextInputExample.ts
      * @language zh_CN
      */
@@ -62,7 +62,7 @@ namespace eui {
          * @skinPart
          * @version Egret 2.5.7
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -70,7 +70,7 @@ namespace eui {
          * @skinPart
          * @version Egret 2.5.7
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public textDisplay:EditableText;
@@ -79,7 +79,7 @@ namespace eui {
          * @skinPart
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         /**
@@ -87,7 +87,7 @@ namespace eui {
          * @skinPart
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public promptDisplay:Label;
@@ -97,7 +97,7 @@ namespace eui {
          *
          * @version Egret 2.5.7
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public get prompt():string {
             if (this.promptDisplay) {
@@ -111,7 +111,7 @@ namespace eui {
          *
          * @version Egret 2.5.7
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public set prompt(value:string) {
             this.$TextInput[sys.TextInputKeys.prompt] = value;
@@ -127,7 +127,7 @@ namespace eui {
          *
          * @version Egret 2.5.7
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public get displayAsPassword(): boolean {
             if (this.textDisplay) {
@@ -142,7 +142,7 @@ namespace eui {
          *
          * @version Egret 2.5.7
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public set displayAsPassword(value: boolean) {
             this.$TextInput[sys.TextInputKeys.displayAsPassword] = value;
@@ -156,7 +156,7 @@ namespace eui {
          *
          * @version Egret 3.1.6
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public set inputType(value: string) {
             this.$TextInput[sys.TextInputKeys.inputType] = value;
@@ -170,7 +170,7 @@ namespace eui {
          *
          * @version Egret 3.1.6
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public get inputType(): string {
             if (this.textDisplay) {
@@ -185,7 +185,7 @@ namespace eui {
          *
          * @version Egret 2.5.7
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public get textColor():number {
             if (this.textDisplay) {
@@ -199,7 +199,7 @@ namespace eui {
          *
          * @version Egret 2.5.7
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public set textColor(value:number) {
             this.$TextInput[sys.TextInputKeys.textColor] = value;
@@ -214,7 +214,7 @@ namespace eui {
          *
          * @version Egret 2.5.7
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public get maxChars():number {
             if (this.textDisplay) {
@@ -229,7 +229,7 @@ namespace eui {
          *
          * @version Egret 2.5.7
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public set maxChars(value:number) {
             this.$TextInput[sys.TextInputKeys.maxChars] = value;
@@ -244,7 +244,7 @@ namespace eui {
          *
          * @version Egret 2.5.7
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public get maxWidth():number {
             if (this.textDisplay) {
@@ -259,7 +259,7 @@ namespace eui {
          *
          * @version Egret 2.5.7
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public set maxWidth(value:number) {
             this.$TextInput[sys.TextInputKeys.maxWidth] = value;
@@ -274,7 +274,7 @@ namespace eui {
          *
          * @version Egret 2.5.7
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public get maxHeight():number {
             if (this.textDisplay) {
@@ -289,7 +289,7 @@ namespace eui {
          *
          * @version Egret 2.5.7
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public set maxHeight(value:number) {
             this.$TextInput[sys.TextInputKeys.maxHeight] = value;
@@ -304,7 +304,7 @@ namespace eui {
          *
          * @version Egret 2.5.7
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public get text():string {
             if (this.textDisplay) {
@@ -318,7 +318,7 @@ namespace eui {
          *
          * @version Egret 2.5.7
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public set text(value:string) {
             this.$TextInput[sys.TextInputKeys.text] = value;
@@ -334,7 +334,7 @@ namespace eui {
          *
          * @version Egret 2.5.7
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public get restrict():string {
             if (this.textDisplay) {
@@ -348,7 +348,7 @@ namespace eui {
          *
          * @version Egret 2.5.7
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         public set restrict(value:string) {
             this.$TextInput[sys.TextInputKeys.restrict] = value;
@@ -386,7 +386,7 @@ namespace eui {
          *
          * @version Egret 2.5.7
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         protected getCurrentState():string {
             let skin = this.skin;
@@ -413,7 +413,7 @@ namespace eui {
          *
          * @version Egret 2.5.7
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         protected partAdded(partName:string, instance:any):void {
             super.partAdded(partName, instance);
@@ -437,7 +437,7 @@ namespace eui {
          *
          * @version Egret 2.5.7
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          */
         protected partRemoved(partName:string, instance:any):void {
             super.partRemoved(partName, instance);

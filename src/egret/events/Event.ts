@@ -1,31 +1,5 @@
-//////////////////////////////////////////////////////////////////////////////////////
-//
-//  Copyright (c) 2014-present, Egret Technology.
-//  All rights reserved.
-//  Redistribution and use in source and binary forms, with or without
-//  modification, are permitted provided that the following conditions are met:
-//
-//     * Redistributions of source code must retain the above copyright
-//       notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above copyright
-//       notice, this list of conditions and the following disclaimer in the
-//       documentation and/or other materials provided with the distribution.
-//     * Neither the name of the Egret nor the
-//       names of its contributors may be used to endorse or promote products
-//       derived from this software without specific prior written permission.
-//
-//  THIS SOFTWARE IS PROVIDED BY EGRET AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
-//  OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-//  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-//  IN NO EVENT SHALL EGRET AND CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-//  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-//  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;LOSS OF USE, DATA,
-//  OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-//  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-//  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
-//  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-//////////////////////////////////////////////////////////////////////////////////////
+// SPDX-License-Identifier: BSD-2-Clause
+// Copyright (c) 2014-present, Egret Technology.
 
 namespace egret {
     /**
@@ -43,7 +17,7 @@ namespace egret {
      * the stopPropagation() or stopImmediatePropagation() method.
      * @see egret.EventDispatcher
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @includeExample egret/events/Event.ts
      * @see http://edn.egret.com/cn/docs/page/798 取消触摸事件
      * @language en_US
@@ -57,7 +31,7 @@ namespace egret {
      * 可以通过调用 stopPropagation() 或 stopImmediatePropagation() 方法，将当前事件侦听器作为处理事件的最后一个事件侦听器。
      * @see egret.EventDispatcher
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @includeExample egret/events/Event.ts
      * @see http://edn.egret.com/cn/docs/page/798 取消触摸事件
      * @language zh_CN
@@ -67,13 +41,13 @@ namespace egret {
          * Dispatched when a display object is added to the on stage display list, either directly or through the addition
          * of a sub tree in which the display object is contained.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 在将显示对象直接添加到舞台显示列表或将包含显示对象的子树添加至舞台显示列表中时调度。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static ADDED_TO_STAGE: string = "addedToStage";
@@ -81,52 +55,52 @@ namespace egret {
          * Dispatched when a display object is about to be removed from the display list, either directly or through the removal
          * of a sub tree in which the display object is contained.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 在从显示列表中直接删除显示对象或删除包含显示对象的子树时调度。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static REMOVED_FROM_STAGE: string = "removedFromStage";
         /**
          * Dispatched when a display object is added to the display list.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 将显示对象添加到显示列表中时调度。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static ADDED: string = "added";
         /**
          * Dispatched when a display object is about to be removed from the display list.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 将要从显示列表中删除显示对象时调度。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static REMOVED: string = "removed";
         /**
          * [broadcast event] Dispatched when the playhead is entering a new frame.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * [广播事件] 进入新的一帧,监听此事件将会在下一帧开始时触发一次回调。这是一个广播事件，可以在任何一个显示对象上监听，无论它是否在显示列表中。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static ENTER_FRAME: string = "enterFrame";
@@ -134,7 +108,7 @@ namespace egret {
          * Dispatched when the display list is about to be updated and rendered.
          * Note: Every time you want to receive a render event,you must call the stage.invalidate() method.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -142,20 +116,20 @@ namespace egret {
          * 注意：每次您希望 Egret 发送 Event.RENDER 事件时，都必须调用 stage.invalidate() 方法，由于每帧只会触发一次屏幕刷新，
          * 若在 Event.RENDER 回调函数执行期间再次调用stage.invalidate()，将会被忽略。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static RENDER: string = "render";
         /**
          * Dispatched when the size of stage or UIComponent is changed.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 舞台尺寸或UI组件尺寸发生改变
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static RESIZE: string = "resize";
@@ -163,13 +137,13 @@ namespace egret {
         /**
          * Dispatched when the value or selection of a property is chaned.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 属性值或状态发生改变。通常是按钮的选中状态，或者列表的选中项索引改变。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static CHANGE: string = "change";
@@ -178,26 +152,26 @@ namespace egret {
          * Dispatched when the value or selection of a property is going to change.you can cancel this by calling the
          * preventDefault() method.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 属性值或状态即将发生改变,通常是按钮的选中状态，或者列表的选中项索引改变。可以通过调用 preventDefault() 方法阻止索引发生更改。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static CHANGING: string = "changing";
         /**
          * Dispatched when the net request is complete.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 网络请求加载完成
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static COMPLETE: string = "complete";
@@ -205,13 +179,13 @@ namespace egret {
         /**
          * Dispatched when loop completed.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 循环完成。循环最后一次只派发 COMPLETE 事件，不派发 LOOP_COMPLETE 事件。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static LOOP_COMPLETE: string = "loopComplete";
@@ -219,39 +193,39 @@ namespace egret {
         /**
          * Dispatched when the TextInput instance gets focus.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * TextInput实例获得焦点
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static FOCUS_IN: string = "focusIn";
         /**
          * Dispatched when the TextInput instance loses focus.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * TextInput实例失去焦点
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static FOCUS_OUT: string = "focusOut";
         /**
          * Dispatched when the playback is ended.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 动画声音等播放完成
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static ENDED: string = "ended";
@@ -260,28 +234,28 @@ namespace egret {
         /**
          * 游戏激活
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          */
         public static ACTIVATE: string = "activate";
 
         /**
          * 取消激活
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          */
         public static DEACTIVATE: string = "deactivate";
 
         /**
          * Event.CLOSE 常量定义 close 事件对象的 type 属性的值。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          */
         public static CLOSE: string = "close";
 
         /**
          * Event.CONNECT 常量定义 connect 事件对象的 type 属性的值。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          */
         public static CONNECT: string = "connect";
 
@@ -289,14 +263,14 @@ namespace egret {
         /**
          * Event.LEAVE_STAGE 常量定义 leaveStage 事件对象的 type 属性的值。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          */
         public static LEAVE_STAGE: string = "leaveStage";
 
         /**
          * Event.SOUND_COMPLETE 常量定义 在声音完成播放后调度。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          */
         public static SOUND_COMPLETE: string = "soundComplete";
 
@@ -308,7 +282,7 @@ namespace egret {
          * @param cancelable Determines whether the Event object can be canceled. The default values is false.
          * @param data the optional data associated with this event
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -318,7 +292,7 @@ namespace egret {
          * @param cancelable 确定是否可以取消 Event 对象。默认值为 false。
          * @param data 与此事件对象关联的可选数据。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public constructor(type: string, bubbles?: boolean, cancelable?: boolean, data?: any) {
@@ -332,13 +306,13 @@ namespace egret {
         /**
          * the optional data associated with this event
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 与此事件对象关联的可选数据。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public data: any;
@@ -351,13 +325,13 @@ namespace egret {
         /**
          * The type of event. The type is case-sensitive.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 事件的类型。类型区分大小写。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get type(): string {
@@ -372,13 +346,13 @@ namespace egret {
         /**
          * Indicates whether an event is a bubbling event.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 表示事件是否为冒泡事件。如果事件可以冒泡，则此值为 true；否则为 false。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get bubbles(): boolean {
@@ -394,14 +368,14 @@ namespace egret {
          * canceled, this value is true; otherwise it is false.
          * @see #preventDefault()
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 表示是否可以阻止与事件相关联的行为。如果可以取消该行为，则此值为 true；否则为 false。
          * @see #preventDefault()
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get cancelable(): boolean {
@@ -420,7 +394,7 @@ namespace egret {
          * The bubbling phase (EventPhase.BUBBLING_PHASE).
          * @see egret.EventPhase
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -430,7 +404,7 @@ namespace egret {
          * 冒泡阶段 (EventPhase.BUBBLING_PHASE)。
          * @see egret.EventPhase
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get eventPhase(): number {
@@ -447,14 +421,14 @@ namespace egret {
          * user clicks an OK button, the current target could be the node containing that button or one of its ancestors
          * that has registered an event listener for that event.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 当前正在使用某个事件侦听器处理 Event 对象的对象。例如，如果用户单击“确定”按钮，
          * 则当前目标可以是包含该按钮的节点，也可以是它的已为该事件注册了事件侦听器的始祖之一。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get currentTarget(): any {
@@ -470,13 +444,13 @@ namespace egret {
          * The event target. This property contains the target node. For example, if a user clicks an OK button,
          * the target node is the display list node containing that button.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 事件目标。此属性包含目标节点。例如，如果用户单击“确定”按钮，则目标节点就是包含该按钮的显示列表节点。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get target(): any {
@@ -499,7 +473,7 @@ namespace egret {
          * @returns If preventDefault() has been called, returns true; otherwise, returns false.
          * @see #preventDefault()
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -507,7 +481,7 @@ namespace egret {
          * @returns 如果已调用 preventDefault() 方法，则返回 true；否则返回 false。
          * @see #preventDefault()
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public isDefaultPrevented(): boolean {
@@ -525,7 +499,7 @@ namespace egret {
          * @see #cancelable
          * @see #isDefaultPrevented
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -537,7 +511,7 @@ namespace egret {
          * @see #cancelable
          * @see #isDefaultPrevented
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public preventDefault(): void {
@@ -559,7 +533,7 @@ namespace egret {
          * @see #stopImmediatePropagation()
          * @see #preventDefault()
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -570,7 +544,7 @@ namespace egret {
          * @see #stopImmediatePropagation()
          * @see #preventDefault()
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public stopPropagation(): void {
@@ -591,7 +565,7 @@ namespace egret {
          * @see #stopPropagation()
          * @see #preventDefault()
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -601,7 +575,7 @@ namespace egret {
          * @see #stopPropagation()
          * @see #preventDefault()
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public stopImmediatePropagation(): void {
@@ -616,7 +590,7 @@ namespace egret {
          * @see egret.Event.create()
          * @see egret.Event.release()
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -625,7 +599,7 @@ namespace egret {
          * @see egret.Event.create()
          * @see egret.Event.release()
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         protected clean(): void {
@@ -643,7 +617,7 @@ namespace egret {
          * @param data {any} data
          * @method egret.Event.dispatchEvent
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -654,7 +628,7 @@ namespace egret {
          * @param data {any} 事件data
          * @method egret.Event.dispatchEvent
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static dispatchEvent(target: IEventDispatcher, type: string, bubbles: boolean = false, data?: any): boolean {
@@ -699,7 +673,7 @@ namespace egret {
          *    Event.release(event);
          * </pre>
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -719,7 +693,7 @@ namespace egret {
          * </pre>
          * @see #clean()
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static create<T extends Event>(EventClass: { new(type: string, bubbles?: boolean, cancelable?: boolean): T; eventPool?: Event[] },
@@ -762,7 +736,7 @@ namespace egret {
          * </pre>
          * @see #clean()
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -778,7 +752,7 @@ namespace egret {
          * </pre>
          * @see #clean()
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static release(event: Event): void {

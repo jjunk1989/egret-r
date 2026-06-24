@@ -2,13 +2,13 @@ module RES {
     /**
      * assetsManager underlying storage resource information
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language en_US
      */
     /**
      * assetsManager底层存储资源信息
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export interface File {

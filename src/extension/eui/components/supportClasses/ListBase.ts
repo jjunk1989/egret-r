@@ -1,31 +1,5 @@
-//////////////////////////////////////////////////////////////////////////////////////
-//
-//  Copyright (c) 2014-present, Egret Technology.
-//  All rights reserved.
-//  Redistribution and use in source and binary forms, with or without
-//  modification, are permitted provided that the following conditions are met:
-//
-//     * Redistributions of source code must retain the above copyright
-//       notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above copyright
-//       notice, this list of conditions and the following disclaimer in the
-//       documentation and/or other materials provided with the distribution.
-//     * Neither the name of the Egret nor the
-//       names of its contributors may be used to endorse or promote products
-//       derived from this software without specific prior written permission.
-//
-//  THIS SOFTWARE IS PROVIDED BY EGRET AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
-//  OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-//  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-//  IN NO EVENT SHALL EGRET AND CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-//  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-//  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;LOSS OF USE, DATA,
-//  OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-//  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-//  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
-//  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-//////////////////////////////////////////////////////////////////////////////////////
+// SPDX-License-Identifier: BSD-2-Clause
+// Copyright (c) 2014-present, Egret Technology.
 
 namespace eui.sys {
 
@@ -89,7 +63,7 @@ namespace eui {
      *
      * @version Egret 2.4
      * @version eui 1.0
-     * @platform Web,Native
+     * @platform Web
      * @language en_US
      */
     /**
@@ -103,7 +77,7 @@ namespace eui {
      *
      * @version Egret 2.4
      * @version eui 1.0
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export class ListBase extends DataGroup {
@@ -112,14 +86,14 @@ namespace eui {
          * Constructor.
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 构造函数
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public constructor() {
@@ -145,14 +119,14 @@ namespace eui {
          * Static constant representing the value "no selection".
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 未选中任何项时的索引值
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static NO_SELECTION:number = -1;
@@ -161,14 +135,14 @@ namespace eui {
          * Static constant representing no proposed selection.
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 未设置缓存选中项的值
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public static NO_PROPOSED_SELECTION:number = -2;
@@ -179,7 +153,7 @@ namespace eui {
          * is always set to a value between 0 and (<code>dataProvider.length</code> - 1).
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -187,7 +161,7 @@ namespace eui {
          * 如果该值为 true，则始终将 selectedIndex 属性设置为 0 和 (dataProvider.length - 1) 之间的一个值。
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get requireSelection():boolean {
@@ -232,7 +206,7 @@ namespace eui {
          * @default -1
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -254,7 +228,7 @@ namespace eui {
          * @default -1
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get selectedIndex():number {
@@ -286,7 +260,7 @@ namespace eui {
          * value has changed.
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -295,7 +269,7 @@ namespace eui {
          * @param dispatchChangeEvent 当索引值发生改变，且该参数为true的时候，组件派发出一个“change”事件。
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         protected setSelectedIndex(value:number, dispatchChangeEvent?:boolean):void {
@@ -336,7 +310,7 @@ namespace eui {
          * @default undefined
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -359,7 +333,7 @@ namespace eui {
          * @default undefined
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get selectedItem():any {
@@ -385,7 +359,7 @@ namespace eui {
          * @param dispatchChangeEvent if true, the component will dispatch a "change" event if the
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -394,7 +368,7 @@ namespace eui {
          * @param dispatchChangeEvent 当索引值发生改变，且该参数为true的时候，组件派发出一个“change”事件。
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         protected setSelectedItem(value:any, dispatchChangeEvent:boolean = false):void {
@@ -414,14 +388,14 @@ namespace eui {
          * Processes the properties set on the component.
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 处理对组件设置的属性
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         protected commitProperties():void {
@@ -477,14 +451,14 @@ namespace eui {
          * Updates an item renderer for use or reuse.
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 更新项呈示器，以备使用或重用
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public updateRenderer(renderer:IItemRenderer, itemIndex:number, data:any):IItemRenderer {
@@ -500,7 +474,7 @@ namespace eui {
          * and <code>false</code> if it is deselected.
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -509,7 +483,7 @@ namespace eui {
          * @param selected <code>true</code>为选中，<code>false</code>取消选中
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         protected itemSelected(index:number, selected:boolean):void {
@@ -538,7 +512,7 @@ namespace eui {
          * was cancelled.
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -548,7 +522,7 @@ namespace eui {
          * @return true 表示提交成功, false表示被取消
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         protected commitSelection(dispatchChangedEvents:boolean = true):boolean {
@@ -615,7 +589,7 @@ namespace eui {
          *  and <code>false</code> if an item was removed.
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -624,7 +598,7 @@ namespace eui {
          * @param add 如果已将项目添加到组件，则为<code>true</code>；如果已删除项目，则为<code>false</code>。
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         protected adjustSelection(newIndex:number, add:boolean = false):void {
@@ -644,7 +618,7 @@ namespace eui {
          * @param index The index of the item being added.
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -653,7 +627,7 @@ namespace eui {
          * @param index 被添加的项的索引。
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         protected itemAdded(item:any, index:number):void {
@@ -676,7 +650,7 @@ namespace eui {
          * @param index The index of the item being removed.
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -685,7 +659,7 @@ namespace eui {
          * @param index 被移除的项的索引。
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         protected itemRemoved(item:any, index:number):void {
@@ -717,7 +691,7 @@ namespace eui {
          * @param The <code>egret.gui.CollectionEvent</code> object.
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -725,7 +699,7 @@ namespace eui {
          * @param event 事件 <code>egret.gui.CollectionEvent</code> 的对象。
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         protected onCollectionChange(event:CollectionEvent):void {
@@ -744,14 +718,14 @@ namespace eui {
          * Default response to dataProvider refresh events: clear the selection and caret.
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 数据源刷新时触发。此方法不从组件外部调用，仅用于编写自定义组件时，子类覆盖父类的此方法，以便在数据源发生改变时，自动执行一些额外的根据数据刷新视图的操作。
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         protected dataProviderRefreshed():void {
@@ -765,7 +739,7 @@ namespace eui {
          * @param item the data of renderer
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -775,7 +749,7 @@ namespace eui {
          * @param item 项呈示器对应的数据
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         protected rendererAdded(renderer:IItemRenderer, index:number, item:any):void {
@@ -791,7 +765,7 @@ namespace eui {
          * @param item the data of renderer.
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -801,7 +775,7 @@ namespace eui {
          * @param item 项呈示器对应的数据
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         protected rendererRemoved(renderer:IItemRenderer, index:number, item:any):void {
@@ -816,7 +790,7 @@ namespace eui {
          * @param event The <code>egret.TouchEvent</code> object.
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -825,7 +799,7 @@ namespace eui {
          * @param event 事件<code>egret.TouchEvent</code>的对象。
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         protected onRendererTouchBegin(event:egret.TouchEvent):void {
@@ -845,7 +819,7 @@ namespace eui {
          * @param event The <code>egret.TouchEvent</code> object.
          * @version Egret 3.0.1
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -854,7 +828,7 @@ namespace eui {
          * @param event 事件<code>egret.TouchEvent</code>的对象。
          * @version Egret 3.0.1
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         protected onRendererTouchCancle(event:egret.TouchEvent):void {
@@ -870,7 +844,7 @@ namespace eui {
          * @param event The <code>egret.TouchEvent</code> object.
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -878,7 +852,7 @@ namespace eui {
          * @param event 事件<code>egret.TouchEvent</code>的对象。
          * @version Egret 2.4
          * @version eui 1.0
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         protected onRendererTouchEnd(event:egret.TouchEvent):void {

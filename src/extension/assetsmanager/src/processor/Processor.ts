@@ -7,7 +7,7 @@ module RES.processor {
          * @param host Load the processor, you can use the processor to load resources, directly use http to get the resources back
          * @param resource Resource information
          * @version Egret 5.2
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -15,7 +15,7 @@ module RES.processor {
          * @param host 加载处理器，可以不使用这个处理器加载资源，直接用http获取资源返回即可
          * @param resource 资源的信息
          * @version Egret 5.2
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         onLoadStart(host: ProcessHost, resource: ResourceInfo): Promise<any>;
@@ -24,7 +24,7 @@ module RES.processor {
          * @param host Load the processor
          * @param resource Resource information
          * @version Egret 5.2
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -32,7 +32,7 @@ module RES.processor {
          * @param host 加载处理器
          * @param resource 资源的信息
          * @version Egret 5.2
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         onRemoveStart(host: ProcessHost, resource: ResourceInfo): void;
@@ -44,7 +44,7 @@ module RES.processor {
         * @param key The key value of the resource
         * @param subkey  Collection of subset names
         * @version Egret 5.2
-        * @platform Web,Native
+        * @platform Web
         * @language en_US
         */
         /**
@@ -54,7 +54,7 @@ module RES.processor {
          * @param key 资源的key值
          * @param subkey  子集名称的集合
          * @version Egret 5.2
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         getData?(host: ProcessHost, resource: ResourceInfo, key: string, subkey: string): any;
@@ -73,7 +73,7 @@ module RES.processor {
      * @param type Load resource type
      * @param processor Loaded processor, an instance that implements the Processor interface
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language en_US
      */
     /**
@@ -81,7 +81,7 @@ module RES.processor {
      * @param type 加载资源类型
      * @param processor 加载的处理器，一个实现Processor接口的实例
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export function map(type: string, processor: Processor) {

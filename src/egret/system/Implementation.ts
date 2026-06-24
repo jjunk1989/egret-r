@@ -9,7 +9,7 @@ namespace egret {
      * @param interfaceName the interface name to register. For example："eui.IAssetAdapter","eui.Theme"
      * @param instance the instance to register.
      * @version Egret 3.2.1
-     * @platform Web,Native
+     * @platform Web
      * @language en_US
      */
     /**
@@ -17,7 +17,7 @@ namespace egret {
      * @param interfaceName 注入的接口名称。例如："eui.IAssetAdapter","eui.Theme"
      * @param instance 实现此接口的实例。
      * @version Egret 3.2.1
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export function registerImplementation(interfaceName: string, instance: any): void {
@@ -30,7 +30,7 @@ namespace egret {
      * @param interfaceName The interface name to identify. For example："eui.IAssetAdapter","eui.Theme"
      * @returns the singleton instance of the implementation class
      * @version Egret 3.2.1
-     * @platform Web,Native
+     * @platform Web
      * @language en_US
      */
     /**
@@ -38,7 +38,7 @@ namespace egret {
      * @param interfaceName 要获取的接口名称。例如："eui.IAssetAdapter","eui.Theme"
      * @returns 返回实现此接口的实例。
      * @version Egret 3.2.1
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export function getImplementation(interfaceName: string): any {

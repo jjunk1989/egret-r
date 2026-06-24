@@ -1,44 +1,18 @@
-//////////////////////////////////////////////////////////////////////////////////////
-//
-//  Copyright (c) 2014-present, Egret Technology.
-//  All rights reserved.
-//  Redistribution and use in source and binary forms, with or without
-//  modification, are permitted provided that the following conditions are met:
-//
-//     * Redistributions of source code must retain the above copyright
-//       notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above copyright
-//       notice, this list of conditions and the following disclaimer in the
-//       documentation and/or other materials provided with the distribution.
-//     * Neither the name of the Egret nor the
-//       names of its contributors may be used to endorse or promote products
-//       derived from this software without specific prior written permission.
-//
-//  THIS SOFTWARE IS PROVIDED BY EGRET AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
-//  OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-//  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-//  IN NO EVENT SHALL EGRET AND CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-//  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-//  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;LOSS OF USE, DATA,
-//  OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-//  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-//  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
-//  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-//////////////////////////////////////////////////////////////////////////////////////
+// SPDX-License-Identifier: BSD-2-Clause
+// Copyright (c) 2014-present, Egret Technology.
 
 namespace egret {
     /**
      * The DisplayObjectContainer class is a basic display list building block: a display list node that can contain children.
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @includeExample egret/display/DisplayObjectContainer.ts
      * @language en_US
      */
     /**
      * DisplayObjectContainer 类是基本显示列表构造块：一个可包含子项的显示列表节点。
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @includeExample egret/display/DisplayObjectContainer.ts
      * @language zh_CN
      */
@@ -56,13 +30,13 @@ namespace egret {
         /**
          * Creates a new DisplayObjectContainer instance.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 实例化一个容器
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public constructor() {
@@ -73,13 +47,13 @@ namespace egret {
         /**
          * Returns the number of children of this object.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 返回此对象的子项数目。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get numChildren(): number {
@@ -117,7 +91,7 @@ namespace egret {
          * @returns 在 child The DisplayObject instance that you pass in the child parameter.
          * @see #addChildAt()
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -127,7 +101,7 @@ namespace egret {
          * @returns 在 child 参数中传递的 DisplayObject 实例。
          * @see #addChildAt()
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public addChild(child: DisplayObject): DisplayObject {
@@ -150,7 +124,7 @@ namespace egret {
          * @returns The DisplayObject instance that you pass in the child parameter.
          * @see #addChild()
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -161,7 +135,7 @@ namespace egret {
          * @returns 在 child 参数中传递的 DisplayObject 实例。
          * @see #addChild()
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public addChildAt(child: DisplayObject, index: number): DisplayObject {
@@ -251,7 +225,7 @@ namespace egret {
          * @param child The child object to test.
          * @returns true if the child object is a child of the DisplayObjectContainer or the container itself; otherwise false.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -260,7 +234,7 @@ namespace egret {
          * @param child 要测试的子对象。
          * @returns 如果 child 对象是 DisplayObjectContainer 的子项或容器本身，则为 true；否则为 false。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public contains(child: DisplayObject): boolean {
@@ -279,7 +253,7 @@ namespace egret {
          * @returns The child display object at the specified index position.
          * @see #getChildByName()
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -288,7 +262,7 @@ namespace egret {
          * @returns 位于指定索引位置处的子显示对象。
          * @see #getChildByName()
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public getChildAt(index: number): DisplayObject {
@@ -307,7 +281,7 @@ namespace egret {
          * @param child The DisplayObject instance to identify.
          * @returns The index position of the child display object to identify.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -315,7 +289,7 @@ namespace egret {
          * @param child 要测试的子对象。
          * @returns 要查找的子显示对象的索引位置。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public getChildIndex(child: egret.DisplayObject): number {
@@ -332,7 +306,7 @@ namespace egret {
          * @see #getChildAt()
          * @see egret.DisplayObject#name
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -343,7 +317,7 @@ namespace egret {
          * @see #getChildAt()
          * @see egret.DisplayObject#name
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public getChildByName(name: string): DisplayObject {
@@ -368,7 +342,7 @@ namespace egret {
          * @returns The DisplayObject instance that you pass in the child parameter.
          * @see #removeChildAt()
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -378,7 +352,7 @@ namespace egret {
          * @returns 在 child 参数中传递的 DisplayObject 实例。
          * @see #removeChildAt()
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public removeChild(child: DisplayObject): DisplayObject {
@@ -400,7 +374,7 @@ namespace egret {
          * @returns The DisplayObject instance that was removed.
          * @see #removeChild()
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -410,7 +384,7 @@ namespace egret {
          * @returns 已删除的 DisplayObject 实例。
          * @see #removeChild()
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public removeChildAt(index: number): DisplayObject {
@@ -486,7 +460,7 @@ namespace egret {
          * @see #addChildAt()
          * @see #getChildAt()
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -496,7 +470,7 @@ namespace egret {
          * @see #addChildAt()
          * @see #getChildAt()
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public setChildIndex(child: DisplayObject, index: number): void {
@@ -553,7 +527,7 @@ namespace egret {
          * @param index2 The index position of the second child object.
          * @see #swapChildren()
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -562,7 +536,7 @@ namespace egret {
          * @param index2 第二个子对象的索引位置。
          * @see #swapChildren()
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public swapChildrenAt(index1: number, index2: number): void {
@@ -584,7 +558,7 @@ namespace egret {
          * @param child2 The second child object.
          * @see #swapChildrenAt()
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -593,7 +567,7 @@ namespace egret {
          * @param child2 第二个子对象。
          * @see #swapChildrenAt()
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public swapChildren(child1: DisplayObject, child2: DisplayObject): void {
@@ -655,7 +629,7 @@ namespace egret {
          * @see #removeChild()
          * @see #removeChildAt()
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -663,7 +637,7 @@ namespace egret {
          * @see #removeChild()
          * @see #removeChildAt()
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public removeChildren(): void {
@@ -771,14 +745,14 @@ namespace egret {
          * enabled, a user can interact with it by using a touch or user input device.
          * @default true
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 确定对象的子级是否支持触摸或用户输入设备。如果对象支持触摸或用户输入设备，用户可以通过使用触摸或用户输入设备与之交互。
          * @default true
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get touchChildren(): boolean {

@@ -10,7 +10,6 @@ export default tseslint.config(
     ignores: [
       '**/dist/**',
       '**/node_modules/**',
-      '**/jslib/**',
       '**/packages/*/src/**',  // generated copies
       'scripts/*.js',           // CommonJS build scripts
     ],

@@ -52,3 +52,50 @@ describe('tween module', () => {
     expect(Ease.bounceOut(1)).toBeCloseTo(1, 6);
   });
 });
+
+describe('Tween engine', () => {
+  it('Tween.get should create a Tween instance for a target', async () => {
+    await import('@egret-r/tween');
+    const Tween = (globalThis as any).egret?.Tween;
+    expect(Tween).toBeTruthy();
+
+    const target = { x: 0, y: 0 };
+    const tween = Tween.get(target);
+    expect(tween).toBeTruthy();
+    expect(typeof tween.to).toBe('function');
+    expect(typeof tween.call).toBe('function');
+  });
+
+  it('Tween.to should configure property animation', async () => {
+    await import('@egret-r/tween');
+    const Tween = (globalThis as any).egret?.Tween;
+    const target = { x: 0 };
+    const tween = Tween.get(target);
+    tween.to({ x: 100 }, 500);
+    // tween should be chainable
+    expect(tween).toBeTruthy();
+  });
+
+  it('Tween.removeTweens should clean up tweens on a target', async () => {
+    await import('@egret-r/tween');
+    const Tween = (globalThis as any).egret?.Tween;
+    const target = { x: 0 };
+    Tween.get(target).to({ x: 100 }, 1000);
+    expect(target.tween_count).toBe(1);
+    Tween.removeTweens(target);
+    expect(target.tween_count).toBe(0);
+  });
+
+  it('Tween.pauseTweens and resumeTweens should control playback', async () => {
+    await import('@egret-r/tween');
+    const Tween = (globalThis as any).egret?.Tween;
+    const target = { x: 0 };
+    Tween.get(target).to({ x: 100 }, 1000);
+    Tween.pauseTweens(target);
+    // No crash is the main assertion here
+    expect(target.tween_count).toBe(1);
+    Tween.resumeTweens(target);
+    Tween.removeTweens(target);
+    expect(target.tween_count).toBe(0);
+  });
+});

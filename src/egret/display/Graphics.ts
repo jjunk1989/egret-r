@@ -1,31 +1,5 @@
-//////////////////////////////////////////////////////////////////////////////////////
-//
-//  Copyright (c) 2014-present, Egret Technology.
-//  All rights reserved.
-//  Redistribution and use in source and binary forms, with or without
-//  modification, are permitted provided that the following conditions are met:
-//
-//     * Redistributions of source code must retain the above copyright
-//       notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above copyright
-//       notice, this list of conditions and the following disclaimer in the
-//       documentation and/or other materials provided with the distribution.
-//     * Neither the name of the Egret nor the
-//       names of its contributors may be used to endorse or promote products
-//       derived from this software without specific prior written permission.
-//
-//  THIS SOFTWARE IS PROVIDED BY EGRET AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
-//  OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-//  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-//  IN NO EVENT SHALL EGRET AND CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-//  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-//  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;LOSS OF USE, DATA,
-//  OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-//  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-//  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
-//  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-//////////////////////////////////////////////////////////////////////////////////////
+// SPDX-License-Identifier: BSD-2-Clause
+// Copyright (c) 2014-present, Egret Technology.
 
 
 namespace egret {
@@ -134,7 +108,7 @@ namespace egret {
      * The following auxiliary functions are provided for ease of use: drawRect(), drawRoundRect(), drawCircle(), and drawEllipse().
      * @see http://edn.egret.com/cn/docs/page/136 Draw Rectangle
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @includeExample egret/display/Graphics.ts
      * @language en_US
      */
@@ -143,7 +117,7 @@ namespace egret {
      * 以下是为便于使用而提供的一些辅助函数：drawRect()、drawRoundRect()、drawCircle() 和 drawEllipse()。
      * @see http://edn.egret.com/cn/docs/page/136 绘制矩形
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @includeExample egret/display/Graphics.ts
      * @language zh_CN
      */
@@ -152,13 +126,13 @@ namespace egret {
         /**
          * Initializes a Graphics object.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 创建一个 Graphics 对象。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public constructor() {
@@ -241,7 +215,7 @@ namespace egret {
          * @param color Filled color
          * @param alpha Filled Alpha value
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -250,7 +224,7 @@ namespace egret {
          * @param color 填充的颜色
          * @param alpha 填充的 Alpha 值
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public beginFill(color: number, alpha: number = 1): void {
@@ -274,7 +248,7 @@ namespace egret {
          * @param alphas An array of alpha values for the corresponding colors in the colors array;
          * @param ratios An array of color distribution ratios; valid values are 0-255.
          * @param matrix A transformation matrix as defined by the egret.Matrix class. The egret.Matrix class includes a createGradientBox() method, which lets you conveniently set up the matrix for use with the beginGradientFill() method.
-         * @platform Web,Native
+         * @platform Web
          * @version Egret 2.4
          * @language en_US
          */
@@ -286,7 +260,7 @@ namespace egret {
          * @param alphas colors 数组中对应颜色的 alpha 值数组。
          * @param ratios 颜色分布比率的数组。有效值为 0 到 255。
          * @param matrix 一个由 egret.Matrix 类定义的转换矩阵。egret.Matrix 类包括 createGradientBox() 方法，通过该方法可以方便地设置矩阵，以便与 beginGradientFill() 方法一起使用
-         * @platform Web,Native
+         * @platform Web
          * @version Egret 2.4
          * @language zh_CN
          */
@@ -304,13 +278,13 @@ namespace egret {
         /**
          * Apply fill to the lines and curves added after the previous calling to the beginFill() method.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 对从上一次调用 beginFill()方法之后添加的直线和曲线应用填充。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public endFill(): void {
@@ -332,7 +306,7 @@ namespace egret {
          * @param miterLimit Indicates the limit number of cut miter.
          * @param lineDash set the line dash.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -347,7 +321,7 @@ namespace egret {
          * @param miterLimit 用于表示剪切斜接的极限值的数字。
          * @param lineDash 设置虚线样式。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public lineStyle(thickness: number = NaN, color: number = 0, alpha: number = 1.0, pixelHinting: boolean = false,
@@ -380,7 +354,7 @@ namespace egret {
          * @param width Width of the rectangle (in pixels).
          * @param height Height of the rectangle (in pixels).
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -390,7 +364,7 @@ namespace egret {
          * @param width 矩形的宽度（以像素为单位）。
          * @param height 矩形的高度（以像素为单位）。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public drawRect(x: number, y: number, width: number, height: number): void {
@@ -419,7 +393,7 @@ namespace egret {
          * @param ellipseWidth Width used to draw an ellipse with rounded corners (in pixels).
          * @param ellipseHeight Height used to draw an ellipse with rounded corners (in pixels). (Optional) If no value is specified, the default value matches the value of the ellipseWidth parameter.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -431,7 +405,7 @@ namespace egret {
          * @param ellipseWidth 用于绘制圆角的椭圆的宽度（以像素为单位）。
          * @param ellipseHeight 用于绘制圆角的椭圆的高度（以像素为单位）。 （可选）如果未指定值，则默认值与为 ellipseWidth 参数提供的值相匹配。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public drawRoundRect(x: number, y: number, width: number, height: number, ellipseWidth: number, ellipseHeight?: number): void {
@@ -466,7 +440,7 @@ namespace egret {
          * @param y y position of the center, relative to the registration point of the parent display object (in pixels).
          * @param r Radius of the circle (in pixels).
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -475,7 +449,7 @@ namespace egret {
          * @param y 相对于父显示对象注册点的圆心的 y 位置（以像素为单位）。
          * @param radius 圆的半径（以像素为单位）。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public drawCircle(x: number, y: number, radius: number): void {
@@ -504,7 +478,7 @@ namespace egret {
          * @param width Width of the rectangle (in pixels).
          * @param height Height of the rectangle (in pixels).
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -514,7 +488,7 @@ namespace egret {
          * @param width 矩形的宽度（以像素为单位）。
          * @param height 矩形的高度（以像素为单位）。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public drawEllipse(x: number, y: number, width: number, height: number): void {
@@ -542,7 +516,7 @@ namespace egret {
          * @param x A number indicating the horizontal position, relative to the registration point of the parent display object (in pixels).
          * @param y A number indicating the vertical position, relative to the registration point of the parent display object (in pixels).
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -550,7 +524,7 @@ namespace egret {
          * @param x 一个表示相对于父显示对象注册点的水平位置的数字（以像素为单位）。
          * @param y 一个表示相对于父显示对象注册点的垂直位置的数字（以像素为单位）。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public moveTo(x: number, y: number): void {
@@ -574,7 +548,7 @@ namespace egret {
          * @param x A number indicating the horizontal position, relative to the registration point of the parent display object (in pixels).
          * @param y A number indicating the vertical position, relative to the registration point of the parent display object (in pixels).
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -582,7 +556,7 @@ namespace egret {
          * @param x 一个表示相对于父显示对象注册点的水平位置的数字（以像素为单位）。
          * @param y 一个表示相对于父显示对象注册点的垂直位置的数字（以像素为单位）。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public lineTo(x: number, y: number): void {
@@ -608,7 +582,7 @@ namespace egret {
          * @param anchorX A number indicating the horizontal position of the next anchor point, relative to the registration point of the parent display object.
          * @param anchorY A number indicating the vertical position of the next anchor point, relative to the registration point of the parent display object.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -620,7 +594,7 @@ namespace egret {
          * @param anchorX 一个数字，指定下一个锚点相对于父显示对象注册点的水平位置。
          * @param anchorY 一个数字，指定下一个锚点相对于父显示对象注册点的垂直位置。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public curveTo(controlX: number, controlY: number, anchorX: number, anchorY: number): void {
@@ -660,7 +634,7 @@ namespace egret {
          * @param anchorX Specifies the anchor point relative to the registration point of the parent display the horizontal position of the object.
          * @param anchorY Specifies the anchor point relative to the registration point of the parent display the vertical position of the object.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -672,7 +646,7 @@ namespace egret {
          * @param anchorX 指定锚点相对于父显示对象的注册点的水平位置。
          * @param anchorY 指定锚点相对于父显示对象的注册点的垂直位置。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public cubicCurveTo(controlX1: number, controlY1: number, controlX2: number,
@@ -716,7 +690,7 @@ namespace egret {
          * @param endAngle The angle at which the arc ends, measured clockwise from the positive x axis and expressed in radians.
          * @param anticlockwise if true, causes the arc to be drawn counter-clockwise between the two angles. By default it is drawn clockwise.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -728,7 +702,7 @@ namespace egret {
          * @param endAngle 圆弧的终点， 单位以弧度表示。
          * @param anticlockwise 如果为 true，逆时针绘制圆弧，反之，顺时针绘制。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public drawArc(x: number, y: number, radius: number, startAngle: number, endAngle: number, anticlockwise?: boolean): void {
@@ -844,13 +818,13 @@ namespace egret {
         /**
          * Clear graphics that are drawn to this Graphics object, and reset fill and line style settings.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 清除绘制到此 Graphics 对象的图形，并重置填充和线条样式设置。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public clear(): void {

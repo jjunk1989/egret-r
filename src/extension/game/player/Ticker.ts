@@ -1,42 +1,16 @@
-//////////////////////////////////////////////////////////////////////////////////////
-//
-//  Copyright (c) 2014-present, Egret Technology.
-//  All rights reserved.
-//  Redistribution and use in source and binary forms, with or without
-//  modification, are permitted provided that the following conditions are met:
-//
-//     * Redistributions of source code must retain the above copyright
-//       notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above copyright
-//       notice, this list of conditions and the following disclaimer in the
-//       documentation and/or other materials provided with the distribution.
-//     * Neither the name of the Egret nor the
-//       names of its contributors may be used to endorse or promote products
-//       derived from this software without specific prior written permission.
-//
-//  THIS SOFTWARE IS PROVIDED BY EGRET AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
-//  OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-//  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-//  IN NO EVENT SHALL EGRET AND CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-//  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-//  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;LOSS OF USE, DATA,
-//  OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-//  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-//  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
-//  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-//////////////////////////////////////////////////////////////////////////////////////
+// SPDX-License-Identifier: BSD-2-Clause
+// Copyright (c) 2014-present, Egret Technology.
 
 namespace egret {
      /**
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @includeExample extension/game/player/Ticker.ts
      * @language en_US
      */
     /**
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @includeExample extension/game/player/Ticker.ts
      * @language zh_CN
      */
@@ -44,7 +18,7 @@ namespace egret {
         /**
          * @deprecated
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          */
         public constructor() {
             super();
@@ -95,7 +69,7 @@ namespace egret {
          * @param thisObject {any} 帧回调函数的this对象
          * @param priority {number} 事件优先级，开发者请勿传递 Number.NEGATIVE_INFINITY 和 Number.POSITIVE_INFINITY
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @deprecated
          */
         public register(listener:Function, thisObject:any, priority:number = 0):void {
@@ -108,7 +82,7 @@ namespace egret {
          * @param listener {Function} 事件侦听函数
          * @param thisObject {any} 侦听函数的this对象
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @deprecated
          */
         public unregister(listener:Function, thisObject:any):void {
@@ -160,7 +134,7 @@ namespace egret {
          * @method egret.Ticker.getInstance
          * @returns {Ticker}
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @deprecated
          */
         public static getInstance():egret.Ticker {

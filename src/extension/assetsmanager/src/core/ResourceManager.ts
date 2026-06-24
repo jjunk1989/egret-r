@@ -4,13 +4,13 @@ module RES {
     /**
      * Print the memory occupied by the picture.
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language en_US
      */
     /**
      * 打印图片所占内存
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export function profile() {
@@ -128,13 +128,13 @@ namespace RES {
     /**
      * Resource group loading progress prompt
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language en_US
      */
     /**
      * 资源组的加载进度提示
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export interface PromiseTaskReporter {
@@ -145,7 +145,7 @@ namespace RES {
          * @param total Total resources required in the current resource bundle
          * @param resItem currently loading resource information
          * @version Egret 5.2
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -154,7 +154,7 @@ namespace RES {
          * @param total 当前资源包内需要资源总数
          * @param resItem 当前加载资源信息
          * @version Egret 5.2
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         onProgress?(current: number, total: number, resItem: ResourceInfo | undefined): void;

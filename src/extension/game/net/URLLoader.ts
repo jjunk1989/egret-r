@@ -1,31 +1,5 @@
-//////////////////////////////////////////////////////////////////////////////////////
-//
-//  Copyright (c) 2014-present, Egret Technology.
-//  All rights reserved.
-//  Redistribution and use in source and binary forms, with or without
-//  modification, are permitted provided that the following conditions are met:
-//
-//     * Redistributions of source code must retain the above copyright
-//       notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above copyright
-//       notice, this list of conditions and the following disclaimer in the
-//       documentation and/or other materials provided with the distribution.
-//     * Neither the name of the Egret nor the
-//       names of its contributors may be used to endorse or promote products
-//       derived from this software without specific prior written permission.
-//
-//  THIS SOFTWARE IS PROVIDED BY EGRET AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
-//  OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-//  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-//  IN NO EVENT SHALL EGRET AND CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-//  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-//  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;LOSS OF USE, DATA,
-//  OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-//  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-//  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
-//  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-//////////////////////////////////////////////////////////////////////////////////////
+// SPDX-License-Identifier: BSD-2-Clause
+// Copyright (c) 2014-present, Egret Technology.
 
 
 namespace egret {
@@ -47,7 +21,7 @@ namespace egret {
      * @event egret.Event.COMPLETE Dispatched when the net request is complete.
      * @event egret.IOErrorEvent.IO_ERROR io error. 
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @includeExample extension/game/net/URLLoader.ts
      * @language en_US
 	 */
@@ -59,7 +33,7 @@ namespace egret {
      * @event egret.Event.COMPLETE 加载完成后调度。 
      * @event egret.IOErrorEvent.IO_ERROR 加载错误后调度。 
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @includeExample extension/game/net/URLLoader.ts
      * @language zh_CN
 	 */
@@ -70,7 +44,7 @@ namespace egret {
 		 * @param request {URLRequest} A URLRequest object specifies the URL to be downloaded.
          * If this parameter is omitted, no load operation begins. If a parameter is specified, the load operation begins immediately
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
 		 */
 		/**
@@ -78,7 +52,7 @@ namespace egret {
 		 * @param request {URLRequest} 一个 URLRequest 对象，指定要下载的 URL。
          * 如果省略该参数，则不开始加载操作。如果已指定参数，则立即开始加载操作
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
 		 */
         public constructor(request: URLRequest = null) {
@@ -97,7 +71,7 @@ namespace egret {
          * The default value is URLLoaderDataFormat.TEXT.
          * @default egret.URLLoaderDataFormat.TEXT
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
 		 */
         /**
@@ -108,7 +82,7 @@ namespace egret {
          * 如果 dataFormat 属性的值是 URLLoaderDataFormat.VARIABLES，则所接收的数据是一个包含 URL 编码变量的 URLVariables 对象。
          * @default egret.URLLoaderDataFormat.TEXT
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public dataFormat: string = URLLoaderDataFormat.TEXT;
@@ -120,7 +94,7 @@ namespace egret {
          * If the dataFormat property is URLLoaderDataFormat.TEXTURE, the received data is a Texture object containing the bitmap data.
          * If the dataFormat property is URLLoaderDataFormat.VARIABLES, the received data is a URLVariables object containing the URL-encoded variables.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
 		 */
 		/**
@@ -130,7 +104,7 @@ namespace egret {
          * 如果 dataFormat 属性是 URLLoaderDataFormat.TEXTURE，则所接收的数据是一个包含位图数据的Texture对象。
          * 如果 dataFormat 属性是 URLLoaderDataFormat.VARIABLES，则所接收的数据是一个包含 URL 编码变量的 URLVariables 对象。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
 		 */
         public data: any = null;
@@ -145,7 +119,7 @@ namespace egret {
          * Note that the default value of the dataFormat property is text. If you want to send data to the specified URL, you can set the data property in the URLRequest object.
          * @param request {URLRequest}  A URLRequest object specifies the URL to be downloaded.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
 		/**
@@ -153,7 +127,7 @@ namespace egret {
          * 请注意 dataFormat 属性的默认值为文本。如果想将数据发送至指定的 URL，则可以在 URLRequest 对象中设置 data 属性。
 		 * @param request {URLRequest}  一个 URLRequest 对象，指定要下载的 URL。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public load(request: URLRequest): void {

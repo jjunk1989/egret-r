@@ -1,31 +1,5 @@
-//////////////////////////////////////////////////////////////////////////////////////
-//
-//  Copyright (c) 2014-present, Egret Technology.
-//  All rights reserved.
-//  Redistribution and use in source and binary forms, with or without
-//  modification, are permitted provided that the following conditions are met:
-//
-//     * Redistributions of source code must retain the above copyright
-//       notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above copyright
-//       notice, this list of conditions and the following disclaimer in the
-//       documentation and/or other materials provided with the distribution.
-//     * Neither the name of the Egret nor the
-//       names of its contributors may be used to endorse or promote products
-//       derived from this software without specific prior written permission.
-//
-//  THIS SOFTWARE IS PROVIDED BY EGRET AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
-//  OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-//  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-//  IN NO EVENT SHALL EGRET AND CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-//  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-//  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;LOSS OF USE, DATA,
-//  OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-//  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-//  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
-//  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-//////////////////////////////////////////////////////////////////////////////////////
+// SPDX-License-Identifier: BSD-2-Clause
+// Copyright (c) 2014-present, Egret Technology.
 
 
 namespace egret {
@@ -43,7 +17,7 @@ namespace egret {
      * and write simple hooks to route calls into the aggregated EventDispatcher.
      * @see egret.EventDispatcher
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @includeExample egret/events/IEventDispatcher.ts
      * @language en_US
      */
@@ -56,7 +30,7 @@ namespace egret {
      * 则可以实现 IEventDispatcher 接口，创建 EventDispatcher 成员，并编写一些简单的挂钩，将调用连接到聚合的 EventDispatcher 中。
      * @see egret.EventDispatcher
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @includeExample egret/events/IEventDispatcher.ts
      * @language zh_CN
      */
@@ -95,7 +69,7 @@ namespace egret {
          * @see #once()
          * @see #removeEventListener()
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -121,7 +95,7 @@ namespace egret {
          * @see #once()
          * @see #removeEventListener()
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         addEventListener(type:string, listener:Function, thisObject:any, useCapture?:boolean, priority?:number):void;
@@ -145,7 +119,7 @@ namespace egret {
          * @see #on()
          * @see #removeEventListener()
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -162,7 +136,7 @@ namespace egret {
          * @see #on()
          * @see #removeEventListener()
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         once(type:string, listener:Function, thisObject:any, useCapture?:boolean, priority?:number):void;
@@ -176,7 +150,7 @@ namespace egret {
          * If the listener was registered for both the capture phase and the bubbling phases, two calls to removeEventListener()
          * are required to remove both: one call with useCapture set to true, and another call with useCapture set to false.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -187,7 +161,7 @@ namespace egret {
          * @param useCapture 指出是为捕获阶段还是为冒泡阶段注册了侦听器。如果为捕获阶段以及冒泡阶段注册了侦听器，则需要对
          * removeEventListener() 进行两次调用才能将这两个侦听器删除：一次调用将 useCapture 设置为 true，另一次调用将 useCapture 设置为 false。。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         removeEventListener(type:string, listener:Function, thisObject:any, useCapture?:boolean):void;
@@ -202,7 +176,7 @@ namespace egret {
          * @returns A value of true if a listener of the specified type is registered; false otherwise.
          * @see #willTrigger()
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -213,7 +187,7 @@ namespace egret {
          * @returns 如果指定类型的侦听器已注册，则值为 true；否则，值为 false。
          * @see #willTrigger()
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         hasEventListener(type:string):boolean;
@@ -223,7 +197,7 @@ namespace egret {
          * @param event The event object dispatched into the event flow.
          * @returns A value of true unless preventDefault() is called on the event, in which case it returns false.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -231,7 +205,7 @@ namespace egret {
          * @param event 调度到事件流中的 Event 对象。
          * @returns 如果成功调度了事件，则值为 true。值 false 表示失败或对事件调用了 preventDefault()。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         dispatchEvent(event:Event):boolean;
@@ -244,7 +218,7 @@ namespace egret {
          * @returns A value of true if a listener of the specified type will be triggered; false otherwise.
          * @see #hasEventListener()
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -256,7 +230,7 @@ namespace egret {
          * @returns 是否注册过监听器，如果注册过返回true，反之返回false
          * @see #hasEventListener()
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         willTrigger(type:string):boolean;

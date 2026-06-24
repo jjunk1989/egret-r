@@ -2,13 +2,13 @@ namespace RES {
     /**
      * Print the memory occupied by the picture.
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language en_US
      */
     /**
      * 对文件路径的一些操作，针对的是 C:/A/B/C/D/example.ts这种格式
      * @version Egret 5.2
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export namespace path {
@@ -16,14 +16,14 @@ namespace RES {
          * Format the file path,"C:/A/B//C//D//example.ts"=>"C:/A/B/C/D/example.ts"
          * @param filename Incoming file path
          * @version Egret 5.2
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 格式化文件路径，"C:/A/B//C//D//example.ts"=>"C:/A/B/C/D/example.ts"
          * @param filename 传入的文件路径
          * @version Egret 5.2
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         export function normalize(filename: string): string {
@@ -35,7 +35,7 @@ namespace RES {
          * @param filename Incoming file path 
          * @return File name
          * @version Egret 5.2
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -43,7 +43,7 @@ namespace RES {
          * @param filename 传入的文件路径 
          * @return 文件的名字
          * @version Egret 5.2
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         export function basename(filename: string): string {
@@ -54,7 +54,7 @@ namespace RES {
          * @param filename Incoming file path 
          * @return The address of the folder where the file is located
          * @version Egret 5.2
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -62,7 +62,7 @@ namespace RES {
          * @param filename 传入的文件路径
          * @return 文件所在文件夹的地址
          * @version Egret 5.2
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         export function dirname(path: string): string {

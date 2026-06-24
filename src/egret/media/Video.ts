@@ -1,31 +1,5 @@
-//////////////////////////////////////////////////////////////////////////////////////
-//
-//  Copyright (c) 2014-present, Egret Technology.
-//  All rights reserved.
-//  Redistribution and use in source and binary forms, with or without
-//  modification, are permitted provided that the following conditions are met:
-//
-//     * Redistributions of source code must retain the above copyright
-//       notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above copyright
-//       notice, this list of conditions and the following disclaimer in the
-//       documentation and/or other materials provided with the distribution.
-//     * Neither the name of the Egret nor the
-//       names of its contributors may be used to endorse or promote products
-//       derived from this software without specific prior written permission.
-//
-//  THIS SOFTWARE IS PROVIDED BY EGRET AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
-//  OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-//  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-//  IN NO EVENT SHALL EGRET AND CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-//  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-//  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;LOSS OF USE, DATA,
-//  OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-//  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-//  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
-//  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-//////////////////////////////////////////////////////////////////////////////////////
+// SPDX-License-Identifier: BSD-2-Clause
+// Copyright (c) 2014-present, Egret Technology.
 
 namespace egret {
 
@@ -65,7 +39,7 @@ namespace egret {
          * @param url Audio file URL
          * * @param cache Should cache the video，only  used in Native
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -73,7 +47,7 @@ namespace egret {
          * @param url 需要加载的视频文件URL
          * @param cache 是否需要缓存到本地，只在 Native 上使用
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         load(url:string,cache?:boolean): void;
@@ -83,7 +57,7 @@ namespace egret {
          * @param startTime The initial position in seconds at which playback should start, (default = 0)
          * @param loop Defines should play the video again when the video is ended. (default = false)
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -91,7 +65,7 @@ namespace egret {
          * @param startTime 应开始播放的初始位置（以秒为单位），默认值是视频上次结束的位置
          * @param loop 是否需要循环播放，默认值是 false
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         play(startTime?:number, loop?:boolean);
@@ -99,13 +73,13 @@ namespace egret {
         /**
          * Closes the stream, causing any download of data to cease
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 关闭该流，从而停止所有数据的下载。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         close(): void;
@@ -113,13 +87,13 @@ namespace egret {
         /**
          * The URL of the video you want to play.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 想要播放的视频的URL
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         src: string;
@@ -127,13 +101,13 @@ namespace egret {
         /**
          * The URL of an image you want to display before the video is loaded or video cannot been draw on the canvas on some mobile device.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 视频加载前，或者在不支持将 video 画在 canvas 的设备上，想要显示的视频截图地址。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         poster: string;
@@ -142,27 +116,27 @@ namespace egret {
          * Should play the video in fullscreen mode (default = true).
          * Currently only supports full-screen mobile terminal web.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 是否全屏播放这个视频（默认值是 true）。
          * 目前移动端 web 只支持全屏。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         fullscreen: boolean;
         /**
          * The volume, ranging from 0 (silent) to 1 (full volume).
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 音量范围从 0（静音）至 1（最大音量）。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         volume: number;
@@ -171,13 +145,13 @@ namespace egret {
          * When the video is playing, the position property indicates
          * in seconds the current point that is being played in the video file.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 当播放视频时，position 属性表示视频文件中当前播放的位置（以秒为单位）
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         position: number;
@@ -185,13 +159,13 @@ namespace egret {
         /**
          * Pause the video playing.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 暂停播放。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         pause(): void;
@@ -216,14 +190,14 @@ namespace egret {
         /**
          * Whether current video is paused.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @readOnly
          * @language en_US
          */
         /**
          * 当前视频是否在暂停状态。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @readOnly
          * @language zh_CN
          */
@@ -231,14 +205,14 @@ namespace egret {
         /**
          * Length of the current video (in seconds).
          * @version Egret 3.0.8
-         * @platform Web,Native
+         * @platform Web
          * @readOnly
          * @language en_US
          */
         /**
          * 当前视频的长度（以秒为单位）。
          * @version Egret 3.0.8
-         * @platform Web,Native
+         * @platform Web
          * @readOnly
          * @language zh_CN
          */

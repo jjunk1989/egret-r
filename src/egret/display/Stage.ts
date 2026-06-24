@@ -1,31 +1,5 @@
-//////////////////////////////////////////////////////////////////////////////////////
-//
-//  Copyright (c) 2014-present, Egret Technology.
-//  All rights reserved.
-//  Redistribution and use in source and binary forms, with or without
-//  modification, are permitted provided that the following conditions are met:
-//
-//     * Redistributions of source code must retain the above copyright
-//       notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above copyright
-//       notice, this list of conditions and the following disclaimer in the
-//       documentation and/or other materials provided with the distribution.
-//     * Neither the name of the Egret nor the
-//       names of its contributors may be used to endorse or promote products
-//       derived from this software without specific prior written permission.
-//
-//  THIS SOFTWARE IS PROVIDED BY EGRET AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
-//  OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-//  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-//  IN NO EVENT SHALL EGRET AND CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-//  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-//  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;LOSS OF USE, DATA,
-//  OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-//  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-//  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
-//  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-//////////////////////////////////////////////////////////////////////////////////////
+// SPDX-License-Identifier: BSD-2-Clause
+// Copyright (c) 2014-present, Egret Technology.
 
 namespace egret {
     /**
@@ -35,7 +9,7 @@ namespace egret {
      * properties and methods. Many of these properties and methods are inapplicable to Stage objects.
      * @event egret.Event.RESIZE Dispatched when the stageWidth or stageHeight property of the Stage object is changed.
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @includeExample egret/display/Stage.ts
      * @language en_US
      */
@@ -49,7 +23,7 @@ namespace egret {
      * @event egret.Event.ACTIVATE 当stage获得焦点后调度
      *
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @includeExample egret/display/Stage.ts
      * @language zh_CN
      */
@@ -59,7 +33,7 @@ namespace egret {
          * @private
          * Stage不许允许自行实例化
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          */
         public constructor() {
             super();
@@ -77,7 +51,7 @@ namespace egret {
          * Note: setting the frameRate property of one Stage object changes the frame rate for all Stage objects
          * @default 30
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -85,7 +59,7 @@ namespace egret {
          * 注意: 修改任何一个Stage的frameRate属性都会同步修改其他Stage的帧率。
          * @default 30
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get frameRate(): number {
@@ -104,13 +78,13 @@ namespace egret {
         /**
          * Indicates the width of the stage, in pixels.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 舞台的当前宽度（以像素为单位）。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get stageWidth(): number {
@@ -125,13 +99,13 @@ namespace egret {
         /**
          * Indicates the height of the stage, in pixels.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 舞台的当前高度（以像素为单位）。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public get stageHeight(): number {
@@ -143,14 +117,14 @@ namespace egret {
          * event to each display object that has registered to listen for the render event. You must call the invalidate()
          * method each time you want the Egret runtime to send render events.
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
          * 调用 invalidate() 方法后，在显示列表下次呈现时，Egret 会向每个已注册侦听 Event.RENDER 事件的显示对象发送一个 Event.RENDER 事件。
          * 每次您希望 Egret 发送 Event.RENDER 事件时，都必须调用 invalidate() 方法。
          * @version Egret 2.4
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public invalidate(): void {
@@ -299,7 +273,7 @@ namespace egret {
          * @param width width
          * @param height height
          * @version Egret 2.5.5
-         * @platform Web,Native
+         * @platform Web
          * @language en_US
          */
         /**
@@ -307,7 +281,7 @@ namespace egret {
          * @param width 宽度
          * @param height 高度
          * @version Egret 2.5.5
-         * @platform Web,Native
+         * @platform Web
          * @language zh_CN
          */
         public setContentSize(width: number, height: number): void {

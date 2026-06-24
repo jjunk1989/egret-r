@@ -1,31 +1,5 @@
-//////////////////////////////////////////////////////////////////////////////////////
-//
-//  Copyright (c) 2014-present, Egret Technology.
-//  All rights reserved.
-//  Redistribution and use in source and binary forms, with or without
-//  modification, are permitted provided that the following conditions are met:
-//
-//     * Redistributions of source code must retain the above copyright
-//       notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above copyright
-//       notice, this list of conditions and the following disclaimer in the
-//       documentation and/or other materials provided with the distribution.
-//     * Neither the name of the Egret nor the
-//       names of its contributors may be used to endorse or promote products
-//       derived from this software without specific prior written permission.
-//
-//  THIS SOFTWARE IS PROVIDED BY EGRET AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
-//  OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-//  OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-//  IN NO EVENT SHALL EGRET AND CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-//  INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-//  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;LOSS OF USE, DATA,
-//  OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-//  LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-//  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
-//  EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
-//////////////////////////////////////////////////////////////////////////////////////
+// SPDX-License-Identifier: BSD-2-Clause
+// Copyright (c) 2014-present, Egret Technology.
 
 /// <reference path="core/ResourceItem.ts" />
 /// <reference path="core/ResourceConfig.ts" />
@@ -48,7 +22,7 @@ namespace RES {
      * @param type Injection type.
      * @param analyzerClass Injection type classes need to be resolved.
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @includeExample extension/resource/Resource.ts
      * @language en_US
      */
@@ -57,7 +31,7 @@ namespace RES {
      * @param type 注入的类型。
      * @param analyzerClass 注入类型需要解析的类。
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @includeExample extension/resource/Resource.ts
      * @language zh_CN
      */
@@ -69,7 +43,7 @@ namespace RES {
      * Get mapping injection.
      * @param type Injection type.
      * @version Egret 3.2.6
-     * @platform Web,Native
+     * @platform Web
      * @includeExample extension/resource/Resource.ts
      * @language en_US
      */
@@ -77,7 +51,7 @@ namespace RES {
      * 获取映射注入。
      * @param type 注入的类型。
      * @version Egret 3.2.6
-     * @platform Web,Native
+     * @platform Web
      * @includeExample extension/resource/Resource.ts
      * @language zh_CN
      */
@@ -89,14 +63,14 @@ namespace RES {
      * Register the VersionController
      * @param vcs The VersionController to register.
      * @version Egret 2.5
-     * @platform Web,Native
+     * @platform Web
      * @language en_US
      */
     /**
      * 注册版本控制器,通过RES模块加载资源时会从版本控制器获取真实url
      * @param vcs 注入的版本控制器。
      * @version Egret 2.5
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export function registerVersionController(vcs:VersionController):void {
@@ -106,13 +80,13 @@ namespace RES {
     /**
      * Returns the VersionController
      * @version Egret 2.5
-     * @platform Web,Native
+     * @platform Web
      * @language en_US
      */
     /**
      * 获得版本控制器.
      * @version Egret 2.5
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export function getVersionController():VersionController {
@@ -126,7 +100,7 @@ namespace RES {
      * @param type Configuration file format. Determine what parser to parse the configuration file. Default "json".
      * @see #setMaxRetryTimes
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @language en_US
      */
     /**
@@ -136,7 +110,7 @@ namespace RES {
      * @param type 配置文件的格式。确定要用什么解析器来解析配置文件。默认"json"
      * @see #setMaxRetryTimes
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export function loadConfig(url:string,resourceRoot:string="",type:string="json"):void{
@@ -149,7 +123,7 @@ namespace RES {
      * <br>A low priority group must wait for the high priority group to complete the end of the load to start, and the same priority group will be loaded at the same time.
      * @see #setMaxRetryTimes
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @language en_US
      */
     /**
@@ -159,7 +133,7 @@ namespace RES {
      * <br>低优先级的组必须等待高优先级组完全加载结束才能开始，同一优先级的组会同时加载。
      * @see #setMaxRetryTimes
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export function loadGroup(name:string,priority:number=0):void{
@@ -171,7 +145,7 @@ namespace RES {
      * @returns Is loading or not.
      * @see #setMaxRetryTimes
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @language en_US
      */
     /**
@@ -180,7 +154,7 @@ namespace RES {
      * @returns 是否正在加载。
      * @see #setMaxRetryTimes
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export function isGroupLoaded(name:string):boolean{
@@ -193,7 +167,7 @@ namespace RES {
      * @see RES.ResourceItem
      * @see #setMaxRetryTimes
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @language en_US
      */
     /**
@@ -203,7 +177,7 @@ namespace RES {
      * @see RES.ResourceItem
      * @see #setMaxRetryTimes
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export function getGroupByName(name:string):Array<ResourceItem>{
@@ -218,7 +192,7 @@ namespace RES {
      * @returns Create success or fail.
      * @see #setMaxRetryTimes
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @language en_US
      */
     /**
@@ -230,7 +204,7 @@ namespace RES {
      * @returns 是否创建成功。
      * @see #setMaxRetryTimes
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export function createGroup(name:string,keys:string[],override:boolean = false):boolean{
@@ -241,7 +215,7 @@ namespace RES {
      * @param key A sbuKeys attribute or name property in a configuration file.
      * @see #setMaxRetryTimes
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @language en_US
      */
     /**
@@ -249,7 +223,7 @@ namespace RES {
      * @param key 对应配置文件里的 name 属性或 sbuKeys 属性的一项。
      * @see #setMaxRetryTimes
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export function hasRes(key:string):boolean{
@@ -261,7 +235,7 @@ namespace RES {
      * @param folder Path prefix for load.
      * @see #setMaxRetryTimes
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @language en_US
      */
     /**
@@ -270,7 +244,7 @@ namespace RES {
      * @param folder 加载项的路径前缀。
      * @see #setMaxRetryTimes
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export function parseConfig(data:any, folder:string=""):void {
@@ -293,7 +267,7 @@ namespace RES {
      * @see RES.ResourceItem
      * @see #setMaxRetryTimes
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @language en_US
      */
     /**
@@ -312,7 +286,7 @@ namespace RES {
      * @see RES.ResourceItem
      * @see #setMaxRetryTimes
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export function getRes(key:string):any{
@@ -325,7 +299,7 @@ namespace RES {
      * @param thisObject This pointer of call back function.
      * @see #setMaxRetryTimes
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @language en_US
      */
     /**
@@ -335,7 +309,7 @@ namespace RES {
      * @param thisObject 回调函数的 this 引用。
      * @see #setMaxRetryTimes
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export function getResAsync(key:string,compFunc:Function,thisObject:any):void{
@@ -348,7 +322,7 @@ namespace RES {
      * @param thisObject This pointer of call back function.
      * @param type File type (optional). Use the static constants defined in the ResourceItem class. If you do not set the file name extension.
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @includeExample extension/resource/GetResByUrl.ts
      * @language en_US
      */
@@ -359,7 +333,7 @@ namespace RES {
      * @param thisObject 回调函数的 this 引用。
      * @param type 文件类型(可选)。请使用 ResourceItem 类中定义的静态常量。若不设置将根据文件扩展名生成。
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @includeExample extension/resource/GetResByUrl.ts
      * @language zh_CN
      */
@@ -373,7 +347,7 @@ namespace RES {
      * @returns Are successful destruction.
      * @see #setMaxRetryTimes
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @language en_US
      */
     /**
@@ -383,7 +357,7 @@ namespace RES {
      * @see #setMaxRetryTimes
      * @returns 是否销毁成功。
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export function destroyRes(name:string, force?:boolean):boolean{
@@ -394,7 +368,7 @@ namespace RES {
      * @param thread The number of concurrent loads to be set.
      * @see #setMaxRetryTimes
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @language en_US
      */
     /**
@@ -402,7 +376,7 @@ namespace RES {
      * @param thread 要设置的并发加载数。
      * @see #setMaxRetryTimes
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export function setMaxLoadingThread(thread:number):void{
@@ -414,7 +388,7 @@ namespace RES {
      * @param retry To set the retry count.
      * @includeExample extension/resource/Resource.ts
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @language en_US
      */
     /**
@@ -422,7 +396,7 @@ namespace RES {
      * @param retry 要设置的重试次数。
      * @includeExample extension/resource/Resource.ts
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export function setMaxRetryTimes(retry: number): void {
@@ -444,7 +418,7 @@ namespace RES {
      * If two or more listeners share the same priority, they are processed in accordance with the order of their added. The default priority is 0.
      * @see RES.ResourceEvent
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @language en_US
      */
     /**
@@ -461,7 +435,7 @@ namespace RES {
      * @see RES.ResourceEvent
      * @see #setMaxRetryTimes
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export function addEventListener(type:string, listener:(event:egret.Event)=>void, thisObject:any, useCapture:boolean = false, priority:number = 0):void {
@@ -474,7 +448,7 @@ namespace RES {
      * @param thisObject The this object that is bound to a function.
      * @param useCapture Is used to capture, and this property is only valid in the display list.
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @language en_US
      */
     /**
@@ -484,7 +458,7 @@ namespace RES {
      * @param thisObject 侦听函数绑定的this对象。
      * @param useCapture 是否使用捕获，这个属性只在显示列表中生效。
      * @version Egret 2.4
-     * @platform Web,Native
+     * @platform Web
      * @language zh_CN
      */
     export function removeEventListener(type:string, listener:(event:egret.Event)=>void,thisObject:any,useCapture:boolean = false):void {
