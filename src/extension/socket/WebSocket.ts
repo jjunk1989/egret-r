@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+/// <reference path="ISocket.ts" />
+
 namespace egret {
     /**
      * The egret.WebSocket class enables code to establish a TCP socket connection, for sending and receiving character string or binary data.

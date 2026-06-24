@@ -115,6 +115,6 @@ namespace egret {
      * @platform Web
      * @language zh_CN
      */
-    export let ISocket:{new():ISocket};
+    export let ISocket: any = undefined;
 
 }

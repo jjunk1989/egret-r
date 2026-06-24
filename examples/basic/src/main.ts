@@ -7,6 +7,7 @@ import { egret } from '@egret-r/core';
 import '@egret-r/eui';
 import '@egret-r/game';
 import '@egret-r/tween';
+import '@egret-r/socket';
 
 type TestCaseContext = {
   root: egret.DisplayObjectContainer;
@@ -16,7 +17,7 @@ type TestCaseContext = {
 type TestCaseDefinition = {
   id: string;
   title: string;
-  module: 'core' | 'eui' | 'game' | 'tween';
+  module: 'core' | 'eui' | 'game' | 'tween' | 'socket';
   run: (ctx: TestCaseContext) => void | (() => void) | Promise<void | (() => void)>;
 };
 
@@ -251,6 +252,44 @@ const TEST_CASES: TestCaseDefinition[] = [
         `name = ${String(data.name)}`,
         `mode = ${String(data.mode)}`,
         `feature = ${Array.isArray(data.feature) ? data.feature.join(', ') : String(data.feature)}`,
+      ].join('\n');
+      root.addChild(body);
+    },
+  },
+  {
+    id: 'socket-websocket',
+    title: 'Socket WebSocket Wrapper',
+    module: 'socket',
+    run: async ({ root }) => {
+      const EG_SOCKET = (globalThis as any).egret;
+
+      const label = new EUI.Label();
+      label.x = 40;
+      label.y = 112;
+      label.size = 22;
+      label.textColor = 0x0f172a;
+      label.text = 'Socket case: ISocket API';
+      root.addChild(label);
+
+      const body = new EUI.Label();
+      body.x = 40;
+      body.y = 148;
+      body.size = 18;
+      body.textColor = 0x334155;
+      body.lineSpacing = 8;
+
+      if (!EG_SOCKET.WebSocket) {
+        body.text = 'egret.WebSocket is unavailable.\nSocket module may not be loaded yet.';
+        root.addChild(body);
+        return;
+      }
+
+      const socket = new EG_SOCKET.WebSocket();
+      const typeStr = typeof socket.connect === 'function' ? 'WebSocket API ready' : 'WebSocket API incomplete';
+      body.text = [
+        'Socket module loaded successfully.',
+        `WebSocket constructor: ${typeof EG_SOCKET.WebSocket}`,
+        `${typeStr}`,
       ].join('\n');
       root.addChild(body);
     },

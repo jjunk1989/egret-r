@@ -89,5 +89,5 @@ namespace egret.web {
         }
     }
 
-    ISocket = HTML5WebSocket;
+    egret.ISocket = HTML5WebSocket;
 }
