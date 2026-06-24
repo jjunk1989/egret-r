@@ -83,6 +83,17 @@ npx vite --host 127.0.0.1 --port 3005 --strictPort
 
 Open `http://127.0.0.1:3005/` in your browser.
 
+### Recommended Development Workflow
+
+Open **two terminals** for the best development experience:
+
+| Terminal 1 | Terminal 2 |
+|------------|------------|
+| `npm run watch` | `npm -w examples/basic run dev` |
+| Watches `src/` changes → auto-rebuilds packages | Vite dev server → HMR auto-refreshes browser |
+
+> With this setup, editing any source file under `src/egret/` or `src/extension/` triggers automatic rebuild + browser refresh — **zero manual steps**.
+
 ### Using the Vite Template
 
 ```bash

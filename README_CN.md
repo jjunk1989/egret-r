@@ -83,6 +83,17 @@ npx vite --host 127.0.0.1 --port 3005 --strictPort
 
 浏览器打开 `http://127.0.0.1:3005/`。
 
+### 推荐开发工作流
+
+打开**两个终端**，获得最佳开发体验：
+
+| 终端 1 | 终端 2 |
+|--------|--------|
+| `npm run watch` | `npm -w examples/basic run dev` |
+| 监听 `src/` 变更 → 自动重构建包 | Vite 开发服务器 → HMR 自动刷新浏览器 |
+
+> 此模式下，修改 `src/egret/` 或 `src/extension/` 下的任意源码文件，都会触发自动构建 + 浏览器刷新 —— **全程零手动**。
+
 ### 使用 Vite 模板
 
 ```bash

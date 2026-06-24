@@ -9,7 +9,8 @@
     "clean": "node scripts/clean-dist.js",
     "check:bare": "node scripts/check-bare-symbols.js",
     "verify": "node scripts/verify-dist.js",
-    "watch": "node scripts/build-esm-v2.js --watch"
+    "watch": "node scripts/build-esm-v3.js --watch",
+    "watch:core": "node scripts/build-esm-v3.js --only core --watch"
   },
   "engines": {
     "node": ">=18"
