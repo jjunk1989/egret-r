@@ -49,3 +49,54 @@ describe('eui module', () => {
     expect(collection.length).toBe(0);
   });
 });
+
+describe('EUI components', () => {
+  it('Label should expose text and style properties', async () => {
+    const { eui } = await import('@egret-r/eui');
+    const label = new eui.Label();
+    label.text = 'Hello EUI';
+    label.size = 18;
+    label.textColor = 0xff0000;
+
+    expect(label.text).toBe('Hello EUI');
+    expect(label.size).toBe(18);
+    expect(label.textColor).toBe(0xff0000);
+  });
+
+  it('Label should support multiline with lineSpacing', async () => {
+    const { eui } = await import('@egret-r/eui');
+    const label = new eui.Label();
+    label.lineSpacing = 6;
+    label.textAlign = 'center';
+
+    expect(label.lineSpacing).toBe(6);
+    expect(label.textAlign).toBe('center');
+  });
+
+  it('Button should expose label and enabled', async () => {
+    const { eui } = await import('@egret-r/eui');
+    const button = new eui.Button();
+    button.label = 'Click me';
+    button.enabled = false;
+
+    expect(button.label).toBe('Click me');
+    expect(button.enabled).toBe(false);
+  });
+
+  it('CheckBox should toggle selected state', async () => {
+    const { eui } = await import('@egret-r/eui');
+    const checkbox = new eui.CheckBox();
+    checkbox.selected = true;
+    expect(checkbox.selected).toBe(true);
+    checkbox.selected = false;
+    expect(checkbox.selected).toBe(false);
+  });
+
+  it('Group should hold children', async () => {
+    const { eui } = await import('@egret-r/eui');
+    const group = new eui.Group();
+    const child = new eui.Label();
+    group.addChild(child);
+    expect(group.numChildren).toBe(1);
+  });
+});
