@@ -1,5 +1,6 @@
 import type { TestCaseDefinition } from './types';
 import { EUI, EG, showCaseError } from './types';
+const _E = (globalThis as any).eui;
 
 export const gameCases: TestCaseDefinition[] = [
   {
@@ -28,7 +29,7 @@ export const gameCases: TestCaseDefinition[] = [
       const vars = new EG.URLVariables('name=egret&mode=debug&feature=test&feature=unit');
       const data = vars.variables as Record<string, string | string[]>;
 
-      const title = new EUI.Label();
+      const title = new _E.Label();
       title.x = 40;
       title.y = 112;
       title.size = 22;
@@ -36,7 +37,7 @@ export const gameCases: TestCaseDefinition[] = [
       title.text = 'Game case: URLVariables decode';
       root.addChild(title);
 
-      const body = new EUI.Label();
+      const body = new _E.Label();
       body.x = 40;
       body.y = 148;
       body.size = 18;

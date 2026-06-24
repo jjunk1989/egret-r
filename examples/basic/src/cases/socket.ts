@@ -1,5 +1,6 @@
 import type { TestCaseDefinition } from './types';
 import { EUI } from './types';
+const _E = (globalThis as any).eui;
 
 export const socketCases: TestCaseDefinition[] = [
   {
@@ -9,7 +10,7 @@ export const socketCases: TestCaseDefinition[] = [
     run: async ({ root }) => {
       const EG_SOCKET = (globalThis as any).egret;
 
-      const label = new EUI.Label();
+      const label = new _E.Label();
       label.x = 40;
       label.y = 112;
       label.size = 22;
@@ -17,7 +18,7 @@ export const socketCases: TestCaseDefinition[] = [
       label.text = 'Socket case: ISocket API';
       root.addChild(label);
 
-      const body = new EUI.Label();
+      const body = new _E.Label();
       body.x = 40;
       body.y = 148;
       body.size = 18;

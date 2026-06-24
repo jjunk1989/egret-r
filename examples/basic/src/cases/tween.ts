@@ -1,6 +1,7 @@
 import { egret } from '@egret-r/core';
 import type { TestCaseDefinition } from './types';
 import { EUI, EG, showCaseError } from './types';
+const _E = (globalThis as any).eui;
 
 export const tweenCases: TestCaseDefinition[] = [
   {
@@ -29,7 +30,7 @@ export const tweenCases: TestCaseDefinition[] = [
       target.y = Math.max(160, Math.floor(stage.stageHeight * 0.5));
       root.addChild(target);
 
-      const label = new EUI.Label();
+      const label = new _E.Label();
       label.x = 40;
       label.y = 116;
       label.size = 20;
@@ -77,7 +78,7 @@ export const tweenCases: TestCaseDefinition[] = [
           .to({ y: 160, alpha: 0.6, rotation: 0 }, 600 + i * 150, EG.Ease.quadInOut);
       }
 
-      const label = new EUI.Label();
+      const label = new _E.Label();
       label.x = 32; label.y = 102;
       label.size = 18; label.textColor = 0x0f172a;
       label.text = '5 parallel bouncing squares · staggered timing';

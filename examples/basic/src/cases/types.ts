@@ -1,4 +1,5 @@
 import { egret } from '@egret-r/core';
+import '@egret-r/eui';
 
 export type TestCaseContext = {
   root: egret.DisplayObjectContainer;
@@ -12,12 +13,16 @@ export type TestCaseDefinition = {
   run: (ctx: TestCaseContext) => void | (() => void) | Promise<void | (() => void)>;
 };
 
-// Shared aliases accessible to all case files
-export const EUI = (globalThis as any).eui as any;
 export const EG = egret as any;
 
+// Lazy access: eui module sets globalThis.eui during evaluation
+export function EUI(): any {
+  return (globalThis as any).eui;
+}
+
 export function showCaseError(root: egret.DisplayObjectContainer, title: string, detail: string): void {
-  const titleLabel = new EUI.Label();
+  const e = EUI();
+  const titleLabel = new e.Label();
   titleLabel.x = 40;
   titleLabel.y = 112;
   titleLabel.size = 22;
@@ -25,7 +30,7 @@ export function showCaseError(root: egret.DisplayObjectContainer, title: string,
   titleLabel.text = title;
   root.addChild(titleLabel);
 
-  const detailLabel = new EUI.Label();
+  const detailLabel = new e.Label();
   detailLabel.x = 40;
   detailLabel.y = 148;
   detailLabel.size = 16;

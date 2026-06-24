@@ -2,6 +2,8 @@ import { egret } from '@egret-r/core';
 import type { TestCaseDefinition } from './types';
 import { EUI } from './types';
 
+const _E = (globalThis as any).eui;
+
 export const coreCases: TestCaseDefinition[] = [
   {
     id: 'core-geom',
@@ -20,7 +22,7 @@ export const coreCases: TestCaseDefinition[] = [
       const rect = new egret.Rectangle(24, 96, 180, 120);
       const hit = rect.contains(100, 120);
 
-      const label = new EUI.Label();
+      const label = new _E.Label();
       label.x = 40;
       label.y = 120;
       label.size = 20;
@@ -42,7 +44,7 @@ export const coreCases: TestCaseDefinition[] = [
       let taps = 0;
       const bus = new egret.EventDispatcher();
 
-      const tip = new EUI.Label();
+      const tip = new _E.Label();
       tip.x = 40;
       tip.y = 116;
       tip.size = 20;
@@ -50,7 +52,7 @@ export const coreCases: TestCaseDefinition[] = [
       tip.text = 'Tap the circle to dispatch custom event';
       root.addChild(tip);
 
-      const countLabel = new EUI.Label();
+      const countLabel = new _E.Label();
       countLabel.x = 40;
       countLabel.y = 150;
       countLabel.size = 18;
@@ -138,7 +140,7 @@ export const coreCases: TestCaseDefinition[] = [
       arc.x = 420; arc.y = 150;
       root.addChild(arc); shapes.push(arc);
 
-      const label = new EUI.Label();
+      const label = new _E.Label();
       label.x = 32; label.y = 102;
       label.size = 16;
       label.textColor = 0x475569;
@@ -157,7 +159,7 @@ export const coreCases: TestCaseDefinition[] = [
       const y0 = 112;
 
       // Multi-style text
-      const title = new EUI.Label();
+      const title = new _E.Label();
       title.x = 32; title.y = y0;
       title.size = 20; title.textColor = 0x0f172a;
       title.text = 'TextField with various styles';
@@ -229,7 +231,7 @@ export const coreCases: TestCaseDefinition[] = [
       center.graphics.endFill();
       container.addChild(center); objects.push(center);
 
-      const label = new EUI.Label();
+      const label = new _E.Label();
       label.x = 32; label.y = 102;
       label.size = 16; label.textColor = 0x475569;
       label.text = '4 rotated squares around a center';
@@ -243,6 +245,224 @@ export const coreCases: TestCaseDefinition[] = [
         egret.stopTick(tick, root);
         objects.forEach((o) => { try { root.removeChild(o); } catch (_) {} });
       };
+    },
+  },
+  {
+    id: 'core-benchmark',
+    title: 'Benchmark: Object Pool + FPS',
+    module: 'core',
+    run: ({ root, stage }) => {
+      const COUNT = 200;
+      const objects: egret.DisplayObject[] = [];
+      let frameCount = 0;
+      let lastFpsTime = performance.now();
+      let currentFps = 0;
+      let running = true;
+
+      // Title
+      const title = new _E.Label();
+      title.x = 32; title.y = 102;
+      title.size = 18; title.textColor = 0x0f172a;
+      title.text = `Benchmark: ${COUNT} moving sprites · FPS monitor`;
+      root.addChild(title); objects.push(title);
+
+      // FPS display
+      const fpsLabel = new _E.Label();
+      fpsLabel.x = 32; fpsLabel.y = 134;
+      fpsLabel.size = 22; fpsLabel.textColor = 0x2563eb;
+      fpsLabel.text = 'FPS: --';
+      root.addChild(fpsLabel); objects.push(fpsLabel);
+
+      // Detail line
+      const detail = new _E.Label();
+      detail.x = 32; detail.y = 166;
+      detail.size = 15; detail.textColor = 0x475569;
+      detail.text = 'Objects: -- | Frame: 0';
+      root.addChild(detail); objects.push(detail);
+
+      // Toggle button
+      const btn = new _E.Button();
+      btn.label = 'Pause';
+      btn.x = 32; btn.y = 200;
+      btn.width = 100; btn.height = 36;
+      root.addChild(btn); objects.push(btn);
+
+      btn.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
+        running = !running;
+        btn.label = running ? 'Pause' : 'Resume';
+      }, root);
+
+      // Create moving sprites
+      const colors = [0x2563eb, 0xdc2626, 0x7c3aed, 0x059669, 0xf59e0b, 0x0ea5e9, 0xd946ef, 0x84cc16];
+      const sprites = new egret.DisplayObjectContainer();
+      sprites.x = 0; sprites.y = 260;
+      root.addChild(sprites); objects.push(sprites);
+
+      const spriteData: { s: egret.Shape; vx: number; vy: number }[] = [];
+      const w = stage.stageWidth;
+      const h = stage.stageHeight - 300;
+
+      for (let i = 0; i < COUNT; i++) {
+        const sq = new egret.Shape();
+        sq.graphics.beginFill(colors[i % colors.length]);
+        sq.graphics.drawRect(-3, -3, 6, 6);
+        sq.graphics.endFill();
+        sq.x = Math.random() * w;
+        sq.y = Math.random() * h;
+        sq.alpha = 0.7;
+        sprites.addChild(sq);
+        spriteData.push({
+          s: sq,
+          vx: (Math.random() - 0.5) * 3,
+          vy: (Math.random() - 0.5) * 3,
+        });
+      }
+
+      // FPS ticker
+      const tick = () => {
+        frameCount++;
+        const now = performance.now();
+        if (now - lastFpsTime >= 1000) {
+          currentFps = Math.round(frameCount / ((now - lastFpsTime) / 1000));
+          fpsLabel.text = `FPS: ${currentFps}`;
+          detail.text = `Objects: ${COUNT} | Frame: ${frameCount}`;
+          frameCount = 0;
+          lastFpsTime = now;
+        }
+
+        if (running) {
+          for (let i = 0; i < spriteData.length; i++) {
+            const d = spriteData[i];
+            d.s.x += d.vx;
+            d.s.y += d.vy;
+            if (d.s.x < 0 || d.s.x > w) d.vx *= -1;
+            if (d.s.y < 0 || d.s.y > h) d.vy *= -1;
+          }
+        }
+        return false;
+      };
+      egret.startTick(tick, root);
+
+      return () => {
+        egret.stopTick(tick, root);
+        objects.forEach((o) => { try { root.removeChild(o); } catch (_) {} });
+      };
+    },
+  },
+  {
+    id: 'core-benchmark-events',
+    title: 'Benchmark: Event Dispatch',
+    module: 'core',
+    run: ({ root }) => {
+      const objects: egret.DisplayObject[] = [];
+      const ITERATIONS = 10000;
+
+      const title = new _E.Label();
+      title.x = 32; title.y = 102;
+      title.size = 18; title.textColor = 0x0f172a;
+      title.text = `Benchmark: ${ITERATIONS.toLocaleString()} event dispatches`;
+      root.addChild(title); objects.push(title);
+
+      const result = new _E.Label();
+      result.x = 32; result.y = 138;
+      result.size = 16; result.textColor = 0x475569;
+      result.lineSpacing = 6;
+      result.text = 'Running...';
+      root.addChild(result); objects.push(result);
+
+      const btn = new _E.Button();
+      btn.label = 'Run Test';
+      btn.x = 32; btn.y = 190;
+      btn.width = 120; btn.height = 36;
+      root.addChild(btn); objects.push(btn);
+
+      btn.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
+        btn.enabled = false;
+        result.text = 'Running...';
+
+        // Use requestAnimationFrame to avoid blocking UI
+        setTimeout(() => {
+          let counter = 0;
+          const bus = new egret.EventDispatcher();
+          const handler = () => { counter++; };
+
+          const t0 = performance.now();
+          for (let i = 0; i < ITERATIONS; i++) {
+            bus.addEventListener('test', handler, bus);
+            bus.dispatchEvent(new egret.Event('test'));
+            bus.removeEventListener('test', handler, bus);
+          }
+          const elapsed = performance.now() - t0;
+
+          result.text = [
+            `Iterations: ${ITERATIONS.toLocaleString()}`,
+            `Total time: ${elapsed.toFixed(1)} ms`,
+            `Per dispatch: ${(elapsed / ITERATIONS * 1000).toFixed(2)} μs`,
+            `Throughput: ${Math.round(ITERATIONS / elapsed * 1000).toLocaleString()} ops/s`,
+          ].join('\n');
+          btn.enabled = true;
+        }, 50);
+      }, root);
+
+      return () => objects.forEach((o) => root.removeChild(o));
+    },
+  },
+  {
+    id: 'core-benchmark-matrix',
+    title: 'Benchmark: Matrix Math',
+    module: 'core',
+    run: ({ root }) => {
+      const objects: egret.DisplayObject[] = [];
+      const ITERATIONS = 50000;
+
+      const title = new _E.Label();
+      title.x = 32; title.y = 102;
+      title.size = 18; title.textColor = 0x0f172a;
+      title.text = `Benchmark: ${ITERATIONS.toLocaleString()} matrix ops`;
+      root.addChild(title); objects.push(title);
+
+      const result = new _E.Label();
+      result.x = 32; result.y = 138;
+      result.size = 16; result.textColor = 0x475569;
+      result.lineSpacing = 6;
+      result.text = 'Click to run matrix benchmark';
+      root.addChild(result); objects.push(result);
+
+      const btn = new _E.Button();
+      btn.label = 'Run Test';
+      btn.x = 32; btn.y = 200;
+      btn.width = 120; btn.height = 36;
+      root.addChild(btn); objects.push(btn);
+
+      btn.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
+        btn.enabled = false;
+        result.text = 'Running...';
+
+        setTimeout(() => {
+          const m = new egret.Matrix();
+          const p = new egret.Point(10, 20);
+
+          const t0 = performance.now();
+          for (let i = 0; i < ITERATIONS; i++) {
+            m.identity();
+            m.translate(i % 100, i % 50);
+            m.rotate((i % 360) * Math.PI / 180);
+            m.scale(1 + (i % 10) / 10, 1 + (i % 10) / 10);
+            m.transformPoint(p.x, p.y);
+          }
+          const elapsed = performance.now() - t0;
+
+          result.text = [
+            `Iterations: ${ITERATIONS.toLocaleString()}`,
+            `Total time: ${elapsed.toFixed(1)} ms`,
+            `Per op: ${(elapsed / ITERATIONS * 1000).toFixed(2)} μs`,
+            `Throughput: ${Math.round(ITERATIONS / elapsed * 1000).toLocaleString()} ops/s`,
+          ].join('\n');
+          btn.enabled = true;
+        }, 50);
+      }, root);
+
+      return () => objects.forEach((o) => root.removeChild(o));
     },
   },
 ];

@@ -16,7 +16,7 @@ import { tweenCases } from './cases/tween';
 import { gameCases } from './cases/game';
 import { socketCases } from './cases/socket';
 
-const EUI = (globalThis as any).eui as any;
+const _E = (globalThis as any).eui;
 
 const TEST_CHANGE_EVENT = 'egret-test-change';
 const QUERY_KEY = 'case';
@@ -147,24 +147,24 @@ class Main extends egret.DisplayObjectContainer {
   }
 
   private createHeader(w: number, h: number): void {
-    this.headerGroup = new EUI.Group();
+    this.headerGroup = new _E.Group();
     this.headerGroup.x = 24;
     this.headerGroup.y = 18;
     this.addChild(this.headerGroup);
 
-    const title = new EUI.Label();
+    const title = new _E.Label();
     title.text = 'Egret Basic Testbed';
     title.size = 30;
     title.textColor = 0x0f172a;
     this.headerGroup.addChild(title);
 
-    this.caseTitle = new EUI.Label();
+    this.caseTitle = new _E.Label();
     this.caseTitle.y = 40;
     this.caseTitle.size = 20;
     this.caseTitle.textColor = 0x1d4ed8;
     this.headerGroup.addChild(this.caseTitle);
 
-    this.caseMeta = new EUI.Label();
+    this.caseMeta = new _E.Label();
     this.caseMeta.y = 66;
     this.caseMeta.size = 15;
     this.caseMeta.textColor = 0x334155;
