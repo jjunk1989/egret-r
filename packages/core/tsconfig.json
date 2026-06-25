@@ -2,7 +2,9 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "dist",
-    "rootDir": "src"
+    "rootDir": "src",
+    "composite": true,          // 新增：声明为可被引用的子项目
+    "declaration": true         // 新增：生成 .d.ts 文件，composite 模式必须
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"]

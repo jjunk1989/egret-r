@@ -1,6 +1,7 @@
+import { egret } from '@egret-r/core';
+import '@egret-r/eui';
 import type { TestCaseDefinition } from './types';
-import { EUI, EG, showCaseError } from './types';
-const _E = (globalThis as any).eui;
+import { showCaseError } from './types';
 
 export const gameCases: TestCaseDefinition[] = [
   {
@@ -8,7 +9,7 @@ export const gameCases: TestCaseDefinition[] = [
     title: 'Game URLVariables Parse',
     module: 'game',
     run: async ({ root }) => {
-      if (!EG.URLVariables) {
+      if (!egret.URLVariables) {
         try {
           await (0, eval)("import('@egret-r/game')");
         } catch {
@@ -21,15 +22,15 @@ export const gameCases: TestCaseDefinition[] = [
         }
       }
 
-      if (!EG.URLVariables) {
+      if (!egret.URLVariables) {
         showCaseError(root, 'URLVariables unavailable', 'egret.URLVariables is missing in current runtime build.');
         return;
       }
 
-      const vars = new EG.URLVariables('name=egret&mode=debug&feature=test&feature=unit');
+      const vars = new egret.URLVariables('name=egret&mode=debug&feature=test&feature=unit');
       const data = vars.variables as Record<string, string | string[]>;
 
-      const title = new _E.Label();
+      const title = new eui.Label();
       title.x = 40;
       title.y = 112;
       title.size = 22;
@@ -37,7 +38,7 @@ export const gameCases: TestCaseDefinition[] = [
       title.text = 'Game case: URLVariables decode';
       root.addChild(title);
 
-      const body = new _E.Label();
+      const body = new eui.Label();
       body.x = 40;
       body.y = 148;
       body.size = 18;

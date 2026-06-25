@@ -2,9 +2,12 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "dist",
-    "rootDir": "src"
+    "rootDir": "src",
+    "paths": {
+      "egret": ["../core/dist/index.d.ts"]
+    }
   },
-  "include": ["src"],
+  "include": ["src", "../core/dist/index.d.ts"],
   "references": [
     { "path": "../core" }
   ],

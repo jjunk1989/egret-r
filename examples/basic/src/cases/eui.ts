@@ -1,6 +1,6 @@
 import type { TestCaseDefinition } from './types';
-import { EUI } from './types';
-const _E = (globalThis as any).eui;
+import { egret } from '@egret-r/core';
+import '@egret-r/eui';
 
 export const euiCases: TestCaseDefinition[] = [
   {
@@ -8,24 +8,24 @@ export const euiCases: TestCaseDefinition[] = [
     title: 'EUI Group + ArrayCollection',
     module: 'eui',
     run: ({ root }) => {
-      const group = new _E.Group();
+      const group = new eui.Group();
       group.x = 40;
       group.y = 112;
       root.addChild(group);
 
-      const title = new _E.Label();
+      const title = new eui.Label();
       title.size = 22;
       title.textColor = 0x1e293b;
       title.text = 'EUI ArrayCollection Test';
       group.addChild(title);
 
-      const data = new _E.ArrayCollection([
+      const data = new eui.ArrayCollection([
         { name: 'alpha', value: 1 },
         { name: 'beta', value: 2 },
         { name: 'gamma', value: 3 },
       ]);
 
-      const detail = new _E.Label();
+      const detail = new eui.Label();
       detail.y = 40;
       detail.size = 18;
       detail.textColor = 0x475569;
@@ -46,19 +46,19 @@ export const euiCases: TestCaseDefinition[] = [
       const objects: egret.DisplayObject[] = [];
       let clickCount = 0;
 
-      const title = new _E.Label();
+      const title = new eui.Label();
       title.x = 32; title.y = 102;
       title.size = 18; title.textColor = 0x0f172a;
       title.text = 'Button click test';
       root.addChild(title); objects.push(title);
 
-      const counter = new _E.Label();
+      const counter = new eui.Label();
       counter.x = 32; counter.y = 134;
       counter.size = 16; counter.textColor = 0x2563eb;
       counter.text = 'Clicks: 0';
       root.addChild(counter); objects.push(counter);
 
-      const btn = new _E.Button();
+      const btn = new eui.Button();
       btn.label = 'Click Me';
       btn.x = 32; btn.y = 170;
       btn.width = 140; btn.height = 44;
@@ -69,20 +69,20 @@ export const euiCases: TestCaseDefinition[] = [
         counter.text = `Clicks: ${clickCount}`;
       }, root);
 
-      const disabledBtn = new _E.Button();
+      const disabledBtn = new eui.Button();
       disabledBtn.label = 'Disabled';
       disabledBtn.enabled = false;
       disabledBtn.x = 190; disabledBtn.y = 170;
       disabledBtn.width = 120; disabledBtn.height = 44;
       root.addChild(disabledBtn); objects.push(disabledBtn);
 
-      const toggleBtn = new _E.ToggleButton();
+      const toggleBtn = new eui.ToggleButton();
       toggleBtn.label = 'Toggle';
       toggleBtn.x = 32; toggleBtn.y = 230;
       toggleBtn.width = 140; toggleBtn.height = 44;
       root.addChild(toggleBtn); objects.push(toggleBtn);
 
-      const toggleLabel = new _E.Label();
+      const toggleLabel = new eui.Label();
       toggleLabel.x = 190; toggleLabel.y = 240;
       toggleLabel.size = 16; toggleLabel.textColor = 0x7c3aed;
       toggleLabel.text = 'State: OFF';
@@ -102,19 +102,19 @@ export const euiCases: TestCaseDefinition[] = [
     run: ({ root }) => {
       const objects: egret.DisplayObject[] = [];
 
-      const title = new _E.Label();
+      const title = new eui.Label();
       title.x = 32; title.y = 102;
       title.size = 18; title.textColor = 0x0f172a;
       title.text = 'CheckBox & RadioButton';
       root.addChild(title); objects.push(title);
 
-      const status = new _E.Label();
+      const status = new eui.Label();
       status.x = 32; status.y = 134;
       status.size = 16; status.textColor = 0x475569;
       status.text = 'Check: unchecked';
       root.addChild(status); objects.push(status);
 
-      const cb = new _E.CheckBox();
+      const cb = new eui.CheckBox();
       cb.label = 'Agree to terms';
       cb.x = 32; cb.y = 165;
       root.addChild(cb); objects.push(cb);
@@ -124,15 +124,15 @@ export const euiCases: TestCaseDefinition[] = [
       }, root);
 
       // Radio group
-      const group = new _E.RadioButtonGroup();
-      const rbLabel = new _E.Label();
+      const group = new eui.RadioButtonGroup();
+      const rbLabel = new eui.Label();
       rbLabel.x = 32; rbLabel.y = 205;
       rbLabel.size = 16; rbLabel.textColor = 0x7c3aed;
       rbLabel.text = 'Selected: none';
       root.addChild(rbLabel); objects.push(rbLabel);
 
       ['Option A', 'Option B', 'Option C'].forEach((opt, i) => {
-        const rb = new _E.RadioButton();
+        const rb = new eui.RadioButton();
         rb.label = opt;
         rb.value = opt;
         rb.group = group;

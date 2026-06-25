@@ -1,8 +1,5 @@
 import { egret } from '@egret-r/core';
 import type { TestCaseDefinition } from './types';
-import { EUI } from './types';
-
-const _E = (globalThis as any).eui;
 
 export const coreCases: TestCaseDefinition[] = [
   {
@@ -22,7 +19,7 @@ export const coreCases: TestCaseDefinition[] = [
       const rect = new egret.Rectangle(24, 96, 180, 120);
       const hit = rect.contains(100, 120);
 
-      const label = new _E.Label();
+      const label = new eui.Label();
       label.x = 40;
       label.y = 120;
       label.size = 20;
@@ -44,7 +41,7 @@ export const coreCases: TestCaseDefinition[] = [
       let taps = 0;
       const bus = new egret.EventDispatcher();
 
-      const tip = new _E.Label();
+      const tip = new eui.Label();
       tip.x = 40;
       tip.y = 116;
       tip.size = 20;
@@ -52,7 +49,7 @@ export const coreCases: TestCaseDefinition[] = [
       tip.text = 'Tap the circle to dispatch custom event';
       root.addChild(tip);
 
-      const countLabel = new _E.Label();
+      const countLabel = new eui.Label();
       countLabel.x = 40;
       countLabel.y = 150;
       countLabel.size = 18;
@@ -140,7 +137,7 @@ export const coreCases: TestCaseDefinition[] = [
       arc.x = 420; arc.y = 150;
       root.addChild(arc); shapes.push(arc);
 
-      const label = new _E.Label();
+      const label = new eui.Label();
       label.x = 32; label.y = 102;
       label.size = 16;
       label.textColor = 0x475569;
@@ -159,7 +156,7 @@ export const coreCases: TestCaseDefinition[] = [
       const y0 = 112;
 
       // Multi-style text
-      const title = new _E.Label();
+      const title = new eui.Label();
       title.x = 32; title.y = y0;
       title.size = 20; title.textColor = 0x0f172a;
       title.text = 'TextField with various styles';
@@ -231,7 +228,7 @@ export const coreCases: TestCaseDefinition[] = [
       center.graphics.endFill();
       container.addChild(center); objects.push(center);
 
-      const label = new _E.Label();
+      const label = new eui.Label();
       label.x = 32; label.y = 102;
       label.size = 16; label.textColor = 0x475569;
       label.text = '4 rotated squares around a center';
@@ -260,28 +257,28 @@ export const coreCases: TestCaseDefinition[] = [
       let running = true;
 
       // Title
-      const title = new _E.Label();
+      const title = new eui.Label();
       title.x = 32; title.y = 102;
       title.size = 18; title.textColor = 0x0f172a;
       title.text = `Benchmark: ${COUNT} moving sprites · FPS monitor`;
       root.addChild(title); objects.push(title);
 
       // FPS display
-      const fpsLabel = new _E.Label();
+      const fpsLabel = new eui.Label();
       fpsLabel.x = 32; fpsLabel.y = 134;
       fpsLabel.size = 22; fpsLabel.textColor = 0x2563eb;
       fpsLabel.text = 'FPS: --';
       root.addChild(fpsLabel); objects.push(fpsLabel);
 
       // Detail line
-      const detail = new _E.Label();
+      const detail = new eui.Label();
       detail.x = 32; detail.y = 166;
       detail.size = 15; detail.textColor = 0x475569;
       detail.text = 'Objects: -- | Frame: 0';
       root.addChild(detail); objects.push(detail);
 
       // Toggle button
-      const btn = new _E.Button();
+      const btn = new eui.Button();
       btn.label = 'Pause';
       btn.x = 32; btn.y = 200;
       btn.width = 100; btn.height = 36;
@@ -357,20 +354,20 @@ export const coreCases: TestCaseDefinition[] = [
       const objects: egret.DisplayObject[] = [];
       const ITERATIONS = 10000;
 
-      const title = new _E.Label();
+      const title = new eui.Label();
       title.x = 32; title.y = 102;
       title.size = 18; title.textColor = 0x0f172a;
       title.text = `Benchmark: ${ITERATIONS.toLocaleString()} event dispatches`;
       root.addChild(title); objects.push(title);
 
-      const result = new _E.Label();
+      const result = new eui.Label();
       result.x = 32; result.y = 138;
       result.size = 16; result.textColor = 0x475569;
       result.lineSpacing = 6;
       result.text = 'Running...';
       root.addChild(result); objects.push(result);
 
-      const btn = new _E.Button();
+      const btn = new eui.Button();
       btn.label = 'Run Test';
       btn.x = 32; btn.y = 190;
       btn.width = 120; btn.height = 36;
@@ -415,20 +412,20 @@ export const coreCases: TestCaseDefinition[] = [
       const objects: egret.DisplayObject[] = [];
       const ITERATIONS = 50000;
 
-      const title = new _E.Label();
+      const title = new eui.Label();
       title.x = 32; title.y = 102;
       title.size = 18; title.textColor = 0x0f172a;
       title.text = `Benchmark: ${ITERATIONS.toLocaleString()} matrix ops`;
       root.addChild(title); objects.push(title);
 
-      const result = new _E.Label();
+      const result = new eui.Label();
       result.x = 32; result.y = 138;
       result.size = 16; result.textColor = 0x475569;
       result.lineSpacing = 6;
       result.text = 'Click to run matrix benchmark';
       root.addChild(result); objects.push(result);
 
-      const btn = new _E.Button();
+      const btn = new eui.Button();
       btn.label = 'Run Test';
       btn.x = 32; btn.y = 200;
       btn.width = 120; btn.height = 36;

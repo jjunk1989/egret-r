@@ -377,7 +377,18 @@ async function buildPackage(pkg) {
   }
   entryContent = bareDecls + entryContent;
 
-  entryContent += '\nexport {};\n';
+  entryContent += '\n';
+  if (pkg.name === 'core') {
+    entryContent += 'if (typeof globalThis !== "undefined") { globalThis.egret = egret; }\n';
+    entryContent += 'export { egret };\n';
+  } else if (pkg.name === 'eui') {
+    entryContent += 'if (typeof globalThis !== "undefined") { globalThis.egret = egret; globalThis.eui = eui; }\n';
+    entryContent += 'export { eui };\n';
+  } else {
+    // game, tween, socket: extend egret namespace, must write back
+    entryContent += 'if (typeof globalThis !== "undefined") { globalThis.egret = egret; }\n';
+    entryContent += 'export {};\n';
+  }
   fs.writeFileSync(entryPath, entryContent, 'utf8');
 
   // Common esbuild options
@@ -395,18 +406,11 @@ async function buildPackage(pkg) {
   };
 
   var runtimeBanner = '';
-  if (pkg.name === 'game' || pkg.name === 'tween' || pkg.name === 'socket') {
+  if (pkg.name === 'eui' || pkg.name === 'game' || pkg.name === 'tween' || pkg.name === 'socket') {
     runtimeBanner = [
       'var egret = (typeof globalThis !== "undefined" && globalThis.egret) ? globalThis.egret : undefined;',
       'var ticker = egret && (egret.ticker || (egret.sys && egret.sys.$ticker));',
     ].join('\n') + '\n';
-  }
-
-  var exportFooter = '';
-  if (pkg.name === 'core') {
-    exportFooter = '\nif (typeof globalThis !== "undefined") { globalThis.egret = egret; }\nexport { egret };\n';
-  } else if (pkg.name === 'eui') {
-    exportFooter = '\nif (typeof globalThis !== "undefined") { globalThis.eui = eui; }\nexport { eui };\n';
   }
 
   // Build normal version
@@ -415,7 +419,6 @@ async function buildPackage(pkg) {
     outfile: path.join(distDir, 'index.js'),
     minify: false, keepNames: true,
     banner: { js: runtimeBanner },
-    footer: { js: exportFooter },
   }));
   console.log('    ' + (fs.statSync(path.join(distDir, 'index.js')).size / 1024).toFixed(1) + ' KB');
 

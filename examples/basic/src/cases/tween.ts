@@ -1,7 +1,6 @@
 import { egret } from '@egret-r/core';
 import type { TestCaseDefinition } from './types';
-import { EUI, EG, showCaseError } from './types';
-const _E = (globalThis as any).eui;
+import { showCaseError } from './types';
 
 export const tweenCases: TestCaseDefinition[] = [
   {
@@ -9,7 +8,7 @@ export const tweenCases: TestCaseDefinition[] = [
     title: 'Tween + Ease',
     module: 'tween',
     run: async ({ root, stage }) => {
-      if (!EG.Tween || !EG.Ease) {
+      if (!egret.Tween || !egret.Ease) {
         try {
           await (0, eval)("import('@egret-r/tween')");
         } catch {
@@ -30,7 +29,7 @@ export const tweenCases: TestCaseDefinition[] = [
       target.y = Math.max(160, Math.floor(stage.stageHeight * 0.5));
       root.addChild(target);
 
-      const label = new _E.Label();
+      const label = new eui.Label();
       label.x = 40;
       label.y = 116;
       label.size = 20;
@@ -39,12 +38,12 @@ export const tweenCases: TestCaseDefinition[] = [
       root.addChild(label);
 
       const endX = Math.max(80, stage.stageWidth - 120);
-      EG.Tween.get(target, { loop: true })
-        .to({ x: endX, rotation: 360 }, 1300, EG.Ease.quadInOut)
-        .to({ x: 44, rotation: 0 }, 1300, EG.Ease.quadInOut);
+      egret.Tween.get(target, { loop: true })
+        .to({ x: endX, rotation: 360 }, 1300, egret.Ease.quadInOut)
+        .to({ x: 44, rotation: 0 }, 1300, egret.Ease.quadInOut);
 
       return () => {
-        EG.Tween.removeTweens(target);
+        egret.Tween.removeTweens(target);
       };
     },
   },
@@ -53,7 +52,7 @@ export const tweenCases: TestCaseDefinition[] = [
     title: 'Tween Multiple Parallel',
     module: 'tween',
     run: async ({ root, stage }) => {
-      if (!EG.Tween || !EG.Ease) {
+      if (!egret.Tween || !egret.Ease) {
         try { await (0, eval)("import('@egret-r/tween')"); } catch { return; }
       }
 
@@ -73,19 +72,19 @@ export const tweenCases: TestCaseDefinition[] = [
         root.addChild(sq); objects.push(sq);
         targets.push(sq);
 
-        EG.Tween.get(sq, { loop: true })
-          .to({ y: 280, alpha: 1, rotation: 180 }, 600 + i * 150, EG.Ease.quadInOut)
-          .to({ y: 160, alpha: 0.6, rotation: 0 }, 600 + i * 150, EG.Ease.quadInOut);
+        egret.Tween.get(sq, { loop: true })
+          .to({ y: 280, alpha: 1, rotation: 180 }, 600 + i * 150, egret.Ease.quadInOut)
+          .to({ y: 160, alpha: 0.6, rotation: 0 }, 600 + i * 150, egret.Ease.quadInOut);
       }
 
-      const label = new _E.Label();
+      const label = new eui.Label();
       label.x = 32; label.y = 102;
       label.size = 18; label.textColor = 0x0f172a;
       label.text = '5 parallel bouncing squares · staggered timing';
       root.addChild(label); objects.push(label);
 
       return () => {
-        targets.forEach((t) => EG.Tween.removeTweens(t));
+        targets.forEach((t) => egret.Tween.removeTweens(t));
         objects.forEach((o) => root.removeChild(o));
       };
     },

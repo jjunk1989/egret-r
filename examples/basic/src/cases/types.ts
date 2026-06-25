@@ -13,16 +13,9 @@ export type TestCaseDefinition = {
   run: (ctx: TestCaseContext) => void | (() => void) | Promise<void | (() => void)>;
 };
 
-export const EG = egret as any;
-
-// Lazy access: eui module sets globalThis.eui during evaluation
-export function EUI(): any {
-  return (globalThis as any).eui;
-}
 
 export function showCaseError(root: egret.DisplayObjectContainer, title: string, detail: string): void {
-  const e = EUI();
-  const titleLabel = new e.Label();
+  const titleLabel = new eui.Label();
   titleLabel.x = 40;
   titleLabel.y = 112;
   titleLabel.size = 22;
@@ -30,7 +23,7 @@ export function showCaseError(root: egret.DisplayObjectContainer, title: string,
   titleLabel.text = title;
   root.addChild(titleLabel);
 
-  const detailLabel = new e.Label();
+  const detailLabel = new eui.Label();
   detailLabel.x = 40;
   detailLabel.y = 148;
   detailLabel.size = 16;
