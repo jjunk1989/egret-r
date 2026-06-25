@@ -52,7 +52,6 @@ namespace egret {
     locale_strings[1047] = "egret.localStorage.setItem保存失败,key={0}&value={1}";
     locale_strings[1048] = "视频加载失败";
     locale_strings[1049] = "声音在没有加载完之前不允许播放";
-    locale_strings[1050] = "ExternalInterface调用了js没有注册的方法: {0}";
     locale_strings[1051] = "runtime 只支持 webgl 渲染模式";
     locale_strings[1052] = "网络请求超时:{0}";
 
