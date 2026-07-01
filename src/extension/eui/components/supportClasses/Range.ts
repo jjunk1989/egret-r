@@ -9,7 +9,7 @@ import { PropertyEvent } from "../../events/PropertyEvent";
     /**
      * @private
      */
-    export const enum RangeKeys{
+    export enum RangeKeys {
         maximum,
         maxChanged,
         minimum,
@@ -21,6 +21,8 @@ import { PropertyEvent } from "../../events/PropertyEvent";
         snapIntervalChanged,
         explicitSnapInterval
     }
+
+    sys.RangeKeys = RangeKeys;
 
 
     /**

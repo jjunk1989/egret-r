@@ -12,28 +12,14 @@ import { is } from "../../../egret/utils/is";
     /**
      * @private
      */
-    export const enum AddPosition {
-        /**
-         * @private
-         * 添加父级容器的底层
-         */
+    export enum AddPosition {
         FIRST,
-        /**
-         * @private
-         * 添加在父级容器的顶层
-         */
         LAST,
-        /**
-         * @private
-         * 添加在相对对象之前
-         */
         BEFORE,
-        /**
-         * @private
-         * 添加在相对对象之后
-         */
         AFTER
     }
+
+    sys.AddPosition = AddPosition;
 
 
     /**

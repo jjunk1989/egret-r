@@ -17,11 +17,13 @@ import { PropertyEvent } from "../events/PropertyEvent";
     /**
      * @private
      */
-    export const enum EditableTextKeys {
+    export enum EditableTextKeys {
         promptText,
         textColorUser,
         asPassword
     }
+
+    sys.EditableTextKeys = EditableTextKeys;
 
     let UIImpl = UIComponentImpl;
 

@@ -9,7 +9,7 @@ import { Label } from "./Label";
     /**
      * @private
      */
-    export const enum TextInputKeys {
+    export enum TextInputKeys {
         prompt,
         displayAsPassword,
         textColor,
@@ -20,6 +20,9 @@ import { Label } from "./Label";
         restrict,
         inputType
     }
+
+    sys.TextInputKeys = TextInputKeys;
+
     /**
      *
      */

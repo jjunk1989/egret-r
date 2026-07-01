@@ -360,6 +360,8 @@ async function buildPackage(pkg) {
     srcCode = srcCode.replace(/(^|\n)(\s*)export\s+(?=class\s|function\s|let\s|const\s|var\s|interface\s|enum\s|type\s|namespace\s|abstract\s|declare\s)/gm, '$1$2');
     // Convert let/const with assignment to var (allows duplicates in namespace), skip const enum and type-only declarations
     srcCode = srcCode.replace(/^(\s*)(let|const)\s+(?!enum\b)(\w[\w$]*\s*[:=])/gm, '$1var $3');
+    // Also handle bare declarations without assignment: let x; -> var x;
+    srcCode = srcCode.replace(/^(\s*)(let|const)\s+(?!enum\b)(\w[\w$]*)\s*;/gm, '$1var $3;');
 
     entryContent += '\n// === ' + rel + ' ===\n';
     entryContent += srcCode + '\n';
