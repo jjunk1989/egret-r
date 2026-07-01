@@ -796,7 +796,7 @@ import { $TempMatrix } from "../../../egret/geom/Matrix";
     /**
      * @private
      */
-    export const enum UIKeys {
+    export enum UIKeys {
         left,
         right,
         top,
@@ -828,6 +828,8 @@ import { $TempMatrix } from "../../../egret/geom/Matrix";
         layoutHeightExplicitlySet,
         initialized
     }
+
+    sys.UIKeys = UIKeys;
 
     let UIComponentClass = "eui.UIComponent";
 

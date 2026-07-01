@@ -6,6 +6,7 @@ import { Event } from "../../../egret/events/Event";
 import { Component } from "./Component";
 import { IItemRenderer } from "../core/IItemRenderer";
 import { registerBindable } from "../utils/registerBindable";
+import { PropertyEvent } from "../events/PropertyEvent";
 
 
     /**

@@ -12,6 +12,7 @@ import { Rectangle } from "../../../egret/geom/Rectangle";
 import { Component } from "./Component";
 import { registerBindable } from "../utils/registerBindable";
 import { UIComponentImpl, UIKeys, implementUIComponent, UIComponent } from "../core/UIComponent";
+import { PropertyEvent } from "../events/PropertyEvent";
 
     /**
      * @private

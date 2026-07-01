@@ -6,6 +6,7 @@ import { Event } from "../../../egret/events/Event";
 import { EventDispatcher } from "../../../egret/events/EventDispatcher";
 import { RadioButton } from "./RadioButton";
 import { registerBindable } from "../utils/registerBindable";
+import { PropertyEvent } from "../events/PropertyEvent";
 
 
     let groupCount:number = 0;

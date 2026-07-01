@@ -16,6 +16,7 @@ import { StateValues, StateClient, State } from "../states/State";
 import { LayoutBase } from "../layouts/supportClasses/LayoutBase";
 import { $TempRectangle } from "../../../egret/geom/Rectangle";
 import { $TempPoint } from "../../../egret/geom/Point";
+import { PropertyEvent } from "../events/PropertyEvent";
 
 
     /**

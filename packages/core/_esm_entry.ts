@@ -363,6 +363,7 @@ egret.getAllSupportLanguageWordWrap = $m120.getAllSupportLanguageWordWrap;
 egret.getUsingWordWrap = $m120.getUsingWordWrap;
 egret.cancelLanguageWordWrapRegex = $m120.cancelLanguageWordWrapRegex;
 egret.TextField = $m120.TextField;
+egret.TextKeys = $m120.TextKeys;
 import * as $m121 from "../../src/egret/text/TextFieldUtils";
 egret.TextFieldUtils = $m121.TextFieldUtils;
 import * as $m122 from "../../src/egret/text/VerticalAlign";

@@ -3,6 +3,7 @@
 
 import { Component } from "../Component";
 import { registerBindable } from "../../utils/registerBindable";
+import { PropertyEvent } from "../../events/PropertyEvent";
 
     
     /**

@@ -20,7 +20,7 @@ import { DEBUG } from "../../../Defines.debug";
     /**
      * @private
      */
-    export const enum ComponentKeys {
+    export enum ComponentKeys {
         hostComponentKey,
         skinName,
         explicitState,
@@ -31,6 +31,8 @@ import { DEBUG } from "../../../Defines.debug";
         explicitTouchEnabled,
         skin
     }
+
+    sys.ComponentKeys = ComponentKeys;
 
 
     /**

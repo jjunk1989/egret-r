@@ -6,6 +6,7 @@ import { BitmapFont } from "../../../egret/text/BitmapFont";
 import { Rectangle } from "../../../egret/geom/Rectangle";
 import { UIComponent, UIComponentImpl, UIKeys, implementUIComponent } from "../core/UIComponent";
 import { registerBindable } from "../utils/registerBindable";
+import { PropertyEvent } from "../events/PropertyEvent";
 
     let UIImpl = UIComponentImpl;
     /**

@@ -9,6 +9,7 @@ import { UIComponent, UIComponentImpl, UIKeys, implementUIComponent } from "../c
 import { TextKeys } from "../../../egret/text/TextField";
 import { registerBindable } from "../utils/registerBindable";
 import { IDisplayText } from "../core/IDisplayText";
+import { PropertyEvent } from "../events/PropertyEvent";
 
 
     let UIImpl = UIComponentImpl;

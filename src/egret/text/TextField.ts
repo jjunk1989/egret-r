@@ -25,7 +25,7 @@ import { TextFieldType } from "./TextFieldType";
     /**
      * @private
      */
-    export const enum TextKeys {
+    export enum TextKeys {
         /**
          * @private
          */
@@ -183,6 +183,8 @@ import { TextFieldType } from "./TextFieldType";
          */
         textLinesChangedForNativeRender
     }
+
+    sys.TextKeys = TextKeys;
 
 
     let defaultRegex = "(?=[\\u00BF-\\u1FFF\\u2C00-\\uD7FF]|\\b|\\s)(?![0-9])(?![。，！、》…）)”】\\.\\,\\!\\?\\]\\:])";

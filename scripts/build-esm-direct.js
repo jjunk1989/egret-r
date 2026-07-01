@@ -290,7 +290,6 @@ async function buildPkg(pkg) {
     header += 'var __global = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : {};\n';
     header += 'var DEBUG = true, RELEASE = false;\n';
     var wrapped = header + '(function() {\n' + bundled + '\n}).call(window);\n';
-    wrapped += 'if (typeof globalThis !== "undefined") { globalThis.egret = globalThis.egret || {}; Object.assign(globalThis.egret, egret); globalThis.eui = globalThis.eui || {}; Object.assign(globalThis.eui, eui); }\n';
     wrapped += 'export { egret, eui };\n';
     fs.writeFileSync(path.join(distDir, 'index.js'), wrapped, 'utf8');
     fs.unlinkSync(path.join(distDir, 'index_tmp.js'));

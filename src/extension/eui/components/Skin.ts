@@ -11,6 +11,7 @@ import { Component } from "./Component";
 import { registerBindable } from "../utils/registerBindable";
 import { Watcher } from "../binding/Watcher";
 import { registerProperty } from "../utils/registerProperty";
+import { PropertyEvent } from "../events/PropertyEvent";
 
 
     /**

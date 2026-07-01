@@ -4,6 +4,7 @@
 import { ComponentKeys } from "./Component";
 import { ToggleButton } from "./ToggleButton";
 import { RadioButtonGroup } from "./RadioButtonGroup";
+import { PropertyEvent } from "../events/PropertyEvent";
 
 
     /**
