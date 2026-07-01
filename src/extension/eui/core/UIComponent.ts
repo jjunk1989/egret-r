@@ -1,14 +1,27 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-/// <reference path="Validator.ts" />
-
-namespace eui {
-
+import { getImplementation } from "../../../egret/system/Implementation";
+import { Event } from "../../../egret/events/Event";
+import { DisplayObject } from "../../../egret/display/DisplayObject";
+import { Rectangle } from "../../../egret/geom/Rectangle";
+import { Matrix } from "../../../egret/geom/Matrix";
+import { Stage } from "../../../egret/display/Stage";
+import { Point } from "../../../egret/geom/Point";
+import { IAssetAdapter } from "./IAssetAdapter";
+import { IThemeAdapter } from "./IThemeAdapter";
+import { UIEvent } from "../events/UIEvent";
+import { Validator } from "./Validator";
+import { MatrixUtil } from "../utils/MatrixUtil";
+import { DefaultAssetAdapter } from "../components/supportClasses/DefaultAssetAdapter";
+import { DefaultThemeAdapter } from "../components/supportClasses/DefaultThemeAdapter";
+import { DEBUG } from "../../../Defines.debug";
+import { $TempRectangle } from "../../../egret/geom/Rectangle";
+import { $TempMatrix } from "../../../egret/geom/Matrix";
 
 
     export function getAssets(source: string, callback: (content: any) => void, thisObject: any) {
-        let adapter: IAssetAdapter = egret.getImplementation("eui.IAssetAdapter");
+        let adapter: IAssetAdapter = getImplementation("IAssetAdapter");
         if (!adapter) {
             adapter = new DefaultAssetAdapter();
         }
@@ -19,7 +32,7 @@ namespace eui {
 
     export function getTheme(source: string, callback: (content: any) => void) {
 
-        let adapter: IThemeAdapter = egret.getImplementation("eui.IThemeAdapter");
+        let adapter: IThemeAdapter = getImplementation("IThemeAdapter");
         if (!adapter) {
             adapter = new DefaultThemeAdapter();
         }
@@ -32,9 +45,9 @@ namespace eui {
     /**
      * The UIComponent class is the base class for all visual components, both skinnable and nonskinnable.
      *
-     * @event egret.Event.RESIZE Dispatch when the component is resized.
-     * @event eui.UIEvent.MOVE Dispatch when the object has moved.
-     * @event eui.UIEvent.CREATION_COMPLETE  Dispatch when the component has finished its construction,
+     * @event Event.RESIZE Dispatch when the component is resized.
+     * @event UIEvent.MOVE Dispatch when the object has moved.
+     * @event UIEvent.CREATION_COMPLETE  Dispatch when the component has finished its construction,
      * property processing, measuring, layout, and drawing.
      *
      * @version Egret 2.4
@@ -46,9 +59,9 @@ namespace eui {
     /**
      * UIComponent 类是所有可视组件（可定制皮肤和不可定制皮肤）的基类。
      *
-     * @event egret.Event.RESIZE 当UI组件的尺寸发生改变时调度
-     * @event eui.UIEvent.MOVE 当UI组件在父级容器中的位置发生改变时调度
-     * @event eui.UIEvent.CREATION_COMPLETE 当UI组件第一次被添加到舞台并完成初始化后调度
+     * @event Event.RESIZE 当UI组件的尺寸发生改变时调度
+     * @event UIEvent.MOVE 当UI组件在父级容器中的位置发生改变时调度
+     * @event UIEvent.CREATION_COMPLETE 当UI组件第一次被添加到舞台并完成初始化后调度
      *
      * @version Egret 2.4
      * @version eui 1.0
@@ -56,7 +69,7 @@ namespace eui {
      * @language zh_CN
      */
 
-    export interface UIComponent extends egret.DisplayObject {
+    export interface UIComponent extends DisplayObject {
 
         ///**
         // * 创建子项,子类覆盖此方法以完成组件子项的初始化操作，
@@ -728,7 +741,7 @@ namespace eui {
          * Priority: layout > explicit > measure.<p/>
          * The result of this method is contains <code>scale</code> and <code>rotation</code>.
          *
-         * @param bounds the instance of <code>egret.Rectangle</code> can set result.
+         * @param bounds the instance of <code>Rectangle</code> can set result.
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -740,14 +753,14 @@ namespace eui {
          * 按照：布局尺寸>外部显式设置尺寸>测量尺寸 的优先级顺序返回尺寸。<p/>
          * 注意此方法返回值已经包含scale和rotation。
          *
-         * @param bounds 可以放置结果的<code>egret.Rectangle</code>实例。
+         * @param bounds 可以放置结果的<code>Rectangle</code>实例。
          *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web
          * @language zh_CN
          */
-        getLayoutBounds(bounds: egret.Rectangle): void;
+        getLayoutBounds(bounds: Rectangle): void;
 
         /**
          * Get the element's preferred bounds。
@@ -755,7 +768,7 @@ namespace eui {
          * Priority: explicit > measure.<p/>
          * The result of this method is contains <code>scale</code> and <code>rotation</code>.
          *
-         * @param bounds the instance of <code>egret.Rectangle</code> can set result.
+         * @param bounds the instance of <code>Rectangle</code> can set result.
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -767,19 +780,16 @@ namespace eui {
          * 按照：外部显式设置尺寸>测量尺寸 的优先级顺序返回尺寸。<p/>
          * 注意此方法返回值已经包含scale和rotation。
          *
-         * @param bounds 可以放置结果的<code>egret.Rectangle</code>实例。
+         * @param bounds 可以放置结果的<code>Rectangle</code>实例。
          *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web
          * @language zh_CN
          */
-        getPreferredBounds(bounds: egret.Rectangle): void;
+        getPreferredBounds(bounds: Rectangle): void;
     }
 
-}
-
-namespace eui.sys {
 
     /**
      * @private
@@ -819,18 +829,18 @@ namespace eui.sys {
 
     let UIComponentClass = "eui.UIComponent";
 
-    function isDeltaIdentity(m: egret.Matrix): boolean {
+    function isDeltaIdentity(m: Matrix): boolean {
         return (m.a === 1 && m.b === 0 && m.c === 0 && m.d === 1);
     }
 
-    let validator = new sys.Validator();
+    let validator = new Validator();
 
     /**
      * @private
      * EUI 显示对象基类模板。仅作为 UIComponent 的默认实现，为egret.sys.implemenetUIComponenet()方法提供代码模板。
      * 注意：在此类里不允许直接使用super关键字访问父类方法。一律使用this.$super属性访问。
      */
-    export class UIComponentImpl extends egret.DisplayObject implements eui.UIComponent {
+    export class UIComponentImpl extends DisplayObject implements eui.UIComponent {
         /**
          * @private
          * 构造函数
@@ -908,7 +918,7 @@ namespace eui.sys {
         protected commitProperties(): void {
             let values = this.$UIComponent;
             if (values[UIKeys.oldWidth] != values[UIKeys.width] || values[UIKeys.oldHeight] != values[UIKeys.height]) {
-                this.dispatchEventWith(egret.Event.RESIZE);
+                this.dispatchEventWith(Event.RESIZE);
                 values[UIKeys.oldWidth] = values[UIKeys.width];
                 values[UIKeys.oldHeight] = values[UIKeys.height];
             }
@@ -964,7 +974,7 @@ namespace eui.sys {
          * @param stage
          * @param nestLevel
          */
-        $onAddToStage(stage: egret.Stage, nestLevel: number): void {
+        $onAddToStage(stage: Stage, nestLevel: number): void {
             this.$super.$onAddToStage.call(this, stage, nestLevel);
             this.checkInvalidateFlag();
             let values = this.$UIComponent;
@@ -1353,7 +1363,7 @@ namespace eui.sys {
             }
             if (change) {
                 this.invalidateDisplayList();
-                this.dispatchEventWith(egret.Event.RESIZE);
+                this.dispatchEventWith(Event.RESIZE);
             }
         }
 
@@ -1367,7 +1377,7 @@ namespace eui.sys {
         /**
          * @private
          */
-        $setMatrix(matrix: egret.Matrix, needUpdateProperties: boolean = true): boolean {
+        $setMatrix(matrix: Matrix, needUpdateProperties: boolean = true): boolean {
             this.$super.$setMatrix.call(this, matrix, needUpdateProperties);
             this.invalidateParentLayout();
             return true;
@@ -1469,7 +1479,7 @@ namespace eui.sys {
                     let length = children.length;
                     for (let i = 0; i < length; i++) {
                         let child = children[i];
-                        if (egret.is(child, UIComponentClass)) {
+                        if (_is(child, UIComponentClass)) {
                             (<eui.UIComponent>child).validateSize(true);
                         }
                     }
@@ -1592,7 +1602,7 @@ namespace eui.sys {
          */
         protected invalidateParentLayout(): void {
             let parent = this.$parent;
-            if (!parent || !this.$includeInLayout || !egret.is(parent, UIComponentClass))
+            if (!parent || !this.$includeInLayout || !_is(parent, UIComponentClass))
                 return;
             (<eui.UIComponent><any>parent).invalidateSize();
             (<eui.UIComponent><any>parent).invalidateDisplayList();
@@ -1637,15 +1647,15 @@ namespace eui.sys {
                 return;
             }
 
-            let fitSize = sys.MatrixUtil.fitBounds(layoutWidth, layoutHeight, matrix,
+            let fitSize = MatrixUtil.fitBounds(layoutWidth, layoutHeight, matrix,
                 values[UIKeys.explicitWidth], values[UIKeys.explicitHeight],
                 this.getPreferredUWidth(), this.getPreferredUHeight(),
                 minWidth, minHeight, maxWidth, maxHeight);
             if (!fitSize) {
-                fitSize = egret.Point.create(minWidth, minHeight);
+                fitSize = Point.create(minWidth, minHeight);
             }
             this.setActualSize(fitSize.x, fitSize.y);
-            egret.Point.release(fitSize);
+            Point.release(fitSize);
         }
 
         /**
@@ -1655,7 +1665,7 @@ namespace eui.sys {
         public setLayoutBoundsPosition(x: number, y: number): void {
             let matrix = this.$getMatrix();
             if (!isDeltaIdentity(matrix) || this.anchorOffsetX != 0 || this.anchorOffsetY != 0) {
-                let bounds = egret.$TempRectangle;
+                let bounds = $TempRectangle;
                 this.getLayoutBounds(bounds);
                 x += this.$getX() - bounds.x;
                 y += this.$getY() - bounds.y;
@@ -1672,7 +1682,7 @@ namespace eui.sys {
          * 按照：布局尺寸>外部显式设置尺寸>测量尺寸 的优先级顺序返回尺寸,
          * 注意此方法返回值已经包含scale和rotation。
          */
-        public getLayoutBounds(bounds: egret.Rectangle): void {
+        public getLayoutBounds(bounds: Rectangle): void {
             let values = this.$UIComponent;
             let w: number;
             if (values[sys.UIKeys.layoutWidthExplicitlySet]) {
@@ -1726,7 +1736,7 @@ namespace eui.sys {
          * 按照：外部显式设置尺寸>测量尺寸 的优先级顺序返回尺寸，
          * 注意此方法返回值已经包含scale和rotation。
          */
-        public getPreferredBounds(bounds: egret.Rectangle): void {
+        public getPreferredBounds(bounds: Rectangle): void {
             let w = this.getPreferredUWidth();
             let h = this.getPreferredUHeight();
             this.applyMatrix(bounds, w, h);
@@ -1736,7 +1746,7 @@ namespace eui.sys {
         /**
          * @private
          */
-        private applyMatrix(bounds: egret.Rectangle, w: number, h: number): void {
+        private applyMatrix(bounds: Rectangle, w: number, h: number): void {
             bounds.setTo(0, 0, w, h);
             let matrix = this.getAnchorMatrix();
 
@@ -1753,12 +1763,12 @@ namespace eui.sys {
         /**
          * @private
          */
-        private getAnchorMatrix(): egret.Matrix {
+        private getAnchorMatrix(): Matrix {
             let matrix = this.$getMatrix();
             let offsetX = this.anchorOffsetX;
             let offsetY = this.anchorOffsetY;
             if (offsetX != 0 || offsetY != 0) {
-                let tempM = egret.$TempMatrix;
+                let tempM = $TempMatrix;
                 matrix.$preMultiplyInto(tempM.setTo(1, 0, 0, 1, -offsetX, -offsetY), tempM);
                 return tempM;
             }
@@ -1830,11 +1840,11 @@ namespace eui.sys {
         registerProperty(descendant, "horizontalCenter", "Percentage");
         registerProperty(descendant, "verticalCenter", "Percentage");
         if (isContainer) {
-            prototype.$childAdded = function (child: egret.DisplayObject, index: number): void {
+            prototype.$childAdded = function (child: DisplayObject, index: number): void {
                 this.invalidateSize();
                 this.invalidateDisplayList();
             };
-            prototype.$childRemoved = function (child: egret.DisplayObject, index: number): void {
+            prototype.$childRemoved = function (child: DisplayObject, index: number): void {
                 this.invalidateSize();
                 this.invalidateDisplayList();
             };
@@ -1844,7 +1854,7 @@ namespace eui.sys {
 
             Object.defineProperty(prototype, "preferredWidth", {
                 get: function () {
-                    let bounds = egret.$TempRectangle;
+                    let bounds = $TempRectangle;
                     this.getPreferredBounds(bounds);
                     return bounds.width;
                 },
@@ -1853,7 +1863,7 @@ namespace eui.sys {
             });
             Object.defineProperty(prototype, "preferredHeight", {
                 get: function () {
-                    let bounds = egret.$TempRectangle;
+                    let bounds = $TempRectangle;
                     this.getPreferredBounds(bounds);
                     return bounds.height;
                 },
@@ -1862,7 +1872,7 @@ namespace eui.sys {
             });
             Object.defineProperty(prototype, "preferredX", {
                 get: function () {
-                    let bounds = egret.$TempRectangle;
+                    let bounds = $TempRectangle;
                     this.getPreferredBounds(bounds);
                     return bounds.x;
                 },
@@ -1871,7 +1881,7 @@ namespace eui.sys {
             });
             Object.defineProperty(prototype, "preferredY", {
                 get: function () {
-                    let bounds = egret.$TempRectangle;
+                    let bounds = $TempRectangle;
                     this.getPreferredBounds(bounds);
                     return bounds.y;
                 },
@@ -1880,7 +1890,7 @@ namespace eui.sys {
             });
             Object.defineProperty(prototype, "layoutBoundsX", {
                 get: function () {
-                    let bounds = egret.$TempRectangle;
+                    let bounds = $TempRectangle;
                     this.getLayoutBounds(bounds);
                     return bounds.x;
                 },
@@ -1889,7 +1899,7 @@ namespace eui.sys {
             });
             Object.defineProperty(prototype, "layoutBoundsY", {
                 get: function () {
-                    let bounds = egret.$TempRectangle;
+                    let bounds = $TempRectangle;
                     this.getLayoutBounds(bounds);
                     return bounds.y;
                 },
@@ -1898,7 +1908,7 @@ namespace eui.sys {
             });
             Object.defineProperty(prototype, "layoutBoundsWidth", {
                 get: function () {
-                    let bounds = egret.$TempRectangle;
+                    let bounds = $TempRectangle;
                     this.getLayoutBounds(bounds);
                     return bounds.width;
                 },
@@ -1907,7 +1917,7 @@ namespace eui.sys {
             });
             Object.defineProperty(prototype, "layoutBoundsHeight", {
                 get: function () {
-                    let bounds = egret.$TempRectangle;
+                    let bounds = $TempRectangle;
                     this.getLayoutBounds(bounds);
                     return bounds.height;
                 },
@@ -1965,4 +1975,3 @@ namespace eui.sys {
             });
         }
     }
-}

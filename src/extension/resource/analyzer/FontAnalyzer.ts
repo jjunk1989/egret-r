@@ -1,8 +1,12 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { Texture } from "../../../egret/display/Texture";
+import { BitmapFont } from "../../../egret/text/BitmapFont";
+import { SheetAnalyzer } from "./SheetAnalyzer";
+import { ResourceItem } from "../../assetsmanager/src/shim/ResourceItem";
 
-namespace RES {
+
     /**
      * @private
      */
@@ -33,7 +37,7 @@ namespace RES {
             return imageUrl;
         }
 
-        public analyzeBitmap(resItem:ResourceItem, texture:egret.Texture):void {
+        public analyzeBitmap(resItem:ResourceItem, texture:Texture):void {
 
             let name:string = resItem.name;
             if (this.fileDic[name] || !texture) {
@@ -42,7 +46,7 @@ namespace RES {
 
             let config:any = this.sheetMap[name];
             delete this.sheetMap[name];
-            let bitmapFont:egret.BitmapFont = new egret.BitmapFont(texture, config);
+            let bitmapFont:BitmapFont = new BitmapFont(texture, config);
             this.fileDic[name] = bitmapFont;
         }
 
@@ -69,10 +73,9 @@ namespace RES {
             return url;
         }
 
-        protected onResourceDestroy(font:egret.BitmapFont) {
+        protected onResourceDestroy(font:BitmapFont) {
             if (font) {
                 font.dispose();
             }
         }
     }
-}

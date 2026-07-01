@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret.sys {
+import { Path2D } from "./Path2D";
+import { Matrix } from "../../geom/Matrix";
+
     /**
      * @private
      * 渐变填充路径
@@ -23,4 +25,3 @@ namespace egret.sys {
 
         public matrix:Matrix;
     }
-}

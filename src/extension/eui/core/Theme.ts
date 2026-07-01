@@ -1,7 +1,15 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace eui {
+import { Event } from "../../../egret/events/Event";
+import { EventDispatcher } from "../../../egret/events/EventDispatcher";
+import { registerImplementation } from "../../../egret/system/Implementation";
+import { Stage } from "../../../egret/display/Stage";
+import { getTheme } from "./UIComponent";
+import { Component, ComponentKeys } from "../components/Component";
+import { Button } from "../components/Button";
+import { $error } from "../../../Defines.debug";
+import { DEBUG } from "../../../Defines.debug";
 
 
     interface ThemeData {
@@ -103,7 +111,7 @@ namespace eui {
     /**
      * Note: The skin name values in the skin theme are used as default values,which can not be changed while running.
      * You can change the skin of a component with the skinName property.
-     * @event egret.Event.COMPLETE Dispatch when EXML used in this theme is loaded and parsed.
+     * @event Event.COMPLETE Dispatch when EXML used in this theme is loaded and parsed.
      * @version Egret 2.4
      * @version eui 1.0
      * @platform Web
@@ -112,14 +120,14 @@ namespace eui {
      */
     /**
      * 皮肤主题。注意：皮肤主题是一次性设置的默认值,并不能运行时切换所有组件默认皮肤。切换单个皮肤您可以自行对Component.skinName赋值来修改。
-     * @event egret.Event.COMPLETE 当主题关联的EXML加载解析完成时派发
+     * @event Event.COMPLETE 当主题关联的EXML加载解析完成时派发
      * @version Egret 2.4
      * @version eui 1.0
      * @platform Web
      * @includeExample  extension/eui/core/ThemeExample.ts
      * @language zh_CN
      */
-    export class Theme extends egret.EventDispatcher {
+    export class Theme extends EventDispatcher {
 
         private $configURL: string;
 
@@ -128,7 +136,7 @@ namespace eui {
          * @param configURL the external theme path. if null, you need to register the default skin name with
          * mapSkin() manually.
          * @param stage current stage.
-         * If null, you need to register with egret.registerImplementation("eui.Theme",theme)
+         * If null, you need to register with registerImplementation("eui.Theme",theme)
          * manually.
          * @version Egret 2.4
          * @version eui 1.0
@@ -140,17 +148,17 @@ namespace eui {
          * @param configURL 要加载并解析的外部主题配置文件路径。若传入 null，将不进行配置文件加载，
          * 之后需要在外部以代码方式手动调用 mapSkin() 方法完成每条默认皮肤名的注册。
          * @param stage 当前舞台引用。
-         * 若传入null，需要在外部手动调用 egret.registerImplementation("eui.Theme",theme) 来完成主题的注册。
+         * 若传入null，需要在外部手动调用 registerImplementation("eui.Theme",theme) 来完成主题的注册。
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web
          * @language zh_CN
          */
-        public constructor(configURL: string, stage?: egret.Stage) {
+        public constructor(configURL: string, stage?: Stage) {
             super();
             this.initialized = !configURL;
             if (stage) {
-                egret.registerImplementation("eui.Theme", this);
+                registerImplementation("eui.Theme", this);
             }
             this.$configURL = configURL;
             this.load(configURL);
@@ -167,7 +175,7 @@ namespace eui {
          * @param url
          */
         private load(url: string): void {
-            eui.getTheme(url, data => this.onConfigLoaded(data))
+            getTheme(url, data => this.onConfigLoaded(data))
         }
 
         /**
@@ -182,7 +190,7 @@ namespace eui {
                     data = JSON.parse(str);
                 }
                 catch (e) {
-                    egret.$error(3000);
+                    $error(3000);
                 }
             }
             else {
@@ -232,7 +240,7 @@ namespace eui {
         private onLoaded(classes?: any[], urls?: string[]) {
             this.initialized = true;
             this.handleDelayList();
-            this.dispatchEventWith(egret.Event.COMPLETE);
+            this.dispatchEventWith(Event.COMPLETE);
         }
 
         /**
@@ -249,10 +257,10 @@ namespace eui {
             let length = list.length;
             for (let i = 0; i < length; i++) {
                 let client = list[i];
-                if (!client.$Component[sys.ComponentKeys.skinNameExplicitlySet]) {
+                if (!client.$Component[ComponentKeys.skinNameExplicitlySet]) {
                     let skinName = this.getSkinName(client);
                     if (skinName) {
-                        client.$Component[sys.ComponentKeys.skinName] = skinName;
+                        client.$Component[ComponentKeys.skinName] = skinName;
                         client.$parseSkinName();
                     }
                 }
@@ -272,7 +280,7 @@ namespace eui {
          * <li>1. Use the <code>hostComponentKey</code> of client to search.</li>
          * <li>2. Use the class name of client to search.</li>
          * <li>3. Use the parent class name of client to search.</li>
-         * <li>4. Repeat step 3 until find the skin name or the parent is <code>eui.Component</code>.</li>
+         * <li>4. Repeat step 3 until find the skin name or the parent is <code>Component</code>.</li>
          * @param client the component need to get the default skin.
          * @version Egret 2.4
          * @version eui 1.0
@@ -284,7 +292,7 @@ namespace eui {
          * <li>1.使用client的hostComponentKey作为键查询默认皮肤名。</li>
          * <li>2.使用client的类名作为键查询默认皮肤名。</li>
          * <li>3.使用client的父类名作为键查询默认皮肤名。</li>
-         * <li>4.不断重复3直到查询到皮肤名或父类为eui.Component时停止。</li>
+         * <li>4.不断重复3直到查询到皮肤名或父类为Component时停止。</li>
          * @param client 要获取默认皮肤的组件。
          * @version Egret 2.4
          * @version eui 1.0
@@ -318,7 +326,7 @@ namespace eui {
                 return "";
             }
             let skinName = this.skinMap[key];
-            if (skinName || key == "eui.Component") {
+            if (skinName || key == "Component") {
                 return skinName;
             }
             return this.findSkinName(Object.getPrototypeOf(prototype));
@@ -326,7 +334,7 @@ namespace eui {
 
         /**
          * Map a default skin for the specified host component.
-         * @param hostComponentKey the name of host component, such as "eui.Button".
+         * @param hostComponentKey the name of host component, such as "Button".
          * @param skinName the name of skin, such as "app.MyButtonSkin".
          * @version Egret 2.4
          * @version eui 1.0
@@ -335,7 +343,7 @@ namespace eui {
          */
         /**
          * 为指定的主机组件映射一个默认皮肤。
-         * @param hostComponentKey 主机组件名称，例如：“eui.Button”。
+         * @param hostComponentKey 主机组件名称，例如：“Button”。
          * @param skinName 皮肤名称 例如："app.MyButtonSkin"。
          * @version Egret 2.4
          * @version eui 1.0
@@ -345,10 +353,10 @@ namespace eui {
         public mapSkin(hostComponentKey: string, skinName: string): void {
             if (DEBUG) {
                 if (!hostComponentKey) {
-                    egret.$error(1003, "hostComponentKey");
+                    $error(1003, "hostComponentKey");
                 }
                 if (!skinName) {
-                    egret.$error(1003, "skinName");
+                    $error(1003, "skinName");
                 }
             }
             this.skinMap[hostComponentKey] = skinName;
@@ -364,4 +372,3 @@ namespace eui {
             return this.$styles[style];
         }
     }
-}

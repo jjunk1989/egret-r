@@ -1,9 +1,7 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-declare namespace egret {
-
-    /**
+/**
      * Writes an error message to the console if the assertion is false. If the assertion is true, nothing will happen.
      * @param assertion Any boolean expression. If the assertion is false, the message will get written to the console.
      * @param message the message written to the console
@@ -17,7 +15,7 @@ declare namespace egret {
      * @param optionalParams 要输出到控制台的额外可选信息
      * @language zh_CN
      */
-    function assert(assertion?:boolean, message?:string, ...optionalParams:any[]):void;
+export declare function assert(assertion?:boolean, message?:string, ...optionalParams:any[]):void;
     /**
      * Writes a warning message to the console.
      * @param message the message written to the console
@@ -30,7 +28,7 @@ declare namespace egret {
      * @param optionalParams 要输出到控制台的额外信息
      * @language zh_CN
      */
-    function warn(message?:any, ...optionalParams:any[]):void;
+export declare function warn(message?:any, ...optionalParams:any[]):void;
     /**
      * Writes an error message to the console.
      * @param message the message written to the console
@@ -43,7 +41,7 @@ declare namespace egret {
      * @param optionalParams 要输出到控制台的额外信息
      * @language zh_CN
      */
-    function error(message?:any, ...optionalParams:any[]): void;
+export declare function error(message?:any, ...optionalParams:any[]): void;
     /**
      * Writes an message to the console.
      * @param message the message written to the console
@@ -56,5 +54,4 @@ declare namespace egret {
      * @param optionalParams 要输出到控制台的额外信息
      * @language zh_CN
      */
-    function log(message?:any, ...optionalParams:any[]):void;
-}
+export declare function log(message?:any, ...optionalParams:any[]):void;

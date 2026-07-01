@@ -1,6 +1,11 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { ResourceItem } from "../shim/ResourceItem";
+import { File, FileSystem } from "./FileSystem";
+import { ResourceManagerError } from "./ResourceManager";
+import { $warn } from "";
+
 type ResourceRootSelector<T extends string> = () => T;
 
 type ResourceNameSelector = (file: string) => string;
@@ -8,8 +13,6 @@ type ResourceNameSelector = (file: string) => string;
 type ResourceMergerSelector = (file: string) => { path: string, alias: string };
 
 
-
-module RES {
     /**
      * @internal
      */
@@ -152,7 +155,7 @@ module RES {
          * 根据组名获取组加载项列表
 		 * @method RES.ResourceConfig#getGroupByName
          * @param name {string} 组名
-		 * @returns {Array<egret.ResourceItem>}
+		 * @returns {Array<ResourceItem>}
          */
         public getGroupByName(name: string): ResourceInfo[] {
             let group = this.config.groups[name];
@@ -286,7 +289,7 @@ module RES {
             //                 group.push(item);
             //         }
             //         else {
-            //             egret.$warn(3200, key);
+            //             $warn(3200, key);
             //         }
             //     }
 
@@ -334,4 +337,3 @@ module RES {
             }
         }
     }
-}

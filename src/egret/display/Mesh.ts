@@ -1,7 +1,12 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret {
+import { nativeRender } from "../player/Player";
+import { MeshNode } from "../player/nodes/MeshNode";
+import { Bitmap } from "./Bitmap";
+import { Texture } from "./Texture";
+import { Rectangle } from "../geom/Rectangle";
+
     /**
      * @private
      */
@@ -9,7 +14,7 @@ namespace egret {
 
         public constructor(value?: Texture) {
             super(value);
-            this.$renderNode = new sys.MeshNode();
+            this.$renderNode = new MeshNode();
         }
 
         protected createNativeDisplayObject(): void {
@@ -33,7 +38,7 @@ namespace egret {
             }
 
             let scale = $TextureScaleFactor;
-            let node = <sys.MeshNode>this.$renderNode;
+            let node = <MeshNode>this.$renderNode;
             node.smoothing = this.$smoothing;
             node.image = image;
             node.imageWidth = this.$sourceWidth;
@@ -66,8 +71,8 @@ namespace egret {
             let self = this;
             self._verticesDirty = true;
             self.$renderDirty = true;
-            if (egret.nativeRender) {
-                let renderNode = <sys.MeshNode>(this.$renderNode);
+            if (nativeRender) {
+                let renderNode = <MeshNode>(this.$renderNode);
                 this.$nativeDisplayObject.setDataToMesh(renderNode.vertices, renderNode.indices, renderNode.uvs);
             }
             else {
@@ -90,7 +95,7 @@ namespace egret {
         $measureContentBounds(bounds: Rectangle): void {
             if (this._verticesDirty) {
                 this._verticesDirty = false;
-                let node = <sys.MeshNode>this.$renderNode;
+                let node = <MeshNode>this.$renderNode;
                 let vertices = node.vertices;
                 if (vertices.length) {
                     this._bounds.setTo(Number.MAX_VALUE, Number.MAX_VALUE, -Number.MAX_VALUE, -Number.MAX_VALUE);
@@ -112,4 +117,3 @@ namespace egret {
             bounds.copyFrom(this._bounds);
         }
     }
-}

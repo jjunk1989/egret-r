@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret.web {
+import { WebGLRenderBuffer } from "./WebGLRenderBuffer";
+
 
     /**
      * @private
@@ -406,4 +407,3 @@ namespace egret.web {
     export var isIOS14Device = () => {
         return false;
     };
-}

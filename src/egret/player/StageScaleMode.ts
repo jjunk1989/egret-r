@@ -2,7 +2,6 @@
 // Copyright (c) 2014-present, Egret Technology.
 
 
-namespace egret {
     /**
      * StageScaleMode class provides values for the stage zoom mode.
      * @version Egret 2.4
@@ -110,4 +109,3 @@ namespace egret {
          */
         public static FIXED_WIDE:string = "fixedWide";
     }
-}

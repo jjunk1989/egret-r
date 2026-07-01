@@ -2,8 +2,6 @@
 // Copyright (c) 2014-present, Egret Technology.
 
 
-namespace eui {
-
     /**
      * The IDisplayText interface defines the properties
      * for simple text display.。
@@ -39,5 +37,3 @@ namespace eui {
          */
         text:string;
     }
-
-}

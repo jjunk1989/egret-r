@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret {
+import { nativeRender } from "../player/Player";
+import { Filter } from "./Filter";
+
     /**
      * The BlurFilter class lets you apply a blur visual effect to display objects. A blur effect softens the details of an image.
      * You can produce blurs that range from a softly unfocused look to a Gaussian blur, a hazy appearance like viewing an image through semi-opaque glass. 
@@ -147,7 +149,7 @@ namespace egret {
         public onPropertyChange(): void {
             let self = this;
             self.updatePadding();
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 egret_native.NativeDisplayObject.setFilterPadding(self.blurXFilter.$id, 0, 0, self.paddingLeft, self.paddingRight);
                 egret_native.NativeDisplayObject.setFilterPadding(self.blurYFilter.$id, self.paddingTop, self.paddingBottom, 0, 0);
                 egret_native.NativeDisplayObject.setDataToFilter(self);
@@ -177,7 +179,7 @@ namespace egret {
         constructor(blurX:number = 4) {
             super();
 
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 this.type = "blur";
             }
             else {
@@ -201,7 +203,7 @@ namespace egret {
         constructor(blurY:number = 4) {
             super();
 
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 this.type = "blur";
             }
             else {
@@ -220,4 +222,3 @@ namespace egret {
             return this.$uniforms.blur.y;
         }
     }
-}

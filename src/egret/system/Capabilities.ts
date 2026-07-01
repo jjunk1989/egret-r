@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret {
 
     /**
      * Type of operation.
@@ -326,7 +325,7 @@ namespace egret {
          * @platform Web
          * @language zh_CN
          */
-        static readonly runtimeType: string = egret.RuntimeType.WEB;
+        static readonly runtimeType: string = RuntimeType.WEB;
 
         /***
          * version of Egret.
@@ -421,4 +420,3 @@ namespace egret {
             }
         };
     }
-}

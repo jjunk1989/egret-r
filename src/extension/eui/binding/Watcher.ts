@@ -1,7 +1,12 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace eui {
+import { IEventDispatcher } from "../../../egret/events/IEventDispatcher";
+import { PropertyEvent } from "../events/PropertyEvent";
+import { $error } from "../../../Defines.debug";
+import { DEBUG } from "../../../Defines.debug";
+import { registerBindable } from "../utils/registerBindable";
+
 
     /**
      * @private
@@ -68,7 +73,7 @@ namespace eui {
 
         /**
          * Creates and starts a Watcher instance.
-         * The Watcher can only watch the property of a Object which host is instance of egret.IEventDispatcher.
+         * The Watcher can only watch the property of a Object which host is instance of IEventDispatcher.
          * @param host The object that hosts the property or property chain to be watched.
          * You can use the use the <code>reset()</code> method to change the value of the <code>host</code> argument
          * after creating the Watcher instance.
@@ -87,7 +92,7 @@ namespace eui {
          * @language en_US
          */
         /**
-         * 创建并启动 Watcher 实例。注意：Watcher 只能监视 host 为 egret.IEventDispatcher 对象的属性改变。若属性链中某个属性所对应的实例不是 egret.IEventDispatcher，
+         * 创建并启动 Watcher 实例。注意：Watcher 只能监视 host 为 IEventDispatcher 对象的属性改变。若属性链中某个属性所对应的实例不是 IEventDispatcher，
          * 则属性链中在它之后的属性改变将无法检测到。
          * @param host 用于承载要监视的属性或属性链的对象。
          * 创建Watcher实例后，您可以利用<code>reset()</code>方法更改<code>host</code>参数的值。
@@ -104,7 +109,7 @@ namespace eui {
         public static watch(host:any, chain:string[], handler:(value:any)=>void, thisObject:any):Watcher {
             if (DEBUG) {
                 if (!chain) {
-                    egret.$error(1003, "chain");
+                    $error(1003, "chain");
                 }
             }
             if (chain.length > 0) {
@@ -128,7 +133,7 @@ namespace eui {
             if (list && list.indexOf(property) != -1) {
                 return true;
             }
-            let isEventDispatcher = egret.is(host, "egret.IEventDispatcher");
+            let isEventDispatcher = is(host, "IEventDispatcher");
             if(!isEventDispatcher && !host[listeners]){
                 host[listeners] = [];
             }
@@ -319,10 +324,10 @@ namespace eui {
          * @platform Web
          * @language zh_CN
          */
-        public reset(newHost:egret.IEventDispatcher):void {
+        public reset(newHost:IEventDispatcher):void {
             let oldHost = this.host;
             if(oldHost){
-                if (egret.is(oldHost, "egret.IEventDispatcher")) {
+                if (is(oldHost, "IEventDispatcher")) {
                     oldHost.removeEventListener(PropertyEvent.PROPERTY_CHANGE, this.wrapHandler, this);
                 }
                 else {
@@ -336,7 +341,7 @@ namespace eui {
 
             if(newHost){
                 Watcher.checkBindable(newHost, this.property);
-                if (egret.is(newHost, "egret.IEventDispatcher")) {
+                if (is(newHost, "IEventDispatcher")) {
                     newHost.addEventListener(PropertyEvent.PROPERTY_CHANGE, this.wrapHandler, this, false, 100);
                 }
                 else{
@@ -385,5 +390,3 @@ namespace eui {
             }
         }
     }
-
-}

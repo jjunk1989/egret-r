@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace eui {
+import { EventDispatcher } from "../../../../egret/events/EventDispatcher";
+import { Group } from "../../components/Group";
+
 
     /**
      * The LayoutBase class defines the base class for all Spark layouts.
@@ -30,7 +32,7 @@ namespace eui {
      * @platform Web
      * @language zh_CN
      */
-    export class LayoutBase extends egret.EventDispatcher {
+    export class LayoutBase extends EventDispatcher {
 
         /**
          * Constructor.
@@ -348,5 +350,3 @@ namespace eui {
         public updateDisplayList(width:number, height:number):void {
         }
     }
-
-}

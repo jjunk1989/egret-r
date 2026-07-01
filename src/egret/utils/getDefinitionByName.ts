@@ -2,8 +2,6 @@
 // Copyright (c) 2014-present, Egret Technology.
 
 
-namespace egret {
-
     /**
      * @private
      */
@@ -51,5 +49,3 @@ namespace egret {
             getDefinitionByNameCache = {};
         }
     }
-
-}

@@ -1,6 +1,24 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { nativeRender, _WebGLRenderContext } from "../../../player/Player";
+import { log, warn } from "../../../system/Console";
+import { Capabilities } from "../../../system/Capabilities";
+import { Rectangle } from "../../../geom/Rectangle";
+import { RenderContext, resizeContext, getContextWebGL, createTexture, createCanvas, getContext2d, drawTextureElements } from "../../../player/SystemRenderer";
+import { mainCanvas } from "../../../3d/EgretPro";
+import { DisplayList } from "../../../player/DisplayList";
+import { WebGLVertexArrayObject } from "./WebGLVertexArrayObject";
+import { WebGLDrawCmdManager } from "./WebGLDrawCmdManager";
+import { WebGLRenderBuffer } from "./WebGLRenderBuffer";
+import { BitmapData } from "../../../display/BitmapData";
+import { EgretWebGLProgram } from "./EgretWebGLProgram";
+import { Filter } from "../../../filters/Filter";
+import { ColorMatrixFilter } from "../../../filters/ColorMatrixFilter";
+import { BlurFilter } from "../../../filters/BlurFilter";
+import { $error } from "../../../../Defines.debug";
+import { DEBUG } from "../../../../Defines.debug";
+
 namespace egret.web {
 
     ///
@@ -17,7 +35,7 @@ namespace egret.web {
      * WebGL上下文对象，提供简单的绘图接口
      * 抽象出此类，以实现共用一个context
      */
-    export class WebGLRenderContext implements egret.sys.RenderContext {
+    export class WebGLRenderContext implements RenderContext {
 
         public static antialias: boolean;
 
@@ -157,9 +175,9 @@ namespace egret.web {
         //for 3D&2D
         public constructor(width?: number, height?: number, context?: WebGLRenderingContext) {
 
-            this.surface = egret.sys.mainCanvas(width, height);
+            this.surface = mainCanvas(width, height);
 
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 return;
             }
 
@@ -207,7 +225,7 @@ namespace egret.web {
          * @param useMaxSize 若传入true，则将改变后的尺寸与已有尺寸对比，保留较大的尺寸。
          */
         public resize(width: number, height: number, useMaxSize?: boolean): void {
-            egret.sys.resizeContext(this, width, height, useMaxSize);
+            resizeContext(this, width, height, useMaxSize);
             /*
             let surface = this.surface;
             if (useMaxSize) {
@@ -270,9 +288,9 @@ namespace egret.web {
                         console.error('buildSupportedCompressedTextureInfo failed = ' + extension.name);
                     }
                     else {
-                        egret.log('support: ' + extension.name);
+                        log('support: ' + extension.name);
                         for (const key in extension) {
-                            egret.log(key, extension[key], '0x' + extension[key].toString(16));
+                            log(key, extension[key], '0x' + extension[key].toString(16));
                         }
                     }
                 }
@@ -312,7 +330,7 @@ namespace egret.web {
         }
 
         public getSupportedCompressedTexture() {
-            let gl = this.context ? this.context : egret.sys.getContextWebGL(this.surface);
+            let gl = this.context ? this.context : getContextWebGL(this.surface);
             this.pvrtc = gl.getExtension('WEBGL_compressed_texture_pvrtc') || gl.getExtension('WEBKIT_WEBGL_compressed_texture_pvrtc');
             if (this.pvrtc) {
                 this.pvrtc.name = 'WEBGL_compressed_texture_pvrtc';
@@ -323,19 +341,18 @@ namespace egret.web {
                 this.etc1.name = 'WEBGL_compressed_texture_etc1';
             }
             //
-            if (egret.Capabilities._supportedCompressedTexture) {
-                egret.Capabilities._supportedCompressedTexture = egret.Capabilities._supportedCompressedTexture || {} as SupportedCompressedTexture;
-                egret.Capabilities._supportedCompressedTexture.pvrtc = !!this.pvrtc;
-                egret.Capabilities._supportedCompressedTexture.etc1 = !!this.etc1;
+            if (Capabilities._supportedCompressedTexture) {
+                Capabilities._supportedCompressedTexture = Capabilities._supportedCompressedTexture || {} as SupportedCompressedTexture;
+                Capabilities._supportedCompressedTexture.pvrtc = !!this.pvrtc;
+                Capabilities._supportedCompressedTexture.etc1 = !!this.etc1;
             } else {
-                (egret.Capabilities as any)['supportedCompressedTexture'] = egret.Capabilities._supportedCompressedTexture || {} as SupportedCompressedTexture;
-                (egret.Capabilities as any)['supportedCompressedTexture'].pvrtc = !!this.pvrtc;
-                (egret.Capabilities as any)['supportedCompressedTexture'].etc1 = !!this.etc1;
+                (Capabilities as any)['supportedCompressedTexture'] = Capabilities._supportedCompressedTexture || {} as SupportedCompressedTexture;
+                (Capabilities as any)['supportedCompressedTexture'].pvrtc = !!this.pvrtc;
+                (Capabilities as any)['supportedCompressedTexture'].etc1 = !!this.etc1;
             }
             //
             this._supportedCompressedTextureInfo = this._buildSupportedCompressedTextureInfo(/*this.context, compressedTextureExNames,*/[this.etc1, this.pvrtc]);
         }
-
 
 
         private handleContextLost() {
@@ -370,7 +387,7 @@ namespace egret.web {
                 $error(1021);
             }
             */
-            const gl = egret.sys.getContextWebGL(this.surface);
+            const gl = getContextWebGL(this.surface);
             this.setContext(gl);
             return gl;
         }
@@ -408,7 +425,7 @@ namespace egret.web {
         /**
          * 开启scissor检测
          */
-        public enableScissorTest(rect: egret.Rectangle): void {
+        public enableScissorTest(rect: Rectangle): void {
             let gl: any = this.context;
             gl.enable(gl.SCISSOR_TEST);
             gl.scissor(rect.x, rect.y, rect.width, rect.height);
@@ -434,7 +451,7 @@ namespace egret.web {
          * 创建一个WebGLTexture
          */
         public createTexture(bitmapData: BitmapData | HTMLCanvasElement): WebGLTexture {
-            return egret.sys.createTexture(this, bitmapData);
+            return createTexture(this, bitmapData);
         }
 
         /*
@@ -466,14 +483,14 @@ namespace egret.web {
         private $debugLogCompressedTextureNotSupported(supportedCompressedTextureInfo: SupportedCompressedTextureInfo[], internalFormat: number): void {
             if (!debugLogCompressedTextureNotSupported[internalFormat]) {
                 debugLogCompressedTextureNotSupported[internalFormat] = true;
-                egret.log('internalFormat = ' + internalFormat + ':' + ('0x' + internalFormat.toString(16)) + ', the current hardware does not support the corresponding compression format.');
+                log('internalFormat = ' + internalFormat + ':' + ('0x' + internalFormat.toString(16)) + ', the current hardware does not support the corresponding compression format.');
                 for (let i = 0, length = supportedCompressedTextureInfo.length; i < length; ++i) {
                     const ss = supportedCompressedTextureInfo[i];
                     if (ss.supportedFormats.length > 0) {
-                        egret.log('support = ' + ss.extensionName);
+                        log('support = ' + ss.extensionName);
                         for (let j = 0, length = ss.supportedFormats.length; j < length; ++j) {
                             const tp = ss.supportedFormats[j];
-                            egret.log(tp[0] + ' : ' + tp[1] + ' : ' + ('0x' + tp[1].toString(16)));
+                            log(tp[0] + ' : ' + tp[1] + ' : ' + ('0x' + tp[1].toString(16)));
                         }
                     }
                 }
@@ -521,8 +538,8 @@ namespace egret.web {
         public get defaultEmptyTexture(): WebGLTexture {
             if (!this._defaultEmptyTexture) {
                 const size = 16;
-                const canvas = egret.sys.createCanvas(size, size);
-                const context = egret.sys.getContext2d(canvas);//canvas.getContext('2d');
+                const canvas = createCanvas(size, size);
+                const context = getContext2d(canvas);//canvas.getContext('2d');
                 context.fillStyle = 'white';
                 context.fillRect(0, 0, size, size);
                 this._defaultEmptyTexture = this.createTexture(canvas);
@@ -1090,7 +1107,7 @@ namespace egret.web {
                         }
                         uniforms[key].setValue(value);
                     } else {
-                        // egret.warn("filter custom: uniform " + key + " not defined!");
+                        // warn("filter custom: uniform " + key + " not defined!");
                     }
                 }
             }
@@ -1100,7 +1117,7 @@ namespace egret.web {
          * 画texture
          **/
         private drawTextureElements(data: any, offset: number): number {
-            return egret.sys.drawTextureElements(this, data, offset);
+            return drawTextureElements(this, data, offset);
             /*
             let gl: any = this.context;
             gl.activeTexture(gl.TEXTURE0); ///refactor
@@ -1225,7 +1242,7 @@ namespace egret.web {
                     let width: number = input.rootRenderTarget.width;
                     let height: number = input.rootRenderTarget.height;
                     output = WebGLRenderBuffer.create(width, height);
-                    const scale = Math.max(egret.sys.DisplayList.$canvasScaleFactor, 2);
+                    const scale = Math.max(DisplayList.$canvasScaleFactor, 2);
                     output.setTransform(scale, 0, 0, scale, 0, 0);
                     output.globalAlpha = 1;
                     this.drawToRenderTarget(filter, input, output);
@@ -1272,7 +1289,7 @@ namespace egret.web {
 
                 if (blurXFilter.blurX != 0 && blurYFilter.blurY != 0) {
                     temp = WebGLRenderBuffer.create(width, height);
-                    const scale = Math.max(egret.sys.DisplayList.$canvasScaleFactor, 2);
+                    const scale = Math.max(DisplayList.$canvasScaleFactor, 2);
                     temp.setTransform(1, 0, 0, 1, 0, 0);
                     temp.transform(scale, 0, 0, scale, 0, 0);
                     temp.globalAlpha = 1;
@@ -1290,7 +1307,7 @@ namespace egret.web {
 
             // 绘制input结果到舞台
             output.saveTransform();
-            const scale = Math.max(egret.sys.DisplayList.$canvasScaleFactor, 2);
+            const scale = Math.max(DisplayList.$canvasScaleFactor, 2);
             output.transform(1 / scale, 0, 0, 1 / scale, 0, 0);
             output.transform(1, 0, 0, -1, 0, height);
             output.currentTexture = input.rootRenderTarget.texture;
@@ -1355,6 +1372,6 @@ namespace egret.web {
 
     WebGLRenderContext.initBlendMode();
 
-    egret.sys.WebGLRenderContext = WebGLRenderContext;
+    _WebGLRenderContext = WebGLRenderContext;
 
 }

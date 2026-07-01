@@ -1,9 +1,17 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace eui {
+import { TextField } from "../../../egret/text/TextField";
+import { getImplementation } from "../../../egret/system/Implementation";
+import { Rectangle } from "../../../egret/geom/Rectangle";
+import { Theme } from "../core/Theme";
+import { UIComponent, UIComponentImpl, UIKeys, implementUIComponent } from "../core/UIComponent";
+import { TextKeys } from "../../../egret/text/TextField";
+import { registerBindable } from "../utils/registerBindable";
+import { IDisplayText } from "../core/IDisplayText";
 
-    let UIImpl = sys.UIComponentImpl;
+
+    let UIImpl = UIComponentImpl;
     /**
      * Label is an UIComponent that can render one or more lines of text.
      * The text to be displayed is determined by the <code>text</code> property.
@@ -46,7 +54,7 @@ namespace eui {
      * @includeExample  extension/eui/components/LabelExample.ts
      * @language zh_CN
      */
-    export class Label extends egret.TextField implements UIComponent,IDisplayText {
+    export class Label extends TextField implements UIComponent,IDisplayText {
 
         /**
          * Constructor.
@@ -127,7 +135,7 @@ namespace eui {
                 return;
             }
             this.$style = value;
-            let theme: Theme = egret.getImplementation("eui.Theme");
+            let theme: Theme = getImplementation("Theme");
             if (theme) {
                 this.$changeFromStyle = true;
                 for (let key in this.$revertStyle) {
@@ -355,7 +363,7 @@ namespace eui {
         private initializeUIValues:()=>void;
 
         /**
-         * @copy eui.UIComponent#createChildren
+         * @copy UIComponent#createChildren
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -366,7 +374,7 @@ namespace eui {
         }
 
         /**
-         * @copy eui.UIComponent#childrenCreated
+         * @copy UIComponent#childrenCreated
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -377,7 +385,7 @@ namespace eui {
         }
 
         /**
-         * @copy eui.UIComponent#commitProperties
+         * @copy UIComponent#commitProperties
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -387,7 +395,7 @@ namespace eui {
 
         }
         /**
-         * @copy eui.UIComponent#measure
+         * @copy UIComponent#measure
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -396,17 +404,17 @@ namespace eui {
         protected measure():void {
             let values = this.$UIComponent;
             let textValues = this.$TextField;
-            let oldWidth = textValues[egret.sys.TextKeys.textFieldWidth];
+            let oldWidth = textValues[TextKeys.textFieldWidth];
             let availableWidth = NaN;
             if (!isNaN(this._widthConstraint)) {
                 availableWidth = this._widthConstraint;
                 this._widthConstraint = NaN;
             }
-            else if (!isNaN(values[sys.UIKeys.explicitWidth])) {
-                availableWidth = values[sys.UIKeys.explicitWidth];
+            else if (!isNaN(values[UIKeys.explicitWidth])) {
+                availableWidth = values[UIKeys.explicitWidth];
             }
-            else if (values[sys.UIKeys.maxWidth] != 100000) {
-                availableWidth = values[sys.UIKeys.maxWidth];
+            else if (values[UIKeys.maxWidth] != 100000) {
+                availableWidth = values[UIKeys.maxWidth];
             }
 
             super.$setWidth(availableWidth);
@@ -415,7 +423,7 @@ namespace eui {
         }
 
         /**
-         * @copy eui.UIComponent#updateDisplayList
+         * @copy UIComponent#updateDisplayList
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -427,7 +435,7 @@ namespace eui {
         }
 
         /**
-         * @copy eui.UIComponent#invalidateParentLayout
+         * @copy UIComponent#invalidateParentLayout
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -447,7 +455,7 @@ namespace eui {
         $includeInLayout:boolean;
 
         /**
-         * @copy eui.UIComponent#includeInLayout
+         * @copy UIComponent#includeInLayout
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -455,7 +463,7 @@ namespace eui {
          */
         public includeInLayout:boolean;
         /**
-         * @copy eui.UIComponent#left
+         * @copy UIComponent#left
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -464,7 +472,7 @@ namespace eui {
         public left:any;
 
         /**
-         * @copy eui.UIComponent#right
+         * @copy UIComponent#right
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -473,7 +481,7 @@ namespace eui {
         public right:any;
 
         /**
-         * @copy eui.UIComponent#top
+         * @copy UIComponent#top
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -482,7 +490,7 @@ namespace eui {
         public top:any;
 
         /**
-         * @copy eui.UIComponent#bottom
+         * @copy UIComponent#bottom
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -491,7 +499,7 @@ namespace eui {
         public bottom:any;
 
         /**
-         * @copy eui.UIComponent#horizontalCenter
+         * @copy UIComponent#horizontalCenter
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -500,7 +508,7 @@ namespace eui {
         public horizontalCenter:any;
 
         /**
-         * @copy eui.UIComponent#verticalCenter
+         * @copy UIComponent#verticalCenter
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -509,7 +517,7 @@ namespace eui {
         public verticalCenter:any;
 
         /**
-         * @copy eui.UIComponent#percentWidth
+         * @copy UIComponent#percentWidth
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -518,7 +526,7 @@ namespace eui {
         public percentWidth:number;
 
         /**
-         * @copy eui.UIComponent#percentHeight
+         * @copy UIComponent#percentHeight
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -527,7 +535,7 @@ namespace eui {
         public percentHeight:number;
 
         /**
-         * @copy eui.UIComponent#explicitWidth
+         * @copy UIComponent#explicitWidth
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -536,7 +544,7 @@ namespace eui {
         public explicitWidth:number;
 
         /**
-         * @copy eui.UIComponent#explicitHeight
+         * @copy UIComponent#explicitHeight
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -546,7 +554,7 @@ namespace eui {
 
 
         /**
-         * @copy eui.UIComponent#minWidth
+         * @copy UIComponent#minWidth
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -554,7 +562,7 @@ namespace eui {
          */
         public minWidth:number;
         /**
-         * @copy eui.UIComponent#maxWidth
+         * @copy UIComponent#maxWidth
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -563,7 +571,7 @@ namespace eui {
         public maxWidth:number;
 
         /**
-         * @copy eui.UIComponent#minHeight
+         * @copy UIComponent#minHeight
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -571,7 +579,7 @@ namespace eui {
          */
         public minHeight:number;
         /**
-         * @copy eui.UIComponent#maxHeight
+         * @copy UIComponent#maxHeight
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -674,10 +682,10 @@ namespace eui {
             }
             this._widthConstraint = layoutWidth;
             let values = this.$UIComponent;
-            if (!isNaN(values[sys.UIKeys.explicitHeight])) {
+            if (!isNaN(values[UIKeys.explicitHeight])) {
                 return;
             }
-            if (layoutWidth == values[sys.UIKeys.measuredWidth]) {
+            if (layoutWidth == values[UIKeys.measuredWidth]) {
                 return;
             }
             this.invalidateSize();
@@ -700,7 +708,7 @@ namespace eui {
          * @version eui 1.0
          * @platform Web
          */
-        public getLayoutBounds(bounds:egret.Rectangle):void {
+        public getLayoutBounds(bounds:Rectangle):void {
         }
 
         /**
@@ -710,10 +718,9 @@ namespace eui {
          * @version eui 1.0
          * @platform Web
          */
-        public getPreferredBounds(bounds:egret.Rectangle):void {
+        public getPreferredBounds(bounds:Rectangle):void {
         }
     }
 
-    sys.implementUIComponent(Label, egret.TextField);
+    implementUIComponent(Label, TextField);
     registerBindable(Label.prototype, "text");
-}

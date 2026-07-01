@@ -1,8 +1,16 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { IEventDispatcher } from "./IEventDispatcher";
+import { HashObject } from "../utils/HashObject";
+import { target } from "../display/Bitmap";
+import { type } from "../text/TextField";
+import { listener } from "../../extension/eui/binding/Watcher";
+import { priority } from "../../extension/assetsmanager/src/core/ResourceLoader";
+import { Event } from "./Event";
+import { $error } from "../../Defines.debug";
+import { DEBUG } from "../../Defines.debug";
 
-namespace egret {
 
     /**
      * @private
@@ -32,7 +40,7 @@ namespace egret {
      * dispatching capabilities is to extend EventDispatcher. If this is impossible (that is, if the class is already extending
      * another class), you can instead implement the IEventDispatcher interface, create an EventDispatcher member, and write simple
      * hooks to route calls into the aggregated EventDispatcher.
-     * @see egret.IEventDispatcher
+     * @see IEventDispatcher
      * @version Egret 2.4
      * @platform Web
      * @includeExample egret/events/EventDispatcher.ts
@@ -46,7 +54,7 @@ namespace egret {
      * 捕获阶段包括从根到事件目标节点之前的最后一个节点的行程，目标阶段仅包括事件目标节点，冒泡阶段包括回程上遇到的任何后续节点到显示列表的根。
      * 通常，使用户定义的类能够调度事件的最简单方法是扩展 EventDispatcher。如果无法扩展（即，如果该类已经扩展了另一个类），则可以实现
      * IEventDispatcher 接口，创建 EventDispatcher 成员，并编写一些简单的映射，将调用连接到聚合的 EventDispatcher 中。
-     * @see egret.IEventDispatcher
+     * @see IEventDispatcher
      * @version Egret 2.4
      * @platform Web
      * @includeExample egret/events/EventDispatcher.ts
@@ -297,9 +305,7 @@ namespace egret {
         }
     }
 
-}
 
-namespace egret.sys {
     /**
      * @private
      * 事件信息对象
@@ -332,4 +338,3 @@ namespace egret.sys {
          */
         dispatchOnce:boolean;
     }
-}

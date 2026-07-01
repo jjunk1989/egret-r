@@ -1,8 +1,16 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { HttpResponseType } from "../../../egret/net/HttpResponseType";
+import { Event } from "../../../egret/events/Event";
+import { HttpRequest, IOErrorEvent } from "../../../egret/events/IOErrorEvent";
+import { ImageLoader } from "../../../egret/net/ImageLoader";
+import { BitmapData } from "../../../egret/display/BitmapData";
+import { Texture } from "../../../egret/display/Texture";
+import { BinAnalyzer } from "./BinAnalyzer";
+import { ResourceItem } from "../../assetsmanager/src/shim/ResourceItem";
+import { $warn } from "";
 
-namespace RES {
 
     /**
      * SpriteSheet解析器
@@ -12,21 +20,21 @@ namespace RES {
 
         public constructor() {
             super();
-            this._dataFormat = egret.HttpResponseType.TEXT;
+            this._dataFormat = HttpResponseType.TEXT;
         }
 
         /**
          * 一项加载结束
          */
-        public onLoadFinish(event:egret.Event):void {
+        public onLoadFinish(event:Event):void {
             let request = event.target;
             let data:any = this.resItemDic[request.$hashCode];
             delete this.resItemDic[request.hashCode];
             let resItem:ResourceItem = data.item;
             let compFunc:Function = data.func;
-            resItem.loaded = (event.type == egret.Event.COMPLETE);
+            resItem.loaded = (event.type == Event.COMPLETE);
             if (resItem.loaded) {
-                if (request instanceof egret.HttpRequest) {
+                if (request instanceof HttpRequest) {
                     resItem.loaded = false;
                     let imageUrl:string = this.analyzeConfig(resItem, request.response);
                     if (imageUrl) {
@@ -36,10 +44,10 @@ namespace RES {
                     }
                 }
                 else {
-                    this.analyzeBitmap(resItem, (<egret.ImageLoader>request).data);
+                    this.analyzeBitmap(resItem, (<ImageLoader>request).data);
                 }
             }
-            if (request instanceof egret.HttpRequest) {
+            if (request instanceof HttpRequest) {
                 this.recycler.push(request);
             }
             else {
@@ -62,7 +70,7 @@ namespace RES {
                 config = JSON.parse(str);
             }
             catch (e) {
-                egret.$warn(1017, resItem.url, data);
+                $warn(1017, resItem.url, data);
             }
             if (config) {
                 this.sheetMap[name] = config;
@@ -86,7 +94,7 @@ namespace RES {
         /**
          * 解析并缓存加载成功的位图数据
          */
-        public analyzeBitmap(resItem:ResourceItem, data:egret.BitmapData):void {
+        public analyzeBitmap(resItem:ResourceItem, data:BitmapData):void {
             let name:string = resItem.name;
             if (this.fileDic[name] || !data) {
                 return;
@@ -113,15 +121,15 @@ namespace RES {
             return url;
         }
 
-        private parseAnimation(bitmapData:egret.BitmapData, data:any, name:string):egret.Texture[] {
+        private parseAnimation(bitmapData:BitmapData, data:any, name:string):Texture[] {
             let attributes = Object.keys(data.mc);
             let list:any[] = data.mc[attributes[0]].frames;
             let len = list.length;
             let config;
-            let animationFrames:egret.Texture[] = [];
+            let animationFrames:Texture[] = [];
             for (let i = 0; i < len; i++) {
                 config = data.res[list[i].res];
-                let texture = new egret.Texture();
+                let texture = new Texture();
                 texture.$bitmapData = bitmapData;
                 texture.$initData(config.x, config.y, config.w, config.h, list[i].x, list[i].y, list[i].sourceW, list[i].sourceH, bitmapData.width, bitmapData.height);
             }
@@ -140,7 +148,7 @@ namespace RES {
         /**
          * ImageLoader对象池
          */
-        private recyclerIamge:egret.ImageLoader[] = [];
+        private recyclerIamge:ImageLoader[] = [];
 
         private loadImage(url:string, data:any):void {
             let loader = this.getImageLoader();
@@ -148,14 +156,13 @@ namespace RES {
             loader.load($getVirtualUrl(url));
         }
 
-        private getImageLoader():egret.ImageLoader {
+        private getImageLoader():ImageLoader {
             let loader = this.recyclerIamge.pop();
             if (!loader) {
-                loader = new egret.ImageLoader();
-                loader.addEventListener(egret.Event.COMPLETE, this.onLoadFinish, this);
-                loader.addEventListener(egret.IOErrorEvent.IO_ERROR, this.onLoadFinish, this);
+                loader = new ImageLoader();
+                loader.addEventListener(Event.COMPLETE, this.onLoadFinish, this);
+                loader.addEventListener(IOErrorEvent.IO_ERROR, this.onLoadFinish, this);
             }
             return loader;
         }
     }
-}

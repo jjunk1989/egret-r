@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-module RES {
+import { ResourceInfo } from "../core/ResourceConfig";
+
 
 	/**
 	 * Resource term. One of the resources arrays in resource.json.
@@ -164,7 +165,6 @@ module RES {
 	}
 
 
-
 	export interface ResourceItem extends ResourceInfo {
 
 		/**
@@ -228,4 +228,3 @@ module RES {
 		soundType?: string
 
 	}
-}

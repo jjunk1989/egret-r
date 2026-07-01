@@ -1,16 +1,20 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { EventDispatcher } from "../../../egret/events/EventDispatcher";
+import { ResourceItem } from "../../assetsmanager/src/shim/ResourceItem";
+import { ResourceEvent } from "../../assetsmanager/src/shim/ResourceEvent";
+import { AnalyzerBase } from "../analyzer/AnalyzerBase";
+import { $warn } from "";
 
-namespace RES {
 
 	/**
 	 * @class RES.ResourceLoader
 	 * @classdesc
-	 * @extends egret.EventDispatcher
+	 * @extends EventDispatcher
 	 * @private
 	 */
-	export class ResourceLoader extends egret.EventDispatcher{
+	export class ResourceLoader extends EventDispatcher{
 		/**
 		 * 构造函数
 		 * @method RES.ResourceLoader#constructor
@@ -82,7 +86,7 @@ namespace RES {
 			if(this.itemListDic[groupName]||!groupName)
 				return;
 			if(!list||list.length==0){
-                egret.$warn(3201, groupName);
+                $warn(3201, groupName);
 				let event:ResourceEvent = new ResourceEvent(ResourceEvent.GROUP_LOAD_ERROR);
 				event.groupName = groupName;
 				this.dispatchEvent(event);
@@ -109,7 +113,7 @@ namespace RES {
 		/**
 		 * 加载一个文件
 		 * @method RES.ResourceLoader#loadItem
-		 * @param resItem {egret.ResourceItem} 要加载的项
+		 * @param resItem {ResourceItem} 要加载的项
 		 */
 		public loadItem(resItem:ResourceItem):void{
 			this.lazyLoadList.push(resItem);
@@ -249,4 +253,3 @@ namespace RES {
 			}
 		}
 	}
-}

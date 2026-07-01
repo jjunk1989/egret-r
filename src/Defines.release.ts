@@ -1,6 +1,15 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { params } from "./extension/assetsmanager/src/processor/Processor";
+
+import { params } from "./extension/assetsmanager/src/processor/Processor";
+
+import { params } from "./extension/assetsmanager/src/processor/Processor";
+
+import { params } from "./extension/assetsmanager/src/processor/Processor";
+import { $warn } from "";
+
 
 //此文件仅保证程序中的debug代码能够通过编译，不会生成代码，在JS代码压缩阶段，会移除所有debug代码
 
@@ -13,7 +22,6 @@ declare let DEBUG:boolean;
  */
 declare let RELEASE:boolean;
 
-namespace egret {
     /**
      * @private
      */
@@ -37,7 +45,7 @@ namespace egret {
     function _getString():string {
         return "";
     }
-    egret.getString = _getString;
+    _getString = _getString;
 
     function _error(code): void {
         throw new Error("#" + code );//使用这种方式报错能够终止后续代码继续运行
@@ -48,10 +56,9 @@ namespace egret {
     function _warn():void {
     }
 
-    egret.$warn = _warn;
+    $warn = _warn;
 
 
     function markCannotUse():void {
     }
     egret.$markCannotUse = markCannotUse;
-}

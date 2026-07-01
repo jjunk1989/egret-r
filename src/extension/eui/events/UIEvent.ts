@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { Event } from "../../../egret/events/Event";
+import { IEventDispatcher } from "../../../egret/events/IEventDispatcher";
 
-namespace eui {
 
     /**
      * The UIEvent class represents the event object passed to
@@ -21,7 +22,7 @@ namespace eui {
      * @includeExample  extension/eui/events/UIEventExample.ts
      * @language zh_CN
      */
-    export class UIEvent extends egret.Event{
+    export class UIEvent extends Event{
 
         /**
          * Constructor.
@@ -159,14 +160,13 @@ namespace eui {
          * @platform Web
          * @language zh_CN
          */
-        public static dispatchUIEvent(target:egret.IEventDispatcher, eventType:string, bubbles?:boolean, cancelable?:boolean):boolean {
+        public static dispatchUIEvent(target:IEventDispatcher, eventType:string, bubbles?:boolean, cancelable?:boolean):boolean {
             if(!target.hasEventListener(eventType)){
                 return true;
             }
-            let event = egret.Event.create(UIEvent, eventType, bubbles, cancelable);
+            let event = Event.create(UIEvent, eventType, bubbles, cancelable);
             let result = target.dispatchEvent(event);
-            egret.Event.release(event);
+            Event.release(event);
             return result;
         }
     }
-}

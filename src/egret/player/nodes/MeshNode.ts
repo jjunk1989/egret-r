@@ -1,7 +1,12 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret.sys {
+import { Matrix } from "../../geom/Matrix";
+import { RenderNode, RenderNodeType } from "./RenderNode";
+import { BitmapData } from "../../display/BitmapData";
+import { Rectangle } from "../../geom/Rectangle";
+import { ColorMatrixFilter } from "../../filters/ColorMatrixFilter";
+
 
     /**
      * @private
@@ -35,7 +40,7 @@ namespace egret.sys {
         /**
          * 相对偏移矩阵。
          */
-        public matrix:egret.Matrix;
+        public matrix:Matrix;
         /**
          * UV 坐标。
          */
@@ -86,4 +91,3 @@ namespace egret.sys {
             this.matrix = null;
         }
     }
-}

@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret.web {
+import { Capabilities } from "../system/Capabilities";
+
 
     /**
      * @private
@@ -12,7 +13,7 @@ namespace egret.web {
          * 检测系统属性
          */
         public static detect(): void {
-            let capabilities = egret.Capabilities;
+            let capabilities = Capabilities;
             let ua = navigator.userAgent.toLowerCase();
             capabilities["isMobile" + ""] = (ua.indexOf('mobile') != -1 || ua.indexOf('android') != -1);
             if (capabilities.isMobile) {
@@ -84,4 +85,3 @@ namespace egret.web {
         }
     }
     WebCapability.detect();
-}

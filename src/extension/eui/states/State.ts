@@ -1,8 +1,14 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { HashObject } from "../../../egret/utils/HashObject";
+import { Stage } from "../../../egret/display/Stage";
+import { DisplayObject } from "../../../egret/display/DisplayObject";
+import { DisplayObjectContainer } from "../../../egret/display/DisplayObjectContainer";
+import { AddItems } from "./AddItems";
+import { Image } from "../components/Image";
+import { IOverride } from "./IOverride";
 
-namespace eui {
 
     /**
      * The State class defines a view state, a particular view of a component.
@@ -26,7 +32,7 @@ namespace eui {
      * @platform Web
      * @language zh_CN
      */
-    export class State extends egret.HashObject {
+    export class State extends HashObject {
         /**
          * Constructor.
          *
@@ -129,14 +135,14 @@ namespace eui {
          * @platform Web
          * @language zh_CN
          */
-        public initialize(host:any, stage:egret.Stage):void {
+        public initialize(host:any, stage:Stage):void {
             let overrides = this.overrides;
             let length = overrides.length;
             for (let i = 0; i < length; i++) {
                 let addItems:AddItems = <AddItems>overrides[i];
-                if (addItems instanceof eui.AddItems) {
-                    let target:egret.DisplayObject = host[addItems.target];
-                    if (target&&target instanceof eui.Image&&!target.$parent) {
+                if (addItems instanceof AddItems) {
+                    let target:DisplayObject = host[addItems.target];
+                    if (target&&target instanceof Image&&!target.$parent) {
                         stage.addChild(target);
                         stage.removeChild(target);
                     }
@@ -145,9 +151,6 @@ namespace eui {
         }
     }
 
-}
-
-namespace eui.sys {
 
     /**
      * @private
@@ -256,7 +259,7 @@ namespace eui.sys {
          * @private
          * 初始化所有视图状态
          */
-        private initializeStates(stage:egret.Stage):void {
+        private initializeStates(stage:Stage):void {
             this.$stateValues.intialized = true;
             let states = this.states;
             let length = states.length;
@@ -304,11 +307,10 @@ namespace eui.sys {
         /**
          * @private
          */
-        public parent:egret.DisplayObjectContainer = null;
+        public parent:DisplayObjectContainer = null;
 
         /**
          * @private
          */
         public stateIsDirty:boolean = false;
     }
-}

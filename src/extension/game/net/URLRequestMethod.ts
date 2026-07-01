@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret {
 
 	/**
 	 * The URLRequestMethod class provides values that specify whether the
@@ -51,4 +50,3 @@ namespace egret {
 		 */
         public static POST:string = "post";
     }
-}

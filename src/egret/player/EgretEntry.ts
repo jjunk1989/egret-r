@@ -1,12 +1,14 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret {
+import { IScreenAdapter } from "./ScreenAdapter";
+import { CanvasRenderingContext2D } from "./rendering/CanvasRenderer";
+
 
     export type runEgretOptions = {
         renderMode?: string;
         audioType?: number;
-        screenAdapter?: sys.IScreenAdapter;
+        screenAdapter?: IScreenAdapter;
         antialias?: boolean;
         canvasScaleFactor?: number;
         calculateCanvasScaleFactor?: (context: CanvasRenderingContext2D) => number;
@@ -48,4 +50,3 @@ namespace egret {
      * @language zh_CN
      */
     export declare function updateAllScreens(): void;
-}

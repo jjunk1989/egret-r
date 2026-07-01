@@ -1,8 +1,11 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { NumberUtils } from "../utils/NumberUtils";
+import { Point } from "./Point";
+import { HashObject } from "../utils/HashObject";
+import { Rectangle } from "./Rectangle";
 
-namespace egret {
 
     let PI = Math.PI;
     let TwoPI = PI * 2;
@@ -373,8 +376,8 @@ namespace egret {
             angle = +angle;
             if (angle !== 0) {
                 angle = angle / DEG_TO_RAD;
-                let u = egret.NumberUtils.cos(angle);
-                let v = egret.NumberUtils.sin(angle);
+                let u = NumberUtils.cos(angle);
+                let v = NumberUtils.sin(angle);
                 let ta = this.a;
                 let tb = this.b;
                 let tc = this.c;
@@ -634,7 +637,7 @@ namespace egret {
             let self = this;
             let x = self.a * point.x + self.c * point.y;
             let y = self.b * point.x + self.d * point.y;
-            return new egret.Point(x, y);
+            return new Point(x, y);
         }
 
         /**
@@ -681,8 +684,8 @@ namespace egret {
             let self = this;
             if (rotation !== 0) {
                 rotation = rotation / DEG_TO_RAD;
-                let u = egret.NumberUtils.cos(rotation);
-                let v = egret.NumberUtils.sin(rotation);
+                let u = NumberUtils.cos(rotation);
+                let v = NumberUtils.sin(rotation);
                 self.a = u * scaleX;
                 self.b = v * scaleY;
                 self.c = -v * scaleX;
@@ -848,14 +851,14 @@ namespace egret {
             }
             skewX = skewX / DEG_TO_RAD;
             skewY = skewY / DEG_TO_RAD;
-            let u = egret.NumberUtils.cos(skewX);
-            let v = egret.NumberUtils.sin(skewX);
+            let u = NumberUtils.cos(skewX);
+            let v = NumberUtils.sin(skewX);
             if (skewX == skewY) {
                 this.a = u * scaleX;
                 this.b = v * scaleX;
             } else {
-                this.a = egret.NumberUtils.cos(skewY) * scaleX;
-                this.b = egret.NumberUtils.sin(skewY) * scaleX;
+                this.a = NumberUtils.cos(skewY) * scaleX;
+                this.b = NumberUtils.sin(skewY) * scaleX;
             }
             this.c = -v * scaleY;
             this.d = u * scaleY;
@@ -896,4 +899,3 @@ namespace egret {
      * 仅供框架内复用，要防止暴露引用到外部。
      */
     export let $TempMatrix = new Matrix();
-}

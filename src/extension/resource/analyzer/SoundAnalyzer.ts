@@ -1,7 +1,13 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace RES {
+import { Sound } from "../../../egret/media/Sound";
+import { Event } from "../../../egret/events/Event";
+import { IOErrorEvent } from "../../../egret/events/IOErrorEvent";
+import { AnalyzerBase } from "./AnalyzerBase";
+import { ResourceItem } from "../../assetsmanager/src/shim/ResourceItem";
+import { $getVirtualUrl } from "../Resource";
+
     /**
      * @private
      */
@@ -31,9 +37,9 @@ namespace RES {
                 callBack.call(thisObject, resItem);
                 return;
             }
-            let sound = new egret.Sound();
-            sound.addEventListener(egret.Event.COMPLETE, this.onLoadFinish, this);
-            sound.addEventListener(egret.IOErrorEvent.IO_ERROR, this.onLoadFinish, this);
+            let sound = new Sound();
+            sound.addEventListener(Event.COMPLETE, this.onLoadFinish, this);
+            sound.addEventListener(IOErrorEvent.IO_ERROR, this.onLoadFinish, this);
             this.resItemDic[sound.$hashCode] = {item: resItem, func: callBack, thisObject: thisObject};
             sound.load($getVirtualUrl(resItem.url));
             if (resItem.data) {
@@ -44,15 +50,15 @@ namespace RES {
         /**
          * 一项加载结束
          */
-        protected onLoadFinish(event:egret.Event):void {
-            let sound = <egret.Sound> (event.$target);
-            sound.removeEventListener(egret.Event.COMPLETE, this.onLoadFinish, this);
-            sound.removeEventListener(egret.IOErrorEvent.IO_ERROR, this.onLoadFinish, this);
+        protected onLoadFinish(event:Event):void {
+            let sound = <Sound> (event.$target);
+            sound.removeEventListener(Event.COMPLETE, this.onLoadFinish, this);
+            sound.removeEventListener(IOErrorEvent.IO_ERROR, this.onLoadFinish, this);
             let data:any = this.resItemDic[sound.$hashCode];
             delete this.resItemDic[sound.$hashCode];
             let resItem:ResourceItem = data.item;
             let compFunc:Function = data.func;
-            resItem.loaded = (event.$type == egret.Event.COMPLETE);
+            resItem.loaded = (event.$type == Event.COMPLETE);
             if (resItem.loaded) {
                 this.analyzeData(resItem, sound)
             }
@@ -62,7 +68,7 @@ namespace RES {
         /**
          * 解析并缓存加载成功的数据
          */
-        protected analyzeData(resItem:ResourceItem, data:egret.Sound):void {
+        protected analyzeData(resItem:ResourceItem, data:Sound):void {
             let name:string = resItem.name;
             if (this.soundDic[name] || !data) {
                 return;
@@ -95,4 +101,3 @@ namespace RES {
             return false;
         }
     }
-}

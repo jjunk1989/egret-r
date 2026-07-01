@@ -1,7 +1,18 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace eui.sys {
+import { TextField } from "../../../egret/text/TextField";
+import { FocusEvent } from "../../../egret/events/FocusEvent";
+import { TextKeys } from "../../../egret/text/TextField";
+import { TextFieldType } from "../../../egret/text/TextFieldType";
+import { Stage } from "../../../egret/display/Stage";
+import { TouchEvent } from "../../../egret/events/TouchEvent";
+import { Capabilities } from "../../../egret/system/Capabilities";
+import { Rectangle } from "../../../egret/geom/Rectangle";
+import { Component } from "./Component";
+import { registerBindable } from "../utils/registerBindable";
+import { UIComponentImpl, UIKeys, implementUIComponent, UIComponent } from "../core/UIComponent";
+
     /**
      * @private
      */
@@ -10,10 +21,8 @@ namespace eui.sys {
         textColorUser,
         asPassword
     }
-}
-namespace eui {
 
-    let UIImpl = sys.UIComponentImpl;
+    let UIImpl = UIComponentImpl;
 
     /**
      * Editable text for displaying,
@@ -32,7 +41,7 @@ namespace eui {
      * @platform Web
      * @language zh_CN
      */
-    export class EditableText extends egret.TextField implements UIComponent, IDisplayText {
+    export class EditableText extends TextField implements UIComponent, IDisplayText {
 
         /**
          * Constructor.
@@ -51,7 +60,7 @@ namespace eui {
         public constructor() {
             super();
             this.initializeUIValues();
-            this.type = egret.TextFieldType.INPUT;
+            this.type = TextFieldType.INPUT;
             this.$EditableText = {
                 0: null,         //promptText,
                 1: 0xffffff,     //textColorUser,
@@ -136,12 +145,12 @@ namespace eui {
          * @param stage
          * @param nestLevel
          */
-        public $onAddToStage(stage: egret.Stage, nestLevel: number): void {
-            sys.UIComponentImpl.prototype["$onAddToStage"].call(this, stage, nestLevel);
-            this.addEventListener(egret.FocusEvent.FOCUS_IN, this.onfocusIn, this);
-            this.addEventListener(egret.FocusEvent.FOCUS_OUT, this.onfocusOut, this);
-            this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
-            this.addEventListener(egret.TouchEvent.TOUCH_CANCEL, this.onTouchCancle, this);
+        public $onAddToStage(stage: Stage, nestLevel: number): void {
+            UIComponentImpl.prototype["$onAddToStage"].call(this, stage, nestLevel);
+            this.addEventListener(FocusEvent.FOCUS_IN, this.onfocusIn, this);
+            this.addEventListener(FocusEvent.FOCUS_OUT, this.onfocusOut, this);
+            this.addEventListener(TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
+            this.addEventListener(TouchEvent.TOUCH_CANCEL, this.onTouchCancle, this);
         }
         /**
          * @private
@@ -149,10 +158,10 @@ namespace eui {
          */
         public $onRemoveFromStage(): void {
             super.$onRemoveFromStage();
-            this.removeEventListener(egret.FocusEvent.FOCUS_IN, this.onfocusIn, this);
-            this.removeEventListener(egret.FocusEvent.FOCUS_OUT, this.onfocusOut, this);
-            this.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
-            this.removeEventListener(egret.TouchEvent.TOUCH_CANCEL, this.onTouchCancle, this);
+            this.removeEventListener(FocusEvent.FOCUS_IN, this.onfocusIn, this);
+            this.removeEventListener(FocusEvent.FOCUS_OUT, this.onfocusOut, this);
+            this.removeEventListener(TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
+            this.removeEventListener(TouchEvent.TOUCH_CANCEL, this.onTouchCancle, this);
         }
         /**
          * @private
@@ -254,7 +263,7 @@ namespace eui {
          * @private
          */
         private onfocusIn(): void {
-            if (!egret.Capabilities.isMobile && this.$isTouchCancle) {
+            if (!Capabilities.isMobile && this.$isTouchCancle) {
                 this.inputUtils.stageText.$hide();
                 return
             }
@@ -307,7 +316,7 @@ namespace eui {
         private initializeUIValues: () => void;
 
         /**
-         * @copy eui.Component#createChildren()
+         * @copy Component#createChildren()
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -318,7 +327,7 @@ namespace eui {
         }
 
         /**
-         * @copy eui.Component#childrenCreated()
+         * @copy Component#childrenCreated()
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -329,7 +338,7 @@ namespace eui {
         }
 
         /**
-         * @copy eui.Component#commitProperties()
+         * @copy Component#commitProperties()
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -340,7 +349,7 @@ namespace eui {
         }
 
         /**
-         * @copy eui.Component#measure()
+         * @copy Component#measure()
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -349,17 +358,17 @@ namespace eui {
         protected measure(): void {
             let values = this.$UIComponent;
             let textValues = this.$TextField;
-            let oldWidth = textValues[egret.sys.TextKeys.textFieldWidth];
+            let oldWidth = textValues[TextKeys.textFieldWidth];
             let availableWidth = NaN;
             if (!isNaN(this._widthConstraint)) {
                 availableWidth = this._widthConstraint;
                 this._widthConstraint = NaN;
             }
-            else if (!isNaN(values[sys.UIKeys.explicitWidth])) {
-                availableWidth = values[sys.UIKeys.explicitWidth];
+            else if (!isNaN(values[UIKeys.explicitWidth])) {
+                availableWidth = values[UIKeys.explicitWidth];
             }
-            else if (values[sys.UIKeys.maxWidth] != 100000) {
-                availableWidth = values[sys.UIKeys.maxWidth];
+            else if (values[UIKeys.maxWidth] != 100000) {
+                availableWidth = values[UIKeys.maxWidth];
             }
 
             super.$setWidth(availableWidth);
@@ -368,7 +377,7 @@ namespace eui {
         }
 
         /**
-         * @copy eui.Component#updateDisplayList()
+         * @copy Component#updateDisplayList()
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -380,7 +389,7 @@ namespace eui {
         }
 
         /**
-         * @copy eui.Component#invalidateParentLayout()
+         * @copy Component#invalidateParentLayout()
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -626,10 +635,10 @@ namespace eui {
                 return;
             }
             let values = this.$UIComponent;
-            if (!isNaN(values[sys.UIKeys.explicitHeight])) {
+            if (!isNaN(values[UIKeys.explicitHeight])) {
                 return;
             }
-            if (layoutWidth == values[sys.UIKeys.measuredWidth]) {
+            if (layoutWidth == values[UIKeys.measuredWidth]) {
                 return;
             }
             this._widthConstraint = layoutWidth;
@@ -653,7 +662,7 @@ namespace eui {
          * @version eui 1.0
          * @platform Web
          */
-        public getLayoutBounds(bounds: egret.Rectangle): void {
+        public getLayoutBounds(bounds: Rectangle): void {
         }
 
         /**
@@ -663,10 +672,9 @@ namespace eui {
          * @version eui 1.0
          * @platform Web
          */
-        public getPreferredBounds(bounds: egret.Rectangle): void {
+        public getPreferredBounds(bounds: Rectangle): void {
         }
     }
 
-    sys.implementUIComponent(EditableText, egret.TextField);
+    implementUIComponent(EditableText, TextField);
     registerBindable(EditableText.prototype, "text");
-}

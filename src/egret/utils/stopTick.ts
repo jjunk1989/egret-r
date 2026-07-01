@@ -1,10 +1,13 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret {
+import { startTick } from "./startTick";
+import { $error } from "../../Defines.debug";
+import { DEBUG } from "../../Defines.debug";
+
 
     /**
-     * Stops the timer started by the egret.startTick() method.
+     * Stops the timer started by the startTick() method.
      * @param callBack the call back method. the timeStamp parameter of this method represents the number of milliseconds
      * since the Egret framework was initialized. If the return value of this method is true, it will force Egret runtime
      * to render after processing of this method completes.
@@ -28,4 +31,3 @@ namespace egret {
         }
         ticker.$stopTick(callBack,thisObject);
     }
-}

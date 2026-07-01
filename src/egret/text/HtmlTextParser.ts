@@ -1,10 +1,13 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret {
+import { TextField } from "./TextField";
+import { ITextElement, ITextStyle } from "./ITextElement";
+import { $error } from "../../Defines.debug";
+
 
     /**
-     * Convert the text in html format to the object that can be assigned to the egret.TextField#textFlow property
+     * Convert the text in html format to the object that can be assigned to the TextField#textFlow property
      * @see http://edn.egret.com/cn/docs/page/146 Text mixed in a variety of style
      * @version Egret 2.4
      * @platform Web
@@ -12,7 +15,7 @@ namespace egret {
      * @language en_US
      */
     /**
-     * 将html格式文本转换为可赋值给 egret.TextField#textFlow 属性的对象
+     * 将html格式文本转换为可赋值给 TextField#textFlow 属性的对象
      * @see http://edn.egret.com/cn/docs/page/146 多种样式文本混合
      * @version Egret 2.4
      * @platform Web
@@ -57,25 +60,25 @@ namespace egret {
         /**
          * @private
          */
-        private resutlArr: Array<egret.ITextElement> = [];
+        private resutlArr: Array<ITextElement> = [];
 
         /**
-         * Convert the text in html format to the object that can be assigned to the egret.TextField#textFlow property
+         * Convert the text in html format to the object that can be assigned to the TextField#textFlow property
          * @param htmltext {string} Text in html
-         * @returns {Array<egret.ITextElement>} 可赋值给 egret.TextField#textFlow Object that can be assigned to the egret.TextField#textFlow property
+         * @returns {Array<ITextElement>} 可赋值给 TextField#textFlow Object that can be assigned to the TextField#textFlow property
          * @version Egret 2.4
          * @platform Web
          * @language en_US
          */
         /**
-         * 将html格式文本转换为可赋值给 egret.TextField#textFlow 属性的对象
+         * 将html格式文本转换为可赋值给 TextField#textFlow 属性的对象
          * @param htmltext {string} html文本
-         * @returns {Array<egret.ITextElement>} 可赋值给 egret.TextField#textFlow 属性的对象
+         * @returns {Array<ITextElement>} 可赋值给 TextField#textFlow 属性的对象
          * @version Egret 2.4
          * @platform Web
          * @language zh_CN
          */
-        public parse(htmltext: string): egret.ITextElement[] {
+        public parse(htmltext: string): ITextElement[] {
             this.stackArray = [];
             this.resutlArr = [];
 
@@ -92,7 +95,7 @@ namespace egret {
 
                     let fontEnd = htmltext.indexOf(">", starIdx);
                     if (fontEnd == -1) {
-                        egret.$error(1038);
+                        $error(1038);
                         fontEnd = starIdx;
                     }
                     else if (htmltext.charAt(starIdx + 1) == "\/") {//关闭
@@ -109,7 +112,7 @@ namespace egret {
             return this.resutlArr;
         }
 
-        public parser(htmltext: string): Array<egret.ITextElement> {
+        public parser(htmltext: string): Array<ITextElement> {
             return this.parse(htmltext);
         }
 
@@ -129,12 +132,12 @@ namespace egret {
                 this.resutlArr.push({ text: value, style: this.stackArray[this.stackArray.length - 1] })
             }
             else {
-                this.resutlArr.push(<egret.ITextElement>{ text: value });
+                this.resutlArr.push(<ITextElement>{ text: value });
             }
         }
 
         //将字符数据转成Json数据
-        private changeStringToObject(str: string): egret.ITextStyle {
+        private changeStringToObject(str: string): ITextStyle {
             str = str.trim();
             let info: any = {};
 
@@ -191,7 +194,7 @@ namespace egret {
          * @param head 
          * @param value 
          */
-        private addProperty(info: egret.ITextStyle, head: string, value: string): void {
+        private addProperty(info: ITextStyle, head: string, value: string): void {
 
             switch (head.toLowerCase()) {
                 case "color":
@@ -235,7 +238,7 @@ namespace egret {
         /**
          * @private
          */
-        private stackArray: Array<egret.ITextStyle>;
+        private stackArray: Array<ITextStyle>;
 
         /**
          * @private
@@ -243,7 +246,7 @@ namespace egret {
          * @param infoStr 
          */
         private addToArray(infoStr: string): void {
-            let info: egret.ITextStyle = this.changeStringToObject(infoStr);
+            let info: ITextStyle = this.changeStringToObject(infoStr);
 
             if (this.stackArray.length == 0) {
                 this.stackArray.push(info);
@@ -259,5 +262,3 @@ namespace egret {
             }
         }
     }
-
-}

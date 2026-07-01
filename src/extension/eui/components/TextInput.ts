@@ -1,4 +1,11 @@
-namespace eui.sys {
+
+import { FocusEvent } from "../../../egret/events/FocusEvent";
+import { TextField } from "../../../egret/text/TextField";
+import { TextFieldInputType } from "../../../egret/text/TextFieldInputType";
+import { EditableText } from "./EditableText";
+import { Component } from "./Component";
+import { Label } from "./Label";
+
     /**
      * @private
      */
@@ -13,9 +20,6 @@ namespace eui.sys {
         restrict,
         inputType
     }
-}
-namespace eui {
-    import FocusEvent = egret.FocusEvent;
     /**
      *
      */
@@ -49,7 +53,7 @@ namespace eui {
                 5: null,          //maxHeight
                 6: "",            //text
                 7: null,          //restrict
-                8:egret.TextFieldInputType.TEXT //inputType
+                8:TextFieldInputType.TEXT //inputType
             }
         }
 
@@ -93,7 +97,7 @@ namespace eui {
         public promptDisplay:Label;
 
         /**
-         * @copy eui.EditableText#prompt
+         * @copy EditableText#prompt
          *
          * @version Egret 2.5.7
          * @version eui 1.0
@@ -107,7 +111,7 @@ namespace eui {
         }
 
         /**
-         * @copy eui.EditableText#prompt
+         * @copy EditableText#prompt
          *
          * @version Egret 2.5.7
          * @version eui 1.0
@@ -123,7 +127,7 @@ namespace eui {
         }
 
         /**
-         * @copy egret.TextField#displayAsPassword
+         * @copy TextField#displayAsPassword
          *
          * @version Egret 2.5.7
          * @version eui 1.0
@@ -138,7 +142,7 @@ namespace eui {
         }
 
         /**
-         * @copy egret.TextField#displayAsPassword
+         * @copy TextField#displayAsPassword
          *
          * @version Egret 2.5.7
          * @version eui 1.0
@@ -152,7 +156,7 @@ namespace eui {
             this.invalidateProperties();
         }
         /**
-         * @copy egret.TextField#inputType
+         * @copy TextField#inputType
          *
          * @version Egret 3.1.6
          * @version eui 1.0
@@ -166,7 +170,7 @@ namespace eui {
             this.invalidateProperties();
         }
         /**
-         * @copy egret.TextField#inputType
+         * @copy TextField#inputType
          *
          * @version Egret 3.1.6
          * @version eui 1.0
@@ -181,7 +185,7 @@ namespace eui {
 
 
         /**
-         * @copy egret.TextField#textColor
+         * @copy TextField#textColor
          *
          * @version Egret 2.5.7
          * @version eui 1.0
@@ -195,7 +199,7 @@ namespace eui {
         }
 
         /**
-         * @copy egret.TextField#textColor
+         * @copy TextField#textColor
          *
          * @version Egret 2.5.7
          * @version eui 1.0
@@ -210,7 +214,7 @@ namespace eui {
         }
 
         /**
-         * @copy egret.TextField#maxChars
+         * @copy TextField#maxChars
          *
          * @version Egret 2.5.7
          * @version eui 1.0
@@ -225,7 +229,7 @@ namespace eui {
         }
 
         /**
-         * @copy egret.TextField#maxChars
+         * @copy TextField#maxChars
          *
          * @version Egret 2.5.7
          * @version eui 1.0
@@ -300,7 +304,7 @@ namespace eui {
         }
 
         /**
-         * @copy egret.TextField#text
+         * @copy TextField#text
          *
          * @version Egret 2.5.7
          * @version eui 1.0
@@ -314,7 +318,7 @@ namespace eui {
         }
 
         /**
-         * @copy egret.TextField#text
+         * @copy TextField#text
          *
          * @version Egret 2.5.7
          * @version eui 1.0
@@ -330,7 +334,7 @@ namespace eui {
         }
 
         /**
-         * @copy egret.TextField#restrict
+         * @copy TextField#restrict
          *
          * @version Egret 2.5.7
          * @version eui 1.0
@@ -344,7 +348,7 @@ namespace eui {
         }
 
         /**
-         * @copy egret.TextField#restrict
+         * @copy TextField#restrict
          *
          * @version Egret 2.5.7
          * @version eui 1.0
@@ -498,4 +502,3 @@ namespace eui {
             values[sys.TextInputKeys.inputType] = this.textDisplay.inputType;
         }
     }
-}

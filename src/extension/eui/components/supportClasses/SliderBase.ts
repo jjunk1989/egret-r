@@ -1,7 +1,17 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace eui {
+import { Event } from "../../../../egret/events/Event";
+import { TouchEvent } from "../../../../egret/events/TouchEvent";
+import { DisplayObject } from "../../../../egret/display/DisplayObject";
+import { DisplayObjectContainer } from "../../../../egret/display/DisplayObjectContainer";
+import { Stage } from "../../../../egret/display/Stage";
+import { UIEvent } from "../../events/UIEvent";
+import { UIComponent } from "../../core/UIComponent";
+import { Animation } from "./Animation";
+import { RangeKeys, Range } from "./Range";
+import { $TempPoint } from "../../../../egret/geom/Point";
+
 
     /**
      * @private
@@ -27,12 +37,12 @@ namespace eui {
      * corresponding to the slider's minimum and maximum values.
      * The SliderBase class is a base class for HSlider and VSlider.
      *
-     * @event eui.UIEvent.CHANGE_START Dispatched when the scroll position is going to change
-     * @event eui.UIEvent.CHANGE_END Dispatched when the scroll position changed complete
-     * @event egret.Event.CHANGE Dispatched when the scroll position is changing
+     * @event UIEvent.CHANGE_START Dispatched when the scroll position is going to change
+     * @event UIEvent.CHANGE_END Dispatched when the scroll position changed complete
+     * @event Event.CHANGE Dispatched when the scroll position is changing
      *
-     * @see eui.HSlider
-     * @see eui.VSlider
+     * @see HSlider
+     * @see VSlider
      *
      * @version Egret 2.4
      * @version eui 1.0
@@ -44,12 +54,12 @@ namespace eui {
      * 滑块的当前值由滑块端点（对应于滑块的最小值和最大值）之间滑块的相对位置确定。
      * SliderBase 类是 HSlider 和 VSlider 的基类。
      *
-     * @event eui.UIEvent.CHANGE_START 滚动位置改变开始
-     * @event eui.UIEvent.CHANGE_END 滚动位置改变结束
-     * @event egret.Event.CHANGE 滚动位置改变的时候
+     * @event UIEvent.CHANGE_START 滚动位置改变开始
+     * @event UIEvent.CHANGE_END 滚动位置改变结束
+     * @event Event.CHANGE 滚动位置改变的时候
      *
-     * @see eui.HSlider
-     * @see eui.VSlider
+     * @see HSlider
+     * @see VSlider
      *
      * @version Egret 2.4
      * @version eui 1.0
@@ -86,7 +96,7 @@ namespace eui {
                 9: true,     //liveDragging
             };
             this.maximum = 10;
-            this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
+            this.addEventListener(TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
         }
 
         /**
@@ -110,7 +120,7 @@ namespace eui {
          * @platform Web
          * @language zh_CN
          */
-        public trackHighlight:egret.DisplayObject = null;
+        public trackHighlight:DisplayObject = null;
         /**
          * [SkinPart] Thumb display object.
          * @skinPart
@@ -127,7 +137,7 @@ namespace eui {
          * @platform Web
          * @language zh_CN
          */
-        public thumb:eui.UIComponent = null;
+        public thumb:UIComponent = null;
 
         /**
          * [SkinPart] Track display object.
@@ -145,7 +155,7 @@ namespace eui {
          * @platform Web
          * @language zh_CN
          */
-        public track:eui.UIComponent = null;
+        public track:UIComponent = null;
 
         /**
          * Duration in milliseconds for the sliding animation when you tap on the track to move a thumb.
@@ -297,17 +307,17 @@ namespace eui {
             super.partAdded(partName, instance);
 
             if (instance == this.thumb) {
-                this.thumb.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onThumbTouchBegin, this);
-                this.thumb.addEventListener(egret.Event.RESIZE, this.onTrackOrThumbResize, this);
+                this.thumb.addEventListener(TouchEvent.TOUCH_BEGIN, this.onThumbTouchBegin, this);
+                this.thumb.addEventListener(Event.RESIZE, this.onTrackOrThumbResize, this);
             }
             else if (instance == this.track) {
-                this.track.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTrackTouchBegin, this);
-                this.track.addEventListener(egret.Event.RESIZE, this.onTrackOrThumbResize, this);
+                this.track.addEventListener(TouchEvent.TOUCH_BEGIN, this.onTrackTouchBegin, this);
+                this.track.addEventListener(Event.RESIZE, this.onTrackOrThumbResize, this);
             }
             else if (instance === this.trackHighlight) {
                 this.trackHighlight.touchEnabled = false;
-                if (egret.is(this.trackHighlight, "egret.DisplayObjectContainer")) {
-                    (<egret.DisplayObjectContainer> this.trackHighlight).touchChildren = false;
+                if (_is(this.trackHighlight, "DisplayObjectContainer")) {
+                    (<DisplayObjectContainer> this.trackHighlight).touchChildren = false;
                 }
             }
         }
@@ -323,12 +333,12 @@ namespace eui {
             super.partRemoved(partName, instance);
 
             if (instance == this.thumb) {
-                this.thumb.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onThumbTouchBegin, this);
-                this.thumb.removeEventListener(egret.Event.RESIZE, this.onTrackOrThumbResize, this);
+                this.thumb.removeEventListener(TouchEvent.TOUCH_BEGIN, this.onThumbTouchBegin, this);
+                this.thumb.removeEventListener(Event.RESIZE, this.onTrackOrThumbResize, this);
             }
             else if (instance == this.track) {
-                this.track.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTrackTouchBegin, this);
-                this.track.removeEventListener(egret.Event.RESIZE, this.onTrackOrThumbResize, this);
+                this.track.removeEventListener(TouchEvent.TOUCH_BEGIN, this.onTrackTouchBegin, this);
+                this.track.removeEventListener(Event.RESIZE, this.onTrackOrThumbResize, this);
             }
         }
 
@@ -336,7 +346,7 @@ namespace eui {
          * @private
          * 滑块或轨道尺寸改变事件
          */
-        private onTrackOrThumbResize(event:egret.Event):void {
+        private onTrackOrThumbResize(event:Event):void {
             this.updateSkinDisplayList();
         }
 
@@ -344,7 +354,7 @@ namespace eui {
         /**
          * Handle touch-begin events on the scroll thumb. Records the touch begin point in clickOffset.
          *
-         * @param The <code>egret.TouchEvent</code> object.
+         * @param The <code>TouchEvent</code> object.
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -354,23 +364,23 @@ namespace eui {
         /**
          * 滑块触摸开始事件，记录触碰开始的坐标偏移量。
          *
-         * @param event 事件 <code>egret.TouchEvent</code> 的对象.
+         * @param event 事件 <code>TouchEvent</code> 的对象.
          *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web
          * @language zh_CN
          */
-        protected onThumbTouchBegin(event:egret.TouchEvent):void {
+        protected onThumbTouchBegin(event:TouchEvent):void {
             let values = this.$SliderBase;
             if (values[Keys.animation] && values[Keys.animation].isPlaying)
                 this.stopAnimation();
 
             let stage = this.$stage;
-            stage.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.onStageTouchMove, this);
-            stage.addEventListener(egret.TouchEvent.TOUCH_END, this.onStageTouchEnd, this);
+            stage.addEventListener(TouchEvent.TOUCH_MOVE, this.onStageTouchMove, this);
+            stage.addEventListener(TouchEvent.TOUCH_END, this.onStageTouchEnd, this);
 
-            let clickOffset = this.thumb.globalToLocal(event.stageX, event.stageY, egret.$TempPoint);
+            let clickOffset = this.thumb.globalToLocal(event.stageX, event.stageY, $TempPoint);
 
             values[Keys.clickOffsetX] = clickOffset.x;
             values[Keys.clickOffsetY] = clickOffset.y;
@@ -381,14 +391,14 @@ namespace eui {
          * @private
          * 舞台上触摸移动事件
          */
-        private onStageTouchMove(event:egret.TouchEvent):void {
+        private onStageTouchMove(event:TouchEvent):void {
             let values = this.$SliderBase;
             values[Keys.moveStageX] = event.$stageX;
             values[Keys.moveStageY] = event.$stageY;
             let track = this.track;
             if (!track)
                 return;
-            let p = track.globalToLocal(values[Keys.moveStageX], values[Keys.moveStageY], egret.$TempPoint);
+            let p = track.globalToLocal(values[Keys.moveStageX], values[Keys.moveStageY], $TempPoint);
             let newValue = this.pointToValue(p.x - values[Keys.clickOffsetX], p.y - values[Keys.clickOffsetY]);
             newValue = this.nearestValidValue(newValue, this.snapInterval);
             this.updateWhenTouchMove(newValue);
@@ -415,7 +425,7 @@ namespace eui {
             if (newValue != this.$SliderBase[Keys.pendingValue]) {
                 if (this.liveDragging) {
                     this.setValue(newValue);
-                    this.dispatchEventWith(egret.Event.CHANGE);
+                    this.dispatchEventWith(Event.CHANGE);
                 }
                 else {
                     this.pendingValue = newValue;
@@ -426,7 +436,7 @@ namespace eui {
         /**
          * Handle touch-end events anywhere on or off the stage.
          *
-         * @param The <code>egret.Event</code> object.
+         * @param The <code>Event</code> object.
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -436,22 +446,22 @@ namespace eui {
         /**
          * 触摸结束事件
          *
-         * @param event 事件 <code>egret.Event</code> 的对象。
+         * @param event 事件 <code>Event</code> 的对象。
          *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web
          * @language zh_CN
          */
-        protected onStageTouchEnd(event:egret.Event):void {
-            let stage:egret.Stage = event.$currentTarget;
-            stage.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.onStageTouchMove, this);
-            stage.removeEventListener(egret.TouchEvent.TOUCH_END, this.onStageTouchEnd, this);
+        protected onStageTouchEnd(event:Event):void {
+            let stage:Stage = event.$currentTarget;
+            stage.removeEventListener(TouchEvent.TOUCH_MOVE, this.onStageTouchMove, this);
+            stage.removeEventListener(TouchEvent.TOUCH_END, this.onStageTouchEnd, this);
             UIEvent.dispatchUIEvent(this, UIEvent.CHANGE_END);
             let values = this.$SliderBase;
             if (!this.liveDragging && this.value != values[Keys.pendingValue]) {
                 this.setValue(values[Keys.pendingValue]);
-                this.dispatchEventWith(egret.Event.CHANGE);
+                this.dispatchEventWith(Event.CHANGE);
             }
         }
 
@@ -459,21 +469,21 @@ namespace eui {
          * @private
          * 当在组件上按下时记录被按下的子显示对象
          */
-        private onTouchBegin(event:egret.TouchEvent):void {
-            this.$stage.addEventListener(egret.TouchEvent.TOUCH_END, this.stageTouchEndHandler, this);
-            this.$SliderBase[Keys.touchDownTarget] = <egret.DisplayObject> (event.$target);
+        private onTouchBegin(event:TouchEvent):void {
+            this.$stage.addEventListener(TouchEvent.TOUCH_END, this.stageTouchEndHandler, this);
+            this.$SliderBase[Keys.touchDownTarget] = <DisplayObject> (event.$target);
         }
 
         /**
          * @private
          * 当结束时，若不是在 touchDownTarget 上弹起，而是另外的子显示对象上弹起时，额外抛出一个触摸单击事件。
          */
-        private stageTouchEndHandler(event:egret.TouchEvent):void {
-            let target:egret.DisplayObject = event.$target;
+        private stageTouchEndHandler(event:TouchEvent):void {
+            let target:DisplayObject = event.$target;
             let values = this.$SliderBase;
-            event.$currentTarget.removeEventListener(egret.TouchEvent.TOUCH_END, this.stageTouchEndHandler, this);
-            if (values[Keys.touchDownTarget] != target && this.contains(<egret.DisplayObject> (target))) {
-                egret.TouchEvent.dispatchTouchEvent(this, egret.TouchEvent.TOUCH_TAP, true, true,
+            event.$currentTarget.removeEventListener(TouchEvent.TOUCH_END, this.stageTouchEndHandler, this);
+            if (values[Keys.touchDownTarget] != target && this.contains(<DisplayObject> (target))) {
+                TouchEvent.dispatchTouchEvent(this, TouchEvent.TOUCH_TAP, true, true,
                     event.$stageX, event.$stageY, event.touchPointID);
             }
             values[Keys.touchDownTarget] = null;
@@ -484,7 +494,7 @@ namespace eui {
          * @private
          * 动画播放更新数值
          */
-        $animationUpdateHandler(animation:sys.Animation):void {
+        $animationUpdateHandler(animation:Animation):void {
             this.pendingValue = animation.currentValue;
         }
 
@@ -492,9 +502,9 @@ namespace eui {
          * @private
          * 动画播放完毕
          */
-        private animationEndHandler(animation:sys.Animation):void {
+        private animationEndHandler(animation:Animation):void {
             this.setValue(this.$SliderBase[Keys.slideToValue]);
-            this.dispatchEventWith(egret.Event.CHANGE);
+            this.dispatchEventWith(Event.CHANGE);
             UIEvent.dispatchUIEvent(this, UIEvent.CHANGE_END);
         }
 
@@ -505,7 +515,7 @@ namespace eui {
         private stopAnimation():void {
             this.$SliderBase[Keys.animation].stop();
             this.setValue(this.nearestValidValue(this.pendingValue, this.snapInterval));
-            this.dispatchEventWith(egret.Event.CHANGE);
+            this.dispatchEventWith(Event.CHANGE);
             UIEvent.dispatchUIEvent(this, UIEvent.CHANGE_END);
         }
 
@@ -514,7 +524,7 @@ namespace eui {
          * calculate the value based on the new position and then
          * move the thumb to the correct location as well as
          * commit the value.
-         * @param The <code>egret.TouchEvent</code> object.
+         * @param The <code>TouchEvent</code> object.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web
@@ -523,29 +533,29 @@ namespace eui {
         /**
          * 轨道的触碰开始事件。我们会在这里根据新的坐标位置计算value，然后移动滑块到当前位置。
          *
-         * @param event 事件 <code>egret.TouchEvent</code> 的对象.
+         * @param event 事件 <code>TouchEvent</code> 的对象.
          *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web
          * @language zh_CN
          */
-        protected onTrackTouchBegin(event:egret.TouchEvent):void {
+        protected onTrackTouchBegin(event:TouchEvent):void {
             let thumbW = this.thumb ? this.thumb.width : 0;
             let thumbH = this.thumb ? this.thumb.height : 0;
             let offsetX = event.$stageX - (thumbW / 2);
             let offsetY = event.$stageY - (thumbH / 2);
-            let p = this.track.globalToLocal(offsetX, offsetY, egret.$TempPoint);
+            let p = this.track.globalToLocal(offsetX, offsetY, $TempPoint);
 
             let rangeValues = this.$Range
             let newValue = this.pointToValue(p.x, p.y);
-            newValue = this.nearestValidValue(newValue, rangeValues[sys.RangeKeys.snapInterval]);
+            newValue = this.nearestValidValue(newValue, rangeValues[RangeKeys.snapInterval]);
 
             let values = this.$SliderBase;
             if (newValue != values[Keys.pendingValue]) {
                 if (values[Keys.slideDuration] != 0) {
                     if (!values[Keys.animation]) {
-                        values[Keys.animation] = new sys.Animation(this.$animationUpdateHandler, this);
+                        values[Keys.animation] = new Animation(this.$animationUpdateHandler, this);
                         values[Keys.animation].endFunction = this.animationEndHandler;
                     }
                     let animation = values[Keys.animation];
@@ -553,7 +563,7 @@ namespace eui {
                         this.stopAnimation();
                     values[Keys.slideToValue] = newValue;
                     animation.duration = values[Keys.slideDuration] *
-                        (Math.abs(values[Keys.pendingValue] - values[Keys.slideToValue]) / (rangeValues[sys.RangeKeys.maximum] - rangeValues[sys.RangeKeys.minimum]));
+                        (Math.abs(values[Keys.pendingValue] - values[Keys.slideToValue]) / (rangeValues[RangeKeys.maximum] - rangeValues[RangeKeys.minimum]));
                     animation.from = values[Keys.pendingValue];
                     animation.to = values[Keys.slideToValue];
                     UIEvent.dispatchUIEvent(this, UIEvent.CHANGE_START);
@@ -561,11 +571,10 @@ namespace eui {
                 }
                 else {
                     this.setValue(newValue);
-                    this.dispatchEventWith(egret.Event.CHANGE);
+                    this.dispatchEventWith(Event.CHANGE);
                 }
             }
         }
 
     }
 
-}

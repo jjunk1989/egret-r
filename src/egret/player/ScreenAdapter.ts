@@ -1,7 +1,10 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret.sys {
+import { Capabilities, RuntimeType } from "../system/Capabilities";
+import { HashObject } from "../utils/HashObject";
+import { StageScaleMode } from "./StageScaleMode";
+
 
     /**
      * @private
@@ -132,7 +135,7 @@ namespace egret.sys {
                     stageHeight = screenHeight;
                     break;
             }
-            if (egret.Capabilities.runtimeType != egret.RuntimeType.WXGAME) {
+            if (Capabilities.runtimeType != RuntimeType.WXGAME) {
                 //宽高不是2的整数倍会导致图片绘制出现问题
                 if (stageWidth % 2 != 0) {
                     stageWidth += 1;
@@ -155,4 +158,3 @@ namespace egret.sys {
             };
         }
     }
-}

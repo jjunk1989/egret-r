@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace eui {
 
 	/**
 	 * Values for the <code>horizontalCanScroll</code> and
@@ -72,4 +71,3 @@ namespace eui {
 		 */
 		public static ON:string = "on";
 	}
-}

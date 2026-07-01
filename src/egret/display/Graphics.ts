@@ -1,8 +1,21 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { Point } from "../geom/Point";
+import { nativeRender } from "../player/Player";
+import { Matrix } from "../geom/Matrix";
+import { GraphicsNode } from "../player/nodes/GraphicsNode";
+import { Path2D } from "../player/paths/Path2D";
+import { StrokePath } from "../player/paths/StrokePath";
+import { canvasHitTestBuffer } from "../player/RenderBuffer";
+import { canvasRenderer } from "../player/SystemRenderer";
+import { tr } from "../i18n/tr";
+import { HashObject } from "../utils/HashObject";
+import { DisplayObject } from "./DisplayObject";
+import { GradientType } from "./GradientType";
+import { _xMin } from "./DisplayObjectContainer";
+import { Rectangle } from "../geom/Rectangle";
 
-namespace egret {
 
     /**
      * @private
@@ -19,13 +32,13 @@ namespace egret {
 
     /**
      * @private
-     * 根据传入的锚点组返回贝塞尔曲线上的一组点,返回类型为egret.Point[];
+     * 根据传入的锚点组返回贝塞尔曲线上的一组点,返回类型为Point[];
      * @param pointsData 锚点组,保存着所有控制点的x和y坐标,格式为[x0,y0,x1,y1,x2,y2...]
      * @param pointsAmount 要获取的点的总个数，实际返回点数不一定等于该属性，与范围有关
      * @param range 要获取的点与中心锚点的范围值，0~1之间
-     * @returns egret.Point[];
+     * @returns Point[];
      */
-    function createBezierPoints(pointsData: number[], pointsAmount: number): egret.Point[] {
+    function createBezierPoints(pointsData: number[], pointsAmount: number): Point[] {
         let points = [];
         for (let i = 0; i < pointsAmount; i++) {
             const point = getBezierPointByFactor(pointsData, i / pointsAmount);
@@ -40,9 +53,9 @@ namespace egret {
      * 根据锚点组与取值系数获取贝塞尔曲线上的一点
      * @param pointsData 锚点组,保存着所有控制点的x和y坐标,格式为[x0,y0,x1,y1,x2,y2...]
      * @param t 取值系数
-     * @returns egret.Point
+     * @returns Point
      */
-    function getBezierPointByFactor(pointsData: number[], t: number): egret.Point {
+    function getBezierPointByFactor(pointsData: number[], t: number): Point {
         let i = 0;
         let x = 0, y = 0;
         const len = pointsData.length;
@@ -70,7 +83,7 @@ namespace egret {
             x = getCubicCurvePoint(x0, x1, x2, x3, t);
             y = getCubicCurvePoint(y0, y1, y2, y3, t);
         }
-        return egret.Point.create(x, y);
+        return Point.create(x, y);
     }
 
     /**
@@ -99,8 +112,6 @@ namespace egret {
         const result = Math.pow((1 - factor), 3) * value0 + 3 * factor * Math.pow((1 - factor), 2) * value1 + 3 * (1 - factor) * Math.pow(factor, 2) * value2 + Math.pow(factor, 3) * value3;
         return result;
     }
-
-
 
 
     /**
@@ -137,13 +148,13 @@ namespace egret {
          */
         public constructor() {
             super();
-            this.$renderNode = new sys.GraphicsNode();
+            this.$renderNode = new GraphicsNode();
         }
 
         /**
          * @private
          */
-        $renderNode: sys.GraphicsNode;
+        $renderNode: GraphicsNode;
         /**
          * 绑定到的目标显示对象
          */
@@ -174,11 +185,11 @@ namespace egret {
         /**
          * 当前正在绘制的填充
          */
-        private fillPath: sys.Path2D = null;
+        private fillPath: Path2D = null;
         /**
          * 当前正在绘制的线条
          */
-        private strokePath: sys.StrokePath = null;
+        private strokePath: StrokePath = null;
         /**
          * 线条的左上方宽度
          */
@@ -230,7 +241,7 @@ namespace egret {
         public beginFill(color: number, alpha: number = 1): void {
             color = +color || 0;
             alpha = +alpha || 0;
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 this.$targetDisplay.$nativeDisplayObject.setBeginFill(color, alpha);
             }
             this.fillPath = this.$renderNode.beginFill(color, alpha, this.strokePath);
@@ -247,7 +258,7 @@ namespace egret {
          * @param colors An array of RGB hexadecimal color values used in the gradient; for example, red is 0xFF0000, blue is 0x0000FF, and so on. You can specify up to 15 colors. For each color, specify a corresponding value in the alphas and ratios parameters.
          * @param alphas An array of alpha values for the corresponding colors in the colors array;
          * @param ratios An array of color distribution ratios; valid values are 0-255.
-         * @param matrix A transformation matrix as defined by the egret.Matrix class. The egret.Matrix class includes a createGradientBox() method, which lets you conveniently set up the matrix for use with the beginGradientFill() method.
+         * @param matrix A transformation matrix as defined by the Matrix class. The Matrix class includes a createGradientBox() method, which lets you conveniently set up the matrix for use with the beginGradientFill() method.
          * @platform Web
          * @version Egret 2.4
          * @language en_US
@@ -259,13 +270,13 @@ namespace egret {
          * @param colors 渐变中使用的 RGB 十六进制颜色值的数组（例如，红色为 0xFF0000，蓝色为 0x0000FF，等等）。对于每种颜色，请在 alphas 和 ratios 参数中指定对应值。
          * @param alphas colors 数组中对应颜色的 alpha 值数组。
          * @param ratios 颜色分布比率的数组。有效值为 0 到 255。
-         * @param matrix 一个由 egret.Matrix 类定义的转换矩阵。egret.Matrix 类包括 createGradientBox() 方法，通过该方法可以方便地设置矩阵，以便与 beginGradientFill() 方法一起使用
+         * @param matrix 一个由 Matrix 类定义的转换矩阵。Matrix 类包括 createGradientBox() 方法，通过该方法可以方便地设置矩阵，以便与 beginGradientFill() 方法一起使用
          * @platform Web
          * @version Egret 2.4
          * @language zh_CN
          */
-        public beginGradientFill(type: string, colors: number[], alphas: number[], ratios: number[], matrix: egret.Matrix = null): void {
-            if (egret.nativeRender) {
+        public beginGradientFill(type: string, colors: number[], alphas: number[], ratios: number[], matrix: Matrix = null): void {
+            if (nativeRender) {
                 this.$targetDisplay.$nativeDisplayObject.setBeginGradientFill(type, colors, alphas, ratios, matrix);
             }
 
@@ -288,7 +299,7 @@ namespace egret {
          * @language zh_CN
          */
         public endFill(): void {
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 this.$targetDisplay.$nativeDisplayObject.setEndFill();
             }
             this.fillPath = null;
@@ -330,7 +341,7 @@ namespace egret {
             color = +color || 0;
             alpha = +alpha || 0;
             miterLimit = +miterLimit || 0;
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 this.$targetDisplay.$nativeDisplayObject.setLineStyle(thickness, color,
                     alpha, pixelHinting, scaleMode, caps, joints, miterLimit);
             }
@@ -372,7 +383,7 @@ namespace egret {
             y = +y || 0;
             width = +width || 0;
             height = +height || 0;
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 this.$targetDisplay.$nativeDisplayObject.setDrawRect(x, y, width, height);
             }
             let fillPath = this.fillPath;
@@ -415,7 +426,7 @@ namespace egret {
             height = +height || 0;
             ellipseWidth = +ellipseWidth || 0;
             ellipseHeight = +ellipseHeight || 0;
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 this.$targetDisplay.$nativeDisplayObject.setDrawRoundRect(x, y, width, height, ellipseWidth, ellipseHeight);
             }
             let fillPath = this.fillPath;
@@ -456,7 +467,7 @@ namespace egret {
             x = +x || 0;
             y = +y || 0;
             radius = +radius || 0;
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 this.$targetDisplay.$nativeDisplayObject.setDrawCircle(x, y, radius);
             }
             let fillPath = this.fillPath;
@@ -497,7 +508,7 @@ namespace egret {
             width = +width || 0;
             height = +height || 0;
 
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 this.$targetDisplay.$nativeDisplayObject.setDrawEllipse(x, y, width, height);
             }
             let fillPath = this.fillPath;
@@ -530,7 +541,7 @@ namespace egret {
         public moveTo(x: number, y: number): void {
             x = +x || 0;
             y = +y || 0;
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 this.$targetDisplay.$nativeDisplayObject.setMoveTo(x, y);
             }
             let fillPath = this.fillPath;
@@ -562,7 +573,7 @@ namespace egret {
         public lineTo(x: number, y: number): void {
             x = +x || 0;
             y = +y || 0;
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 this.$targetDisplay.$nativeDisplayObject.setLineTo(x, y);
             }
             let fillPath = this.fillPath;
@@ -602,7 +613,7 @@ namespace egret {
             controlY = +controlY || 0;
             anchorX = +anchorX || 0;
             anchorY = +anchorY || 0;
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 this.$targetDisplay.$nativeDisplayObject.setCurveTo(controlX, controlY,
                     anchorX, anchorY);
             }
@@ -617,7 +628,7 @@ namespace egret {
             for (let i = 0; i < bezierPoints.length; i++) {
                 let point = bezierPoints[i];
                 this.extendBoundsByPoint(point.x, point.y);
-                egret.Point.release(point);
+                Point.release(point);
             }
 
             this.extendBoundsByPoint(anchorX, anchorY);
@@ -657,7 +668,7 @@ namespace egret {
             controlY2 = +controlY2 || 0;
             anchorX = +anchorX || 0;
             anchorY = +anchorY || 0;
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 this.$targetDisplay.$nativeDisplayObject.setCubicCurveTo(controlX1,
                     controlY1, controlX2, controlY2, anchorX, anchorY);
             }
@@ -672,7 +683,7 @@ namespace egret {
             for (let i = 0; i < bezierPoints.length; i++) {
                 let point = bezierPoints[i];
                 this.extendBoundsByPoint(point.x, point.y);
-                egret.Point.release(point);
+                Point.release(point);
             }
 
             this.extendBoundsByPoint(anchorX, anchorY);
@@ -717,7 +728,7 @@ namespace egret {
             anticlockwise = !!anticlockwise;
             startAngle = clampAngle(startAngle);
             endAngle = clampAngle(endAngle);
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 this.$targetDisplay.$nativeDisplayObject.setDrawArc(x, y, radius,
                     startAngle, endAngle, anticlockwise);
             }
@@ -749,7 +760,7 @@ namespace egret {
         private dirty(): void {
             let self = this;
             self.$renderNode.dirtyRender = true;
-            if (!egret.nativeRender) {
+            if (!nativeRender) {
                 const target = self.$targetDisplay;
                 target.$cacheDirty = true;
                 let p = target.$parent;
@@ -828,7 +839,7 @@ namespace egret {
          * @language zh_CN
          */
         public clear(): void {
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 this.$targetDisplay.$nativeDisplayObject.setGraphicsClear();
             }
             this.$renderNode.clear();
@@ -935,13 +946,13 @@ namespace egret {
             let m = target.$getInvertedConcatenatedMatrix();
             let localX = m.a * stageX + m.c * stageY + m.tx;
             let localY = m.b * stageX + m.d * stageY + m.ty;
-            let buffer = sys.canvasHitTestBuffer;
+            let buffer = canvasHitTestBuffer;
             buffer.resize(3, 3);
             let node = this.$renderNode;
             let matrix = Matrix.create();
             matrix.identity();
             matrix.translate(1 - localX, 1 - localY);
-            sys.canvasRenderer.drawNodeToBuffer(node, buffer, matrix, true);
+            canvasRenderer.drawNodeToBuffer(node, buffer, matrix, true);
             Matrix.release(matrix);
 
             try {
@@ -951,7 +962,7 @@ namespace egret {
                 }
             }
             catch (e) {
-                throw new Error(sys.tr(1039));
+                throw new Error(tr(1039));
             }
             return target;
         }
@@ -963,9 +974,8 @@ namespace egret {
             if (this.$renderNode) {
                 this.$renderNode.clean();
             }
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 egret_native.NativeDisplayObject.disposeGraphicData(this);
             }
         }
     }
-}

@@ -1,8 +1,11 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { Point } from "../../../egret/geom/Point";
+import { TouchEvent } from "../../../egret/events/TouchEvent";
+import { ScrollTween } from "./ScrollTween";
 
-namespace egret {
+
     /**
      * @private
      * @version Egret 2.4
@@ -38,11 +41,11 @@ namespace egret {
         /**
          * @private
          */
-        public _lastTouchPosition:egret.Point = new egret.Point(0, 0);
+        public _lastTouchPosition:Point = new Point(0, 0);
         /**
          * @private
          */
-        public _touchStartPosition:egret.Point = new egret.Point(0, 0);
+        public _touchStartPosition:Point = new Point(0, 0);
         /**
          * @private
          */
@@ -81,4 +84,3 @@ namespace egret {
          */
         public _bounces: boolean = true;
     }
-}

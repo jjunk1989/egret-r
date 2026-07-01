@@ -1,7 +1,29 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret.web {
+import { BlurFilter } from "../../../filters/BlurFilter";
+import { DisplayList } from "../../../player/DisplayList";
+import { SystemRenderer } from "../../../player/SystemRenderer";
+import { RenderBuffer, CanvasRenderBuffer } from "../../../player/RenderBuffer";
+import { RenderNode, RenderNodeType } from "../../../player/nodes/RenderNode";
+import { BitmapNode } from "../../../player/nodes/BitmapNode";
+import { TextNode } from "../../../player/nodes/TextNode";
+import { GraphicsNode } from "../../../player/nodes/GraphicsNode";
+import { GroupNode } from "../../../player/nodes/GroupNode";
+import { MeshNode } from "../../../player/nodes/MeshNode";
+import { NormalBitmapNode } from "../../../player/nodes/NormalBitmapNode";
+import { DisplayObject } from "../../../display/DisplayObject";
+import { RenderMode } from "../../../display/DisplayObject";
+import { Matrix } from "../../../geom/Matrix";
+import { WebGLRenderBuffer } from "./WebGLRenderBuffer";
+import { WebGLRenderContext } from "../../../player/Player";
+import { CanvasRenderer } from "../../../player/rendering/CanvasRenderer";
+import { DrawLabel } from "./TextAtlasRender";
+import { TextBlock, Page } from "./TextAtlasStrategy";
+import { CustomFilter } from "../../../filters/CustomFilter";
+import { ColorMatrixFilter } from "../../../filters/ColorMatrixFilter";
+import { BitmapData } from "../../../display/BitmapData";
+
 
     let blendModes = ["source-over", "lighter", "destination-out"];
     let defaultCompositeOp = "source-over";
@@ -11,7 +33,7 @@ namespace egret.web {
      * @private
      * WebGL渲染器
      */
-    export class WebGLRenderer implements sys.SystemRenderer {
+    export class WebGLRenderer implements SystemRenderer {
 
         public constructor() {
         }
@@ -30,7 +52,7 @@ namespace egret.web {
          * @param forRenderTexture 绘制目标是RenderTexture的标志
          * @returns drawCall触发绘制的次数
          */
-        public render(displayObject: DisplayObject, buffer: sys.RenderBuffer, matrix: Matrix, forRenderTexture?: boolean): number {
+        public render(displayObject: DisplayObject, buffer: RenderBuffer, matrix: Matrix, forRenderTexture?: boolean): number {
             this.nestLevel++;
             let webglBuffer: WebGLRenderBuffer = <WebGLRenderBuffer>buffer;
             let webglBufferContext: WebGLRenderContext = webglBuffer.context;
@@ -71,12 +93,12 @@ namespace egret.web {
          */
         private drawDisplayObject(displayObject: DisplayObject, buffer: WebGLRenderBuffer, offsetX: number, offsetY: number, isStage?: boolean): number {
             let drawCalls = 0;
-            let node: sys.RenderNode;
+            let node: RenderNode;
             let displayList = displayObject.$displayList;
             if (displayList && !isStage) {
                 if (displayObject.$cacheDirty || displayObject.$renderDirty ||
-                    displayList.$canvasScaleX != sys.DisplayList.$canvasScaleX ||
-                    displayList.$canvasScaleY != sys.DisplayList.$canvasScaleY) {
+                    displayList.$canvasScaleX != DisplayList.$canvasScaleX ||
+                    displayList.$canvasScaleY != DisplayList.$canvasScaleY) {
                     drawCalls += displayList.drawToSurface();
                 }
                 node = displayList.$renderNode;
@@ -95,23 +117,23 @@ namespace egret.web {
                 buffer.$offsetX = offsetX;
                 buffer.$offsetY = offsetY;
                 switch (node.type) {
-                    case sys.RenderNodeType.BitmapNode:
-                        this.renderBitmap(<sys.BitmapNode>node, buffer);
+                    case RenderNodeType.BitmapNode:
+                        this.renderBitmap(<BitmapNode>node, buffer);
                         break;
-                    case sys.RenderNodeType.TextNode:
-                        this.renderText(<sys.TextNode>node, buffer);
+                    case RenderNodeType.TextNode:
+                        this.renderText(<TextNode>node, buffer);
                         break;
-                    case sys.RenderNodeType.GraphicsNode:
-                        this.renderGraphics(<sys.GraphicsNode>node, buffer);
+                    case RenderNodeType.GraphicsNode:
+                        this.renderGraphics(<GraphicsNode>node, buffer);
                         break;
-                    case sys.RenderNodeType.GroupNode:
-                        this.renderGroup(<sys.GroupNode>node, buffer);
+                    case RenderNodeType.GroupNode:
+                        this.renderGroup(<GroupNode>node, buffer);
                         break;
-                    case sys.RenderNodeType.MeshNode:
-                        this.renderMesh(<sys.MeshNode>node, buffer);
+                    case RenderNodeType.MeshNode:
+                        this.renderMesh(<MeshNode>node, buffer);
                         break;
-                    case sys.RenderNodeType.NormalBitmapNode:
-                        this.renderNormalBitmap(<sys.NormalBitmapNode>node, buffer);
+                    case RenderNodeType.NormalBitmapNode:
+                        this.renderNormalBitmap(<NormalBitmapNode>node, buffer);
                         break;
                 }
                 buffer.$offsetX = 0;
@@ -255,12 +277,12 @@ namespace egret.web {
             }
 
             // 为显示对象创建一个新的buffer
-            const scale = Math.max(egret.sys.DisplayList.$canvasScaleFactor, 2);
+            const scale = Math.max(DisplayList.$canvasScaleFactor, 2);
             filters.forEach((filter) => {
                 if (filter instanceof GlowFilter || filter instanceof BlurFilter) {
                     filter.$uniforms.$filterScale = scale;
                     if (filter.type == 'blur') {
-                        const blurFilter = filter as egret.BlurFilter
+                        const blurFilter = filter as BlurFilter
                         blurFilter.blurXFilter.$uniforms.$filterScale = scale;
                         blurFilter.blurYFilter.$uniforms.$filterScale = scale;
                     }
@@ -564,7 +586,7 @@ namespace egret.web {
          * @param matrix 要叠加的矩阵
          * @param forHitTest 绘制结果是用于碰撞检测。若为true，当渲染GraphicsNode时，会忽略透明度样式设置，全都绘制为不透明的。
          */
-        public drawNodeToBuffer(node: sys.RenderNode, buffer: WebGLRenderBuffer, matrix: Matrix, forHitTest?: boolean): void {
+        public drawNodeToBuffer(node: RenderNode, buffer: WebGLRenderBuffer, matrix: Matrix, forHitTest?: boolean): void {
             let webglBuffer: WebGLRenderBuffer = <WebGLRenderBuffer>buffer;
 
             //pushRenderTARGET
@@ -590,7 +612,7 @@ namespace egret.web {
             if (matrix) {
                 buffer.setTransform(matrix.a, matrix.b, matrix.c, matrix.d, matrix.tx, matrix.ty);
             }
-            let node: sys.RenderNode;
+            let node: RenderNode;
             if (displayObject.$renderDirty) {
                 node = displayObject.$getRenderNode();
             }
@@ -601,23 +623,23 @@ namespace egret.web {
             if (node) {
                 drawCalls++;
                 switch (node.type) {
-                    case sys.RenderNodeType.BitmapNode:
-                        this.renderBitmap(<sys.BitmapNode>node, buffer);
+                    case RenderNodeType.BitmapNode:
+                        this.renderBitmap(<BitmapNode>node, buffer);
                         break;
-                    case sys.RenderNodeType.TextNode:
-                        this.renderText(<sys.TextNode>node, buffer);
+                    case RenderNodeType.TextNode:
+                        this.renderText(<TextNode>node, buffer);
                         break;
-                    case sys.RenderNodeType.GraphicsNode:
-                        this.renderGraphics(<sys.GraphicsNode>node, buffer);
+                    case RenderNodeType.GraphicsNode:
+                        this.renderGraphics(<GraphicsNode>node, buffer);
                         break;
-                    case sys.RenderNodeType.GroupNode:
-                        this.renderGroup(<sys.GroupNode>node, buffer);
+                    case RenderNodeType.GroupNode:
+                        this.renderGroup(<GroupNode>node, buffer);
                         break;
-                    case sys.RenderNodeType.MeshNode:
-                        this.renderMesh(<sys.MeshNode>node, buffer);
+                    case RenderNodeType.MeshNode:
+                        this.renderMesh(<MeshNode>node, buffer);
                         break;
-                    case sys.RenderNodeType.NormalBitmapNode:
-                        this.renderNormalBitmap(<sys.NormalBitmapNode>node, buffer);
+                    case RenderNodeType.NormalBitmapNode:
+                        this.renderNormalBitmap(<NormalBitmapNode>node, buffer);
                         break;
                 }
             }
@@ -655,27 +677,27 @@ namespace egret.web {
         /**
          * @private
          */
-        private renderNode(node: sys.RenderNode, buffer: WebGLRenderBuffer, offsetX: number, offsetY: number, forHitTest?: boolean): void {
+        private renderNode(node: RenderNode, buffer: WebGLRenderBuffer, offsetX: number, offsetY: number, forHitTest?: boolean): void {
             buffer.$offsetX = offsetX;
             buffer.$offsetY = offsetY;
             switch (node.type) {
-                case sys.RenderNodeType.BitmapNode:
-                    this.renderBitmap(<sys.BitmapNode>node, buffer);
+                case RenderNodeType.BitmapNode:
+                    this.renderBitmap(<BitmapNode>node, buffer);
                     break;
-                case sys.RenderNodeType.TextNode:
-                    this.renderText(<sys.TextNode>node, buffer);
+                case RenderNodeType.TextNode:
+                    this.renderText(<TextNode>node, buffer);
                     break;
-                case sys.RenderNodeType.GraphicsNode:
-                    this.renderGraphics(<sys.GraphicsNode>node, buffer, forHitTest);
+                case RenderNodeType.GraphicsNode:
+                    this.renderGraphics(<GraphicsNode>node, buffer, forHitTest);
                     break;
-                case sys.RenderNodeType.GroupNode:
-                    this.renderGroup(<sys.GroupNode>node, buffer);
+                case RenderNodeType.GroupNode:
+                    this.renderGroup(<GroupNode>node, buffer);
                     break;
-                case sys.RenderNodeType.MeshNode:
-                    this.renderMesh(<sys.MeshNode>node, buffer);
+                case RenderNodeType.MeshNode:
+                    this.renderMesh(<MeshNode>node, buffer);
                     break;
-                case sys.RenderNodeType.NormalBitmapNode:
-                    this.renderNormalBitmap(<sys.NormalBitmapNode>node, buffer);
+                case RenderNodeType.NormalBitmapNode:
+                    this.renderNormalBitmap(<NormalBitmapNode>node, buffer);
                     break;
             }
         }
@@ -683,7 +705,7 @@ namespace egret.web {
         /**
          * @private
          */
-        private renderNormalBitmap(node: sys.NormalBitmapNode, buffer: WebGLRenderBuffer): void {
+        private renderNormalBitmap(node: NormalBitmapNode, buffer: WebGLRenderBuffer): void {
             let image = node.image;
             if (!image) {
                 return;
@@ -695,7 +717,7 @@ namespace egret.web {
         /**
          * @private
          */
-        private renderBitmap(node: sys.BitmapNode, buffer: WebGLRenderBuffer): void {
+        private renderBitmap(node: BitmapNode, buffer: WebGLRenderBuffer): void {
             let image = node.image;
             if (!image) {
                 return;
@@ -770,7 +792,7 @@ namespace egret.web {
         /**
          * @private
          */
-        private renderMesh(node: sys.MeshNode, buffer: WebGLRenderBuffer): void {
+        private renderMesh(node: MeshNode, buffer: WebGLRenderBuffer): void {
             let image = node.image;
             //buffer.imageSmoothingEnabled = node.smoothing;
             let data = node.drawData;
@@ -844,14 +866,14 @@ namespace egret.web {
         /**
          * @private
          */
-        private ___renderText____(node: sys.TextNode, buffer: WebGLRenderBuffer): void {
+        private ___renderText____(node: TextNode, buffer: WebGLRenderBuffer): void {
             let width = node.width - node.x;
             let height = node.height - node.y;
             if (width <= 0 || height <= 0 || !width || !height || node.drawData.length === 0) {
                 return;
             }
-            let canvasScaleX = sys.DisplayList.$canvasScaleX;
-            let canvasScaleY = sys.DisplayList.$canvasScaleY;
+            let canvasScaleX = DisplayList.$canvasScaleX;
+            let canvasScaleY = DisplayList.$canvasScaleY;
             const maxTextureSize = buffer.context.$maxTextureSize;
             if (width * canvasScaleX > maxTextureSize) {
                 canvasScaleX *= maxTextureSize / (width * canvasScaleX);
@@ -919,7 +941,7 @@ namespace egret.web {
         /**
          * @private
          */
-        private renderText(node: sys.TextNode, buffer: WebGLRenderBuffer): void {
+        private renderText(node: TextNode, buffer: WebGLRenderBuffer): void {
             if (textAtlasRenderEnable) {
                 //新的文字渲染机制
                 this.___renderText____(node, buffer);
@@ -930,8 +952,8 @@ namespace egret.web {
             if (width <= 0 || height <= 0 || !width || !height || node.drawData.length == 0) {
                 return;
             }
-            let canvasScaleX = sys.DisplayList.$canvasScaleX;
-            let canvasScaleY = sys.DisplayList.$canvasScaleY;
+            let canvasScaleX = DisplayList.$canvasScaleX;
+            let canvasScaleY = DisplayList.$canvasScaleY;
             let maxTextureSize = buffer.context.$maxTextureSize;
             if (width * canvasScaleX > maxTextureSize) {
                 canvasScaleX *= maxTextureSize / (width * canvasScaleX);
@@ -1023,14 +1045,14 @@ namespace egret.web {
         /**
          * @private
          */
-        private renderGraphics(node: sys.GraphicsNode, buffer: WebGLRenderBuffer, forHitTest?: boolean): void {
+        private renderGraphics(node: GraphicsNode, buffer: WebGLRenderBuffer, forHitTest?: boolean): void {
             let width = node.width;
             let height = node.height;
             if (width <= 0 || height <= 0 || !width || !height || node.drawData.length == 0) {
                 return;
             }
-            let canvasScaleX = sys.DisplayList.$canvasScaleX;
-            let canvasScaleY = sys.DisplayList.$canvasScaleY;
+            let canvasScaleX = DisplayList.$canvasScaleX;
+            let canvasScaleY = DisplayList.$canvasScaleY;
             if (width * canvasScaleX < 1 || height * canvasScaleY < 1) {
                 canvasScaleX = canvasScaleY = 1;
             }
@@ -1131,7 +1153,7 @@ namespace egret.web {
             }
         }
 
-        private renderGroup(groupNode: sys.GroupNode, buffer: WebGLRenderBuffer): void {
+        private renderGroup(groupNode: GroupNode, buffer: WebGLRenderBuffer): void {
             let m = groupNode.matrix;
             let savedMatrix;
             let offsetX;
@@ -1154,7 +1176,7 @@ namespace egret.web {
             let children = groupNode.drawData;
             let length = children.length;
             for (let i = 0; i < length; i++) {
-                let node: sys.RenderNode = children[i];
+                let node: RenderNode = children[i];
                 this.renderNode(node, buffer, buffer.$offsetX, buffer.$offsetY);
             }
             if (m) {
@@ -1188,7 +1210,6 @@ namespace egret.web {
         }
 
 
-
         public renderClear() {
             const renderContext = WebGLRenderContext.getInstance();
             const gl = renderContext.context;
@@ -1198,4 +1219,3 @@ namespace egret.web {
             gl.viewport(0, 0, width, height)
         }
     }
-}

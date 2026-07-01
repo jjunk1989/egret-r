@@ -1,4 +1,3 @@
-namespace RES {
     /**
      * Print the memory occupied by the picture.
      * @version Egret 5.2
@@ -69,4 +68,3 @@ namespace RES {
             return path.substr(0, path.lastIndexOf("/"));
         }
     }
-}

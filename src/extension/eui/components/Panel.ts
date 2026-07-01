@@ -1,14 +1,19 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { TouchEvent } from "../../../egret/events/TouchEvent";
+import { DisplayObject } from "../../../egret/display/DisplayObject";
+import { UIEvent } from "../events/UIEvent";
+import { Component } from "./Component";
+import { Button } from "./Button";
+import { IDisplayText } from "../core/IDisplayText";
 
-namespace eui {
 
     /**
      * The Panel class defines a container that includes a title bar,
      * a closeButton, a moveArea, and a content area for its children.
      *
-     * @event eui.UIEvent.CLOSING Dispatched when the close button is taped
+     * @event UIEvent.CLOSING Dispatched when the close button is taped
      * you can use <code>event.preventDefault()</code> to prevent close.
      *
      * @defaultProperty elementsContent
@@ -21,7 +26,7 @@ namespace eui {
     /**
      * Panel 类定义一个容器，该容器为其子代提供标题栏、关闭按钮、可移动区域和内容区域。
      *
-     * @event eui.UIEvent.CLOSING 面板即将关闭事件，在关闭按钮被点击后抛出，
+     * @event UIEvent.CLOSING 面板即将关闭事件，在关闭按钮被点击后抛出，
      * 监听此事件并调用<code>event.preventDefault()</code>能够阻止面板被关闭。
      *
      * @defaultProperty elementsContent
@@ -51,14 +56,14 @@ namespace eui {
          */
         public constructor() {
             super();
-            this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onWindowTouchBegin, this, false, 100);
+            this.addEventListener(TouchEvent.TOUCH_BEGIN, this.onWindowTouchBegin, this, false, 100);
         }
 
         /**
          * @private
          * 在窗体上按下时前置窗口
          */
-        private onWindowTouchBegin(event:egret.TouchEvent):void {
+        private onWindowTouchBegin(event:TouchEvent):void {
             this.$parent.addChild(this);
         }
 
@@ -78,7 +83,7 @@ namespace eui {
          * @platform Web
          * @language zh_CN
          */
-        public set elementsContent(value:egret.DisplayObject[]) {
+        public set elementsContent(value:DisplayObject[]) {
             if (value) {
                 let length = value.length;
                 for (let i = 0; i < length; i++) {
@@ -128,7 +133,7 @@ namespace eui {
          * @platform Web
          * @language zh_CN
          */
-        public moveArea:egret.DisplayObject = null;
+        public moveArea:DisplayObject = null;
 
         /**
          * The skin part that defines the appearance of the
@@ -201,10 +206,10 @@ namespace eui {
                 this.titleDisplay.text = this._title;
             }
             else if (instance == this.moveArea) {
-                this.moveArea.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
+                this.moveArea.addEventListener(TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
             }
             else if (instance == this.closeButton) {
-                this.closeButton.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onCloseButtonClick, this);
+                this.closeButton.addEventListener(TouchEvent.TOUCH_TAP, this.onCloseButtonClick, this);
             }
         }
 
@@ -218,10 +223,10 @@ namespace eui {
         protected partRemoved(partName:string, instance:any):void {
             super.partRemoved(partName, instance);
             if (instance == this.moveArea) {
-                this.moveArea.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
+                this.moveArea.removeEventListener(TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
             }
             else if (instance == this.closeButton) {
-                this.closeButton.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.onCloseButtonClick, this);
+                this.closeButton.removeEventListener(TouchEvent.TOUCH_TAP, this.onCloseButtonClick, this);
             }
         }
 
@@ -241,7 +246,7 @@ namespace eui {
          * @platform Web
          * @language zh_CN
          */
-        protected onCloseButtonClick(event:egret.TouchEvent):void {
+        protected onCloseButtonClick(event:TouchEvent):void {
             if (UIEvent.dispatchUIEvent(this, UIEvent.CLOSING, true, true)) {
                 this.close();
             }
@@ -296,12 +301,12 @@ namespace eui {
          * @platform Web
          * @language zh_CN
          */
-        protected onTouchBegin(event:egret.TouchEvent):void {
+        protected onTouchBegin(event:TouchEvent):void {
             this.$includeInLayout = false;
             this.offsetPointX = this.x - event.$stageX;
             this.offsetPointY = this.y - event.$stageY;
-            this.$stage.addEventListener(egret.TouchEvent.TOUCH_MOVE, this.onTouchMove, this);
-            this.$stage.addEventListener(egret.TouchEvent.TOUCH_END, this.onTouchEnd, this);
+            this.$stage.addEventListener(TouchEvent.TOUCH_MOVE, this.onTouchMove, this);
+            this.$stage.addEventListener(TouchEvent.TOUCH_END, this.onTouchEnd, this);
         }
 
         /**
@@ -320,7 +325,7 @@ namespace eui {
          * @platform Web
          * @language zh_CN
          */
-        protected onTouchMove(event:egret.TouchEvent):void {
+        protected onTouchMove(event:TouchEvent):void {
             this.x = event.$stageX + this.offsetPointX;
             this.y = event.$stageY + this.offsetPointY;
         }
@@ -341,12 +346,11 @@ namespace eui {
          * @platform Web
          * @language zh_CN
          */
-        protected onTouchEnd(event:egret.TouchEvent):void {
+        protected onTouchEnd(event:TouchEvent):void {
             let stage = event.$currentTarget;
-            stage.removeEventListener(egret.TouchEvent.TOUCH_MOVE, this.onTouchMove, this);
-            stage.removeEventListener(egret.TouchEvent.TOUCH_END, this.onTouchEnd, this);
+            stage.removeEventListener(TouchEvent.TOUCH_MOVE, this.onTouchMove, this);
+            stage.removeEventListener(TouchEvent.TOUCH_END, this.onTouchEnd, this);
         }
     }
 
     registerProperty(Panel, "elementsContent", "Array", true);
-}

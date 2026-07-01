@@ -1,4 +1,3 @@
-module RES {
     /**
      * assetsManager underlying storage resource information
      * @version Egret 5.2
@@ -120,6 +119,5 @@ module RES {
             return true;
         }
     }
-}
 
 

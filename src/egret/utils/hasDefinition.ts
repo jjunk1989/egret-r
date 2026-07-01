@@ -1,15 +1,15 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { DisplayObject } from "../display/DisplayObject";
 
-namespace egret {
 
      /**
       * Check whether a public definition exists in the specified application domain. The definition can be that of a class, a naming space or a function.
       * @param name {string} Name of the definition.
 	  * @returns {boolean} Whether the public definition exists
       * @example
-      * egret.hasDefinition("egret.DisplayObject") //return true
+      * egret.hasDefinition("DisplayObject") //return true
       * @version Egret 2.4
       * @platform Web
       * @includeExample egret/utils/hasDefinition.ts
@@ -20,7 +20,7 @@ namespace egret {
       * @param name {string} 定义的名称。
 	  * @returns {boolean} 公共定义是否存在
       * @example
-      * egret.hasDefinition("egret.DisplayObject") //返回 true
+      * egret.hasDefinition("DisplayObject") //返回 true
       * @version Egret 2.4
       * @platform Web
       * @includeExample egret/utils/hasDefinition.ts
@@ -30,4 +30,3 @@ namespace egret {
         let definition:any = getDefinitionByName(name);
         return definition?true:false;
     }
-}

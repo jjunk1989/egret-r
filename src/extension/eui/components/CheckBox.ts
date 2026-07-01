@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { ToggleButton } from "./ToggleButton";
 
-namespace eui {
 
 	/**
 	 * The CheckBox component consists of an optional label and a small box
@@ -47,5 +47,3 @@ namespace eui {
 			super();
 		}
 	}
-
-}

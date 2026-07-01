@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { HashObject } from "../../../egret/utils/HashObject";
+import { URLRequestHeader } from "./URLRequestHeader";
+import { URLRequestMethod } from "./URLRequestMethod";
 
-namespace egret {
 
     /**
      * The URLRequest class captures all of the information in a single HTTP request.
@@ -20,7 +22,7 @@ namespace egret {
      * @includeExample extension/game/net/URLRequest.ts
      * @language zh_CN
      */
-    export class URLRequest extends egret.HashObject {
+    export class URLRequest extends HashObject {
 
         /**
          * Create an egret.URLRequest object
@@ -117,4 +119,3 @@ namespace egret {
          */
         public requestHeaders:Array<URLRequestHeader> = [];
     }
-}

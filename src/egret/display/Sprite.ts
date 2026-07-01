@@ -1,7 +1,11 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret {
+import { DisplayObjectContainer } from "./DisplayObjectContainer";
+import { Graphics } from "./Graphics";
+import { DisplayObject } from "./DisplayObject";
+import { Rectangle } from "../geom/Rectangle";
+
     /**
      * The Sprite class is a basic display list building block: a display list node that can contain children.
      * @version Egret 2.4
@@ -131,4 +135,3 @@ namespace egret {
             }
         }
     }
-}

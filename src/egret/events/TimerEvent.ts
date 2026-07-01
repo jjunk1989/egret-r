@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { Event } from "./Event";
+import { IEventDispatcher } from "./IEventDispatcher";
 
-namespace egret {
+
     export interface Timer{
         addEventListener<Z>(type: "timer" | "timerComplete"
             , listener: (this: Z, e: TimerEvent) => void, thisObject: Z, useCapture?: boolean, priority?: number);
@@ -133,8 +135,8 @@ namespace egret {
          * the inherited bubbles property.
          * @param cancelable Determines whether the Event object can be canceled. Event listeners can access this information
          * through the inherited cancelable property.
-         * @see egret.Event.create()
-         * @see egret.Event.release()
+         * @see Event.create()
+         * @see Event.release()
          * @version Egret 2.4
          * @platform Web
          * @language en_US
@@ -145,8 +147,8 @@ namespace egret {
          * @param type 事件的类型。事件侦听器可以通过继承的 type 属性访问此信息。
          * @param bubbles 确定 Event 对象是否冒泡。事件侦听器可以通过继承的 bubbles 属性访问此信息。
          * @param cancelable 确定是否可以取消 Event 对象。事件侦听器可以通过继承的 cancelable 属性访问此信息。
-         * @see egret.Event.create()
-         * @see egret.Event.release()
+         * @see Event.create()
+         * @see Event.release()
          * @version Egret 2.4
          * @platform Web
          * @language zh_CN
@@ -158,5 +160,3 @@ namespace egret {
             return result;
         }
     }
-
-}

@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret.sys {
+import { Path2D, PathType } from "./Path2D";
+
     /**
      * @private
      * 线条路径。
@@ -44,4 +45,3 @@ namespace egret.sys {
          */
         public lineDash: number[];
     }
-}

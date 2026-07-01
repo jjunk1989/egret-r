@@ -1,4 +1,3 @@
-namespace egret {
 
     /**
      * @private
@@ -22,5 +21,3 @@ namespace egret {
         return obj;
 
     }
-
-}

@@ -1,18 +1,22 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret {
+import { Event } from "../events/Event";
+import { ProgressEvent } from "../events/ProgressEvent";
+import { HttpResponseType } from "./HttpResponseType";
+import { EventDispatcher } from "../events/EventDispatcher";
+
     /**
      * The HttpRequest class downloads data from a URL as text or binary data. It is useful for downloading text files,
      * XML, or other information to be used in a dynamic, data-driven application. A HttpRequest object downloads all
      * of the data from a URL before making it available to code in the applications. It sends out notifications about
      * the progress of the download, which you can monitor through the bytesLoaded and bytesTotal properties,
      * as well as through dispatched events.
-     * @event egret.Event.COMPLETE Dispatched when the net request is complete.
-     * @event egret.Event.IO_ERROR Dispatched when the net request is failed.
-     * @event egret.ProgressEvent.PROGRESS Dispatched when data is received as the download operation progresses.
+     * @event Event.COMPLETE Dispatched when the net request is complete.
+     * @event Event.IO_ERROR Dispatched when the net request is failed.
+     * @event ProgressEvent.PROGRESS Dispatched when data is received as the download operation progresses.
      * @see egret.HttpMethod
-     * @see egret.HttpResponseType
+     * @see HttpResponseType
      * @includeExample egret/net/HttpRequestExample.ts
      * @version Egret 2.4
      * @platform Web
@@ -22,11 +26,11 @@ namespace egret {
      * HttpRequest 类以文本或二进制数据的形式从 URL 下载数据。
      * HttpRequest 对象会先从 URL 中下载所有数据，然后才将数据用于应用程序中的代码。它会发出有关下载进度的通知，
      * 通过 bytesLoaded 和 bytesTotal 属性以及已调度的事件，可以监视下载进度。
-     * @event egret.Event.COMPLETE 加载完成
-     * @event egret.Event.IO_ERROR 加载失败
-     * @event egret.ProgressEvent.PROGRESS 加载进度，可通过event.bytesLoaded和event.bytesTotal统计进度信息。
+     * @event Event.COMPLETE 加载完成
+     * @event Event.IO_ERROR 加载失败
+     * @event ProgressEvent.PROGRESS 加载进度，可通过event.bytesLoaded和event.bytesTotal统计进度信息。
      * @see egret.HttpMethod
-     * @see egret.HttpResponseType
+     * @see HttpResponseType
      * @includeExample egret/net/HttpRequestExample.ts
      * @version Egret 2.4
      * @platform Web
@@ -51,7 +55,7 @@ namespace egret {
         /**
          * Controls whether the downloaded data is received as text (HttpResponseType.TEXT) or raw binary data (HttpResponseType.ArrayBuffer)<br/>
          * Note:If you attempt to set this property to an invalid value, Egret runtime set the value to HttpResponseType.TEXT.
-         * @default egret.HttpResponseType.TEXT
+         * @default HttpResponseType.TEXT
          * @version Egret 2.4
          * @platform Web
          * @language en_US
@@ -59,7 +63,7 @@ namespace egret {
         /**
          * 设置返回的数据格式为文本（HttpResponseType.TEXT）还是二进制数据（HttpResponseType.ArrayBuffer）<br/>
          * 注意：若尝试设置此属性为一个非法的值，运行时将使用HttpResponseType.TEXT。
-         * @default egret.HttpResponseType.TEXT
+         * @default HttpResponseType.TEXT
          * @version Egret 2.4
          * @platform Web
          * @language zh_CN
@@ -67,14 +71,14 @@ namespace egret {
         responseType: string;
         /**
          * Can be set to a time in milliseconds.When set to a non-zero value will cause fetching to terminate after the given time has passed.
-         * @default egret.HttpResponseType.TEXT
+         * @default HttpResponseType.TEXT
          * @version Egret 5.2.15
          * @platform Web
          * @language en_US
          */
         /**
          * 代表着一个请求在被自动终止前所消耗的毫秒数。默认值为 0，意味着没有超时。
-         * @default egret.HttpResponseType.TEXT
+         * @default HttpResponseType.TEXT
          * @version Egret 5.2.15
          * @platform Web
          * @language zh_CN
@@ -209,4 +213,3 @@ namespace egret {
      */
     export let HttpRequest:{ new (): HttpRequest };
 
-}

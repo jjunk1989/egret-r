@@ -1,7 +1,11 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace eui {
+import { Event } from "../../../egret/events/Event";
+import { TouchEvent } from "../../../egret/events/TouchEvent";
+import { ListBaseKeys, ListBase } from "./supportClasses/ListBase";
+import { IItemRenderer } from "../core/IItemRenderer";
+
 
     /**
      * The List control displays a vertical or horizontal list of items.
@@ -186,8 +190,8 @@ namespace eui {
         protected setSelectedIndices(value:number[], dispatchChangeEvent?:boolean):void {
             let values = this.$ListBase;
             if (dispatchChangeEvent)
-                values[sys.ListBaseKeys.dispatchChangeAfterSelection] =
-                    (values[sys.ListBaseKeys.dispatchChangeAfterSelection] || dispatchChangeEvent);
+                values[ListBaseKeys.dispatchChangeAfterSelection] =
+                    (values[ListBaseKeys.dispatchChangeAfterSelection] || dispatchChangeEvent);
 
             if (value)
                 this._proposedSelectedIndices = value;
@@ -219,7 +223,7 @@ namespace eui {
          */
         protected commitSelection(dispatchChangedEvents:boolean = true):boolean {
             let values = this.$ListBase;
-            let oldSelectedIndex = values[sys.ListBaseKeys.selectedIndex];
+            let oldSelectedIndex = values[ListBaseKeys.selectedIndex];
             if (this._proposedSelectedIndices) {
                 this._proposedSelectedIndices = this._proposedSelectedIndices.filter(this.isValidIndex);
 
@@ -229,10 +233,10 @@ namespace eui {
                     this._proposedSelectedIndices = temp;
                 }
                 if (this._proposedSelectedIndices.length > 0) {
-                    values[sys.ListBaseKeys.proposedSelectedIndex] = this._proposedSelectedIndices[0];
+                    values[ListBaseKeys.proposedSelectedIndex] = this._proposedSelectedIndices[0];
                 }
                 else {
-                    values[sys.ListBaseKeys.proposedSelectedIndex] = -1;
+                    values[ListBaseKeys.proposedSelectedIndex] = -1;
                 }
             }
 
@@ -261,9 +265,9 @@ namespace eui {
             }
 
             if (dispatchChangedEvents && retVal) {
-                if (values[sys.ListBaseKeys.dispatchChangeAfterSelection]) {
-                    this.dispatchEventWith(egret.Event.CHANGE)
-                    values[sys.ListBaseKeys.dispatchChangeAfterSelection] = false;
+                if (values[ListBaseKeys.dispatchChangeAfterSelection]) {
+                    this.dispatchEventWith(Event.CHANGE)
+                    values[ListBaseKeys.dispatchChangeAfterSelection] = false;
                 }
                 PropertyEvent.dispatchPropertyEvent(this,PropertyEvent.PROPERTY_CHANGE,"selectedIndex");
                 PropertyEvent.dispatchPropertyEvent(this,PropertyEvent.PROPERTY_CHANGE,"selectedItem");
@@ -380,7 +384,7 @@ namespace eui {
             let length = selectedIndices.length;
             if (length > 0) {
                 if (length == 1 && (selectedIndices[0] == index)) {
-                    if (!this.$ListBase[sys.ListBaseKeys.requireSelection]) {
+                    if (!this.$ListBase[ListBaseKeys.requireSelection]) {
                         return interval;
                     }
                     interval.splice(0, 0, selectedIndices[0]);
@@ -415,10 +419,10 @@ namespace eui {
          * @version eui 1.0
          * @platform Web
          */
-        protected onRendererTouchEnd(event:egret.TouchEvent):void {
+        protected onRendererTouchEnd(event:TouchEvent):void {
             if (this.allowMultipleSelection) {
                 let itemRenderer = <IItemRenderer> (event.currentTarget);
-                let touchDownItemRenderer = this.$ListBase[sys.ListBaseKeys.touchDownItemRenderer];
+                let touchDownItemRenderer = this.$ListBase[ListBaseKeys.touchDownItemRenderer];
                 if (itemRenderer != touchDownItemRenderer)
                     return;
                 this.setSelectedIndices(this.calculateSelectedIndices(itemRenderer.itemIndex), true);
@@ -429,5 +433,3 @@ namespace eui {
             }
         }
     }
-
-}

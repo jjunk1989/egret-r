@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { DisplayObjectContainer, host } from "../../../egret/display/DisplayObjectContainer";
+import { IOverride } from "./IOverride";
+import { Skin } from "../components/Skin";
 
-namespace eui {
 
     /**
      * The SetProperty class specifies a property value that is in effect only
@@ -132,7 +134,7 @@ namespace eui {
          * @version eui 1.0
          * @platform Web
          */
-        public apply(host:Skin, parent:egret.DisplayObjectContainer):void {
+        public apply(host:Skin, parent:DisplayObjectContainer):void {
             let obj:any = this.target ? host[this.target] : host;
             if (!obj)
                 return;
@@ -147,7 +149,7 @@ namespace eui {
          * @version eui 1.0
          * @platform Web
          */
-        public remove(host:Skin, parent:egret.DisplayObjectContainer):void {
+        public remove(host:Skin, parent:DisplayObjectContainer):void {
             let obj:any = this.target ? host[this.target] : host;
             if (!obj)
                 return;
@@ -182,5 +184,3 @@ namespace eui {
             return value != false;
         }
     }
-
-}

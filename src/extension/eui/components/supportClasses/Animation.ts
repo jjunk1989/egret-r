@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { getTimer } from "../../../../egret/utils/getTimer";
+import { startTick } from "../../../../egret/utils/startTick";
+import { stopTick } from "../../../../egret/utils/stopTick";
 
-
-namespace eui.sys {
 
     /**
      * @private
@@ -101,9 +102,9 @@ namespace eui.sys {
         private start():void {
             this.isPlaying = false;
             this.currentValue = 0;
-            this.startTime = egret.getTimer();
+            this.startTime = getTimer();
             this.doInterval(this.startTime);
-            egret.startTick(this.doInterval,this);
+            startTick(this.doInterval,this);
         }
 
         /**
@@ -113,7 +114,7 @@ namespace eui.sys {
         public stop():void {
             this.isPlaying = false;
             this.startTime = 0;
-            egret.stopTick(this.doInterval,this);
+            stopTick(this.doInterval,this);
         }
 
         /**
@@ -144,4 +145,3 @@ namespace eui.sys {
         }
 
     }
-}

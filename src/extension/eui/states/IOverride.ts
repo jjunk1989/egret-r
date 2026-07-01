@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { DisplayObjectContainer } from "../../../egret/display/DisplayObjectContainer";
 
-namespace eui {
 
 	/**
 	 * The IOverride interface is used for view state overrides.
@@ -47,7 +47,7 @@ namespace eui {
 		 * @platform Web
 		 * @language zh_CN
 		 */
-		apply(host:any,parent:egret.DisplayObjectContainer):void;
+		apply(host:any,parent:DisplayObjectContainer):void;
 		/**
 		 * Removes the override. The value remembered in the <code>apply()</code>
 		 * method is restored. </p>
@@ -70,6 +70,5 @@ namespace eui {
 		 * @platform Web
 		 * @language zh_CN
 		 */
-		remove(host:any,parent:egret.DisplayObjectContainer):void;
+		remove(host:any,parent:DisplayObjectContainer):void;
 	}
-}

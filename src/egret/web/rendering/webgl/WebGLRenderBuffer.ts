@@ -1,13 +1,20 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret.web {
+import { nativeRender, WebGLRenderContext } from "../../../player/Player";
+import { Rectangle } from "../../../geom/Rectangle";
+import { RenderBuffer } from "../../../player/RenderBuffer";
+import { HashObject } from "../../../utils/HashObject";
+import { WebGLRenderTarget } from "./WebGLRenderTarget";
+import { Matrix } from "../../../geom/Matrix";
+import { BitmapData } from "../../../display/BitmapData";
+
 
     /**
      * @private
      * WebGL渲染缓存
      */
-    export class WebGLRenderBuffer extends HashObject implements sys.RenderBuffer {
+    export class WebGLRenderBuffer extends HashObject implements RenderBuffer {
 
         public static autoClear: boolean = true;
 
@@ -42,7 +49,7 @@ namespace egret.web {
             // 获取webglRenderContext
             this.context = WebGLRenderContext.getInstance(width, height);
 
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 if (root) {
                     this.surface = this.context.surface;
                 }
@@ -116,7 +123,7 @@ namespace egret.web {
          * scissor 开关状态  
          */
         public $scissorState: boolean = false;
-        private scissorRect: Rectangle = new egret.Rectangle();
+        private scissorRect: Rectangle = new Rectangle();
         public $hasScissor: boolean = false;
 
         public enableScissor(x: number, y: number, width: number, height: number): void {
@@ -148,7 +155,7 @@ namespace egret.web {
          * @readOnly
          */
         public get width(): number {
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 return this.surface.width;
             }
             else {
@@ -161,7 +168,7 @@ namespace egret.web {
          * @readOnly
          */
         public get height(): number {
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 return this.surface.height;
             }
             else {
@@ -178,7 +185,7 @@ namespace egret.web {
         public resize(width: number, height: number, useMaxSize?: boolean): void {
             width = width || 1;
             height = height || 1;
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 this.surface.resize(width, height);
                 return;
             }
@@ -204,7 +211,7 @@ namespace egret.web {
         public getPixels(x: number, y: number, width: number = 1, height: number = 1): number[] {
             let pixels = new Uint8Array(4 * width * height);
 
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 egret_native.activateBuffer(this);
                 egret_native.nrGetPixels(x, y, width, height, pixels);
                 egret_native.activateBuffer(null);
@@ -421,4 +428,3 @@ namespace egret.web {
     }
 
     export let renderBufferPool: WebGLRenderBuffer[] = [];//渲染缓冲区对象池
-}

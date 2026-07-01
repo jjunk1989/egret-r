@@ -1,7 +1,17 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace eui {
+import { EventDispatcher } from "../../../egret/events/EventDispatcher";
+import { DisplayObject } from "../../../egret/display/DisplayObject";
+import { Event } from "../../../egret/events/Event";
+import { Stage } from "../../../egret/display/Stage";
+import { StateValues, StateClient, State } from "../states/State";
+import { mixin } from "../core/UIComponent";
+import { Component } from "./Component";
+import { registerBindable } from "../utils/registerBindable";
+import { Watcher } from "../binding/Watcher";
+import { registerProperty } from "../utils/registerProperty";
+
 
     /**
      * The Skin class defines the base class for all skins.
@@ -47,7 +57,7 @@ namespace eui {
      * @includeExample  extension/eui/components/SkinExample.ts
      * @language zh_CN
      */
-    export class Skin extends egret.EventDispatcher {
+    export class Skin extends EventDispatcher {
 
         /**
          * The list of skin parts name
@@ -200,9 +210,9 @@ namespace eui {
         /**
          * @private
          */
-        $elementsContent: egret.DisplayObject[] = [];
+        $elementsContent: DisplayObject[] = [];
 
-        public set elementsContent(value: egret.DisplayObject[]) {
+        public set elementsContent(value: DisplayObject[]) {
             this.$elementsContent = value;
         }
 
@@ -233,7 +243,7 @@ namespace eui {
             if (this._hostComponent == value)
                 return;
             if (this._hostComponent) {
-                this._hostComponent.removeEventListener(egret.Event.ADDED_TO_STAGE, this.onAddedToStage, this);
+                this._hostComponent.removeEventListener(Event.ADDED_TO_STAGE, this.onAddedToStage, this);
             }
             this._hostComponent = value;
             let values = this.$stateValues;
@@ -245,7 +255,7 @@ namespace eui {
                         this.initializeStates(value.$stage);
                     }
                     else {
-                        value.once(egret.Event.ADDED_TO_STAGE, this.onAddedToStage, this);
+                        value.once(Event.ADDED_TO_STAGE, this.onAddedToStage, this);
                     }
                 }
             }
@@ -257,7 +267,7 @@ namespace eui {
          * 
          * @param event 
          */
-        private onAddedToStage(event?: egret.Event): void {
+        private onAddedToStage(event?: Event): void {
             this.initializeStates(this._hostComponent.$stage);
         }
 
@@ -265,7 +275,7 @@ namespace eui {
         /**
          * @private
          */
-        $stateValues: sys.StateValues = new sys.StateValues();
+        $stateValues: StateValues = new StateValues();
 
         /**
          * The list of state for host component.
@@ -322,7 +332,7 @@ namespace eui {
          * @private
          * 初始化所有视图状态
          */
-        private initializeStates: (stage: egret.Stage) => void;
+        private initializeStates: (stage: Stage) => void;
 
         /**
          * @private
@@ -343,8 +353,7 @@ namespace eui {
         }
     }
 
-    sys.mixin(Skin, sys.StateClient);
+    mixin(Skin, StateClient);
     registerProperty(Skin, "elementsContent", "Array", true);
     registerProperty(Skin, "states", "State[]");
     registerBindable(Skin.prototype, "hostComponent");
-}

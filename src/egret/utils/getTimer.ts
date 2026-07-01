@@ -2,7 +2,8 @@
 // Copyright (c) 2014-present, Egret Technology.
 
 
-namespace egret {
+import { $START_TIME } from "../player/SystemTicker";
+
 
     /**
      * Used to compute relative time.this method returns the number of milliseconds since the Egret framework was initialized
@@ -21,6 +22,5 @@ namespace egret {
      * @language zh_CN
      */
     export function getTimer():number {
-        return Date.now() - sys.$START_TIME;
+        return Date.now() - $START_TIME;
     }
-}

@@ -1,8 +1,11 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { EventDispatcher } from "../../egret/events/EventDispatcher";
+import { getTimer } from "../../egret/utils/getTimer";
+import { ticker } from "../../egret/player/SystemTicker";
+import { Ease } from "./Ease";
 
-namespace egret {
 
 	/**
      * Tween is the animation easing class of Egret
@@ -20,7 +23,7 @@ namespace egret {
      * @includeExample extension/tween/Tween.ts
      * @language zh_CN
 	 */
-    export class Tween extends egret.EventDispatcher {
+    export class Tween extends EventDispatcher {
 		/**
          * 不做特殊处理
 		 * @constant {number} egret.Tween.NONE
@@ -193,7 +196,7 @@ namespace egret {
             if (!target.tween_count) {
                 return;
             }
-            let tweens: egret.Tween[] = egret.Tween._tweens;
+            let tweens: Tween[] = Tween._tweens;
             for (let i = tweens.length - 1; i >= 0; i--) {
                 if (tweens[i]._target === target) {
                     tweens[i].paused = true;
@@ -219,7 +222,7 @@ namespace egret {
             if (!target.tween_count) {
                 return;
             }
-            let tweens: egret.Tween[] = egret.Tween._tweens;
+            let tweens: Tween[] = Tween._tweens;
             for (let i = tweens.length - 1; i >= 0; i--) {
                 if (tweens[i]._target === target) {
                     tweens[i].paused = false;
@@ -265,8 +268,8 @@ namespace egret {
                 }
                 tweens.push(tween);
                 if (!Tween._inited) {
-                    Tween._lastTime = egret.getTimer();
-                    egret.ticker.$startTick(Tween.tick, null);
+                    Tween._lastTime = getTimer();
+                    ticker.$startTick(Tween.tick, null);
                     Tween._inited = true;
                 }
             } else {
@@ -665,7 +668,7 @@ namespace egret {
          * Modify the property of the specified object to a specified value
 		 * @param props {Object} Property set of an object
 		 * @param duration {number} Duration
-		 * @param ease {egret.Ease} Easing algorithm
+		 * @param ease {Ease} Easing algorithm
 		 * @returns {egret.Tween} Tween object itself
          * @version Egret 2.4
          * @platform Web
@@ -675,7 +678,7 @@ namespace egret {
          * 将指定对象的属性修改为指定值
 		 * @param props {Object} 对象的属性集合
 		 * @param duration {number} 持续时间
-		 * @param ease {egret.Ease} 缓动算法
+		 * @param ease {Ease} 缓动算法
 		 * @returns {egret.Tween} Tween对象本身
          * @version Egret 2.4
          * @platform Web
@@ -811,4 +814,3 @@ namespace egret {
             this.setPosition(this._prevPosition + delta);
         }
     }
-}

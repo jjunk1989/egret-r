@@ -4,7 +4,6 @@
 /**
  * @private
  */
-namespace egret.sys {
 
     /**
      * 测量文本在指定样式下的宽度。
@@ -15,4 +14,3 @@ namespace egret.sys {
      * @param italic 是否斜体
      */
     export let measureText:(text:string, fontFamily:string, fontSize:number, bold:boolean, italic:boolean)=>number;
-}

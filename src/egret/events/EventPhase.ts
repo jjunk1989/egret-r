@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret {
 
     /**
      * The EventPhase class provides values for the eventPhase property of the Event class.
@@ -59,4 +58,3 @@ namespace egret {
          */
         BUBBLING_PHASE = 3
     }
-}

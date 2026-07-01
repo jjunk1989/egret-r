@@ -1,8 +1,18 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { DisplayObject } from "../../../egret/display/DisplayObject";
+import { CollectionEvent } from "../events/CollectionEvent";
+import { BasicLayout } from "../layouts/BasicLayout";
+import { UIComponent } from "../core/UIComponent";
+import { Group } from "./Group";
+import { ICollection } from "../collections/ICollection";
+import { registerBindable } from "../utils/registerBindable";
+import { LayoutBase } from "../layouts/supportClasses/LayoutBase";
+import { PropertyEvent } from "../events/PropertyEvent";
+import { CollectionEventKind } from "../events/CollectionEventKind";
+import { ListBase } from "./supportClasses/ListBase";
 
-namespace eui {
 
     /**
      * An ViewStack navigator container consists of a collection of child
@@ -12,7 +22,7 @@ namespace eui {
      * the old one because it appears in the same location.
      * However, the old child container still exists; it is just invisible.
      *
-     * @event eui.CollectionEvent.COLLECTION_CHANGE Dispatched when the ICollection has been updated in some way.
+     * @event CollectionEvent.COLLECTION_CHANGE Dispatched when the ICollection has been updated in some way.
      *
      * @version Egret 2.4
      * @version eui 1.0
@@ -25,7 +35,7 @@ namespace eui {
      * 选择另一个子容器后，它将显示在原来子容器的位置处，所以看起来好像此子容器替换了原来的子容器。
      * 但是，原来的子容器仍然存在，只不过它现在处于不可见状态。
      *
-     * @event eui.CollectionEvent.COLLECTION_CHANGE 以某种方式更新 ICollection 后分派。
+     * @event CollectionEvent.COLLECTION_CHANGE 以某种方式更新 ICollection 后分派。
      *
      * @version Egret 2.4
      * @version eui 1.0
@@ -59,7 +69,7 @@ namespace eui {
          * This object is responsible for the measurement and layout of
          * the visual elements in the container.
          *
-         * @default eui.BasicLayout
+         * @default BasicLayout
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -69,7 +79,7 @@ namespace eui {
         /**
          * 此容器的 layout 对象。此对象负责容器中可视元素的测量和布局。
          *
-         * @default eui.BasicLayout
+         * @default BasicLayout
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -83,7 +93,7 @@ namespace eui {
         /**
          * @private
          */
-        private _selectedChild:egret.DisplayObject = null;
+        private _selectedChild:DisplayObject = null;
         /**
          * A reference to the currently visible child container.
          * The default is a reference to the first child.
@@ -102,14 +112,14 @@ namespace eui {
          * @platform Web
          * @language zh_CN
          */
-        public get selectedChild():egret.DisplayObject {
+        public get selectedChild():DisplayObject {
             let index = this.selectedIndex;
             if (index >= 0 && index < this.numChildren)
                 return this.getChildAt(index);
             return null;
         }
 
-        public set selectedChild(value:egret.DisplayObject) {
+        public set selectedChild(value:DisplayObject) {
             let index = this.getChildIndex(value);
             if (index >= 0 && index < this.numChildren)
                 this.setSelectedIndex(index);
@@ -173,7 +183,7 @@ namespace eui {
          * 一个子项被添加到容器内，此方法不仅在操作addChild()时会被回调，在操作setChildIndex()或swapChildren时也会回调。
          * 当子项索引发生改变时，会先触发$childRemoved()方法，然后触发$childAdded()方法。
          */
-        $childAdded(child:egret.DisplayObject, index:number):void {
+        $childAdded(child:DisplayObject, index:number):void {
             super.$childAdded(child, index);
             this.showOrHide(child, false);
             let selectedIndex = this.selectedIndex;
@@ -192,7 +202,7 @@ namespace eui {
          * 一个子项从容器内移除，此方法不仅在操作removeChild()时会被回调，在操作setChildIndex()或swapChildren时也会回调。
          * 当子项索引发生改变时，会先触发$childRemoved()方法，然后触发$childAdded()方法。
          */
-        $childRemoved(child:egret.DisplayObject, index:number):void {
+        $childRemoved(child:DisplayObject, index:number):void {
             super.$childRemoved(child, index);
             this.showOrHide(child, true);
             let selectedIndex = this.selectedIndex;
@@ -258,9 +268,9 @@ namespace eui {
          * @param child 
          * @param visible 
          */
-        private showOrHide(child:egret.DisplayObject, visible:boolean):void {
-            if (egret.is(child, "eui.UIComponent")) {
-                (<eui.UIComponent><any>child).includeInLayout = visible;
+        private showOrHide(child:DisplayObject, visible:boolean):void {
+            if (is(child, "UIComponent")) {
+                (<UIComponent><any>child).includeInLayout = visible;
             }
             child.visible = visible;
         }
@@ -293,7 +303,7 @@ namespace eui {
          * @platform Web
          */
         public getItemAt(index:number):any {
-            let element:egret.DisplayObject = this.$children[index];
+            let element:DisplayObject = this.$children[index];
             return element ? element.name : "";
         }
 
@@ -317,5 +327,3 @@ namespace eui {
     }
 
     registerBindable(ViewStack.prototype,"selectedIndex");
-
-}

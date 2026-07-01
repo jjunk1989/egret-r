@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace eui {
+import { $locale_strings } from "../../../egret/i18n/tr";
 
-    egret.$locale_strings = egret.$locale_strings || {};
-    egret.$locale_strings["en_US"] = egret.$locale_strings["en_US"] || {};
-    let locale_strings = egret.$locale_strings["en_US"];
+
+    $locale_strings["en_US"] = $locale_strings["en_US"] || {};
+    let locale_strings = $locale_strings["en_US"];
 
     //2000-2999
     locale_strings[2001] = "EXML parsing error {0}: EXML file can't be found ";
@@ -37,10 +37,9 @@ namespace eui {
     locale_strings[2104] = "EXML parsing warnning, Instantiate class {0} error，the parameters of its constructor method must be empty.";
 
     locale_strings[2201] = "BasicLayout doesn't support virtualization.";
-    locale_strings[2202] = "parse skinName error，the parsing result of skinName must be a instance of eui.Skin.";
+    locale_strings[2202] = "parse skinName error，the parsing result of skinName must be a instance of Skin.";
     locale_strings[2203] = "Could not find the skin class '{0}'。";
     locale_strings[2204] = "Undefined event.kind type (CollectionEventKind) = '{0}'.";
 
     locale_strings[2301] = "parse source failed，could not find asset from URL：{0} .";
 
-}

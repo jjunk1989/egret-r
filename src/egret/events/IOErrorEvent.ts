@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { IEventDispatcher } from "./IEventDispatcher";
+import { Event } from "./Event";
 
-namespace egret {
+
 	export interface HttpRequest{
 		addEventListener<Z>(type: "ioError"
 			, listener: (this: Z, e: IOErrorEvent) => void, thisObject: Z, useCapture?: boolean, priority?: number);
@@ -62,14 +64,14 @@ namespace egret {
 
         /**
          * EventDispatcher object using the specified event object thrown Event. The objects will be thrown in the object cache pool for the next round robin.
-		 * @param target {egret.IEventDispatcher} Distribute event target
+		 * @param target {IEventDispatcher} Distribute event target
          * @version Egret 2.4
          * @platform Web
          * @language en_US
          */
         /**
          * 使用指定的EventDispatcher对象来抛出Event事件对象。抛出的对象将会缓存在对象池上，供下次循环复用。
-		 * @param target {egret.IEventDispatcher} 派发事件目标
+		 * @param target {IEventDispatcher} 派发事件目标
          * @version Egret 2.4
          * @platform Web
          * @language zh_CN
@@ -81,4 +83,3 @@ namespace egret {
             return result;
         }
     }
-}

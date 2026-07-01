@@ -1,8 +1,14 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { Event } from "../../../egret/events/Event";
+import { UIComponent } from "../core/UIComponent";
+import { Direction } from "../core/Direction";
+import { Animation } from "./supportClasses/Animation";
+import { RangeKeys, Range } from "./supportClasses/Range";
+import { Label } from "./Label";
+import { $TempRectangle } from "../../../egret/geom/Rectangle";
 
-namespace eui {
 
     /**
      * The ProgressBar control provides a visual representation of the progress of a task over time.
@@ -42,7 +48,7 @@ namespace eui {
          */
         public constructor() {
             super();
-            this.animation = new sys.Animation(this.animationUpdateHandler, this);
+            this.animation = new Animation(this.animationUpdateHandler, this);
         }
 
         /**
@@ -65,7 +71,7 @@ namespace eui {
          * @platform Web
          * @language zh_CN
          */
-        public thumb:eui.UIComponent = null;
+        public thumb:UIComponent = null;
         /**
          * the label of the progressbar.
          *
@@ -237,7 +243,7 @@ namespace eui {
          * @private
          * 动画实例
          */
-        private animation:sys.Animation;
+        private animation:Animation;
         /**
          * @private
          * 动画播放结束时要到达的value。
@@ -262,11 +268,11 @@ namespace eui {
                     this.invalidateDisplayList();
                     animation.stop();
                 }
-                this.slideToValue = this.nearestValidValue(newValue, values[sys.RangeKeys.snapInterval]);
+                this.slideToValue = this.nearestValidValue(newValue, values[RangeKeys.snapInterval]);
                 if (this.slideToValue === this.animationValue)
                     return result;
                 let duration = this._slideDuration *
-                    (Math.abs(this.animationValue - this.slideToValue) / (values[sys.RangeKeys.maximum] - values[sys.RangeKeys.minimum]));
+                    (Math.abs(this.animationValue - this.slideToValue) / (values[RangeKeys.maximum] - values[RangeKeys.minimum]));
                 animation.duration = duration === Infinity ? 0 : duration;
                 animation.from = this.animationValue;
                 animation.to = this.slideToValue;
@@ -287,10 +293,10 @@ namespace eui {
          * @private
          * 动画播放更新数值
          */
-        private animationUpdateHandler(animation:sys.Animation):void {
+        private animationUpdateHandler(animation:Animation):void {
             let values = this.$Range;
-            let value = this.nearestValidValue(animation.currentValue, values[sys.RangeKeys.snapInterval]);
-            this.animationValue = Math.min(values[sys.RangeKeys.maximum], Math.max(values[sys.RangeKeys.minimum], value));
+            let value = this.nearestValidValue(animation.currentValue, values[RangeKeys.snapInterval]);
+            this.animationValue = Math.min(values[RangeKeys.maximum], Math.max(values[RangeKeys.minimum], value));
             this.invalidateDisplayList();
         }
         /**
@@ -313,7 +319,7 @@ namespace eui {
             if (instance === this.thumb) {
                 if(this.thumb.x) this.thumbInitX = this.thumb.x;
                 if(this.thumb.y) this.thumbInitY = this.thumb.y;
-                this.thumb.addEventListener(egret.Event.RESIZE, this.onThumbResize, this);
+                this.thumb.addEventListener(Event.RESIZE, this.onThumbResize, this);
             }
         }
 
@@ -327,7 +333,7 @@ namespace eui {
         protected partRemoved(partName:string, instance:any):void {
             super.partRemoved(partName, instance);
             if (instance === this.thumb) {
-                this.thumb.removeEventListener(egret.Event.RESIZE, this.onThumbResize, this);
+                this.thumb.removeEventListener(Event.RESIZE, this.onThumbResize, this);
             }
         }
 
@@ -335,7 +341,7 @@ namespace eui {
          * @private
          * thumb的位置或尺寸发生改变
          */
-        private onThumbResize(event:egret.Event):void {
+        private onThumbResize(event:Event):void {
             this.updateSkinDisplayList();
         }
 
@@ -362,26 +368,26 @@ namespace eui {
 
                 let rect = thumb.$scrollRect;
                 if (!rect) {
-                    rect = egret.$TempRectangle;
+                    rect = $TempRectangle;
                 }
                 rect.setTo(0,0,thumbWidth,thumbHeight);
                 let thumbPosX = thumb.x - rect.x;
                 let thumbPosY = thumb.y - rect.y;
                  switch (this._direction) {
-                     case eui.Direction.LTR:
+                     case Direction.LTR:
                          rect.width = clipWidth;
                          thumb.x = thumbPosX;
                          break;
-                     case eui.Direction.RTL:
+                     case Direction.RTL:
                          rect.width = clipWidth;
                          rect.x = thumbWidth - clipWidth;
                          thumb.x = rect.x;
                          break;
-                     case eui.Direction.TTB:
+                     case Direction.TTB:
                          rect.height = clipHeight;
                          thumb.y = thumbPosY;
                          break;
-                     case eui.Direction.BTT:
+                     case Direction.BTT:
                          rect.height = clipHeight;
                          rect.y = thumbHeight - clipHeight;
                          thumb.y = rect.y;
@@ -394,4 +400,3 @@ namespace eui {
             }
         }
     }
-}

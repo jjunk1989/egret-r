@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace eui {
     /**
      * The JustifyAlign class defines the possible values for the
      * <code>horizontalAlign</code> 和 <code>verticalAlign</code> property of
@@ -66,4 +65,3 @@ namespace eui {
          */
         public static CONTENT_JUSTIFY:string = "contentJustify";
     }
-}

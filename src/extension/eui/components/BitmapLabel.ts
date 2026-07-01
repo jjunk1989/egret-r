@@ -1,9 +1,13 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-/// <reference path="../core/UIComponent.ts" />
-namespace eui {
-    let UIImpl = sys.UIComponentImpl;
+import { BitmapText } from "../../../egret/text/BitmapText";
+import { BitmapFont } from "../../../egret/text/BitmapFont";
+import { Rectangle } from "../../../egret/geom/Rectangle";
+import { UIComponent, UIComponentImpl, UIKeys, implementUIComponent } from "../core/UIComponent";
+import { registerBindable } from "../utils/registerBindable";
+
+    let UIImpl = UIComponentImpl;
     /**
      * BitmapLabel is one line or multiline uneditable BitmapText
      * @version Egret 2.5.3
@@ -18,7 +22,7 @@ namespace eui {
      * @platform Web
      * @language zh_CN
      */
-    export class BitmapLabel extends egret.BitmapText implements UIComponent, IDisplayText {
+    export class BitmapLabel extends BitmapText implements UIComponent, IDisplayText {
         public constructor(text?: string) {
             super();
             this.initializeUIValues();
@@ -61,7 +65,7 @@ namespace eui {
             PropertyEvent.dispatchPropertyEvent(this, PropertyEvent.PROPERTY_CHANGE, "text");
             return result;
         }
-        private $fontForBitmapLabel: string | egret.BitmapFont;
+        private $fontForBitmapLabel: string | BitmapFont;
         $setFont(value: any): boolean {
             if (this.$fontForBitmapLabel == value) {
                 return false;
@@ -92,7 +96,7 @@ namespace eui {
             }
         }
 
-        $setFontData(value: egret.BitmapFont, font?: string): boolean {
+        $setFontData(value: BitmapFont, font?: string): boolean {
             if (font && font != this.$fontForBitmapLabel) {
                 return;
             }
@@ -118,7 +122,7 @@ namespace eui {
          */
         private initializeUIValues: () => void;
         /**
-         * @copy eui.UIComponent#createChildren
+         * @copy UIComponent#createChildren
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -132,7 +136,7 @@ namespace eui {
         }
 
         /**
-         * @copy eui.UIComponent#childrenCreated
+         * @copy UIComponent#childrenCreated
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -143,7 +147,7 @@ namespace eui {
         }
 
         /**
-         * @copy eui.UIComponent#commitProperties
+         * @copy UIComponent#commitProperties
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -154,7 +158,7 @@ namespace eui {
         }
 
         /**
-         * @copy eui.UIComponent#measure
+         * @copy UIComponent#measure
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -169,11 +173,11 @@ namespace eui {
                 availableWidth = this._widthConstraint;
                 this._widthConstraint = NaN;
             }
-            else if (!isNaN(values[sys.UIKeys.explicitWidth])) {
-                availableWidth = values[sys.UIKeys.explicitWidth];
+            else if (!isNaN(values[UIKeys.explicitWidth])) {
+                availableWidth = values[UIKeys.explicitWidth];
             }
-            else if (values[sys.UIKeys.maxWidth] != 100000) {
-                availableWidth = values[sys.UIKeys.maxWidth];
+            else if (values[UIKeys.maxWidth] != 100000) {
+                availableWidth = values[UIKeys.maxWidth];
             }
             super.$setWidth(availableWidth);
             let availableHeight = NaN;
@@ -181,11 +185,11 @@ namespace eui {
                 availableHeight = this._heightConstraint;
                 this._heightConstraint = NaN;
             }
-            else if (!isNaN(values[sys.UIKeys.explicitHeight])) {
-                availableHeight = values[sys.UIKeys.explicitHeight];
+            else if (!isNaN(values[UIKeys.explicitHeight])) {
+                availableHeight = values[UIKeys.explicitHeight];
             }
-            else if (values[sys.UIKeys.maxHeight] != 100000) {
-                availableHeight = values[sys.UIKeys.maxHeight];
+            else if (values[UIKeys.maxHeight] != 100000) {
+                availableHeight = values[UIKeys.maxHeight];
             }
             super.$setHeight(availableHeight);
             this.setMeasuredSize(this.textWidth, this.textHeight);
@@ -193,7 +197,7 @@ namespace eui {
             super.$setHeight(oldHeight);
         }
         /**
-         * @copy eui.UIComponent#updateDisplayList
+         * @copy UIComponent#updateDisplayList
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -205,7 +209,7 @@ namespace eui {
         }
 
         /**
-         * @copy eui.UIComponent#invalidateParentLayout
+         * @copy UIComponent#invalidateParentLayout
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -225,7 +229,7 @@ namespace eui {
         $includeInLayout: boolean;
 
         /**
-         * @copy eui.UIComponent#includeInLayout
+         * @copy UIComponent#includeInLayout
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -233,7 +237,7 @@ namespace eui {
          */
         public includeInLayout: boolean;
         /**
-         * @copy eui.UIComponent#left
+         * @copy UIComponent#left
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -242,7 +246,7 @@ namespace eui {
         public left: any;
 
         /**
-         * @copy eui.UIComponent#right
+         * @copy UIComponent#right
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -251,7 +255,7 @@ namespace eui {
         public right: any;
 
         /**
-         * @copy eui.UIComponent#top
+         * @copy UIComponent#top
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -260,7 +264,7 @@ namespace eui {
         public top: any;
 
         /**
-         * @copy eui.UIComponent#bottom
+         * @copy UIComponent#bottom
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -269,7 +273,7 @@ namespace eui {
         public bottom: any;
 
         /**
-         * @copy eui.UIComponent#horizontalCenter
+         * @copy UIComponent#horizontalCenter
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -278,7 +282,7 @@ namespace eui {
         public horizontalCenter: any;
 
         /**
-         * @copy eui.UIComponent#verticalCenter
+         * @copy UIComponent#verticalCenter
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -287,7 +291,7 @@ namespace eui {
         public verticalCenter: any;
 
         /**
-         * @copy eui.UIComponent#percentWidth
+         * @copy UIComponent#percentWidth
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -296,7 +300,7 @@ namespace eui {
         public percentWidth: number;
 
         /**
-         * @copy eui.UIComponent#percentHeight
+         * @copy UIComponent#percentHeight
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -305,7 +309,7 @@ namespace eui {
         public percentHeight: number;
 
         /**
-         * @copy eui.UIComponent#explicitWidth
+         * @copy UIComponent#explicitWidth
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -314,7 +318,7 @@ namespace eui {
         public explicitWidth: number;
 
         /**
-         * @copy eui.UIComponent#explicitHeight
+         * @copy UIComponent#explicitHeight
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -324,7 +328,7 @@ namespace eui {
 
 
         /**
-         * @copy eui.UIComponent#minWidth
+         * @copy UIComponent#minWidth
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -332,7 +336,7 @@ namespace eui {
          */
         public minWidth: number;
         /**
-         * @copy eui.UIComponent#maxWidth
+         * @copy UIComponent#maxWidth
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -341,7 +345,7 @@ namespace eui {
         public maxWidth: number;
 
         /**
-         * @copy eui.UIComponent#minHeight
+         * @copy UIComponent#minHeight
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -349,7 +353,7 @@ namespace eui {
          */
         public minHeight: number;
         /**
-         * @copy eui.UIComponent#maxHeight
+         * @copy UIComponent#maxHeight
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -450,10 +454,10 @@ namespace eui {
                 return;
             }
             let values = this.$UIComponent;
-            if (!isNaN(values[sys.UIKeys.explicitHeight])) {
+            if (!isNaN(values[UIKeys.explicitHeight])) {
                 return;
             }
-            if (layoutWidth == values[sys.UIKeys.measuredWidth]) {
+            if (layoutWidth == values[UIKeys.measuredWidth]) {
                 return;
             }
             this._widthConstraint = layoutWidth;
@@ -478,7 +482,7 @@ namespace eui {
          * @version eui 1.0
          * @platform Web
          */
-        public getLayoutBounds(bounds: egret.Rectangle): void {
+        public getLayoutBounds(bounds: Rectangle): void {
         }
 
         /**
@@ -488,10 +492,9 @@ namespace eui {
          * @version eui 1.0
          * @platform Web
          */
-        public getPreferredBounds(bounds: egret.Rectangle): void {
+        public getPreferredBounds(bounds: Rectangle): void {
         }
     }
 
-    sys.implementUIComponent(BitmapLabel, egret.BitmapText);
+    implementUIComponent(BitmapLabel, BitmapText);
     registerBindable(BitmapLabel.prototype, "text");
-}

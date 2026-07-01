@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret {
     /** 
      * Returns the fully qualified class name of the base class of the object specified by the value parameter.
      * @param value The object for which a parent class is desired. Any JavaScript value may be passed to this method including
@@ -9,7 +8,7 @@ namespace egret {
      * @returns  A fully qualified base class name, or null if none exists.
      * @example
      * <pre>
-     *  egret.getQualifiedSuperclassName(egret.Bitmap) //return "egret.DisplayObject"
+     *  egret.getQualifiedSuperclassName(Bitmap) //return "DisplayObject"
      * </pre>
      * @version Egret 2.4
      * @platform Web
@@ -22,7 +21,7 @@ namespace egret {
      * @returns 完全限定的基类名称，或 null（如果不存在基类名称）。
      * @example
      * <pre>
-     *  egret.getQualifiedSuperclassName(egret.Sprite) //返回 "egret.DisplayObject"
+     *  egret.getQualifiedSuperclassName(Sprite) //返回 "DisplayObject"
      * </pre>
      * @version Egret 2.4
      * @platform Web
@@ -44,4 +43,3 @@ namespace egret {
         }
         return superClass;
     }
-}

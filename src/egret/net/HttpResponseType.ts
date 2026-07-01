@@ -1,18 +1,19 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret {
+import { HttpRequest } from "../events/IOErrorEvent";
+
 
     /**
      * The HttpResponseType class provides values that specify how downloaded data is received.
-     * @see egret.HttpRequest
+     * @see HttpRequest
      * @version Egret 2.4
      * @platform Web
      * @language en_US
      */
     /**
      * URLLoaderDataFormat 类提供了一些用于指定如何接收已下载数据的值。
-     * @see egret.HttpRequest
+     * @see HttpRequest
      * @version Egret 2.4
      * @platform Web
      * @language zh_CN
@@ -47,4 +48,3 @@ namespace egret {
         public static ARRAY_BUFFER:string = "arraybuffer";
 
     }
-}

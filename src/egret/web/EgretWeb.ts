@@ -1,7 +1,20 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret.web {
+import { nativeRender } from "../player/Player";
+import { ticker, SystemTicker } from "../player/SystemTicker";
+import { runEgretOptions } from "../player/EgretEntry";
+import { screenAdapter, DefaultScreenAdapter } from "../player/ScreenAdapter";
+import { CanvasRenderBuffer, canvasHitTestBuffer, RenderBuffer, customHitTestBuffer } from "../player/RenderBuffer";
+import { DisplayList } from "../player/DisplayList";
+import { systemRenderer, canvasRenderer } from "../player/SystemRenderer";
+import { WebPlayer } from "./WebPlayer";
+import { WebGLRenderer } from "./rendering/webgl/WebGLRenderer";
+import { CanvasRenderer } from "../player/rendering/CanvasRenderer";
+import { WebGLRenderBuffer } from "./rendering/webgl/WebGLRenderBuffer";
+import { DEBUG } from "../../Defines.debug";
+import { $warn } from "";
+
     /**
      * @private
      * 刷新所有Egret播放器的显示区域尺寸。仅当使用外部JavaScript代码动态修改了Egret容器大小时，需要手动调用此方法刷新显示区域。
@@ -36,7 +49,7 @@ namespace egret.web {
         }
         let ua: string = navigator.userAgent.toLowerCase();
         if (ua.indexOf("egretnative") >= 0 && ua.indexOf("egretwebview") == -1) {
-            Capabilities["runtimeType" + ""] = egret.RuntimeType.RUNTIME2;
+            Capabilities["runtimeType" + ""] = RuntimeType.RUNTIME2;
         }
 
         // 是否启动3d环境
@@ -53,7 +66,7 @@ namespace egret.web {
             }
         }
 
-        if (ua.indexOf("egretnative") >= 0 && egret.nativeRender) {// Egret Native
+        if (ua.indexOf("egretnative") >= 0 && nativeRender) {// Egret Native
             egret_native.addModuleCallback(function () {
                 Html5Capatibility.$init();
 
@@ -73,20 +86,20 @@ namespace egret.web {
                     canvasScaleFactor = options.canvasScaleFactor;
                 }
                 else if (options.calculateCanvasScaleFactor) {
-                    canvasScaleFactor = options.calculateCanvasScaleFactor(sys.canvasHitTestBuffer.context);
+                    canvasScaleFactor = options.calculateCanvasScaleFactor(canvasHitTestBuffer.context);
                 }
                 else {
                     canvasScaleFactor = window.devicePixelRatio;
                 }
-                sys.DisplayList.$canvasScaleFactor = canvasScaleFactor;
+                DisplayList.$canvasScaleFactor = canvasScaleFactor;
 
-                let ticker = egret.ticker;
+                let ticker = ticker;
                 startTicker(ticker);
                 if (options.screenAdapter) {
-                    egret.sys.screenAdapter = options.screenAdapter;
+                    screenAdapter = options.screenAdapter;
                 }
-                else if (!egret.sys.screenAdapter) {
-                    egret.sys.screenAdapter = new egret.sys.DefaultScreenAdapter();
+                else if (!screenAdapter) {
+                    screenAdapter = new DefaultScreenAdapter();
                 }
 
                 let list = document.querySelectorAll(".egret-player");
@@ -118,7 +131,7 @@ namespace egret.web {
 
             sys.CanvasRenderBuffer = web.CanvasRenderBuffer;
             if (ua.indexOf("egretnative") >= 0 && renderMode != "webgl") {
-                egret.$warn(1051);
+                $warn(1051);
                 renderMode = "webgl";
             }
             setRenderMode(renderMode);
@@ -128,11 +141,11 @@ namespace egret.web {
                 canvasScaleFactor = options.canvasScaleFactor;
             }
             else if (options.calculateCanvasScaleFactor) {
-                canvasScaleFactor = options.calculateCanvasScaleFactor(sys.canvasHitTestBuffer.context);
+                canvasScaleFactor = options.calculateCanvasScaleFactor(canvasHitTestBuffer.context);
             }
             else {
                 //based on : https://github.com/jondavidjohn/hidpi-canvas-polyfill
-                let context = sys.canvasHitTestBuffer.context;
+                let context = canvasHitTestBuffer.context;
                 let backingStore = context.backingStorePixelRatio ||
                     context.webkitBackingStorePixelRatio ||
                     context.mozBackingStorePixelRatio ||
@@ -141,15 +154,15 @@ namespace egret.web {
                     context.backingStorePixelRatio || 1;
                 canvasScaleFactor = (window.devicePixelRatio || 1) / backingStore;
             }
-            sys.DisplayList.$canvasScaleFactor = canvasScaleFactor;
+            DisplayList.$canvasScaleFactor = canvasScaleFactor;
 
-            let ticker = egret.ticker;
+            let ticker = ticker;
             startTicker(ticker);
             if (options.screenAdapter) {
-                egret.sys.screenAdapter = options.screenAdapter;
+                screenAdapter = options.screenAdapter;
             }
-            else if (!egret.sys.screenAdapter) {
-                egret.sys.screenAdapter = new egret.sys.DefaultScreenAdapter();
+            else if (!screenAdapter) {
+                screenAdapter = new DefaultScreenAdapter();
             }
 
             let list = document.querySelectorAll(".egret-player");
@@ -175,30 +188,30 @@ namespace egret.web {
     function setRenderMode(renderMode: string): void {
         if (renderMode == "webgl" && WebGLUtils.checkCanUseWebGL()) {
             sys.RenderBuffer = web.WebGLRenderBuffer;
-            sys.systemRenderer = new WebGLRenderer();
-            sys.canvasRenderer = new CanvasRenderer();
-            sys.customHitTestBuffer = new WebGLRenderBuffer(3, 3);
-            sys.canvasHitTestBuffer = new CanvasRenderBuffer(3, 3);
+            systemRenderer = new WebGLRenderer();
+            canvasRenderer = new CanvasRenderer();
+            customHitTestBuffer = new WebGLRenderBuffer(3, 3);
+            canvasHitTestBuffer = new CanvasRenderBuffer(3, 3);
             Capabilities["renderMode" + ""] = "webgl";
         }
         else {
             sys.RenderBuffer = web.CanvasRenderBuffer;
-            sys.systemRenderer = new CanvasRenderer();
-            sys.canvasRenderer = sys.systemRenderer;
-            sys.customHitTestBuffer = new CanvasRenderBuffer(3, 3);
-            sys.canvasHitTestBuffer = sys.customHitTestBuffer;
+            systemRenderer = new CanvasRenderer();
+            canvasRenderer = systemRenderer;
+            customHitTestBuffer = new CanvasRenderBuffer(3, 3);
+            canvasHitTestBuffer = customHitTestBuffer;
             Capabilities["renderMode" + ""] = "canvas";
         }
     }
 
 
-    egret.sys.setRenderMode = setRenderMode;
+    sys.setRenderMode = setRenderMode;
 
     /**
      * @private
      * 启动心跳计时器。
      */
-    function startTicker(ticker: egret.sys.SystemTicker): void {
+    function startTicker(ticker: SystemTicker): void {
         let requestAnimationFrame =
             window["requestAnimationFrame"] ||
             window["webkitRequestAnimationFrame"] ||
@@ -232,10 +245,9 @@ namespace egret.web {
 
     function doResize() {
         resizeTimer = NaN;
-        egret.updateAllScreens();
+        updateAllScreens();
     }
 
-}
 
 if (DEBUG) {
     let language = navigator.language || navigator["browserLanguage"] || "en_US";

@@ -1,14 +1,16 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret {
+import { TimerEvent } from "../events/TimerEvent";
+import { EventDispatcher } from "../events/EventDispatcher";
+
 	/**
      * The Timer class is the interface to timers, which let you run code on a specified time sequence. Use the start()
      * method to start a timer. Add an event listener for the timer event to set up code to be run on the timer interval.<br/>
      * You can create Timer objects to run once or repeat at specified intervals to execute code on a schedule. Depending
      * on the framerate or the runtime environment (available memory and other factors), the runtime may dispatchEvent events at
      * slightly offset intervals.
-     * @see egret.TimerEvent
+     * @see TimerEvent
      * @version Egret 2.4
      * @platform Web
      * @includeExample egret/utils/Timer.ts
@@ -19,7 +21,7 @@ namespace egret {
      * 使用 start() 方法来启动计时器。为 timer 事件添加事件侦听器，以便将代码设置为按计时器间隔运行。
      * 可以创建 Timer 对象以运行一次或按指定间隔重复运行，从而按计划执行代码。
      * 根据 Egret 的帧速率或运行时环境（可用内存和其他因素），运行时调度事件的间隔可能稍有不同。
-     * @see egret.TimerEvent
+     * @see TimerEvent
      * @version Egret 2.4
      * @platform Web
      * @includeExample egret/utils/Timer.ts
@@ -234,7 +236,7 @@ namespace egret {
             this._currentCount++;
             let complete = (this.repeatCount > 0 && this._currentCount >= this.repeatCount);
             if (this.repeatCount == 0 || this._currentCount <= this.repeatCount) {
-                egret.TimerEvent.dispatchTimerEvent(this, egret.TimerEvent.TIMER);
+                TimerEvent.dispatchTimerEvent(this, TimerEvent.TIMER);
             }
             if (complete) {
                 this.stop();
@@ -244,4 +246,3 @@ namespace egret {
         }
     }
 
-}

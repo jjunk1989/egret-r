@@ -1,8 +1,13 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { error } from "../system/Console";
+import { KTXContainer } from "./KTXContainer";
+import { BitmapData } from "./Bitmap";
+import { Rectangle } from "../geom/Rectangle";
+import { HashObject } from "../utils/HashObject";
 
-namespace egret {
+
     export let $TextureScaleFactor: number = 1;
     /**
      * The Texture class encapsulates different image resources on different platforms.
@@ -251,19 +256,19 @@ namespace egret {
          */
         public _setKtxData(value: ArrayBuffer) {
             if (!value) {
-                egret.error('ktx data is null');
+                error('ktx data is null');
                 return;
             }
             if (value == this.$ktxData) {
                 return;
             }
-            let ktx = new egret.KTXContainer(value, 1);
+            let ktx = new KTXContainer(value, 1);
             if (ktx.isInvalid) {
-                egret.error('ktx data is invalid');
+                error('ktx data is invalid');
                 return;
             }
             this.$ktxData = value;
-            let bitmapData = new egret.BitmapData(value);
+            let bitmapData = new BitmapData(value);
             bitmapData.format = 'ktx';
             ktx.uploadLevels(bitmapData, false);
             this._setBitmapData(bitmapData);
@@ -356,7 +361,7 @@ namespace egret {
          * @version Egret 2.4
          * @language zh_CN
          */
-        public toDataURL(type: string, rect?: egret.Rectangle, encoderOptions?): string {
+        public toDataURL(type: string, rect?: Rectangle, encoderOptions?): string {
             throw new Error();
         }
 
@@ -380,7 +385,7 @@ namespace egret {
          * @platform Native
          * @language zh_CN
          */
-        public saveToFile(type: string, filePath: string, rect?: egret.Rectangle): void {
+        public saveToFile(type: string, filePath: string, rect?: Rectangle): void {
             throw new Error();
         }
 
@@ -406,5 +411,4 @@ namespace egret {
         }
     }
 
-}
 

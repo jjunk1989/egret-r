@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret {
+import { nativeRender } from "../player/Player";
+import { HashObject } from "../utils/HashObject";
+
     /**
      * @private
      * @version Egret 2.4
@@ -51,7 +53,7 @@ namespace egret {
         constructor() {
             super();
             this.$uniforms = {};
-            if (egret.nativeRender) {
+            if (nativeRender) {
                egret_native.NativeDisplayObject.createFilter(this);
             }
         }
@@ -70,10 +72,9 @@ namespace egret {
         public onPropertyChange(): void {
             let self = this;
             self.updatePadding();
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 egret_native.NativeDisplayObject.setFilterPadding(self.$id, self.paddingTop, self.paddingBottom, self.paddingLeft, self.paddingRight);
                 egret_native.NativeDisplayObject.setDataToFilter(self);
             }
         }
     }
-}

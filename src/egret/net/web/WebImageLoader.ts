@@ -1,4 +1,16 @@
 
+import { Event } from "../../events/Event";
+import { IOErrorEvent } from "../../events/IOErrorEvent";
+import { BitmapData } from "../../display/Bitmap";
+import { ImageLoader } from "../ImageLoader";
+import { EventDispatcher } from "../../events/EventDispatcher";
+import { WebHttpRequest } from "./WebHttpRequest";
+import { Image } from "../../../extension/eui/components/Image";
+import { $error } from "../../../Defines.debug";
+import { DEBUG } from "../../../Defines.debug";
+import { $warn } from "";
+
+
 //////////////////////////////////////////////////////////////////////////////////////
 //
 //  Copyright (c) 2014-present, Egret Technology.
@@ -28,8 +40,6 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-
-namespace egret.web {
 
     let winURL = window["URL"] || window["webkitURL"];
 
@@ -101,8 +111,8 @@ namespace egret.web {
                 let request = this.request;
                 if (!request) {
                     request = this.request = new egret.web.WebHttpRequest();
-                    request.addEventListener(egret.Event.COMPLETE, this.onBlobLoaded, this);
-                    request.addEventListener(egret.IOErrorEvent.IO_ERROR, this.onBlobError, this);
+                    request.addEventListener(Event.COMPLETE, this.onBlobLoaded, this);
+                    request.addEventListener(IOErrorEvent.IO_ERROR, this.onBlobError, this);
                     request.responseType = "blob";
                 }
                 if (DEBUG) {
@@ -119,7 +129,7 @@ namespace egret.web {
         /**
          * @private
          */
-        private onBlobLoaded(event:egret.Event):void {
+        private onBlobLoaded(event:Event):void {
             let blob:Blob = this.request.response;
             this.request = undefined;
             this.loadImage(winURL.createObjectURL(blob));
@@ -128,7 +138,7 @@ namespace egret.web {
         /**
          * @private
          */
-        private onBlobError(event:egret.Event):void {
+        private onBlobError(event:Event):void {
             this.dispatchIOError(this.currentURL);
             this.request = undefined;
         }
@@ -168,7 +178,7 @@ namespace egret.web {
             if (!image) {
                 return;
             }
-            this.data = new egret.BitmapData(image);
+            this.data = new BitmapData(image);
             let self = this;
             window.setTimeout(function ():void {
                 self.dispatchEventWith(Event.COMPLETE);
@@ -207,7 +217,7 @@ namespace egret.web {
                     winURL.revokeObjectURL(image.src);
                 }
                 catch(e) {
-                    egret.$warn(1037);
+                    $warn(1037);
                 }
             }
             image.onerror = null;
@@ -221,5 +231,4 @@ namespace egret.web {
 
     }
 
-    egret.ImageLoader = WebImageLoader;
-}
+    ImageLoader = WebImageLoader;

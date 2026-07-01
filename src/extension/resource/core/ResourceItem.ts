@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace RES {
 
 	/**
 	 * Resource term. One of the resources arrays in resource.json.
@@ -252,4 +251,3 @@ namespace RES {
 			return "[ResourceItem name=\""+this.name+"\" url=\""+this.url+"\" type=\""+this.type+"\"]";
 		}
 	}
-}

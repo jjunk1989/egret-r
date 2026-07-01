@@ -1,7 +1,29 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret {
+import { Event } from "../events/Event";
+import { TouchEvent } from "../events/TouchEvent";
+import { nativeRender } from "../player/Player";
+import { Matrix } from "../geom/Matrix";
+import { Rectangle } from "../geom/Rectangle";
+import { DisplayObjectContainer } from "./DisplayObjectContainer";
+import { BlendMode, numberToBlendMode, blendModeToNumber } from "./BlendMode";
+import { NumberUtils } from "../utils/NumberUtils";
+import { DisplayList } from "../player/DisplayList";
+import { RenderNode } from "../player/nodes/RenderNode";
+import { customHitTestBuffer } from "../player/RenderBuffer";
+import { tr } from "../i18n/tr";
+import { systemRenderer } from "../player/SystemRenderer";
+import { EventDispatcher } from "../events/EventDispatcher";
+import { Stage } from "./Stage";
+import { Bitmap } from "./Bitmap";
+import { Filter } from "../filters/Filter";
+import { Point } from "../geom/Point";
+import { BlurFilter } from "../filters/BlurFilter";
+import { GlowFilter } from "../filters/GlowFilter";
+import { DropShadowFilter } from "../filters/DropShadowFilter";
+import { CustomFilter } from "../filters/CustomFilter";
+
 
     /**
      * @private
@@ -41,17 +63,17 @@ namespace egret {
      * instance, but rather all DisplayObject instances, including those that are not on the display list. This means that you
      * can add a listener to any DisplayObject instance to listen for broadcast events.
      *
-     * @event egret.Event.ADDED Dispatched when a display object is added to the display list.
-     * @event egret.Event.ADDED_TO_STAGE Dispatched when a display object is added to the on stage display list, either directly or through the addition of a sub tree in which the display object is contained.
-     * @event egret.Event.REMOVED Dispatched when a display object is about to be removed from the display list.
-     * @event egret.Event.REMOVED_FROM_STAGE Dispatched when a display object is about to be removed from the display list, either directly or through the removal of a sub tree in which the display object is contained.
-     * @event egret.Event.ENTER_FRAME [broadcast event] Dispatched when the playhead is entering a new frame.
-     * @event egret.Event.RENDER [broadcast event] Dispatched when the display list is about to be updated and rendered.
-     * @event egret.TouchEvent.TOUCH_MOVE Dispatched when the user touches the device, and is continuously dispatched until the point of contact is removed.
-     * @event egret.TouchEvent.TOUCH_BEGIN Dispatched when the user first contacts a touch-enabled device (such as touches a finger to a mobile phone or tablet with a touch screen).
-     * @event egret.TouchEvent.TOUCH_END Dispatched when the user removes contact with a touch-enabled device (such as lifts a finger off a mobile phone or tablet with a touch screen).
-     * @event egret.TouchEvent.TOUCH_TAP Dispatched when the user lifts the point of contact over the same DisplayObject instance on which the contact was initiated on a touch-enabled device (such as presses and releases a finger from a single point over a display object on a mobile phone or tablet with a touch screen).
-     * @event egret.TouchEvent.TOUCH_RELEASE_OUTSIDE Dispatched when the user lifts the point of contact over the different DisplayObject instance on which the contact was initiated on a touch-enabled device (such as presses and releases a finger from a single point over a display object on a mobile phone or tablet with a touch screen).
+     * @event Event.ADDED Dispatched when a display object is added to the display list.
+     * @event Event.ADDED_TO_STAGE Dispatched when a display object is added to the on stage display list, either directly or through the addition of a sub tree in which the display object is contained.
+     * @event Event.REMOVED Dispatched when a display object is about to be removed from the display list.
+     * @event Event.REMOVED_FROM_STAGE Dispatched when a display object is about to be removed from the display list, either directly or through the removal of a sub tree in which the display object is contained.
+     * @event Event.ENTER_FRAME [broadcast event] Dispatched when the playhead is entering a new frame.
+     * @event Event.RENDER [broadcast event] Dispatched when the display list is about to be updated and rendered.
+     * @event TouchEvent.TOUCH_MOVE Dispatched when the user touches the device, and is continuously dispatched until the point of contact is removed.
+     * @event TouchEvent.TOUCH_BEGIN Dispatched when the user first contacts a touch-enabled device (such as touches a finger to a mobile phone or tablet with a touch screen).
+     * @event TouchEvent.TOUCH_END Dispatched when the user removes contact with a touch-enabled device (such as lifts a finger off a mobile phone or tablet with a touch screen).
+     * @event TouchEvent.TOUCH_TAP Dispatched when the user lifts the point of contact over the same DisplayObject instance on which the contact was initiated on a touch-enabled device (such as presses and releases a finger from a single point over a display object on a mobile phone or tablet with a touch screen).
+     * @event TouchEvent.TOUCH_RELEASE_OUTSIDE Dispatched when the user lifts the point of contact over the different DisplayObject instance on which the contact was initiated on a touch-enabled device (such as presses and releases a finger from a single point over a display object on a mobile phone or tablet with a touch screen).
      * @version Egret 2.4
      * @platform Web
      * @includeExample egret/display/DisplayObject.ts
@@ -66,17 +88,17 @@ namespace egret {
      * 但是对于广播事件，目标不是特定的 DisplayObject 实例，而是所有 DisplayObject 实例（包括那些不在显示列表中的实例）。这意味着您可以向任何
      * DisplayObject 实例添加侦听器来侦听广播事件。
      *
-     * @event egret.Event.ADDED 将显示对象添加到显示列表中时调度。
-     * @event egret.Event.ADDED_TO_STAGE 在将显示对象直接添加到舞台显示列表或将包含显示对象的子树添加至舞台显示列表中时调度。
-     * @event egret.Event.REMOVED 将要从显示列表中删除显示对象时调度。
-     * @event egret.Event.REMOVED_FROM_STAGE 在从显示列表中直接删除显示对象或删除包含显示对象的子树时调度。
-     * @event egret.Event.ENTER_FRAME [广播事件] 播放头进入新帧时调度。
-     * @event egret.Event.RENDER [广播事件] 将要更新和呈现显示列表时调度。
-     * @event egret.TouchEvent.TOUCH_MOVE 当用户触碰设备时进行调度，而且会连续调度，直到接触点被删除。
-     * @event egret.TouchEvent.TOUCH_BEGIN 当用户第一次触摸启用触摸的设备时（例如，用手指触摸手机屏幕）调度。
-     * @event egret.TouchEvent.TOUCH_END 当用户移除与启用触摸的设备的接触时（例如，将手指从屏幕上抬起）调度。
-     * @event egret.TouchEvent.TOUCH_TAP 当用户在启用触摸设备上的已启动接触的同一 DisplayObject 实例上抬起接触点时（例如，手机点击屏幕后抬起）调度。
-     * @event egret.TouchEvent.TOUCH_RELEASE_OUTSIDE 当用户在启用触摸设备上的已启动接触的不同 DisplayObject 实例上抬起接触点时（例如，按住屏幕上的某个对象,然后从它上面挪开后再松开手指）调度。
+     * @event Event.ADDED 将显示对象添加到显示列表中时调度。
+     * @event Event.ADDED_TO_STAGE 在将显示对象直接添加到舞台显示列表或将包含显示对象的子树添加至舞台显示列表中时调度。
+     * @event Event.REMOVED 将要从显示列表中删除显示对象时调度。
+     * @event Event.REMOVED_FROM_STAGE 在从显示列表中直接删除显示对象或删除包含显示对象的子树时调度。
+     * @event Event.ENTER_FRAME [广播事件] 播放头进入新帧时调度。
+     * @event Event.RENDER [广播事件] 将要更新和呈现显示列表时调度。
+     * @event TouchEvent.TOUCH_MOVE 当用户触碰设备时进行调度，而且会连续调度，直到接触点被删除。
+     * @event TouchEvent.TOUCH_BEGIN 当用户第一次触摸启用触摸的设备时（例如，用手指触摸手机屏幕）调度。
+     * @event TouchEvent.TOUCH_END 当用户移除与启用触摸的设备的接触时（例如，将手指从屏幕上抬起）调度。
+     * @event TouchEvent.TOUCH_TAP 当用户在启用触摸设备上的已启动接触的同一 DisplayObject 实例上抬起接触点时（例如，手机点击屏幕后抬起）调度。
+     * @event TouchEvent.TOUCH_RELEASE_OUTSIDE 当用户在启用触摸设备上的已启动接触的不同 DisplayObject 实例上抬起接触点时（例如，按住屏幕上的某个对象,然后从它上面挪开后再松开手指）调度。
      * @version Egret 2.4
      * @platform Web
      * @includeExample egret/display/DisplayObject.ts
@@ -98,7 +120,7 @@ namespace egret {
          */
         public constructor() {
             super();
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 this.createNativeDisplayObject();
             }
             //默认都是纯白
@@ -274,7 +296,7 @@ namespace egret {
             return this.$getMatrix().clone();
         }
 
-        private $matrix: egret.Matrix = new egret.Matrix();
+        private $matrix: Matrix = new Matrix();
 
         private $matrixDirty: boolean = false;
 
@@ -326,12 +348,12 @@ namespace egret {
                 self.$skewYdeg = clampRotation(self.$skewY * 180 / Math.PI);
                 self.$rotation = clampRotation(self.$skewY * 180 / Math.PI);
             }
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 self.$nativeDisplayObject.setMatrix(matrix.a, matrix.b, matrix.c, matrix.d, matrix.tx, matrix.ty);
             }
         }
 
-        private $concatenatedMatrix: egret.Matrix;
+        private $concatenatedMatrix: Matrix;
 
         /**
          * @private
@@ -341,7 +363,7 @@ namespace egret {
             let self = this;
             let matrix = self.$concatenatedMatrix;
             if (!matrix) {
-                matrix = self.$concatenatedMatrix = new egret.Matrix();
+                matrix = self.$concatenatedMatrix = new Matrix();
             }
             if (self.$parent) {
                 self.$parent.$getConcatenatedMatrix().$preMultiplyInto(self.$getMatrix(),
@@ -362,7 +384,7 @@ namespace egret {
             return self.$concatenatedMatrix;
         }
 
-        private $invertedConcatenatedMatrix: egret.Matrix;
+        private $invertedConcatenatedMatrix: Matrix;
 
         /**
          * @private
@@ -371,7 +393,7 @@ namespace egret {
         $getInvertedConcatenatedMatrix(): Matrix {
             let self = this;
             if (!self.$invertedConcatenatedMatrix) {
-                self.$invertedConcatenatedMatrix = new egret.Matrix();
+                self.$invertedConcatenatedMatrix = new Matrix();
             }
             self.$getConcatenatedMatrix().$invertInto(self.$invertedConcatenatedMatrix);
             return self.$invertedConcatenatedMatrix;
@@ -426,7 +448,7 @@ namespace egret {
                 return false;
             }
             self.$x = value;
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 self.$nativeDisplayObject.setX(value);
             }
             else {
@@ -493,7 +515,7 @@ namespace egret {
                 return false;
             }
             self.$y = value;
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 self.$nativeDisplayObject.setY(value);
             }
             else {
@@ -559,7 +581,7 @@ namespace egret {
             self.$matrixDirty = true;
 
             self.$updateUseTransform();
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 self.$nativeDisplayObject.setScaleX(value);
             }
             else {
@@ -623,7 +645,7 @@ namespace egret {
             self.$matrixDirty = true;
 
             self.$updateUseTransform();
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 self.$nativeDisplayObject.setScaleY(value);
             }
             else {
@@ -690,7 +712,7 @@ namespace egret {
             self.$matrixDirty = true;
 
             self.$updateUseTransform();
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 self.$nativeDisplayObject.setRotation(value);
             }
             else {
@@ -744,7 +766,7 @@ namespace egret {
             self.$matrixDirty = true;
 
             self.$updateUseTransform();
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 self.$nativeDisplayObject.setSkewX(self.$skewXdeg);
             }
             else {
@@ -798,7 +820,7 @@ namespace egret {
             self.$matrixDirty = true;
 
             self.$updateUseTransform();
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 self.$nativeDisplayObject.setSkewY(self.$skewYdeg);
             }
             else {
@@ -907,7 +929,7 @@ namespace egret {
         /**
          * 测量宽度
          * @returns {number}
-         * @member {egret.Rectangle} egret.DisplayObject#measuredWidth
+         * @member {Rectangle} egret.DisplayObject#measuredWidth
          * @version Egret 2.4
          * @platform Web
          */
@@ -918,7 +940,7 @@ namespace egret {
         /**
          * 测量高度
          * @returns {number}
-         * @member {egret.Rectangle} egret.DisplayObject#measuredWidth
+         * @member {Rectangle} egret.DisplayObject#measuredWidth
          * @version Egret 2.4
          * @platform Web
          */
@@ -962,7 +984,7 @@ namespace egret {
                 return;
             }
             self.$anchorOffsetX = value;
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 self.$nativeDisplayObject.setAnchorOffsetX(value);
             }
             else {
@@ -1015,7 +1037,7 @@ namespace egret {
                 return;
             }
             self.$anchorOffsetY = value;
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 self.$nativeDisplayObject.setAnchorOffsetY(value);
             }
             else {
@@ -1066,7 +1088,7 @@ namespace egret {
                 return;
             }
             self.$visible = value;
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 self.$nativeDisplayObject.setVisible(value);
             }
             else {
@@ -1088,7 +1110,7 @@ namespace egret {
          * @private
          * cacheAsBitmap创建的缓存位图节点。
          */
-        $displayList: egret.sys.DisplayList = null;
+        $displayList: DisplayList = null;
 
         private $cacheAsBitmap: boolean = false;
 
@@ -1121,7 +1143,7 @@ namespace egret {
         public set cacheAsBitmap(value: boolean) {
             let self = this;
             self.$cacheAsBitmap = value;
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 self.$nativeDisplayObject.setCacheAsBitmap(value);
             }
             else {
@@ -1136,7 +1158,7 @@ namespace egret {
                 return;
             }
             if (value) {
-                let displayList = sys.DisplayList.create(self);
+                let displayList = DisplayList.create(self);
                 if (displayList) {
                     self.$displayList = displayList;
                     self.$cacheDirty = true;
@@ -1198,7 +1220,7 @@ namespace egret {
             }
             self.$alpha = value;
 
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 self.$nativeDisplayObject.setAlpha(value);
             }
             else {
@@ -1241,7 +1263,7 @@ namespace egret {
          * set to false, the instance does not receive any touch events (or other user input events). Any children of
          * this instance on the display list are not affected. To change the touchEnabled behavior for all children of
          * an object on the display list, use DisplayObjectContainer.touchChildren.
-         * @see egret.DisplayObjectContainer#touchChildren
+         * @see DisplayObjectContainer#touchChildren
          * @default false
          * @version Egret 2.4
          * @platform Web
@@ -1251,7 +1273,7 @@ namespace egret {
          * 指定此对象是否接收触摸或其他用户输入。默认值为 false，这表示默认情况下，显示列表上的任何 DisplayObject 实例都不会接收触摸事件或
          * 其他用户输入事件。如果将 touchEnabled 设置为 false，则实例将不接收任何触摸事件（或其他用户输入事件）。显示列表上的该实例的任
          * 何子级都不会受到影响。要更改显示列表上对象的所有子级的 touchEnabled 行为，请使用 DisplayObjectContainer.touchChildren。
-         * @see egret.DisplayObjectContainer#touchChildren
+         * @see DisplayObjectContainer#touchChildren
          * @default false
          * @version Egret 2.4
          * @platform Web
@@ -1341,20 +1363,20 @@ namespace egret {
             }
             if (value) {
                 if (!self.$scrollRect) {
-                    self.$scrollRect = new egret.Rectangle();
+                    self.$scrollRect = new Rectangle();
                 }
                 self.$scrollRect.copyFrom(value);
-                if (egret.nativeRender) {
+                if (nativeRender) {
                     self.$nativeDisplayObject.setScrollRect(value.x, value.y, value.width, value.height);
                 }
             }
             else {
                 self.$scrollRect = null;
-                if (egret.nativeRender) {
+                if (nativeRender) {
                     self.$nativeDisplayObject.setScrollRect(0, 0, 0, 0);
                 }
             }
-            if (!egret.nativeRender) {
+            if (!nativeRender) {
                 self.$updateRenderMode();
                 let p = self.$parent;
                 if (p && !p.$cacheDirty) {
@@ -1378,8 +1400,8 @@ namespace egret {
          * A value from the BlendMode class that specifies which blend mode to use. Determine how a source image (new one)
          * is drawn on the target image (old one).<br/>
          * If you attempt to set this property to an invalid value, Egret runtime set the value to BlendMode.NORMAL.
-         * @default egret.BlendMode.NORMAL
-         * @see egret.BlendMode
+         * @default BlendMode.NORMAL
+         * @see BlendMode
          * @version Egret 2.4
          * @platform Web
          * @language en_US
@@ -1387,25 +1409,25 @@ namespace egret {
         /**
          * BlendMode 枚举中的一个值，用于指定要使用的混合模式，确定如何将一个源（新的）图像绘制到目标（已有）的图像上<br/>
          * 如果尝试将此属性设置为无效值，则运行时会将此值设置为 BlendMode.NORMAL。
-         * @default egret.BlendMode.NORMAL
-         * @see egret.BlendMode
+         * @default BlendMode.NORMAL
+         * @see BlendMode
          * @version Egret 2.4
          * @platform Web
          * @language zh_CN
          */
         public get blendMode(): string {
-            return sys.numberToBlendMode(this.$blendMode);
+            return numberToBlendMode(this.$blendMode);
         }
 
         public set blendMode(value: string) {
             let self = this;
-            let mode = sys.blendModeToNumber(value);
+            let mode = blendModeToNumber(value);
             if (self.$blendMode == mode) {
                 return;
             }
             self.$blendMode = mode;
 
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 self.$nativeDisplayObject.setBlendMode(mode);
             }
             else {
@@ -1489,35 +1511,35 @@ namespace egret {
                     value.$maskedObject = self;
 
                     self.$mask = value;
-                    if (!egret.nativeRender) {
+                    if (!nativeRender) {
                         value.$updateRenderMode();
                     }
                     if (self.$maskRect) {
-                        if (egret.nativeRender) {
+                        if (nativeRender) {
                             self.$nativeDisplayObject.setMaskRect(0, 0, 0, 0);
                         }
                         self.$maskRect = null;
                     }
-                    if (egret.nativeRender) {
+                    if (nativeRender) {
                         self.$nativeDisplayObject.setMask(value.$nativeDisplayObject.id);
                     }
                 }
                 else {
                     if (!self.$maskRect) {
-                        self.$maskRect = new egret.Rectangle();
+                        self.$maskRect = new Rectangle();
                     }
                     self.$maskRect.copyFrom(value);
-                    if (egret.nativeRender) {
+                    if (nativeRender) {
                         self.$nativeDisplayObject.setMaskRect(value.x, value.y, value.width, value.height);
                     }
                     if (self.$mask) {
                         self.$mask.$maskedObject = null;
-                        if (!egret.nativeRender) {
+                        if (!nativeRender) {
                             self.$mask.$updateRenderMode();
                         }
                     }
                     if (self.mask) {
-                        if (egret.nativeRender) {
+                        if (nativeRender) {
                             self.$nativeDisplayObject.setMask(-1);
                         }
                         self.$mask = null;
@@ -1527,24 +1549,24 @@ namespace egret {
             else {
                 if (self.$mask) {
                     self.$mask.$maskedObject = null;
-                    if (!egret.nativeRender) {
+                    if (!nativeRender) {
                         self.$mask.$updateRenderMode();
                     }
                 }
                 if (self.mask) {
-                    if (egret.nativeRender) {
+                    if (nativeRender) {
                         self.$nativeDisplayObject.setMask(-1);
                     }
                     self.$mask = null;
                 }
                 if (self.$maskRect) {
-                    if (egret.nativeRender) {
+                    if (nativeRender) {
                         self.$nativeDisplayObject.setMaskRect(0, 0, 0, 0);
                     }
                     self.$maskRect = null;
                 }
             }
-            if (!egret.nativeRender) {
+            if (!nativeRender) {
                 self.$updateRenderMode();
             }
         }
@@ -1556,7 +1578,7 @@ namespace egret {
             }
             if (value) {
                 if (!self.$maskRect) {
-                    self.$maskRect = new egret.Rectangle();
+                    self.$maskRect = new Rectangle();
                 }
                 self.$maskRect.copyFrom(value);
             }
@@ -1588,7 +1610,7 @@ namespace egret {
             let filters: Filter[] = self.$filters;
             if (!filters && !value) {
                 self.$filters = value;
-                if (egret.nativeRender) {
+                if (nativeRender) {
                     self.$nativeDisplayObject.setFilters(null);
                 }
                 else {
@@ -1609,17 +1631,17 @@ namespace egret {
             if (value && value.length) {
                 value = value.concat();
                 self.$filters = value;
-                if (egret.nativeRender) {
+                if (nativeRender) {
                     self.$nativeDisplayObject.setFilters(value);
                 }
             }
             else {
                 self.$filters = value;
-                if (egret.nativeRender) {
+                if (nativeRender) {
                     self.$nativeDisplayObject.setFilters(null);
                 }
             }
-            if (!egret.nativeRender) {
+            if (!nativeRender) {
                 self.$updateRenderMode();
                 let p = self.$parent;
                 if (p && !p.$cacheDirty) {
@@ -1676,7 +1698,7 @@ namespace egret {
          * @platform Web
          * @language zh_CN
          */
-        public getBounds(resultRect?: Rectangle, calculateAnchor: boolean = true): egret.Rectangle {
+        public getBounds(resultRect?: Rectangle, calculateAnchor: boolean = true): Rectangle {
             let self = this;
             resultRect = self.$getTransformedBounds(self, resultRect);
             if (calculateAnchor) {
@@ -1737,7 +1759,7 @@ namespace egret {
          * @language zh_CN
          */
         public globalToLocal(stageX: number = 0, stageY: number = 0, resultPoint?: Point): Point {
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 egret_native.updateNativeRender();
                 let result = egret_native.nrGlobalToLocal(this.$nativeDisplayObject.id, stageX, stageY);
                 let arr = result.split(",");
@@ -1779,7 +1801,7 @@ namespace egret {
          * @language zh_CN
          */
         public localToGlobal(localX: number = 0, localY: number = 0, resultPoint?: Point): Point {
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 egret_native.updateNativeRender();
                 let result = egret_native.nrLocalToGlobal(this.$nativeDisplayObject.id, localX, localY);
                 let arr = result.split(",");
@@ -1830,7 +1852,7 @@ namespace egret {
          * @private
          */
         $getContentBounds(): Rectangle {
-            let bounds: egret.Rectangle = $TempRectangle;
+            let bounds: Rectangle = $TempRectangle;
             bounds.setEmpty();
             this.$measureContentBounds(bounds);
             return bounds;
@@ -1847,13 +1869,13 @@ namespace egret {
         /**
          * @private
          */
-        $parentDisplayList: egret.sys.DisplayList = null;
+        $parentDisplayList: DisplayList = null;
 
         /**
          * @private
          * 渲染节点,不为空表示自身有绘制到屏幕的内容
          */
-        $renderNode: sys.RenderNode = null;
+        $renderNode: RenderNode = null;
 
         $renderDirty: boolean = false;
 
@@ -1861,7 +1883,7 @@ namespace egret {
          * @private
          * 获取渲染节点
          */
-        $getRenderNode(): sys.RenderNode {
+        $getRenderNode(): RenderNode {
             let self = this;
             let node = self.$renderNode;
             if (!node) {
@@ -1934,14 +1956,14 @@ namespace egret {
                             let distanceX = 0;
                             let distanceY = 0;
                             if (distance != 0) {
-                                distanceX = distance * egret.NumberUtils.cos(angle);
+                                distanceX = distance * NumberUtils.cos(angle);
                                 if (distanceX > 0) {
                                     distanceX = Math.ceil(distanceX);
                                 }
                                 else {
                                     distanceX = Math.floor(distanceX);
                                 }
-                                distanceY = distance * egret.NumberUtils.sin(angle);
+                                distanceY = distance * NumberUtils.sin(angle);
                                 if (distanceY > 0) {
                                     distanceY = Math.ceil(distanceY);
                                 }
@@ -2015,7 +2037,7 @@ namespace egret {
          */
         $hitTest(stageX: number, stageY: number): DisplayObject {
             let self = this;
-            if ((!egret.nativeRender && !self.$renderNode) || !self.$visible || self.$scaleX == 0 || self.$scaleY == 0) {
+            if ((!nativeRender && !self.$renderNode) || !self.$visible || self.$scaleX == 0 || self.$scaleY == 0) {
                 return null;
             }
             let m = self.$getInvertedConcatenatedMatrix();
@@ -2088,8 +2110,8 @@ namespace egret {
                 let localX = m.a * x + m.c * y + m.tx;
                 let localY = m.b * x + m.d * y + m.ty;
                 let data: number[] | Uint8Array;
-                if (egret.nativeRender) {
-                    let buffer = sys.customHitTestBuffer;
+                if (nativeRender) {
+                    let buffer = customHitTestBuffer;
                     buffer.resize(3, 3);
                     egret_native.forHitTest = true;
                     egret_native.activateBuffer(buffer);
@@ -2100,7 +2122,7 @@ namespace egret {
                         egret_native.nrGetPixels(1, 1, 1, 1, data);
                     }
                     catch (e) {
-                        throw new Error(sys.tr(1039));
+                        throw new Error(tr(1039));
                     }
                     egret_native.activateBuffer(null);
                     egret_native.forHitTest = false;
@@ -2117,23 +2139,23 @@ namespace egret {
                             data = buffer.getPixels(localX - displayList.offsetX, localY - displayList.offsetY);
                         }
                         catch (e) {
-                            throw new Error(sys.tr(1039));
+                            throw new Error(tr(1039));
                         }
                     }
                     else {
-                        let buffer = sys.customHitTestBuffer;
+                        let buffer = customHitTestBuffer;
                         buffer.resize(3, 3);
                         let matrix = Matrix.create();
                         matrix.identity();
                         matrix.translate(1 - localX, 1 - localY);
-                        sys.systemRenderer.render(this, buffer, matrix, true);
+                        systemRenderer.render(this, buffer, matrix, true);
                         Matrix.release(matrix);
 
                         try {
                             data = buffer.getPixels(1, 1);
                         }
                         catch (e) {
-                            throw new Error(sys.tr(1039));
+                            throw new Error(tr(1039));
                         }
                     }
                     if (data[3] === 0) {
@@ -2289,7 +2311,7 @@ namespace egret {
         }
         public set tint(value) {
             this._tint = (typeof value == "number" && value >= 0 && value <= 0xffffff) ? value : 0xffffff;
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 if (this.$nativeDisplayObject.setTint) {
                     this.$nativeDisplayObject.setTint(this._tint);
                 }
@@ -2326,7 +2348,7 @@ namespace egret {
         }
         public set zIndex(value: number) {
             this._zIndex = value;
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 if (this.$nativeDisplayObject.setZIndex) {
                     this.$nativeDisplayObject.setZIndex(value);
                 }
@@ -2367,4 +2389,3 @@ namespace egret {
         private _sortableChildren: boolean = false;
     }
 
-}

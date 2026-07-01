@@ -1,14 +1,11 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret.sys {
     export let fontResourceCache: { [url: string]: any } = {}
 
     export function registerFontMapping(name: string, path: string): void {
         console.error(`empty sys.registerFontMapping = ${name}, ${path}`);
     }
-}
-namespace egret {
     /**
      * Register font mapping.
      * @param name The font family name to register.
@@ -29,10 +26,9 @@ namespace egret {
 
 
     function _registerFontMapping(name: string, path: string): void {
-        egret.sys.registerFontMapping(name, path);
+        registerFontMapping(name, path);
     }
 
-    if (!egret.registerFontMapping) {
-        egret.registerFontMapping = _registerFontMapping;
+    if (!registerFontMapping) {
+        registerFontMapping = _registerFontMapping;
     }
-}

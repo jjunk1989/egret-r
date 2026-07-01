@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { HashObject } from "../utils/HashObject";
 
-namespace egret {
 
     let pointPool:Point[] = [];
     let DEG_TO_RAD:number = Math.PI / 180;
@@ -388,5 +388,3 @@ namespace egret {
      * 仅供框架内复用，要防止暴露引用到外部。
      */
     export let $TempPoint = new Point();
-
-}

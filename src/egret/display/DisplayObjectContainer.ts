@@ -1,7 +1,14 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret {
+import { ChildrenSortMode } from "./native/ChildrenSortMode";
+import { nativeRender } from "../player/Player";
+import { DisplayObject } from "./DisplayObject";
+import { Stage } from "./Stage";
+import { Rectangle } from "../geom/Rectangle";
+import { $error } from "../../Defines.debug";
+import { DEBUG } from "../../Defines.debug";
+
     /**
      * The DisplayObjectContainer class is a basic display list building block: a display list node that can contain children.
      * @version Egret 2.4
@@ -63,7 +70,7 @@ namespace egret {
         /**
          * Set children sort mode.
          * @param value {string} The sort mode
-         * @see egret.ChildrenSortMode
+         * @see ChildrenSortMode
          * @version Egret 5.2.19
          * @platform Native
          * @language en_US
@@ -71,13 +78,13 @@ namespace egret {
         /**
          * 设置子项目的排序方式
          * @param value {string} 排序方式
-         * @see egret.ChildrenSortMode
+         * @see ChildrenSortMode
          * @version Egret 5.2.19
          * @platform Native
          * @language en_US
          */
         public setChildrenSortMode(value: string): void {
-            if (egret.nativeRender && this.$nativeDisplayObject.setChildrenSortMode) {
+            if (nativeRender && this.$nativeDisplayObject.setChildrenSortMode) {
                 this.$nativeDisplayObject.setChildrenSortMode(value);
             }
         }
@@ -175,7 +182,7 @@ namespace egret {
 
             self.$children.splice(index, 0, child);
             child.$setParent(self);
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 self.$nativeDisplayObject.addChildAt(child.$nativeDisplayObject.id, index);
             }
 
@@ -195,7 +202,7 @@ namespace egret {
                     }
                 }
             }
-            if (!egret.nativeRender) {
+            if (!nativeRender) {
                 if (child.$maskedObject) {
                     child.$maskedObject.$updateRenderMode();
                 }
@@ -292,7 +299,7 @@ namespace egret {
          * @platform Web
          * @language zh_CN
          */
-        public getChildIndex(child: egret.DisplayObject): number {
+        public getChildIndex(child: DisplayObject): number {
             return this.$children.indexOf(child);
         }
 
@@ -304,7 +311,7 @@ namespace egret {
          * @param name The name of the child to return.
          * @returns The child display object with the specified name.
          * @see #getChildAt()
-         * @see egret.DisplayObject#name
+         * @see DisplayObject#name
          * @version Egret 2.4
          * @platform Web
          * @language en_US
@@ -315,7 +322,7 @@ namespace egret {
          * @param name 要返回的子项的名称。
          * @returns 具有指定名称的子显示对象。
          * @see #getChildAt()
-         * @see egret.DisplayObject#name
+         * @see DisplayObject#name
          * @version Egret 2.4
          * @platform Web
          * @language zh_CN
@@ -429,7 +436,7 @@ namespace egret {
             if (indexNow != -1) {
                 children.splice(indexNow, 1);
             }
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 self.$nativeDisplayObject.removeChild(child.$nativeDisplayObject.id);
             }
             else {
@@ -499,7 +506,7 @@ namespace egret {
             //放到新的位置
             this.$children.splice(index, 0, child);
             this.$childAdded(child, index);
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 this.$nativeDisplayObject.removeChild(child.$nativeDisplayObject.id);
                 this.$nativeDisplayObject.addChildAt(child.$nativeDisplayObject.id, index);
             }
@@ -603,7 +610,7 @@ namespace egret {
             list[index2] = child1;
             this.$childAdded(child2, index1);
             this.$childAdded(child1, index2);
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 this.$nativeDisplayObject.swapChild(index1, index2);
             }
             else {
@@ -863,4 +870,3 @@ namespace egret {
             }
         }
     }
-}

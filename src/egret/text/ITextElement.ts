@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret {
 
     /**
      * @private
@@ -263,4 +262,3 @@ namespace egret {
          */
         elements:Array<IWTextElement>;
     }
-}

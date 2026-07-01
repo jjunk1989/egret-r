@@ -2,7 +2,6 @@
 // Copyright (c) 2014-present, Egret Technology.
 
 
-namespace egret {
     /**
      * @private
      * @version Egret 2.4
@@ -31,4 +30,3 @@ namespace egret {
          */
         HIGH = 3
     }
-}

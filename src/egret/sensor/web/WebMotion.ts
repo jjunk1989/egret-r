@@ -1,6 +1,8 @@
 
+import { DeviceAcceleration, DeviceRotationRate, Motion } from "../Motion";
+import { EventDispatcher } from "../../events/EventDispatcher";
+import { MotionEvent } from "../../events/MotionEvent";
 
-namespace egret.web {
 
     /**
      * @private
@@ -28,17 +30,17 @@ namespace egret.web {
          */
         protected onChange = (e: DeviceMotionEvent) => {
             let event = new MotionEvent(Event.CHANGE);
-            let acceleration: egret.DeviceAcceleration = {
+            let acceleration: DeviceAcceleration = {
                 x: e.acceleration.x,
                 y: e.acceleration.y,
                 z: e.acceleration.z
             };
-            let accelerationIncludingGravity: egret.DeviceAcceleration = {
+            let accelerationIncludingGravity: DeviceAcceleration = {
                 x: e.accelerationIncludingGravity.x,
                 y: e.accelerationIncludingGravity.y,
                 z: e.accelerationIncludingGravity.z
             };
-            let rotation: egret.DeviceRotationRate = {
+            let rotation: DeviceRotationRate = {
                 alpha: e.rotationRate.alpha,
                 beta: e.rotationRate.beta,
                 gamma: e.rotationRate.gamma
@@ -49,4 +51,3 @@ namespace egret.web {
             this.dispatchEvent(event);
         }
     }
-}

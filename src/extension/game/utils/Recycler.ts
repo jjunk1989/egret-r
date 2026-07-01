@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { HashObject } from "../../../egret/utils/HashObject";
+import { ticker } from "../../../egret/player/SystemTicker";
 
-namespace egret {
+
     /**
      * Tool class for object cache repeat use, which can be used to construct an object pool. Objects are automatically recycled after a certain duration.
      * @version Egret 2.4
@@ -19,7 +21,7 @@ namespace egret {
      * @private
      * @language zh_CN
      */
-    export class Recycler extends egret.HashObject{
+    export class Recycler extends HashObject{
 
 		/**
          * Create an egret.Recycler object
@@ -49,7 +51,7 @@ namespace egret {
         public static _callBackList:any[] = [];
 
         public static $init():void {
-            egret.ticker.$startTick(Recycler.onUpdate, Recycler);
+            ticker.$startTick(Recycler.onUpdate, Recycler);
         }
 
         public static onUpdate(timeStamp:number):boolean {
@@ -182,4 +184,3 @@ namespace egret {
     }
 
     Recycler.$init();
-}

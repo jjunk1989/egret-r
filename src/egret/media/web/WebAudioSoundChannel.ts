@@ -1,13 +1,19 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret.web {
+import { EventDispatcher } from "../../events/EventDispatcher";
+import { SoundChannel } from "../SoundChannel";
+import { Sound } from "../Sound";
+import { Event } from "../../events/Event";
+import { AudioBufferSourceNodeEgret } from "./WebAudioSound";
+import { $error } from "../../../Defines.debug";
+
 
     /**
      * @private
      * @inheritDoc
      */
-    export class WebAudioSoundChannel extends egret.EventDispatcher implements egret.SoundChannel {
+    export class WebAudioSoundChannel extends EventDispatcher implements SoundChannel {
 
 
         /**
@@ -26,7 +32,7 @@ namespace egret.web {
         /**
          * @private
          * audio音频对象
-         * @member {any} egret.Sound#audio
+         * @member {any} Sound#audio
          */
         $audioBuffer: AudioBuffer;
         /**
@@ -76,7 +82,7 @@ namespace egret.web {
 
         $play(): void {
             if (this.isStopped) {
-                egret.$error(1036);
+                $error(1036);
                 return;
             }
 
@@ -128,7 +134,7 @@ namespace egret.web {
         private onPlayEnd = () => {
             if (this.$loops == 1) {
                 this.stop();
-                this.dispatchEventWith(egret.Event.SOUND_COMPLETE);
+                this.dispatchEventWith(Event.SOUND_COMPLETE);
                 return;
             }
 
@@ -153,7 +159,7 @@ namespace egret.web {
          */
         public set volume(value: number) {
             if (this.isStopped) {
-                egret.$error(1036);
+                $error(1036);
                 return;
             }
 
@@ -176,4 +182,3 @@ namespace egret.web {
             return 0;
         }
     }
-}

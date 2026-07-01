@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret {
+import { Button } from "../../extension/eui/components/Button";
+import { Skin } from "../../extension/eui/components/Skin";
+
     /**
      * The XMLNode class is the base class for all xml node.
      * @version Egret 2.4
@@ -191,4 +193,3 @@ namespace egret {
          */
         parse(text:string):XML;
     };
-}

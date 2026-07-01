@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret {
+import { BitmapData } from "./Bitmap";
+import { CompressedTextureData } from "./BitmapData";
+
 
     /** !!!!!!!!inspired by Babylon.js!!!!!!!!!!!!!
      * for description see https://www.khronos.org/opengles/sdk/tools/KTX/
@@ -149,13 +151,13 @@ namespace egret {
          * It is assumed that the texture has already been created & is currently bound
          * @hidden
          */
-        public uploadLevels(bitmapData: egret.BitmapData, loadMipmaps: boolean): void {
+        public uploadLevels(bitmapData: BitmapData, loadMipmaps: boolean): void {
             if (this.loadType === KTXContainer.COMPRESSED_2D) {
                 this._upload2DCompressedLevels(bitmapData, loadMipmaps);
             }
         }
 
-        private _upload2DCompressedLevels(bitmapData: egret.BitmapData, loadMipmaps: boolean): void {
+        private _upload2DCompressedLevels(bitmapData: BitmapData, loadMipmaps: boolean): void {
             bitmapData.clearCompressedTextureData();
 
             // initialize width & height for level 1
@@ -169,12 +171,12 @@ namespace egret {
                 const imageSize = new Int32Array(this.arrayBuffer, dataOffset, 1)[0]; // size per face, since not supporting array cubemaps
                 dataOffset += 4; //image data starts from next multiple of 4 offset. Each face refers to same imagesize field above.
 
-                const levelData: egret.CompressedTextureData[] = [];
+                const levelData: CompressedTextureData[] = [];
                 for (let face = 0; face < this.numberOfFaces; face++) {
 
                     const byteArray = new Uint8Array(this.arrayBuffer, dataOffset, imageSize);
 
-                    const compressedData = new egret.CompressedTextureData;
+                    const compressedData = new CompressedTextureData;
                     compressedData.glInternalFormat = this.glInternalFormat;
                     compressedData.width = width;
                     compressedData.height = height;
@@ -199,5 +201,4 @@ namespace egret {
         }
     }
 
-}
 

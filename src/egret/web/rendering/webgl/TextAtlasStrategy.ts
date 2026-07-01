@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { HashObject } from "../../../utils/HashObject";
+
 /*
 *** 一个管理模型，逐级包含: back -> page -> line -> textBlock
 */
-namespace egret.web {
 
     export class TextBlock extends HashObject {
 
@@ -314,5 +315,4 @@ namespace egret.web {
             return txtBlock;
         }
     }
-}
 

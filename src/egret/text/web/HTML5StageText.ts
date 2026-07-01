@@ -1,11 +1,21 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret.web {
+import { StageText } from "../StageText";
+import { TextField } from "../../text/TextField";
+import { Event } from "../../events/Event";
+import { TextFieldUtils } from "../TextFieldUtils";
+import { Capabilities } from "../../system/Capabilities";
+import { getTimer } from "../../utils/getTimer";
+import { DisplayList } from "../../player/DisplayList";
+import { getPrefixStyleName } from "../../web/Html5Capatibility";
+import { $callAsync } from "../../utils/callLater";
+import { EventDispatcher } from "../../events/EventDispatcher";
+
 
     /**
      * @classdesc
-     * @extends egret.StageText
+     * @extends StageText
      * @private
      */
     export class HTML5StageText extends EventDispatcher implements StageText {
@@ -13,7 +23,7 @@ namespace egret.web {
         /**
          * @private
          */
-        private htmlInput: egret.web.HTMLInput;
+        private htmlInput: HTMLInput;
         /**
          * @private
          */
@@ -25,13 +35,13 @@ namespace egret.web {
         /**
          * @private
          */
-        $textfield: egret.TextField;
+        $textfield: TextField;
         /**
          * @private
          * 
          * @param textfield 
          */
-        $setTextField(textfield: egret.TextField): boolean {
+        $setTextField(textfield: TextField): boolean {
             this.$textfield = textfield;
 
             return true;
@@ -64,7 +74,7 @@ namespace egret.web {
          * 
          */
         $addToStage(): void {
-            this.htmlInput = egret.web.$getTextAdapter(this.$textfield);
+            this.htmlInput = $getTextAdapter(this.$textfield);
         }
 
         /**
@@ -108,7 +118,7 @@ namespace egret.web {
                 node = node.parent;
             }
 
-            let transformKey = egret.web.getPrefixStyleName("transform");
+            let transformKey = getPrefixStyleName("transform");
             this.inputDiv.style[transformKey] = "rotate(" + rotation + "deg)";
 
             this._gscaleX = scaleX * cX;
@@ -153,7 +163,7 @@ namespace egret.web {
             if (this.htmlInput._needShow) {
                 // this.htmlInput._needShow = false;
                 this._isNeedShow = false;
-                this.dispatchEvent(new egret.Event("focus"));
+                this.dispatchEvent(new Event("focus"));
                 this.executeShow();
                 this.htmlInput.show();
             }
@@ -299,13 +309,13 @@ namespace egret.web {
                 if (self.inputElement && self.inputElement.selectionStart == self.inputElement.selectionEnd) {
                     self.textValue = self.inputElement.value;
 
-                    egret.Event.dispatchEvent(self, "updateText", false);
+                    Event.dispatchEvent(self, "updateText", false);
                 }
             }, 0);
         }
 
         private setAreaHeight() {
-            let textfield: egret.TextField = this.$textfield;
+            let textfield: TextField = this.$textfield;
             if (textfield.multiline) {
                 let textheight = TextFieldUtils.$getTextHeight(textfield);
                 if (textfield.height <= textfield.size) {
@@ -344,7 +354,7 @@ namespace egret.web {
                 e.stopImmediatePropagation();
                 //e.preventDefault();
                 this._isNeedShow = false;
-                this.dispatchEvent(new egret.Event("focus"));
+                this.dispatchEvent(new Event("focus"));
                 this.executeShow();
             }
         }
@@ -356,7 +366,7 @@ namespace egret.web {
         public _onDisconnect(): void {
             this.inputElement = null;
 
-            this.dispatchEvent(new egret.Event("blur"));
+            this.dispatchEvent(new Event("blur"));
         }
 
         /**
@@ -395,7 +405,7 @@ namespace egret.web {
          */
         $resetStageText(): void {
             if (this.inputElement) {
-                let textfield: egret.TextField = this.$textfield;
+                let textfield: TextField = this.$textfield;
                 this.setElementStyle("fontFamily", textfield.fontFamily);
                 this.setElementStyle("fontStyle", textfield.italic ? "italic" : "normal");
                 this.setElementStyle("fontWeight", textfield.bold ? "bold" : "normal");
@@ -413,7 +423,7 @@ namespace egret.web {
                 }
 
                 let inputWidth = tw * this._gscaleX;
-                let scale = (textfield.scaleX * sys.DisplayList.$canvasScaleX) / (textfield.scaleY * sys.DisplayList.$canvasScaleY);
+                let scale = (textfield.scaleX * DisplayList.$canvasScaleX) / (textfield.scaleY * DisplayList.$canvasScaleY);
                 this.setElementStyle("width", inputWidth / scale + "px");
 
                 this.setElementStyle("transform", `scale(${scale},  1)`);
@@ -434,7 +444,7 @@ namespace egret.web {
                     else {
                         this.setElementStyle("height", (textfield.size) * this._gscaleY + "px");
                         let rap = (textfield.height - textfield.size) * this._gscaleY;
-                        let valign = egret.TextFieldUtils.$getValign(textfield);
+                        let valign = TextFieldUtils.$getValign(textfield);
                         let top = rap * valign;
                         let bottom = rap - top;
                         if (bottom < textfield.size / 2 * this._gscaleY) {
@@ -451,10 +461,8 @@ namespace egret.web {
         }
     }
 
-    egret.StageText = HTML5StageText;
-}
+    StageText = HTML5StageText;
 
-namespace egret.web {
     /**
      * @private
      */
@@ -540,15 +548,15 @@ namespace egret.web {
                 return;
             }
 
-            this.$scaleX = egret.sys.DisplayList.$canvasScaleX;
-            this.$scaleY = egret.sys.DisplayList.$canvasScaleY;
+            this.$scaleX = DisplayList.$canvasScaleX;
+            this.$scaleY = DisplayList.$canvasScaleY;
 
             this.StageDelegateDiv.style.left = this.canvas.style.left;
             this.StageDelegateDiv.style.top = this.canvas.style.top;
 
-            let transformKey = egret.web.getPrefixStyleName("transform");
+            let transformKey = getPrefixStyleName("transform");
             this.StageDelegateDiv.style[transformKey] = this.canvas.style[transformKey];
-            this.StageDelegateDiv.style[egret.web.getPrefixStyleName("transformOrigin")] = "0% 0% 0px";
+            this.StageDelegateDiv.style[getPrefixStyleName("transformOrigin")] = "0% 0% 0px";
         }
 
         /**
@@ -585,14 +593,14 @@ namespace egret.web {
                 self._inputDIV.style.left = 0 + "px";
                 self._inputDIV.style.top = "-100px";
 
-                self._inputDIV.style[egret.web.getPrefixStyleName("transformOrigin")] = "0% 0% 0px";
+                self._inputDIV.style[getPrefixStyleName("transformOrigin")] = "0% 0% 0px";
                 stageDelegateDiv.appendChild(self._inputDIV);
 
-                // if (egret.Capabilities.isMobile) {
+                // if (Capabilities.isMobile) {
                 //     let downTime = 0;
                 //     let screenX: number, screenY: number;
                 //     this.canvas.addEventListener("touchstart", (e) => {
-                //         downTime = egret.getTimer();
+                //         downTime = getTimer();
                 //         for (let touch of e.touches) {
                 //             screenX = touch.screenX;
                 //             screenY = touch.screenY;
@@ -600,7 +608,7 @@ namespace egret.web {
 
                 //     });
                 //     this.canvas.addEventListener("touchend", (e) => {
-                //         const upTime = egret.getTimer();
+                //         const upTime = getTimer();
                 //         const timeDelay = upTime - downTime;
                 //         for (let touch of e.changedTouches) {
                 //             const offset = Math.sqrt(Math.pow(touch.screenX - screenX, 2) + Math.pow(touch.screenY - screenY, 2))
@@ -703,7 +711,7 @@ namespace egret.web {
             let self = this;
             let inputElement = self._inputElement;
             //隐藏输入框
-            egret.$callAsync(function () {
+            $callAsync(function () {
                 inputElement.style.opacity = "1";
             }, self);
         }
@@ -829,9 +837,7 @@ namespace egret.web {
             this._inputElement = null;
         }
     }
-}
 
-namespace egret.web {
 
     let stageToTextLayerMap: any = {};
     let stageToCanvasMap: any = {};
@@ -864,4 +870,3 @@ namespace egret.web {
         stageToCanvasMap[stage.$hashCode] = canvas;
         stageToContainerMap[stage.$hashCode] = container;
     }
-}

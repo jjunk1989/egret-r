@@ -6,7 +6,6 @@
      * @platform Web
      * @includeExample egret/localStorage/localStorage.ts
      */
-namespace egret.localStorage {
 
     /**
      * Read data
@@ -73,4 +72,3 @@ namespace egret.localStorage {
      * @language zh_CN
      */
     export let clear:()=>void;
-}

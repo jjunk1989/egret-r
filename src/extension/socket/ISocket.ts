@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret {
     /**
      * @private
      * @version Egret 2.4
@@ -116,5 +115,3 @@ namespace egret {
      * @language zh_CN
      */
     export let ISocket: any = undefined;
-
-}

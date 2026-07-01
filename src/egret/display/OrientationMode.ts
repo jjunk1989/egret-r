@@ -2,7 +2,6 @@
 // Copyright (c) 2014-present, Egret Technology.
 
 
-namespace egret {
     /**
      * OrientationMode 类为舞台初始旋转模式提供值。
      */
@@ -25,4 +24,3 @@ namespace egret {
          */
         LANDSCAPE_FLIPPED: "landscapeFlipped"
     }
-}

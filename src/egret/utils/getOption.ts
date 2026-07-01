@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret {
     /**
      * Get browser or Runtime parameters, returns an empty string if not set
      * Get the url parameter corresponds to the browser, access to the corresponding parameter in the Runtime setOption
@@ -21,4 +20,3 @@ namespace egret {
      * @language zh_CN
      */
     export let getOption:(key:string)=>string;
-}

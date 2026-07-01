@@ -1,10 +1,20 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { log } from "../../system/Console";
+import { EventDispatcher } from "../../events/EventDispatcher";
+import { Sound } from "../Sound";
+import { IOErrorEvent } from "../../events/IOErrorEvent";
+import { Event } from "../../events/Event";
+import { SoundChannel } from "../SoundChannel";
+import { WebAudioSoundChannel } from "./WebAudioSoundChannel";
+import { $error } from "../../../Defines.debug";
+import { DEBUG } from "../../../Defines.debug";
+
 /**
  * @private
  */
-interface AudioBufferSourceNodeEgret {
+export interface AudioBufferSourceNodeEgret {
     buffer:any;
     context:any;
     onended:Function;
@@ -15,7 +25,6 @@ interface AudioBufferSourceNodeEgret {
     disconnect();
 }
 
-namespace egret.web {
 
     /**
      * @private
@@ -58,7 +67,7 @@ namespace egret.web {
                 WebAudioDecode.isDecoding = false;
                 WebAudioDecode.decodeAudios();
             }, function () {
-                egret.log('sound decode error')
+                log('sound decode error')
                 if (decodeInfo["fail"]) {
                     decodeInfo["fail"]();
                 }
@@ -76,7 +85,7 @@ namespace egret.web {
      * @private
      * @inheritDoc
      */
-    export class WebAudioSound extends egret.EventDispatcher implements egret.Sound {
+    export class WebAudioSound extends EventDispatcher implements Sound {
         /**
          * Background music
          * @version Egret 2.4
@@ -154,7 +163,7 @@ namespace egret.web {
             this.url = url;
 
             if (DEBUG && !url) {
-                egret.$error(3002);
+                $error(3002);
             }
 
             let request = new XMLHttpRequest();
@@ -163,7 +172,7 @@ namespace egret.web {
             request.addEventListener("load", function() {
                 var ioError = (request.status >= 400);
                 if (ioError) {
-                    self.dispatchEventWith(egret.IOErrorEvent.IO_ERROR);
+                    self.dispatchEventWith(IOErrorEvent.IO_ERROR);
                 } else {
                     WebAudioDecode.decodeArr.push({
                         "buffer": request.response,
@@ -176,17 +185,17 @@ namespace egret.web {
                 }
             });
             request.addEventListener("error", function() {
-                self.dispatchEventWith(egret.IOErrorEvent.IO_ERROR);
+                self.dispatchEventWith(IOErrorEvent.IO_ERROR);
             });
             request.send();
 
             function onAudioLoaded():void {
                 self.loaded = true;
-                self.dispatchEventWith(egret.Event.COMPLETE);
+                self.dispatchEventWith(Event.COMPLETE);
             }
 
             function onAudioError():void {
-                self.dispatchEventWith(egret.IOErrorEvent.IO_ERROR);
+                self.dispatchEventWith(IOErrorEvent.IO_ERROR);
             }
         }
 
@@ -198,7 +207,7 @@ namespace egret.web {
             loops = +loops || 0;
 
             if (DEBUG && this.loaded == false) {
-                egret.$error(1049);
+                $error(1049);
             }
 
             let channel = new WebAudioSoundChannel();
@@ -219,4 +228,3 @@ namespace egret.web {
         public close() {
         }
     }
-}

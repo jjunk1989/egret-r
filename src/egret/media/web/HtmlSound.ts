@@ -1,13 +1,21 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret.web {
+import { EventDispatcher } from "../../events/EventDispatcher";
+import { Sound } from "../Sound";
+import { Event } from "../../events/Event";
+import { IOErrorEvent } from "../../events/IOErrorEvent";
+import { SoundChannel } from "../SoundChannel";
+import { HtmlSoundChannel } from "./HtmlSoundChannel";
+import { $error } from "../../../Defines.debug";
+import { DEBUG } from "../../../Defines.debug";
+
 
     /**
      * @private
      * @inheritDoc
      */
-    export class HtmlSound extends egret.EventDispatcher implements egret.Sound {
+    export class HtmlSound extends EventDispatcher implements Sound {
         /**
          * Background music
          * @version Egret 2.4
@@ -83,7 +91,7 @@ namespace egret.web {
             this.url = url;
 
             if (DEBUG && !url) {
-                egret.$error(3002);
+                $error(3002);
             }
             let audio = new Audio(url);
             audio.addEventListener("canplaythrough", onAudioLoaded);
@@ -119,12 +127,12 @@ namespace egret.web {
                 }
 
                 self.loaded = true;
-                self.dispatchEventWith(egret.Event.COMPLETE);
+                self.dispatchEventWith(Event.COMPLETE);
             }
 
             function onAudioError(): void {
                 removeListeners();
-                self.dispatchEventWith(egret.IOErrorEvent.IO_ERROR);
+                self.dispatchEventWith(IOErrorEvent.IO_ERROR);
             }
 
             function removeListeners(): void {
@@ -144,7 +152,7 @@ namespace egret.web {
             loops = +loops || 0;
 
             if (DEBUG && this.loaded == false) {
-                egret.$error(1049);
+                $error(1049);
             }
 
             let audio = HtmlSound.$pop(this.url);
@@ -213,4 +221,3 @@ namespace egret.web {
             array.push(audio);
         }
     }
-}

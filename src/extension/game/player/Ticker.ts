@@ -1,7 +1,14 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret {
+import { EventDispatcher } from "../../../egret/events/EventDispatcher";
+import { ticker } from "../../../egret/player/SystemTicker";
+import { getTimer } from "../../../egret/utils/getTimer";
+import { startTick } from "../../../egret/utils/startTick";
+import { stopTick } from "../../../egret/utils/stopTick";
+import { $error } from "../../../Defines.debug";
+import { DEBUG } from "../../../Defines.debug";
+
      /**
      * @version Egret 2.4
      * @platform Web
@@ -14,7 +21,7 @@ namespace egret {
      * @includeExample extension/game/player/Ticker.ts
      * @language zh_CN
      */
-    export class Ticker extends egret.EventDispatcher {
+    export class Ticker extends EventDispatcher {
         /**
          * @deprecated
          * @version Egret 2.4
@@ -24,13 +31,13 @@ namespace egret {
             super();
             if (Ticker.instance != null) {
                 if (DEBUG) {
-                    egret.$error(1033);
+                    $error(1033);
                 }
             }
 
-            egret.ticker.$startTick(this.update, this);
+            ticker.$startTick(this.update, this);
 
-            this._lastTime = egret.getTimer();
+            this._lastTime = getTimer();
         }
 
         private _timeScale:number = 1;
@@ -63,7 +70,7 @@ namespace egret {
 
         private callBackList:any[] = [];
         /**
-         * 注册帧回调事件，同一函数的重复监听会被忽略。推荐使用 egret.startTick 替代此方法。
+         * 注册帧回调事件，同一函数的重复监听会被忽略。推荐使用 startTick 替代此方法。
          * @method egret.Ticker#register
          * @param listener {Function} 帧回调函数,参数返回上一帧和这帧的间隔时间。示例：onEnterFrame(frameTime:number):void
          * @param thisObject {any} 帧回调函数的this对象
@@ -77,7 +84,7 @@ namespace egret {
         }
 
         /**
-         * 取消侦听enterFrame事件。推荐使用 egret.stopTick 替代此方法。
+         * 取消侦听enterFrame事件。推荐使用 stopTick 替代此方法。
          * @method egret.Ticker#unregister
          * @param listener {Function} 事件侦听函数
          * @param thisObject {any} 侦听函数的this对象
@@ -128,7 +135,7 @@ namespace egret {
         /**
          * @private
          */
-        private static instance:egret.Ticker;
+        private static instance: Ticker;
 
         /**
          * @method egret.Ticker.getInstance
@@ -137,7 +144,7 @@ namespace egret {
          * @platform Web
          * @deprecated
          */
-        public static getInstance():egret.Ticker {
+        public static getInstance(): Ticker {
             if (Ticker.instance == null) {
                 Ticker.instance = new Ticker();
             }
@@ -145,4 +152,3 @@ namespace egret {
         }
     }
 
-}

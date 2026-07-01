@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret {
+import { DEBUG } from "../../Defines.debug";
+
     /**
      * Logger is an entrance for the log processing namespace of the engine
      * @version Egret 2.4
@@ -135,4 +136,3 @@ namespace egret {
         public static set logLevel(logType:string) {
         }
     }
-}

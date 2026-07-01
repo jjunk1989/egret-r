@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret {
+import { DisplayObject } from "./DisplayObject";
+
 
     //混合模式在Web端只有部分被支持，在 Native 中全部都支持。
     //目前所有平台的浏览器都支持的有：Layer,Alpha,Normal,Add,ERASE。
@@ -12,7 +13,7 @@ namespace egret {
     /**
      * A class that provides constant values for visual blend mode effects. These constants are used in the blendMode
      * property of the DisplayObject class.
-     * @see egret.DisplayObject#blendMode
+     * @see DisplayObject#blendMode
      * @version Egret 2.4
      * @platform Web
      * @includeExample egret/display/BlendMode.ts
@@ -21,7 +22,7 @@ namespace egret {
      */
     /**
      * 提供混合模式可视效果的常量值的类,通常用于 DisplayObject 的 blendMode 属性上。
-     * @see egret.DisplayObject#blendMode
+     * @see DisplayObject#blendMode
      * @version Egret 2.4
      * @platform Web
      * @includeExample egret/display/BlendMode.ts
@@ -77,9 +78,7 @@ namespace egret {
         public static ERASE:string = "erase";
 
     }
-}
 
-namespace egret.sys {
 
     let blendModeString = ["normal", "add", "erase"];
     let blendModeNumber = {};
@@ -106,5 +105,3 @@ namespace egret.sys {
         let str = blendModeString[blendMode];
         return str === undefined ? "normal" : str;
     }
-
-}

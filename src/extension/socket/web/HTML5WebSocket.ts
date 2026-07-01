@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret.web {
+import { ISocket } from "../ISocket";
+import { $error } from "../../../Defines.debug";
+
     /**
      * @private
      */
@@ -10,7 +12,7 @@ namespace egret.web {
 
         constructor() {
             if (!window["WebSocket"]) {
-                egret.$error(3100);
+                $error(3100);
             }
         }
 
@@ -89,5 +91,4 @@ namespace egret.web {
         }
     }
 
-    egret.ISocket = HTML5WebSocket;
-}
+    ISocket = HTML5WebSocket;

@@ -1,7 +1,13 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace eui {
+import { Rectangle } from "../../../egret/geom/Rectangle";
+import { Scroller } from "../components/Scroller";
+import { viewport } from "../components/HScrollBar";
+import { Group } from "../components/Group";
+import { $error } from "../../../Defines.debug";
+import { DEBUG } from "../../../Defines.debug";
+
 
     /**
      * Register a property for a class definition in running,
@@ -22,7 +28,7 @@ namespace eui {
      * @param property The property need to be registered. Note that the property
      * name cannot start with "_" or "$".
      * @param type The type need to be registered,
-     * such as “boolean","number","string","Array","egret.Rectangle" and so on.
+     * such as “boolean","number","string","Array","Rectangle" and so on.
      * @param asDefault Whether register this property as a default property of component.
      * One component can register only on default property. And the default property can be spare in an EXML.
      *
@@ -55,7 +61,7 @@ namespace eui {
      *
      * @param classDefinition 要注册的类定义。
      * @param property 要注册的属性,注意属性名不能以 _ 或 $ 符开头。
-     * @param type 要注册的类型,例如：“boolean","number","string","Array","egret.Rectangle"
+     * @param type 要注册的类型,例如：“boolean","number","string","Array","Rectangle"
      * @param asDefault 是否将此属性注册为组件的默认属性,一个组件只可以设置一个默认属性。注册了组件默认属性后，在EXML中可以使用省略属性节点的写法，
      * @example：
      * <pre>
@@ -79,16 +85,16 @@ namespace eui {
     export function registerProperty(classDefinition:any,property:string,type:string,asDefault?:boolean):void{
         if (DEBUG) {
             if(!classDefinition){
-                egret.$error(1003, "classDefinition");
+                $error(1003, "classDefinition");
             }
             if(!classDefinition.prototype){
-                egret.$error(1012,"classDefinition")
+                $error(1012,"classDefinition")
             }
             if(!property){
-                egret.$error(1003, "property");
+                $error(1003, "property");
             }
             if(!type){
-                egret.$error(1003, "type");
+                $error(1003, "type");
             }
         }
         let prototype: any = classDefinition.prototype;
@@ -98,4 +104,3 @@ namespace eui {
             prototype.__defaultProperty__ = property;
         }
     }
-}

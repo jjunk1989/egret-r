@@ -1,7 +1,11 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret.web {
+import { warn } from "../../../system/Console";
+import { _createTexture } from "../../../player/SystemRenderer";
+import { HashObject } from "../../../utils/HashObject";
+import { DEBUG } from "../../../../Defines.debug";
+
 
     /**
      * @private
@@ -41,13 +45,13 @@ namespace egret.web {
             height = height || 1;
             if (width < 1) {
                 if (DEBUG) {
-                    egret.warn('WebGLRenderTarget _resize width = ' + width);
+                    warn('WebGLRenderTarget _resize width = ' + width);
                 }
                 width = 1;
             }
             if (height < 1) {
                 if (DEBUG) {
-                    egret.warn('WebGLRenderTarget _resize height = ' + height);
+                    warn('WebGLRenderTarget _resize height = ' + height);
                 }
                 height = 1;
             }
@@ -94,7 +98,7 @@ namespace egret.web {
         private createTexture(): WebGLTexture {
             //就是创建空的纹理
             const webglrendercontext = WebGLRenderContext.getInstance(0, 0);
-            return sys._createTexture(webglrendercontext, this.width, this.height, null);
+            return _createTexture(webglrendercontext, this.width, this.height, null);
             /*
             const gl = this.gl;
             const texture: WebGLTexture = gl.createTexture();
@@ -138,4 +142,3 @@ namespace egret.web {
             WebGLUtils.deleteWebGLTexture(this.texture);
         }
     }
-}

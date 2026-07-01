@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { createMap } from "../utils/DataStructure";
+import { Texture } from "./Texture";
+import { HashObject } from "../utils/HashObject";
 
-namespace egret {
 
     /**
      * SpriteSheet is a mosaic of multiple sub-bitmaps, comprising a plurality of Texture objects.
@@ -71,12 +73,12 @@ namespace egret {
          * @private
          * 纹理缓存字典
          */
-        public _textureMap = egret.createMap<Texture>();
+        public _textureMap = createMap<Texture>();
 
         /**
          * Obtain a cached Texture object according to the specified texture name
          * @param name {string} Cache the name of this Texture object
-         * @returns {egret.Texture} The Texture object
+         * @returns {Texture} The Texture object
          * @version Egret 2.4
          * @platform Web
          * @language en_US
@@ -84,7 +86,7 @@ namespace egret {
         /**
          * 根据指定纹理名称获取一个缓存的 Texture 对象
          * @param name {string} 缓存这个 Texture 对象所使用的名称
-         * @returns {egret.Texture} Texture 对象
+         * @returns {Texture} Texture 对象
          * @version Egret 2.4
          * @platform Web
          * @language zh_CN
@@ -104,7 +106,7 @@ namespace egret {
          * @param offsetY {number} Starting point y for a non-transparent area of the original bitmap
          * @param textureWidth {number} Width of the original bitmap. If it is not passed, use the bitmapWidth  value.
          * @param textureHeight {number} Height of the original bitmap. If it is not passed, use the bitmapHeight value.
-         * @returns {egret.Texture} The created Texture object
+         * @returns {Texture} The created Texture object
          * @version Egret 2.4
          * @platform Web
          * @language en_US
@@ -120,7 +122,7 @@ namespace egret {
          * @param offsetY {number} 原始位图的非透明区域 y 起始点
          * @param textureWidth {number} 原始位图的高度，若不传入，则使用 bitmapWidth 的值。
          * @param textureHeight {number} 原始位图的宽度，若不传入，则使用 bitmapHeight 的值。
-         * @returns {egret.Texture} 创建的 Texture 对象
+         * @returns {Texture} 创建的 Texture 对象
          * @version Egret 2.4
          * @platform Web
          * @language zh_CN
@@ -132,7 +134,7 @@ namespace egret {
             if (textureHeight === void 0) {
                 textureHeight = offsetY + bitmapHeight;
             }
-            let texture:Texture = new egret.Texture();
+            let texture:Texture = new Texture();
             texture.disposeBitmapData = false;
             texture.$bitmapData = this.$texture.$bitmapData;
             texture.$initData(this._bitmapX + bitmapX, this._bitmapY + bitmapY, bitmapWidth, bitmapHeight, offsetX, offsetY, textureWidth, textureHeight, this.$texture.$sourceWidth, this.$texture.$sourceHeight);
@@ -159,4 +161,3 @@ namespace egret {
             }
         }
     }
-}

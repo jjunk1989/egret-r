@@ -1,7 +1,15 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace eui.sys {
+import { IEventDispatcher } from "../../../../egret/events/IEventDispatcher";
+import { stopTick } from "../../../../egret/utils/stopTick";
+import { getTimer } from "../../../../egret/utils/getTimer";
+import { startTick } from "../../../../egret/utils/startTick";
+import { ScrollerThrowEvent } from "../../events/ScrollerThrowEvent";
+import { Animation } from "./Animation";
+import { $error } from "../../../../Defines.debug";
+import { DEBUG } from "../../../../Defines.debug";
+
     /**
      * @private
      * 需要记录的历史速度的最大次数。
@@ -63,14 +71,14 @@ namespace eui.sys {
          * 创建一个 TouchScroll 实例
          * @param updateFunction 滚动位置更新回调函数
          */
-        public constructor(updateFunction:(scrollPos:number)=>void, endFunction:()=>void, target:egret.IEventDispatcher) {
+        public constructor(updateFunction:(scrollPos:number)=>void, endFunction:()=>void, target:IEventDispatcher) {
             if (DEBUG && !updateFunction) {
-                egret.$error(1003, "updateFunction");
+                $error(1003, "updateFunction");
             }
             this.updateFunction = updateFunction;
             this.endFunction = endFunction;
             this.target = target;
-            this.animation = new sys.Animation(this.onScrollingUpdate, this);
+            this.animation = new Animation(this.onScrollingUpdate, this);
             this.animation.endFunction = this.finishScrolling;
             this.animation.easerFunction = easeOut;
         }
@@ -84,7 +92,7 @@ namespace eui.sys {
         /**
          * @private
          */
-        private target:egret.IEventDispatcher;
+        private target:IEventDispatcher;
         /**
          * @private
          */
@@ -131,7 +139,7 @@ namespace eui.sys {
          * @private
          * 停止触摸时继续滚动的动画实例
          */
-        private animation:sys.Animation;
+        private animation:Animation;
 
         public $bounces:boolean = true;
 
@@ -149,7 +157,7 @@ namespace eui.sys {
          */
         public stop():void {
             this.animation.stop();
-            egret.stopTick(this.onTick, this);
+            stopTick(this.onTick, this);
             this.started = false;
         }
 
@@ -172,10 +180,10 @@ namespace eui.sys {
             this.started = true;
             this.velocity = 0;
             this.previousVelocity.length = 0;
-            this.previousTime = egret.getTimer();
+            this.previousTime = getTimer();
             this.previousPosition = this.currentPosition = touchPoint;
             this.offsetPoint = touchPoint;
-            egret.startTick(this.onTick, this);
+            startTick(this.onTick, this);
         }
 
         /**
@@ -217,7 +225,7 @@ namespace eui.sys {
          * @param maxScrollPos 容器可以滚动的最大值。当目标值不在 0~maxValue之间时，将会应用更大的摩擦力，从而影响缓动时间的长度。
          */
         public finish(currentScrollPos:number, maxScrollPos:number):void {
-            egret.stopTick(this.onTick, this);
+            stopTick(this.onTick, this);
             this.started = false;
             let sum = this.velocity * CURRENT_VELOCITY_WEIGHT;
             let previousVelocityX = this.previousVelocity;
@@ -256,7 +264,7 @@ namespace eui.sys {
                 posTo = currentScrollPos;
             }
             if (this.target["$getThrowInfo"]) {
-                let event:eui.ScrollerThrowEvent = this.target["$getThrowInfo"](currentScrollPos, posTo);
+                let event:ScrollerThrowEvent = this.target["$getThrowInfo"](currentScrollPos, posTo);
                 posTo = event.toPos;
             }
             if (duration > 0) {
@@ -340,4 +348,3 @@ namespace eui.sys {
             this.updateFunction.call(this.target, animation.currentValue);
         }
     }
-}

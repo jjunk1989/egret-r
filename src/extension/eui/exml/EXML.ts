@@ -1,13 +1,17 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-/// <reference path="EXMLParser.ts" />
+import { HttpRequest } from "../../../egret/events/IOErrorEvent";
+import { getDefinitionByName } from "../../../egret/utils/getDefinitionByName";
+import { getTheme } from "../core/UIComponent";
+import { EXMLParser } from "./EXMLParser";
+import { $error } from "../../../Defines.debug";
+import { DEBUG } from "../../../Defines.debug";
 
-namespace EXML {
 
-    let parser = new eui.sys.EXMLParser();
+    let parser = new EXMLParser();
 
-    let requestPool: egret.HttpRequest[] = [];
+    let requestPool: HttpRequest[] = [];
     let callBackMap: any = {};
     let parsedClasses: any = {};
     let $prefixURL: string = "";
@@ -42,7 +46,7 @@ namespace EXML {
      * node of the EXML to register to the global as a class name.
      *
      * It will be fail to register and output a warning if the specified name already exists. You can get a definition
-     * of a class through <code>egret.getDefinitionByName(className)</code>.
+     * of a class through <code>getDefinitionByName(className)</code>.
      *
      * @param text the text of a EXML file.
      *
@@ -53,7 +57,7 @@ namespace EXML {
      */
     /**
      * 解析一个 EXML 文件的文本内容为一个类定义。您可以在 EXML 文件的根节点上声明 class 属性作为要注册到全局的类名。
-     * 若指定的类名已经存在，将会注册失败，并输出一个警告。注册成功后，您也可以通过 egret.getDefinitionByName(className) 方法获取这个 EXML 文件对应的类定义。
+     * 若指定的类名已经存在，将会注册失败，并输出一个警告。注册成功后，您也可以通过 getDefinitionByName(className) 方法获取这个 EXML 文件对应的类定义。
      *
      * @param text 要解析的 EXML 文件内容。
      *
@@ -71,7 +75,7 @@ namespace EXML {
      * node of the EXML to register to the global as a class name.
      *
      * It will be fail to register and output a warning if the specified name already exists. You can get a definition
-     * of a class through <code>egret.getDefinitionByName(className)</code>.
+     * of a class through <code>getDefinitionByName(className)</code>.
      *
      * @param url the path of an EXML file
      * @param callBack method to invoke with an argument of the result when load and parse completed or failed. The argument will be
@@ -86,7 +90,7 @@ namespace EXML {
      */
     /**
      * 加载并解析一个外部的 EXML 文件为一个类定义。您可以在 EXML 文件的根节点上声明 class 属性作为要注册到全局的类名。
-     * 若指定的类名已经存在，将会注册失败，并输出一个警告。注册成功后，您也可以通过 egret.getDefinitionByName(className) 方法获取这个 EXML 文件对应的类定义。
+     * 若指定的类名已经存在，将会注册失败，并输出一个警告。注册成功后，您也可以通过 getDefinitionByName(className) 方法获取这个 EXML 文件对应的类定义。
      *
      * @param url 要加载的 EXML 文件路径
      * @param callBack 加载并解析完成后的回调函数，无论加载成功还是失败，此函数均会被回调。失败时将传入 undefined 作为回调函数参数。
@@ -101,7 +105,7 @@ namespace EXML {
     export function load(url: string, callBack?: (clazz: any, url: string) => void, thisObject?: any, useCache = false): void {
         if (DEBUG) {
             if (!url) {
-                egret.$error(1003, "url");
+                $error(1003, "url");
             }
         }
         if (useCache && (url in parsedClasses)) {
@@ -241,6 +245,5 @@ namespace EXML {
             }
             callback(url, str);
         };
-        eui.getTheme(openUrl, onConfigLoaded);
+        getTheme(openUrl, onConfigLoaded);
     }
-}

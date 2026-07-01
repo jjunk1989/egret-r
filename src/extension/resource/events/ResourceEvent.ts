@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { Event } from "../../../egret/events/Event";
+import { IEventDispatcher } from "../../../egret/events/IEventDispatcher";
+import { ResourceItem } from "../../assetsmanager/src/shim/ResourceItem";
 
-namespace RES {
 
 	/**
 	 * The events of resource loading.
@@ -16,7 +18,7 @@ namespace RES {
 	 * @platform Web
 	 * @language zh_CN
 	 */
-	export class ResourceEvent extends egret.Event{
+	export class ResourceEvent extends Event{
 		/**
 		 * Failure event for a load item.
 		 * @version Egret 2.4
@@ -174,24 +176,23 @@ namespace RES {
         /**
          * 使用指定的EventDispatcher对象来抛出事件对象。抛出的对象将会缓存在对象池上，供下次循环复用。
 		 * @method RES.ResourceEvent.dispatchResourceEvent
-		 * @param target {egret.IEventDispatcher} 
+		 * @param target {IEventDispatcher} 
 		 * @param type {string} 
 		 * @param groupName {string} 
-		 * @param resItem {egret.ResourceItem} 
+		 * @param resItem {ResourceItem} 
 		 * @param itemsLoaded {number} 
 		 * @param itemsTotal {number}
 		 * @private
          */
-        public static dispatchResourceEvent(target:egret.IEventDispatcher,type:string,
+        public static dispatchResourceEvent(target:IEventDispatcher,type:string,
                                                     groupName:string="",resItem:ResourceItem=null,itemsLoaded:number=0,itemsTotal:number=0):boolean{
-			let event:ResourceEvent = egret.Event.create(ResourceEvent, type);
+			let event:ResourceEvent = Event.create(ResourceEvent, type);
 			event.groupName = groupName;
 			event.resItem = resItem;
 			event.itemsLoaded = itemsLoaded;
 			event.itemsTotal = itemsTotal;
 			let result = target.dispatchEvent(event);
-			egret.Event.release(event);
+			Event.release(event);
 			return result;
         }
 	}
-}

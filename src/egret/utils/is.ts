@@ -1,7 +1,12 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret {
+import { Sprite } from "../display/Sprite";
+import { log } from "../system/Console";
+import { DisplayObjectContainer } from "../display/DisplayObjectContainer";
+import { Bitmap } from "../display/Bitmap";
+import { registerClass } from "./registerClass";
+
     /**
      * Indicates whether an object is a instance of the class or interface specified as the parameter.This method has better performance
      * compared width the instanceOf operator,and it can indicate whether an object is a instance of the specific interface.
@@ -10,12 +15,12 @@ namespace egret {
      * @returns A value of true if the object is a instance of the class or interface specified as the parameter.
      * @example
      * <pre>
-     *     let instance = new egret.Sprite();
-     *     egret.log(egret.is(instance,"egret.Sprite"))  //true
-     *     egret.log(egret.is(instance,"egret.DisplayObjectContainer"))  //true
-     *     egret.log(egret.is(instance,"egret.Bitmap"))  //false
+     *     let instance = new Sprite();
+     *     log(_is(instance,"Sprite"))  //true
+     *     log(_is(instance,"DisplayObjectContainer"))  //true
+     *     log(_is(instance,"Bitmap"))  //false
      * </pre>
-     * @see egret.registerClass()
+     * @see registerClass()
      * @version Egret 2.4
      * @platform Web
      * @language en_US
@@ -27,12 +32,12 @@ namespace egret {
      * @returns 返回true表示当前对象是指定类或接口的实例。
      * @example
      * <pre>
-     *     let instance = new egret.Sprite();
-     *     egret.log(egret.is(instance,"egret.Sprite"))  //true
-     *     egret.log(egret.is(instance,"egret.DisplayObjectContainer"))  //true
-     *     egret.log(egret.is(instance,"egret.Bitmap"))  //false
+     *     let instance = new Sprite();
+     *     log(_is(instance,"Sprite"))  //true
+     *     log(_is(instance,"DisplayObjectContainer"))  //true
+     *     log(_is(instance,"Bitmap"))  //false
      * </pre>
-     * @see egret.registerClass()
+     * @see registerClass()
      * @version Egret 2.4
      * @platform Web
      * @language zh_CN
@@ -48,4 +53,3 @@ namespace egret {
         }
         return (types.indexOf(typeName) !== -1);
     }
-}

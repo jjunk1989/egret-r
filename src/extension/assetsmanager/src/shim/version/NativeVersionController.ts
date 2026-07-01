@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace RES {
+import { Capabilities } from "../../../../../egret/system/Capabilities";
+import { IVersionController } from "./IVersionController";
+
 
     interface R {
         v: string,
@@ -37,7 +39,6 @@ namespace RES {
             return null;
         }
     }
-    if (egret.Capabilities.runtimeType == egret.RuntimeType.NATIVE) {
+    if (Capabilities.runtimeType == egret.RuntimeType.NATIVE) {
         VersionController = NativeVersionController;
     }
-}

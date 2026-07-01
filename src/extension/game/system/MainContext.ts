@@ -1,18 +1,23 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { EventDispatcher } from "../../../egret/events/EventDispatcher";
+import { Capabilities } from "../../../egret/system/Capabilities";
+import { Ticker } from "../player/Ticker";
+import { Stage } from "../../../egret/display/Stage";
+import { $warn } from "";
 
-namespace egret {
+
     /**
      * @class egret.MainContext
      * @classdesc
      * MainContext是游戏的核心跨平台接口，组合了多个功能Context，并是游戏启动的主入口
-     * @extends egret.EventDispatcher
+     * @extends EventDispatcher
      * @private
      * @version Egret 2.4
      * @platform Web
      */
-    export class MainContext extends egret.EventDispatcher {
+    export class MainContext extends EventDispatcher {
 
         /**
          * @version Egret 2.4
@@ -84,7 +89,7 @@ namespace egret {
         //  * @platform Web
         //  */
         // public static get runtimeType():string {
-        //     egret.$warn(1041, "egret.MainContext.runtimeType", "egret.Capabilities.runtimeType");
+        //     $warn(1041, "egret.MainContext.runtimeType", "Capabilities.runtimeType");
         //     return MainContext._runtimeType;
         // }
         // /**
@@ -99,7 +104,6 @@ namespace egret {
         // public static RUNTIME_NATIVE:string = "runtimeNative";
 
 
-
         /**
          * 游戏启动，开启主循环，参考Flash的滑动跑道模型
          * @method egret.MainContext#run
@@ -112,22 +116,21 @@ namespace egret {
         /**
          * @private
          */
-        private static _instance: egret.MainContext;
+        private static _instance: MainContext;
 
         /**
-         * @method egret.Ticker.getInstance
+         * @method Ticker.getInstance
          * @returns {Ticker}
          * @version Egret 2.4
          * @platform Web
          */
-        public static get instance(): egret.MainContext {
+        public static get instance(): MainContext {
             if (MainContext._instance == null) {
                 MainContext._instance = new MainContext();
             }
             return MainContext._instance;
         }
     }
-}
 
 /**
  * @private
@@ -139,5 +142,5 @@ egret["testDeviceType1"] = function () {
     let ua = navigator.userAgent.toLowerCase();
     return (ua.indexOf('mobile') != -1 || ua.indexOf('android') != -1);
 };
-egret.MainContext.deviceType = egret["testDeviceType1"]() ? egret.MainContext.DEVICE_MOBILE : egret.MainContext.DEVICE_PC;
+MainContext.deviceType = egret["testDeviceType1"]() ? MainContext.DEVICE_MOBILE : MainContext.DEVICE_PC;
 delete egret["testDeviceType1"];

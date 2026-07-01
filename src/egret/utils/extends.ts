@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+
 //function __extends(d, b) {
 //    for (let p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
 //    function __() {
@@ -11,7 +12,6 @@
 //    d.prototype = new __();
 //}
 
-namespace egret {
 
     /**
      * Call setter properties of the parent class, instead of the other writing languages, such as super.alpha = 1;
@@ -20,7 +20,7 @@ namespace egret {
      * @param type Setter property names need to call
      * @param values Value passed to the parent class
      *
-     * @exmaple egret.superSetter(egret.Sprite, this, "alpha", 1);
+     * @exmaple egret.superSetter(Sprite, this, "alpha", 1);
      * @language en_US
      */
     /**
@@ -30,7 +30,7 @@ namespace egret {
      * @param type 需要调用的setter属性名称
      * @param values 传给父类的值
      *
-     * @exmaple egret.superSetter(egret.Sprite, this, "alpha", 1);
+     * @exmaple egret.superSetter(Sprite, this, "alpha", 1);
      * @language zh_CN
      */
     export function superSetter(currentClass:any, thisObj:any, type:string, ...values) {
@@ -71,7 +71,7 @@ namespace egret {
      * @param type Setter property names need to call
      * @returns {any} The value returned by the parent
      *
-     * @exmaple egret.superGetter(egret.Sprite, this, "alpha");
+     * @exmaple egret.superGetter(Sprite, this, "alpha");
      * @language en_US
      */
     /**
@@ -81,7 +81,7 @@ namespace egret {
      * @param type 需要调用的getter属性名称
      * @returns {any} 父类返回的值
      *
-     * @exmaple egret.superGetter(egret.Sprite, this, "alpha");
+     * @exmaple egret.superGetter(Sprite, this, "alpha");
      * @language zh_CN
      */
     export function superGetter(currentClass:any, thisObj:any, type:string):any {
@@ -114,4 +114,3 @@ namespace egret {
         geters[type] = getF;
         return getF.call(thisObj);
     }
-}

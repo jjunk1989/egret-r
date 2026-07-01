@@ -1,22 +1,21 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-/// <reference path="core/ResourceItem.ts" />
-/// <reference path="core/ResourceConfig.ts" />
-/// <reference path="core/ResourceLoader.ts" />
-/// <reference path="events/ResourceEvent.ts" />
-/// <reference path="analyzer/BinAnalyzer.ts" />
-/// <reference path="analyzer/ImageAnalyzer.ts" />
-/// <reference path="analyzer/TextAnalyzer.ts" />
-/// <reference path="analyzer/JsonAnalyzer.ts" />
-/// <reference path="analyzer/SheetAnalyzer.ts" />
-/// <reference path="analyzer/FontAnalyzer.ts" />
-/// <reference path="analyzer/SoundAnalyzer.ts" />
-/// <reference path="analyzer/XMLAnalyzer.ts" />
-/// <reference path="version/IVersionController.ts" />
-/// <reference path="version/Html5VersionController.ts" />
+import { BitmapData } from "../../egret/display/BitmapData";
+import { EventDispatcher } from "../../egret/events/EventDispatcher";
+import { callLater } from "../../egret/utils/callLater";
+import { ResourceItem } from "../assetsmanager/src/shim/ResourceItem";
+import { AnalyzerBase } from "./analyzer/AnalyzerBase";
+import { VersionController } from "../assetsmanager/src/shim/version/IVersionController";
+import { Texture } from "../../egret/display/Texture";
+import { HtmlSound } from "../../egret/media/web/HtmlSound";
+import { ResourceLoader } from "../assetsmanager/src/core/ResourceLoader";
+import { ResourceConfig } from "../assetsmanager/src/core/ResourceConfig";
+import { ResourceEvent } from "../assetsmanager/src/shim/ResourceEvent";
+import { $error } from "../../Defines.debug";
+import { DEBUG } from "../../Defines.debug";
+import { $warn } from "";
 
-namespace RES {
     /**
      * Conduct mapping injection with class definition as the value.
      * @param type Injection type.
@@ -254,7 +253,7 @@ namespace RES {
      * The synchronization method for obtaining the cache has been loaded with the success of the resource.
      * <br>The type of resource and the corresponding return value types are as follows:
      * <br>RES.ResourceItem.TYPE_BIN : ArrayBuffer JavaScript primary object
-     * <br>RES.ResourceItem.TYPE_IMAGE : img Html Object，or egret.BitmapData interface。
+     * <br>RES.ResourceItem.TYPE_IMAGE : img Html Object，or BitmapData interface。
      * <br>RES.ResourceItem.TYPE_JSON : Object
      * <br>RES.ResourceItem.TYPE_SHEET : Object
      * <br>  1. If the incoming parameter is the name of the entire SpriteSheet is returned is {image1: Texture, "image2": Texture}.
@@ -274,7 +273,7 @@ namespace RES {
      * 同步方式获取缓存的已经加载成功的资源。
      * <br>资源类型和对应的返回值类型关系如下：
      * <br>RES.ResourceItem.TYPE_BIN : ArrayBuffer JavaScript 原生对象
-     * <br>RES.ResourceItem.TYPE_IMAGE : img Html 对象，或者 egret.BitmapData 接口。
+     * <br>RES.ResourceItem.TYPE_IMAGE : img Html 对象，或者 BitmapData 接口。
      * <br>RES.ResourceItem.TYPE_JSON : Object
      * <br>RES.ResourceItem.TYPE_SHEET : Object
      * <br>  1. 如果传入的参数是整个 SpriteSheet 的名称返回的是 {"image1":Texture,"image2":Texture} 这样的格式。
@@ -438,7 +437,7 @@ namespace RES {
      * @platform Web
      * @language zh_CN
      */
-    export function addEventListener(type:string, listener:(event:egret.Event)=>void, thisObject:any, useCapture:boolean = false, priority:number = 0):void {
+    export function addEventListener(type:string, listener:(event:_Event)=>void, thisObject:any, useCapture:boolean = false, priority:number = 0):void {
         instance.addEventListener(type,listener,thisObject,useCapture,priority);
     }
     /**
@@ -461,7 +460,7 @@ namespace RES {
      * @platform Web
      * @language zh_CN
      */
-    export function removeEventListener(type:string, listener:(event:egret.Event)=>void,thisObject:any,useCapture:boolean = false):void {
+    export function removeEventListener(type:string, listener:(event:_Event)=>void,thisObject:any,useCapture:boolean = false):void {
         instance.removeEventListener(type,listener,thisObject,useCapture);
     }
 
@@ -477,7 +476,7 @@ namespace RES {
     /**
     * @internal
     */
-    class Resource extends egret.EventDispatcher{
+    class Resource extends EventDispatcher{
         /**
          * 构造函数
 		 * @method RES.constructor
@@ -507,7 +506,7 @@ namespace RES {
                 let clazz = this.analyzerClassMap[type];
                 if (!clazz) {
                     if (DEBUG) {
-                        egret.$error(3203, type);
+                        $error(3203, type);
                     }
                     return null;
                 }
@@ -582,7 +581,7 @@ namespace RES {
             let configItem:any = {url:url,resourceRoot:resourceRoot,type:type};
             this.configItemList.push(configItem);
             if(!this.callLaterFlag){
-                egret.callLater(this.startLoadConfig,this);
+                callLater(this.startLoadConfig,this);
                 this.callLaterFlag = true;
             }
         }
@@ -634,7 +633,7 @@ namespace RES {
          * 根据组名获取组加载项列表
 		 * @method RES.getGroupByName
 		 * @param name {string}
-		 * @returns {Array<egret.ResourceItem>}
+		 * @returns {Array<ResourceItem>}
          */
         public getGroupByName(name:string):Array<ResourceItem>{
             return this.resConfig.getGroupByName(name);
@@ -839,7 +838,7 @@ namespace RES {
                 type = this.getTypeByUrl(url);
 
             if (this._loadedUrlTypes[url] != null && this._loadedUrlTypes[url] != type) {
-                egret.$warn(3202);
+                $warn(3202);
             }
             this._loadedUrlTypes[url] = type;
 
@@ -1028,4 +1027,3 @@ namespace RES {
      * Resource单例
      */
     let instance:Resource = new Resource();
-}

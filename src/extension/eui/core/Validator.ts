@@ -1,14 +1,19 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { EventDispatcher } from "../../../egret/events/EventDispatcher";
+import { Bitmap } from "../../../egret/display/Bitmap";
+import { Event } from "../../../egret/events/Event";
+import { DisplayObjectContainer } from "../../../egret/display/DisplayObjectContainer";
+import { UIComponent } from "./UIComponent";
+import { is } from "../../../egret/utils/is";
 
-namespace eui.sys {
 
     /**
      * @private
      * 失效验证管理器
      */
-    export class Validator extends egret.EventDispatcher {
+    export class Validator extends EventDispatcher {
         /**
          * @private
          * 创建一个Validator对象
@@ -160,7 +165,7 @@ namespace eui.sys {
         /**
          * @private
          */
-        private eventDisplay:egret.Bitmap = new egret.Bitmap();
+        private eventDisplay:Bitmap = new Bitmap();
         /**
          * @private
          * 是否已经添加了事件监听
@@ -172,9 +177,9 @@ namespace eui.sys {
          * 添加事件监听
          */
         private attachListeners():void {
-            this.eventDisplay.addEventListener(egret.Event.ENTER_FRAME, this.doPhasedInstantiationCallBack, this);
-            this.eventDisplay.addEventListener(egret.Event.RENDER, this.doPhasedInstantiationCallBack, this);
-            egret.sys.$invalidateRenderFlag = true;
+            this.eventDisplay.addEventListener(Event.ENTER_FRAME, this.doPhasedInstantiationCallBack, this);
+            this.eventDisplay.addEventListener(Event.RENDER, this.doPhasedInstantiationCallBack, this);
+            sys.$invalidateRenderFlag = true;
             this.listenersAttached = true;
         }
 
@@ -182,9 +187,9 @@ namespace eui.sys {
          * @private
          * 执行属性应用
          */
-        private doPhasedInstantiationCallBack(event?:egret.Event):void {
-            this.eventDisplay.removeEventListener(egret.Event.ENTER_FRAME, this.doPhasedInstantiationCallBack, this);
-            this.eventDisplay.removeEventListener(egret.Event.RENDER, this.doPhasedInstantiationCallBack, this);
+        private doPhasedInstantiationCallBack(event?:Event):void {
+            this.eventDisplay.removeEventListener(Event.ENTER_FRAME, this.doPhasedInstantiationCallBack, this);
+            this.eventDisplay.removeEventListener(Event.RENDER, this.doPhasedInstantiationCallBack, this);
             this.doPhasedInstantiation();
         }
 
@@ -430,13 +435,13 @@ namespace eui.sys {
                             return client;
                         }
                     }
-                    else if(egret.is(client,"egret.DisplayObjectContainer")){
+                    else if(is(client,"DisplayObjectContainer")){
 
                         let items = bin.items;
                         let length = bin.length;
                         for (let i = 0; i < length; i++) {
                             let value = items[i];
-                            if ((<egret.DisplayObjectContainer><any> client).contains(value)) {
+                            if ((<DisplayObjectContainer><any> client).contains(value)) {
                                 bin.remove(value);
                                 return value;
                             }
@@ -477,12 +482,12 @@ namespace eui.sys {
                             return client;
                         }
                     }
-                    else if(egret.is(client,"egret.DisplayObjectContainer")){
+                    else if(is(client,"DisplayObjectContainer")){
                         let items = bin.items;
                         let length = bin.length;
                         for (let i = 0; i < length; i++) {
                             let value = items[i];
-                            if ((<egret.DisplayObjectContainer><any> client).contains(value)) {
+                            if ((<DisplayObjectContainer><any> client).contains(value)) {
                                 bin.remove(value);
                                 return value;
                             }
@@ -560,4 +565,3 @@ namespace eui.sys {
             }
         }
     }
-}

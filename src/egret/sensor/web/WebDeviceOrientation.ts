@@ -1,4 +1,8 @@
-namespace egret.web {
+
+import { DeviceOrientation } from "../DeviceOrientation";
+import { EventDispatcher } from "../../events/EventDispatcher";
+import { OrientationEvent } from "../../events/OrientationEvent";
+
 
     /**
      * @private
@@ -32,6 +36,5 @@ namespace egret.web {
             this.dispatchEvent(event);
         }
     }
-}
 
-egret.DeviceOrientation = egret.web.WebDeviceOrientation;
+DeviceOrientation = egret.web.WebDeviceOrientation;

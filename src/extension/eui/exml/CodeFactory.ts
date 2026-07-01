@@ -1,13 +1,18 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace eui.sys {
+import { State } from "../states/State";
+import { AddItems } from "../states/AddItems";
+import { SetProperty } from "../states/SetProperty";
+import { SetStateProperty } from "../states/SetStateProperty";
+import { Binding } from "../binding/Binding";
 
-    let STATE = "eui.State";
-    let ADD_ITEMS = "eui.AddItems";
-    let SET_PROPERTY = "eui.SetProperty";
-    let SET_STATEPROPERTY = "eui.SetStateProperty";
-    let BINDING_PROPERTIES = "eui.Binding.$bindProperties";
+
+    let STATE = "State";
+    let ADD_ITEMS = "AddItems";
+    let SET_PROPERTY = "SetProperty";
+    let SET_STATEPROPERTY = "SetStateProperty";
+    let BINDING_PROPERTIES = "Binding.$bindProperties";
 
     /**
      * @private
@@ -750,4 +755,3 @@ namespace eui.sys {
                 this.target + ",\"" + this.property + "\")";
         }
     }
-}

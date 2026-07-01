@@ -1,7 +1,11 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace eui.sys {
+import { getDefinitionByName } from "../../../egret/utils/getDefinitionByName";
+import { error } from "../../../egret/system/Console";
+import { DEBUG } from "../../../Defines.debug";
+import { $warn } from "";
+
 
     /**
      * @private
@@ -166,11 +170,11 @@ namespace eui.sys {
             let prototype = getPrototypeOf(className);
             if (prototype) {
                 if (!prototype.hasOwnProperty("__hashCode__")) {
-                    let clazz = egret.getDefinitionByName(className);
+                    let clazz = getDefinitionByName(className);
                     let instance = getInstanceOf(clazz);
                     if (!instance) {
                         if (DEBUG) {
-                            egret.$warn(2104, className);
+                            $warn(2104, className);
                         }
                         return resultType;
                     }
@@ -198,7 +202,7 @@ namespace eui.sys {
      * 获取一个类名对应的prototype引用
      */
     function getPrototypeOf(className:string):any {
-        let clazz = egret.getDefinitionByName(className);
+        let clazz = getDefinitionByName(className);
         if (!clazz) {
             return null;
         }
@@ -219,7 +223,7 @@ namespace eui.sys {
                 instance = new clazz();
             }
             catch (e) {
-                egret.error(e);
+                error(e);
                 return null;
             }
         }else{
@@ -229,4 +233,3 @@ namespace eui.sys {
         return instance;
     }
 
-}

@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret.web {
+import { Filter } from "../../../filters/Filter";
+import { WebGLRenderBuffer } from "./WebGLRenderBuffer";
+
     /**
      * @private
      * draw类型，所有的绘图操作都会缓存在drawData中，每个drawData都是一个drawable对象
@@ -287,4 +289,3 @@ namespace egret.web {
         }
 
     }
-}

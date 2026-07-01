@@ -1,7 +1,10 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret {
+import { ticker } from "../../../egret/player/SystemTicker";
+import { getTimer } from "../../../egret/utils/getTimer";
+import { args } from "../../../egret/player/Player";
+
 
     let setTimeoutCache: any = {};
     let setTimeoutIndex: number = 0;
@@ -36,9 +39,9 @@ namespace egret {
         let data = { listener, thisObject, delay: delay, params: args };
 
         setTimeoutCount++;
-        if (setTimeoutCount == 1 && egret.ticker) {
-            lastTime = egret.getTimer();
-            egret.ticker.$startTick(timeoutUpdate, null);
+        if (setTimeoutCount == 1 && ticker) {
+            lastTime = getTimer();
+            ticker.$startTick(timeoutUpdate, null);
         }
 
         setTimeoutIndex++;
@@ -65,8 +68,8 @@ namespace egret {
             setTimeoutCount--;
             delete setTimeoutCache[key];
 
-            if (setTimeoutCount == 0 && egret.ticker) {
-                egret.ticker.$stopTick(timeoutUpdate, null);
+            if (setTimeoutCount == 0 && ticker) {
+                ticker.$stopTick(timeoutUpdate, null);
             }
         }
 
@@ -93,4 +96,3 @@ namespace egret {
 
         return false;
     }
-}

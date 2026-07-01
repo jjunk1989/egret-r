@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret {
 
     /**
      * Transfer number to color character string
@@ -36,4 +35,3 @@ namespace egret {
         }
         return "#" + color;
     }
-}

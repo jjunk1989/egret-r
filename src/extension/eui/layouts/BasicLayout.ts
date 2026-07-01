@@ -1,7 +1,16 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace eui {
+import { Point, $TempPoint } from "../../../egret/geom/Point";
+import { Rectangle, $TempRectangle } from "../../../egret/geom/Rectangle";
+import { UIComponent, UIKeys } from "../core/UIComponent";
+import { Group } from "../components/Group";
+import { Component } from "../components/Component";
+import { LayoutBase } from "./supportClasses/LayoutBase";
+import { $error } from "../../../Defines.debug";
+import { DEBUG } from "../../../Defines.debug";
+import { is } from "../../../egret/utils/is";
+
 
     /**
      * The BasicLayout class arranges the layout elements according to their individual settings,
@@ -103,17 +112,15 @@ namespace eui {
                 return this.$useVirtualLayout;
             },
             set: function (value) {
-                egret.$error(2201);
+                $error(2201);
             },
             enumerable: true,
             configurable: true
         });
     }
-}
 
-namespace eui.sys {
 
-    let UIComponentClass = "eui.UIComponent";
+    let UIComponentClass = "UIComponent";
 
     /**
      * @private
@@ -137,27 +144,27 @@ namespace eui.sys {
      * @private
      * 一个工具方法，使用BasicLayout规则测量目标对象。
      */
-    export function measure(target:eui.Group|eui.Component):void {
+    export function measure(target:Group|Component):void {
         if (!target) {
             return;
         }
         let width = 0;
         let height = 0;
-        let bounds = egret.$TempRectangle;
+        let bounds = $TempRectangle;
         let count = target.numChildren;
         for (let i = 0; i < count; i++) {
-            let layoutElement = <eui.UIComponent> (target.getChildAt(i));
-            if (!egret.is(layoutElement, UIComponentClass) || !layoutElement.$includeInLayout) {
+            let layoutElement = <UIComponent> (target.getChildAt(i));
+            if (!is(layoutElement, UIComponentClass) || !layoutElement.$includeInLayout) {
                 continue;
             }
 
             let values = layoutElement.$UIComponent;
-            let hCenter = +values[sys.UIKeys.horizontalCenter];
-            let vCenter = +values[sys.UIKeys.verticalCenter];
-            let left = +values[sys.UIKeys.left];
-            let right = +values[sys.UIKeys.right];
-            let top = +values[sys.UIKeys.top];
-            let bottom = +values[sys.UIKeys.bottom];
+            let hCenter = +values[UIKeys.horizontalCenter];
+            let vCenter = +values[UIKeys.verticalCenter];
+            let left = +values[UIKeys.left];
+            let right = +values[UIKeys.right];
+            let top = +values[UIKeys.top];
+            let bottom = +values[UIKeys.bottom];
 
             let extX:number;
             let extY:number;
@@ -205,8 +212,8 @@ namespace eui.sys {
      * @private
      * 一个工具方法，使用BasicLayout规则布局目标对象。
      */
-    export function updateDisplayList(target:eui.Group|eui.Component,
-                                      unscaledWidth:number, unscaledHeight:number):egret.Point {
+    export function updateDisplayList(target:Group|Component,
+                                      unscaledWidth:number, unscaledHeight:number):Point {
         if (!target)
             return;
 
@@ -214,22 +221,22 @@ namespace eui.sys {
 
         let maxX = 0;
         let maxY = 0;
-        let bounds = egret.$TempRectangle;
+        let bounds = $TempRectangle;
         for (let i = 0; i < count; i++) {
-            let layoutElement = <eui.UIComponent> (target.getChildAt(i));
-            if (!egret.is(layoutElement, UIComponentClass) || !layoutElement.$includeInLayout) {
+            let layoutElement = <UIComponent> (target.getChildAt(i));
+            if (!is(layoutElement, UIComponentClass) || !layoutElement.$includeInLayout) {
                 continue;
             }
 
             let values = layoutElement.$UIComponent;
-            let hCenter = formatRelative(values[sys.UIKeys.horizontalCenter], unscaledWidth*0.5);
-            let vCenter = formatRelative(values[sys.UIKeys.verticalCenter], unscaledHeight*0.5);
-            let left = formatRelative(values[sys.UIKeys.left], unscaledWidth);
-            let right = formatRelative(values[sys.UIKeys.right], unscaledWidth);
-            let top = formatRelative(values[sys.UIKeys.top], unscaledHeight);
-            let bottom = formatRelative(values[sys.UIKeys.bottom], unscaledHeight);
-            let percentWidth = values[sys.UIKeys.percentWidth];
-            let percentHeight = values[sys.UIKeys.percentHeight];
+            let hCenter = formatRelative(values[UIKeys.horizontalCenter], unscaledWidth*0.5);
+            let vCenter = formatRelative(values[UIKeys.verticalCenter], unscaledHeight*0.5);
+            let left = formatRelative(values[UIKeys.left], unscaledWidth);
+            let right = formatRelative(values[UIKeys.right], unscaledWidth);
+            let top = formatRelative(values[UIKeys.top], unscaledHeight);
+            let bottom = formatRelative(values[UIKeys.bottom], unscaledHeight);
+            let percentWidth = values[UIKeys.percentWidth];
+            let percentHeight = values[UIKeys.percentHeight];
 
             let childWidth = NaN;
             let childHeight = NaN;
@@ -280,6 +287,5 @@ namespace eui.sys {
             maxX = Math.max(maxX, childX + elementWidth);
             maxY = Math.max(maxY, childY + elementHeight);
         }
-        return egret.$TempPoint.setTo(maxX, maxY);
+        return $TempPoint.setTo(maxX, maxY);
     }
-}

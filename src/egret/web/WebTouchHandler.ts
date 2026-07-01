@@ -1,7 +1,11 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret.web {
+import { Stage } from "../display/Stage";
+import { TouchHandler } from "../player/TouchHandler";
+import { HashObject } from "../utils/HashObject";
+import { Point } from "../geom/Point";
+
 
     /**
      * @private
@@ -11,10 +15,10 @@ namespace egret.web {
         /**
          * @private
          */
-        public constructor(stage:egret.Stage, canvas:HTMLCanvasElement) {
+        public constructor(stage:Stage, canvas:HTMLCanvasElement) {
             super();
             this.canvas = canvas;
-            this.touch = new egret.sys.TouchHandler(stage);
+            this.touch = new TouchHandler(stage);
             this.addListeners();
         }
 
@@ -25,7 +29,7 @@ namespace egret.web {
         /**
          * @private
          */
-        private touch:egret.sys.TouchHandler;
+        private touch:TouchHandler;
 
         /**
          * @private
@@ -214,4 +218,3 @@ namespace egret.web {
             this.touch.$initMaxTouches();
         }
     }
-}

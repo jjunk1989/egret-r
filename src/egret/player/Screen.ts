@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret.sys {
     /**
      * @private
      * 设备屏幕
@@ -25,4 +24,3 @@ namespace egret.sys {
          */
         setContentSize(width:number, height:number);
     }
-}

@@ -1,8 +1,12 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { TextField, TextKeys } from "./TextField";
+import { ILineElement, ITextElement, IHitTextElement, IWTextElement } from "./ITextElement";
+import { HorizontalAlign } from "./HorizontalAlign";
+import { TextFieldType } from "./TextFieldType";
 
-namespace egret {
+
     /**
      * @private
      * @version Egret 2.4
@@ -16,24 +20,24 @@ namespace egret {
          * @returns {number} 行数，从0开始
          * @private
          */
-        static $getStartLine(textfield:egret.TextField):number {
+        static $getStartLine(textfield:TextField):number {
             let values = textfield.$TextField;
             let textHeight:number = TextFieldUtils.$getTextHeight(textfield);
             let startLine:number = 0;
-            let textFieldHeight: number = values[sys.TextKeys.textFieldHeight];
+            let textFieldHeight: number = values[TextKeys.textFieldHeight];
             if (!isNaN(textFieldHeight)) {//
                 if (textHeight < textFieldHeight) {//最大高度比需要显示的高度小
 
                 }
                 else if (textHeight > textFieldHeight) {//最大高度比需要显示的高度大
-                    startLine = Math.max(values[sys.TextKeys.scrollV] - 1, 0);
-                    startLine = Math.min(values[sys.TextKeys.numLines] - 1, startLine);
+                    startLine = Math.max(values[TextKeys.scrollV] - 1, 0);
+                    startLine = Math.min(values[TextKeys.numLines] - 1, startLine);
                 }
 
-                if (!values[sys.TextKeys.multiline]) {
-                    startLine = Math.max(values[sys.TextKeys.scrollV] - 1, 0);
-                    if (values[sys.TextKeys.numLines] > 0) {
-                        startLine = Math.min(values[sys.TextKeys.numLines] - 1, startLine);    
+                if (!values[TextKeys.multiline]) {
+                    startLine = Math.max(values[TextKeys.scrollV] - 1, 0);
+                    if (values[TextKeys.numLines] > 0) {
+                        startLine = Math.min(values[TextKeys.numLines] - 1, startLine);    
                     }
                 }
             }
@@ -47,17 +51,17 @@ namespace egret {
          * @returns {number} 水平比例
          * @private
          */
-        static $getHalign(textfield:egret.TextField):number {
-            let lineArr:Array<egret.ILineElement>  = textfield.$getLinesArr2();
+        static $getHalign(textfield:TextField):number {
+            let lineArr:Array<ILineElement>  = textfield.$getLinesArr2();
             let halign:number = 0;
-            if (textfield.$TextField[sys.TextKeys.textAlign] == HorizontalAlign.CENTER) {
+            if (textfield.$TextField[TextKeys.textAlign] == HorizontalAlign.CENTER) {
                 halign = 0.5;
             }
-            else if (textfield.$TextField[sys.TextKeys.textAlign] == HorizontalAlign.RIGHT) {
+            else if (textfield.$TextField[TextKeys.textAlign] == HorizontalAlign.RIGHT) {
                 halign = 1;
             }
 
-            if (textfield.$TextField[sys.TextKeys.type] == egret.TextFieldType.INPUT && !textfield.$TextField[sys.TextKeys.multiline] && lineArr.length > 1) {
+            if (textfield.$TextField[TextKeys.type] == TextFieldType.INPUT && !textfield.$TextField[TextKeys.multiline] && lineArr.length > 1) {
                 halign = 0;
             }
 
@@ -70,9 +74,9 @@ namespace egret {
          * @param textfield 
          * @returns 
          */
-        static $getTextHeight(textfield:egret.TextField):number {
-            let textHeight:number = (egret.TextFieldType.INPUT == textfield.$TextField[sys.TextKeys.type]
-                && !textfield.$TextField[sys.TextKeys.multiline]) ? textfield.$TextField[sys.TextKeys.fontSize] : (textfield.$TextField[sys.TextKeys.textHeight] + (textfield.$TextField[sys.TextKeys.numLines] - 1) * textfield.$TextField[sys.TextKeys.lineSpacing]);
+        static $getTextHeight(textfield:TextField):number {
+            let textHeight:number = (TextFieldType.INPUT == textfield.$TextField[TextKeys.type]
+                && !textfield.$TextField[TextKeys.multiline]) ? textfield.$TextField[TextKeys.fontSize] : (textfield.$TextField[TextKeys.textHeight] + (textfield.$TextField[TextKeys.numLines] - 1) * textfield.$TextField[TextKeys.lineSpacing]);
             return textHeight;
         }
 
@@ -82,21 +86,21 @@ namespace egret {
          * @returns {number} 垂直比例
          * @private
          */
-        static $getValign(textfield:egret.TextField):number{
+        static $getValign(textfield:TextField):number{
             let textHeight:number = TextFieldUtils.$getTextHeight(textfield);
-            //if (textfield.$TextField[sys.TextKeys.type] == egret.TextFieldType.INPUT) {
-            //    if (textfield.$TextField[sys.TextKeys.multiline]) {
+            //if (textfield.$TextField[TextKeys.type] == TextFieldType.INPUT) {
+            //    if (textfield.$TextField[TextKeys.multiline]) {
                     //return 0;
                 //}
                 //return 0.5;
             //}
-            let textFieldHeight:number = textfield.$TextField[sys.TextKeys.textFieldHeight];
+            let textFieldHeight:number = textfield.$TextField[TextKeys.textFieldHeight];
             if (!isNaN(textFieldHeight)) {//
                 if (textHeight < textFieldHeight) {//最大高度比需要显示的高度小
                     let valign:number = 0;
-                    if (textfield.$TextField[sys.TextKeys.verticalAlign] == VerticalAlign.MIDDLE)
+                    if (textfield.$TextField[TextKeys.verticalAlign] == VerticalAlign.MIDDLE)
                         valign = 0.5;
-                    else if (textfield.$TextField[sys.TextKeys.verticalAlign] == VerticalAlign.BOTTOM)
+                    else if (textfield.$TextField[TextKeys.verticalAlign] == VerticalAlign.BOTTOM)
                         valign = 1;
 
                     return valign;
@@ -113,10 +117,10 @@ namespace egret {
          * @returns 文本单项
          * @private
          */
-        static $getTextElement(textfield:egret.TextField, x:number, y:number):ITextElement {
+        static $getTextElement(textfield:TextField, x:number, y:number):ITextElement {
             let hitTextEle:IHitTextElement = TextFieldUtils.$getHit(textfield, x, y);
 
-            let lineArr:Array<egret.ILineElement>  = textfield.$getLinesArr2();
+            let lineArr:Array<ILineElement>  = textfield.$getLinesArr2();
             if (hitTextEle && lineArr[hitTextEle.lineIndex] && lineArr[hitTextEle.lineIndex].elements[hitTextEle.textElementIndex]) {
                 return lineArr[hitTextEle.lineIndex].elements[hitTextEle.textElementIndex];
             }
@@ -131,16 +135,16 @@ namespace egret {
          * @returns 文本点击块
          * @private
          */
-        static $getHit(textfield:egret.TextField, x:number, y:number):IHitTextElement {
-            let lineArr:Array<egret.ILineElement>  = textfield.$getLinesArr2();
-            if (textfield.$TextField[sys.TextKeys.textFieldWidth] == 0) {//文本可点击区域
+        static $getHit(textfield:TextField, x:number, y:number):IHitTextElement {
+            let lineArr:Array<ILineElement>  = textfield.$getLinesArr2();
+            if (textfield.$TextField[TextKeys.textFieldWidth] == 0) {//文本可点击区域
                 return null;
             }
             let line:number = 0;
 
             let textHeight:number = TextFieldUtils.$getTextHeight(textfield);
             let startY:number = 0;
-            let textFieldHeight:number = textfield.$TextField[sys.TextKeys.textFieldHeight];
+            let textFieldHeight:number = textfield.$TextField[TextKeys.textFieldHeight];
             if (!isNaN(textFieldHeight) && textFieldHeight > textHeight) {
                 let valign:number = TextFieldUtils.$getValign(textfield);
                 startY = valign * (textFieldHeight - textHeight);
@@ -152,7 +156,7 @@ namespace egret {
             let startLine:number = TextFieldUtils.$getStartLine(textfield);
             let lineH:number = 0;
             for (let i:number = startLine; i < lineArr.length; i++) {
-                let lineEle:egret.ILineElement = lineArr[i];
+                let lineEle:ILineElement = lineArr[i];
                 if (lineH + lineEle.height >= y) {
                     if (lineH < y) {
                         line = i + 1;
@@ -163,19 +167,19 @@ namespace egret {
                     lineH += lineEle.height;
                 }
 
-                if (lineH + textfield.$TextField[sys.TextKeys.lineSpacing] > y) {
+                if (lineH + textfield.$TextField[TextKeys.lineSpacing] > y) {
                     return null;
                 }
 
-                lineH += textfield.$TextField[sys.TextKeys.lineSpacing];
+                lineH += textfield.$TextField[TextKeys.lineSpacing];
             }
             if(line == 0) {
                 return null;
             }
-            let lineElement:egret.ILineElement = lineArr[line - 1];
+            let lineElement:ILineElement = lineArr[line - 1];
 
 
-            let textFieldWidth:number = textfield.$TextField[sys.TextKeys.textFieldWidth];
+            let textFieldWidth:number = textfield.$TextField[TextKeys.textFieldWidth];
             if (isNaN(textFieldWidth)) {
                 textFieldWidth = textfield.textWidth;
             }
@@ -202,9 +206,9 @@ namespace egret {
          * @returns {number} 显示的行数
          * @private
          */
-        static $getScrollNum(textfield:egret.TextField):number {
+        static $getScrollNum(textfield:TextField):number {
             let scrollNum:number = 1;
-            if (textfield.$TextField[sys.TextKeys.multiline]) {
+            if (textfield.$TextField[TextKeys.multiline]) {
                 let height = textfield.height;
                 let size = textfield.size;
                 let lineSpacing = textfield.lineSpacing;
@@ -218,4 +222,3 @@ namespace egret {
         }
 
     }
-}

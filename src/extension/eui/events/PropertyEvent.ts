@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { Event } from "../../../egret/events/Event";
+import { IEventDispatcher } from "../../../egret/events/IEventDispatcher";
 
-namespace eui {
 
     /**
      * The PropertyChangeEvent class represents the event object
@@ -24,7 +25,7 @@ namespace eui {
      * @includeExample  extension/eui/events/PropertyEventExample.ts
      * @language zh_CN
      */
-    export class PropertyEvent extends egret.Event {
+    export class PropertyEvent extends Event {
         /**
          * Dispatch when a property changed.
          * @version Egret 2.4
@@ -115,16 +116,14 @@ namespace eui {
          * @platform Web
          * @language zh_CN
          */
-        public static dispatchPropertyEvent(target:egret.IEventDispatcher, eventType:string, property?:string):boolean {
+        public static dispatchPropertyEvent(target:IEventDispatcher, eventType:string, property?:string):boolean {
             if (!target.hasEventListener(eventType)) {
                 return true;
             }
-            let event = egret.Event.create(PropertyEvent, eventType);
+            let event = Event.create(PropertyEvent, eventType);
             event.property = property;
             let result = target.dispatchEvent(event);
-            egret.Event.release(event);
+            Event.release(event);
             return result;
         }
     }
-
-}

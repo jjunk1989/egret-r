@@ -1,7 +1,27 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret.sys {
+import { ITextStyle, ITextElement, ILineElement, IWTextElement } from "./ITextElement";
+import { Event } from "../events/Event";
+import { FocusEvent } from "../events/FocusEvent";
+import { nativeRender } from "../player/Player";
+import { HorizontalAlign } from "./HorizontalAlign";
+import { VerticalAlign } from "./VerticalAlign";
+import { InputController } from "./InputController";
+import { TouchEvent } from "../events/TouchEvent";
+import { TextEvent } from "../events/TextEvent";
+import { measureText } from "./TextMeasurer";
+import { TextNode } from "../player/nodes/TextNode";
+import { GraphicsNode } from "../player/nodes/GraphicsNode";
+import { GroupNode } from "../player/nodes/GroupNode";
+import { Path2D } from "../player/paths/Path2D";
+import { DisplayObject } from "../display/DisplayObject";
+import { TextFieldInputType } from "./TextFieldInputType";
+import { Stage } from "../display/Stage";
+import { Rectangle } from "../geom/Rectangle";
+import { TextFieldUtils } from "./TextFieldUtils";
+import { TextFieldType } from "./TextFieldType";
+
     /**
      * @private
      */
@@ -163,11 +183,9 @@ namespace egret.sys {
          */
         textLinesChangedForNativeRender
     }
-}
 
-namespace egret {
 
-    let defaultRegex = "(?=[\\u00BF-\\u1FFF\\u2C00-\\uD7FF]|\\b|\\s)(?![0-9])(?![。，！、》…）)}”】\\.\\,\\!\\?\\]\\:])";
+    let defaultRegex = "(?=[\\u00BF-\\u1FFF\\u2C00-\\uD7FF]|\\b|\\s)(?![0-9])(?![。，！、》…）)”】\\.\\,\\!\\?\\]\\:])";
     let SplitRegex: RegExp;
 
     /**
@@ -288,12 +306,12 @@ namespace egret {
      * 根据样式测量文本宽度
      */
     function measureTextWidth(text, values: any, style?: ITextStyle): number {
-        style = style || <egret.ITextStyle>{};
+        style = style || <ITextStyle>{};
         let italic: boolean = style.italic == null ? values[sys.TextKeys.italic] : style.italic;
         let bold: boolean = style.bold == null ? values[sys.TextKeys.bold] : style.bold;
         let size: number = style.size == null ? values[sys.TextKeys.fontSize] : style.size;
         let fontFamily: string = style.fontFamily || values[sys.TextKeys.fontFamily] || TextField.default_fontFamily;
-        return sys.measureText(text, fontFamily, size, bold, italic);
+        return measureText(text, fontFamily, size, bold, italic);
     }
 
     /**
@@ -301,9 +319,9 @@ namespace egret {
      * If developers expect  no differences among all platforms, please use BitmapText
      * @see http://edn.egret.com/cn/docs/page/141 Create Text
      *
-     * @event egret.Event.CHANGE Dispatched when entering text user input。
-     * @event egret.FocusEvent.FOCUS_IN Dispatched after the focus to enter text.
-     * @event egret.FocusEvent.FOCUS_OUT Enter the text loses focus after dispatch.
+     * @event Event.CHANGE Dispatched when entering text user input。
+     * @event FocusEvent.FOCUS_IN Dispatched after the focus to enter text.
+     * @event FocusEvent.FOCUS_OUT Enter the text loses focus after dispatch.
      * @version Egret 2.4
      * @platform Web
      * @includeExample egret/text/TextField.ts
@@ -314,9 +332,9 @@ namespace egret {
      * 如果开发者希望所有平台完全无差异，请使用BitmapText
      * @see http://edn.egret.com/cn/docs/page/141 创建文本
      *
-     * @event egret.Event.CHANGE 输入文本有用户输入时调度。
-     * @event egret.FocusEvent.FOCUS_IN 聚焦输入文本后调度。
-     * @event egret.FocusEvent.FOCUS_OUT 输入文本失去焦点后调度。
+     * @event Event.CHANGE 输入文本有用户输入时调度。
+     * @event FocusEvent.FOCUS_IN 聚焦输入文本后调度。
+     * @event FocusEvent.FOCUS_OUT 输入文本失去焦点后调度。
      * @version Egret 2.4
      * @platform Web
      * @includeExample egret/text/TextField.ts
@@ -372,7 +390,7 @@ namespace egret {
          */
         constructor() {
             super();
-            let textNode = new sys.TextNode();
+            let textNode = new TextNode();
             textNode.fontFamily = TextField.default_fontFamily;
             this.textNode = textNode;
             this.$renderNode = textNode;
@@ -417,7 +435,7 @@ namespace egret {
                 37: TextFieldInputType.TEXT,            //inputType
                 38: false            //textLinesChangedForNativeRender
             };
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 this.$nativeDisplayObject.setFontFamily(TextField.default_fontFamily);
                 this.$nativeDisplayObject.setFontSize(TextField.default_size);
             }
@@ -478,7 +496,7 @@ namespace egret {
             }
             values[sys.TextKeys.fontFamily] = value;
             this.invalidateFontString();
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 this.$nativeDisplayObject.setFontFamily(value);
             }
 
@@ -514,7 +532,7 @@ namespace egret {
             }
             values[sys.TextKeys.fontSize] = value;
             this.invalidateFontString();
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 this.$nativeDisplayObject.setFontSize(value);
             }
 
@@ -550,7 +568,7 @@ namespace egret {
             }
             values[sys.TextKeys.bold] = value;
             this.invalidateFontString();
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 this.$nativeDisplayObject.setBold(value);
             }
 
@@ -586,7 +604,7 @@ namespace egret {
             }
             values[sys.TextKeys.italic] = value;
             this.invalidateFontString();
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 this.$nativeDisplayObject.setItalic(value);
             }
 
@@ -604,14 +622,14 @@ namespace egret {
 
         /**
          * Horizontal alignment of text.
-         * @default：egret.HorizontalAlign.LEFT
+         * @default：HorizontalAlign.LEFT
          * @version Egret 2.4
          * @platform Web
          * @language en_US
          */
         /**
          * 文本的水平对齐方式。
-         * @default：egret.HorizontalAlign.LEFT
+         * @default：HorizontalAlign.LEFT
          * @version Egret 2.4
          * @platform Web
          * @language zh_CN
@@ -631,7 +649,7 @@ namespace egret {
             }
             values[sys.TextKeys.textAlign] = value;
             this.$invalidateTextField();
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 this.$nativeDisplayObject.setTextAlign(value);
             }
 
@@ -640,14 +658,14 @@ namespace egret {
 
         /**
          * Vertical alignment of text.
-         * @default：egret.VerticalAlign.TOP
+         * @default：VerticalAlign.TOP
          * @version Egret 2.4
          * @platform Web
          * @language en_US
          */
         /**
          * 文字的垂直对齐方式。
-         * @default：egret.VerticalAlign.TOP
+         * @default：VerticalAlign.TOP
          * @version Egret 2.4
          * @platform Web
          * @language zh_CN
@@ -667,7 +685,7 @@ namespace egret {
             }
             values[sys.TextKeys.verticalAlign] = value;
             this.$invalidateTextField();
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 this.$nativeDisplayObject.setVerticalAlign(value);
             }
 
@@ -703,7 +721,7 @@ namespace egret {
             }
             values[sys.TextKeys.lineSpacing] = value;
             this.$invalidateTextField();
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 this.$nativeDisplayObject.setLineSpacing(value);
             }
 
@@ -742,7 +760,7 @@ namespace egret {
                 this.inputUtils._setColor(this.$TextField[sys.TextKeys.textColor]);
             }
             this.$invalidateTextField();
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 this.$nativeDisplayObject.setTextColor(value);
             }
             return true;
@@ -782,7 +800,7 @@ namespace egret {
             }
             values[sys.TextKeys.wordWrap] = value;
             this.$invalidateTextField();
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 this.$nativeDisplayObject.setWordWrap(value);
             }
         }
@@ -814,7 +832,7 @@ namespace egret {
             let values = this.$TextField;
             if (values[sys.TextKeys.type] != value) {
                 values[sys.TextKeys.type] = value;
-                if (egret.nativeRender) {
+                if (nativeRender) {
                     this.$nativeDisplayObject.setType(value);
                 }
                 if (value == TextFieldType.INPUT) {//input，如果没有设置过宽高，则设置默认值为100，30
@@ -829,7 +847,7 @@ namespace egret {
 
                     //创建stageText
                     if (this.inputUtils == null) {
-                        this.inputUtils = new egret.InputController();
+                        this.inputUtils = new InputController();
                     }
 
                     this.inputUtils.init(this);
@@ -875,7 +893,7 @@ namespace egret {
                 return;
             }
             this.$TextField[sys.TextKeys.inputType] = value;
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 this.$nativeDisplayObject.setInputType(value);
             }
         }
@@ -947,11 +965,11 @@ namespace egret {
                     text = value;
                 }
 
-                if (egret.nativeRender) {
+                if (nativeRender) {
                     this.$nativeDisplayObject.setText(text);
                 }
 
-                this.setMiddleStyle([<egret.ITextElement>{ text: text }]);
+                this.setMiddleStyle([<ITextElement>{ text: text }]);
                 return true;
             }
             return false;
@@ -1014,10 +1032,10 @@ namespace egret {
                     text = values[sys.TextKeys.text];
                 }
 
-                if (egret.nativeRender) {
+                if (nativeRender) {
                     this.$nativeDisplayObject.setText(text);
                 }
-                this.setMiddleStyle([<egret.ITextElement>{ text: text }]);
+                this.setMiddleStyle([<ITextElement>{ text: text }]);
 
                 return true;
             }
@@ -1058,7 +1076,7 @@ namespace egret {
             if (values[sys.TextKeys.strokeColor] != value) {
                 this.$invalidateTextField();
                 values[sys.TextKeys.strokeColor] = value;
-                if (egret.nativeRender) {
+                if (nativeRender) {
                     this.$nativeDisplayObject.setStrokeColor(value);
                 }
                 values[sys.TextKeys.strokeColorString] = toColorString(value);
@@ -1103,7 +1121,7 @@ namespace egret {
             if (this.$TextField[sys.TextKeys.stroke] != value) {
                 this.$invalidateTextField();
                 this.$TextField[sys.TextKeys.stroke] = value;
-                if (egret.nativeRender) {
+                if (nativeRender) {
                     this.$nativeDisplayObject.setStroke(value);
                 }
 
@@ -1141,7 +1159,7 @@ namespace egret {
         $setMaxChars(value: number): boolean {
             if (this.$TextField[sys.TextKeys.maxChars] != value) {
                 this.$TextField[sys.TextKeys.maxChars] = value;
-                if (egret.nativeRender) {
+                if (nativeRender) {
                     this.$nativeDisplayObject.setMaxChars(value);
                 }
 
@@ -1169,7 +1187,7 @@ namespace egret {
                 return;
             }
             this.$TextField[sys.TextKeys.scrollV] = value;
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 this.$nativeDisplayObject.setScrollV(value);
             }
             this.$invalidateTextField();
@@ -1290,7 +1308,7 @@ namespace egret {
             }
             this.$TextField[sys.TextKeys.multiline] = value;
             this.$invalidateTextField();
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 this.$nativeDisplayObject.setMultiline(value);
             }
             return true;
@@ -1393,7 +1411,7 @@ namespace egret {
          * @param value
          */
         $setWidth(value: number): boolean {
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 this.$nativeDisplayObject.setTextFieldWidth(value);
             }
             let values = this.$TextField;
@@ -1427,7 +1445,7 @@ namespace egret {
          * @param value
          */
         $setHeight(value: number): boolean {
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 this.$nativeDisplayObject.setTextFieldHeight(value);
             }
             let values = this.$TextField;
@@ -1476,11 +1494,11 @@ namespace egret {
         /**
          * @private
          */
-        private textNode: sys.TextNode;
+        private textNode: TextNode;
         /**
          * @private
          */
-        public $graphicsNode: sys.GraphicsNode = null;
+        public $graphicsNode: GraphicsNode = null;
 
         /**
          * Specifies whether the text field has a border.
@@ -1510,7 +1528,7 @@ namespace egret {
             }
             this.$TextField[sys.TextKeys.border] = value;
             this.$invalidateTextField();
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 this.$nativeDisplayObject.setBorder(value);
             }
         }
@@ -1549,7 +1567,7 @@ namespace egret {
             }
             this.$TextField[sys.TextKeys.borderColor] = value;
             this.$invalidateTextField();
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 this.$nativeDisplayObject.setBorderColor(value);
             }
         }
@@ -1589,7 +1607,7 @@ namespace egret {
             }
             this.$TextField[sys.TextKeys.background] = value;
             this.$invalidateTextField();
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 this.$nativeDisplayObject.setBackground(value);
             }
         }
@@ -1627,7 +1645,7 @@ namespace egret {
             }
             this.$TextField[sys.TextKeys.backgroundColor] = value;
             this.$invalidateTextField();
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 this.$nativeDisplayObject.setBackgroundColor(value);
             }
         }
@@ -1652,9 +1670,9 @@ namespace egret {
             let values = this.$TextField;
             if (values[sys.TextKeys.background] || values[sys.TextKeys.border] || (lines && lines.length > 0)) {
                 if (!graphics) {
-                    graphics = this.$graphicsNode = new sys.GraphicsNode();
-                    if (!egret.nativeRender) {
-                        let groupNode = new sys.GroupNode();
+                    graphics = this.$graphicsNode = new GraphicsNode();
+                    if (!nativeRender) {
+                        let groupNode = new GroupNode();
                         groupNode.addNode(graphics);
                         groupNode.addNode(this.textNode);
                         this.$renderNode = groupNode;
@@ -1663,8 +1681,8 @@ namespace egret {
                         this.$renderNode = this.textNode;
                     }
                 }
-                let fillPath: sys.Path2D;
-                let strokePath: sys.Path2D;
+                let fillPath: Path2D;
+                let strokePath: Path2D;
                 //渲染背景
                 if (values[sys.TextKeys.background]) {
                     fillPath = graphics.beginFill(values[sys.TextKeys.backgroundColor]);
@@ -1738,7 +1756,7 @@ namespace egret {
 
             if (this.textNode) {
                 this.textNode.clean();
-                if (egret.nativeRender) {
+                if (nativeRender) {
                     egret_native.NativeDisplayObject.disposeTextData(this);
                 }
             }
@@ -1766,7 +1784,7 @@ namespace egret {
             self.$renderDirty = true;
             self.$TextField[sys.TextKeys.textLinesChanged] = true;
             self.$TextField[sys.TextKeys.textLinesChangedForNativeRender] = true;
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 // egret_native.dirtyTextField(this);
             }
             else {
@@ -1863,13 +1881,13 @@ namespace egret {
          * @see http://edn.egret.com/cn/index.php/article/index/id/146
          * @language zh_CN
          */
-        public set textFlow(textArr: Array<egret.ITextElement>) {
+        public set textFlow(textArr: Array<ITextElement>) {
             this.isFlow = true;
             let text: string = "";
             if (textArr == null)
                 textArr = [];
             for (let i: number = 0; i < textArr.length; i++) {
-                let element: egret.ITextElement = textArr[i];
+                let element: ITextElement = textArr[i];
                 text += element.text;
             }
 
@@ -1879,7 +1897,7 @@ namespace egret {
             else {
                 this.$TextField[sys.TextKeys.text] = text;
                 this.setMiddleStyle(textArr);
-                if (egret.nativeRender) {
+                if (nativeRender) {
                     this.$nativeDisplayObject.setTextFlow(textArr);
                 }
             }
@@ -1889,7 +1907,7 @@ namespace egret {
          * @version Egret 2.4
          * @platform Web
          */
-        public get textFlow(): Array<egret.ITextElement> {
+        public get textFlow(): Array<ITextElement> {
             return this.textArr;
         }
 
@@ -1921,14 +1939,14 @@ namespace egret {
         /**
          * @private
          */
-        private textArr: Array<egret.ITextElement> = [];
+        private textArr: Array<ITextElement> = [];
 
         /**
          * @private
          *
          * @param textArr
          */
-        private setMiddleStyle(textArr: Array<egret.ITextElement>): void {
+        private setMiddleStyle(textArr: Array<ITextElement>): void {
             this.$TextField[sys.TextKeys.textLinesChanged] = true;
             this.$TextField[sys.TextKeys.textLinesChangedForNativeRender] = true;
             this.textArr = textArr;
@@ -1982,7 +2000,7 @@ namespace egret {
          * @platform Web
          */
         public appendText(text: string): void {
-            this.appendElement(<egret.ITextElement>{ text: text });
+            this.appendElement(<ITextElement>{ text: text });
         }
 
         /**
@@ -1991,10 +2009,10 @@ namespace egret {
          * @version Egret 2.4
          * @platform Web
          */
-        public appendElement(element: egret.ITextElement): void {
+        public appendElement(element: ITextElement): void {
             const text: string = this.$TextField[sys.TextKeys.text] + element.text;
 
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 this.textArr.push(element);
                 this.$TextField[sys.TextKeys.text] = text;
                 this.$TextField[sys.TextKeys.textLinesChanged] = true;
@@ -2017,9 +2035,9 @@ namespace egret {
         /**
          * @private
          */
-        private linesArr: Array<egret.ILineElement> = [];
+        private linesArr: Array<ILineElement> = [];
 
-        $getLinesArr(): Array<egret.ILineElement> {
+        $getLinesArr(): Array<ILineElement> {
             let values = this.$TextField;
             if (nativeRender && values[sys.TextKeys.textLinesChangedForNativeRender]) {
                 egret_native.updateNativeRender();
@@ -2036,7 +2054,7 @@ namespace egret {
          *
          * @returns
          */
-        $getLinesArr2(): Array<egret.ILineElement> {
+        $getLinesArr2(): Array<ILineElement> {
             let values = this.$TextField;
 
             if (!values[sys.TextKeys.textLinesChanged]) {
@@ -2044,7 +2062,7 @@ namespace egret {
             }
 
             values[sys.TextKeys.textLinesChanged] = false;
-            let text2Arr: Array<egret.ITextElement> = this.textArr;
+            let text2Arr: Array<ITextElement> = this.textArr;
 
             this.linesArr.length = 0;
             values[sys.TextKeys.textHeight] = 0;
@@ -2057,15 +2075,15 @@ namespace egret {
                 return [{ width: 0, height: 0, charNum: 0, elements: [], hasNextLine: false }];
             }
 
-            let linesArr: Array<egret.ILineElement> = this.linesArr;
+            let linesArr: Array<ILineElement> = this.linesArr;
             let lineW: number = 0;
             let lineCharNum: number = 0;
             let lineH: number = 0;
             let lineCount: number = 0;
-            let lineElement: egret.ILineElement;
+            let lineElement: ILineElement;
 
             for (let i: number = 0, text2ArrLength: number = text2Arr.length; i < text2ArrLength; i++) {
-                let element: egret.ITextElement = text2Arr[i];
+                let element: ITextElement = text2Arr[i];
                 //可能设置为没有文本，忽略绘制
                 if (!element.text) {
                     if (lineElement) {
@@ -2077,7 +2095,7 @@ namespace egret {
                     }
                     continue;
                 }
-                element.style = element.style || <egret.ITextStyle>{};
+                element.style = element.style || <ITextStyle>{};
 
                 let text: string = element.text.toString();
                 let textArr: string[] = text.split(/(?:\r\n|\r|\n)/);
@@ -2109,7 +2127,7 @@ namespace egret {
                         if (isNaN(textFieldWidth)) {//没有设置过宽
                             lineW += w;
                             lineCharNum += textArr[j].length;
-                            lineElement.elements.push(<egret.IWTextElement>{
+                            lineElement.elements.push(<IWTextElement>{
                                 width: w,
                                 text: textArr[j],
                                 style: element.style
@@ -2121,7 +2139,7 @@ namespace egret {
                         }
                         else {
                             if (lineW + w <= textFieldWidth) {//在设置范围内
-                                lineElement.elements.push(<egret.IWTextElement>{
+                                lineElement.elements.push(<IWTextElement>{
                                     width: w,
                                     text: textArr[j],
                                     style: element.style
@@ -2223,7 +2241,7 @@ namespace egret {
                                 }
 
                                 if (k > 0) {
-                                    lineElement.elements.push(<egret.IWTextElement>{
+                                    lineElement.elements.push(<IWTextElement>{
                                         width: ww,
                                         text: word.substring(0, charNum),
                                         style: element.style
@@ -2314,7 +2332,7 @@ namespace egret {
             node.strokeColor = values[sys.TextKeys.strokeColor];
             node.textColor = values[sys.TextKeys.textColor];
             //先算出需要的数值
-            let lines: Array<egret.ILineElement> = this.$getLinesArr();
+            let lines: Array<ILineElement> = this.$getLinesArr();
             if (values[sys.TextKeys.textWidth] == 0) {
                 return [];
             }
@@ -2336,7 +2354,7 @@ namespace egret {
             let drawX: number = 0;
             let underLineData: number[] = [];
             for (let i: number = startLine, numLinesLength: number = values[sys.TextKeys.numLines]; i < numLinesLength; i++) {
-                let line: egret.ILineElement = lines[i];
+                let line: ILineElement = lines[i];
                 let h: number = line.height;
                 drawY += h / 2;
                 if (i != startLine) {
@@ -2350,7 +2368,7 @@ namespace egret {
 
                 drawX = Math.round((maxWidth - line.width) * hAlign);
                 for (let j: number = 0, elementsLength: number = line.elements.length; j < elementsLength; j++) {
-                    let element: egret.IWTextElement = line.elements[j];
+                    let element: IWTextElement = line.elements[j];
                     let size: number = typeof element.style.size == "number" ? element.style.size : values[sys.TextKeys.fontSize];
 
                     node.drawText(drawX, drawY + (h - size) / 2, element.text, element.style);
@@ -2374,16 +2392,16 @@ namespace egret {
 
         //增加点击事件
         private addEvent(): void {
-            this.addEventListener(egret.TouchEvent.TOUCH_TAP, this.onTapHandler, this);
+            this.addEventListener(TouchEvent.TOUCH_TAP, this.onTapHandler, this);
         }
 
         //释放点击事件
         private removeEvent(): void {
-            this.removeEventListener(egret.TouchEvent.TOUCH_TAP, this.onTapHandler, this);
+            this.removeEventListener(TouchEvent.TOUCH_TAP, this.onTapHandler, this);
         }
 
         //处理富文本中有href的
-        private onTapHandler(e: egret.TouchEvent): void {
+        private onTapHandler(e: TouchEvent): void {
             if (this.$TextField[sys.TextKeys.type] == egret.TextFieldType.INPUT) {
                 return;
             }
@@ -2391,12 +2409,12 @@ namespace egret {
             if (ele == null) {
                 return;
             }
-            let style: egret.ITextStyle = ele.style;
+            let style: ITextStyle = ele.style;
 
             if (style && style.href) {
                 if (style.href.match(/^event:/)) {
                     let type: string = style.href.match(/^event:/)[0];
-                    egret.TextEvent.dispatchTextEvent(this, egret.TextEvent.LINK, style.href.substring(type.length));
+                    TextEvent.dispatchTextEvent(this, TextEvent.LINK, style.href.substring(type.length));
                 }
                 else {
                     open(style.href, style.target || "_blank");

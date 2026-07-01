@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret {
 
     /**
      * Return the fully qualified class name of an object
@@ -10,7 +9,7 @@ namespace egret {
      * @returns A string containing the fully qualified class name.
      * @example
      * <pre>
-     *  egret.getQualifiedClassName(egret.DisplayObject) //return "egret.DisplayObject"
+     *  egret.getQualifiedClassName(DisplayObject) //return "DisplayObject"
      * </pre>
      * @version Egret 2.4
      * @platform Web
@@ -24,7 +23,7 @@ namespace egret {
      * @returns 包含完全限定类名称的字符串。
      * @example
      * <pre>
-     *  egret.getQualifiedClassName(egret.DisplayObject) //返回 "egret.DisplayObject"
+     *  egret.getQualifiedClassName(DisplayObject) //返回 "DisplayObject"
      * </pre>
      * @version Egret 2.4
      * @platform Web
@@ -50,4 +49,3 @@ namespace egret {
         });
         return className;
     }
-}

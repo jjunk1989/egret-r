@@ -1,8 +1,12 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { HttpResponseType } from "../../../egret/net/HttpResponseType";
+import { XML } from "../../../egret/utils/XML";
+import { BinAnalyzer } from "./BinAnalyzer";
+import { ResourceItem } from "../../assetsmanager/src/shim/ResourceItem";
 
-namespace RES {
+
     /**
      * @private
      */
@@ -10,7 +14,7 @@ namespace RES {
 
         public constructor(){
             super();
-            this._dataFormat = egret.HttpResponseType.TEXT;
+            this._dataFormat = HttpResponseType.TEXT;
         }
 
         /**
@@ -23,11 +27,10 @@ namespace RES {
             }
             try{
                 let xmlStr:string = <string> data;
-                let xml:any = egret.XML.parse(xmlStr);
+                let xml:any = XML.parse(xmlStr);
                 this.fileDic[name] = xml;
             }
             catch (e){
             }
         }
     }
-}

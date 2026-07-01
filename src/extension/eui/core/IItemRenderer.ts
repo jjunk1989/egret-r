@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { UIComponent } from "./UIComponent";
 
-namespace eui {
 
 	/**
 	 * The IItemRenderer interface defines the basic set of APIs
@@ -68,4 +68,3 @@ namespace eui {
 		 */
 		itemIndex:number;
 	}
-}

@@ -29,7 +29,7 @@
  * @platform Web
  * @language zh_CN
  */
-declare let DEBUG: boolean;
+export const DEBUG: boolean = true;
 /**
  * Is release mode.
  * @version Egret 2.5
@@ -42,12 +42,8 @@ declare let DEBUG: boolean;
  * @platform Web
  * @language zh_CN
  */
-declare let RELEASE: boolean;
+export const RELEASE: boolean = false;
 
-global.DEBUG = true;
-global.RELEASE = false;
-
-namespace egret {
     /**
      * @private
      */
@@ -69,12 +65,12 @@ namespace egret {
      * @private
      */
     function _getString(code: number, ...params: any[]): string {
-        return egret.sys.tr.apply(egret.sys, arguments);
+        return tr.apply(egret.sys, arguments);
     }
     egret.getString = _getString;
 
     function _error(code: number, ...params: any[]): void {
-        let text: string = egret.sys.tr.apply(null, arguments);
+        let text: string = tr.apply(null, arguments);
         if (DEBUG) {
             egret.sys.$errorToFPS("Error #" + code + ": " + text);
         }
@@ -84,14 +80,14 @@ namespace egret {
     egret.$error = _error;
 
     function _warn(code: number, ...params: any[]): void {
-        let text: string = egret.sys.tr.apply(null, arguments);
+        let text: string = tr.apply(null, arguments);
         if (DEBUG) {
             egret.sys.$warnToFPS("Warning #" + code + ": " + text);
         }
-        egret.warn("Warning #" + code + ": " + text);
+        warn("Warning #" + code + ": " + text);
     }
 
-    egret.$warn = _warn;
+    $warn = _warn;
 
     function _markReadOnly(instance: any, property: string, isProperty: boolean = true): void {
         let data: PropertyDescriptor = Object.getOwnPropertyDescriptor(isProperty ? instance.prototype : instance, property);
@@ -101,10 +97,10 @@ namespace egret {
         }
         data.set = function (value: any) {
             if (isProperty) {
-                egret.$warn(1010, getQualifiedClassName(instance), property);
+                $warn(1010, getQualifiedClassName(instance), property);
             }
             else {
-                egret.$warn(1014, getQualifiedClassName(instance), property);
+                $warn(1014, getQualifiedClassName(instance), property);
             }
         };
         Object.defineProperty(instance.prototype, property, data);
@@ -114,7 +110,7 @@ namespace egret {
     function markCannotUse(instance: any, property: string, defaultValue: any): void {
         Object.defineProperty(instance.prototype, property, {
             get: function () {
-                egret.$warn(1009, getQualifiedClassName(instance), property);
+                $warn(1009, getQualifiedClassName(instance), property);
                 return defaultValue;
             },
             set: function (value) {
@@ -125,5 +121,4 @@ namespace egret {
         });
     }
     egret.$markCannotUse = markCannotUse;
-}
 

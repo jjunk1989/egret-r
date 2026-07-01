@@ -1,8 +1,13 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret.sys {
-
+import { Matrix } from "../../geom/Matrix";
+import { BitmapFillMode } from "../../display/BitmapFillMode";
+import { Rectangle } from "../../geom/Rectangle";
+import { NormalBitmapNode } from "./NormalBitmapNode";
+import { RenderNode, RenderNodeType } from "./RenderNode";
+import { BitmapData } from "../../display/BitmapData";
+import { ColorMatrixFilter } from "../../filters/ColorMatrixFilter";
 
 
     /**
@@ -26,7 +31,7 @@ namespace egret.sys {
         /**
          * 相对偏移矩阵。
          */
-        public matrix: egret.Matrix;
+        public matrix: Matrix;
         /**
          * 图片宽度。WebGL渲染使用
          */
@@ -72,7 +77,7 @@ namespace egret.sys {
             this.filter = null;
         }
 
-        static $updateTextureData(node: sys.NormalBitmapNode, image: BitmapData,
+        static $updateTextureData(node: NormalBitmapNode, image: BitmapData,
             bitmapX: number, bitmapY: number, bitmapWidth: number, bitmapHeight: number, offsetX: number, offsetY: number,
             textureWidth: number, textureHeight: number, destW: number, destH: number, sourceWidth: number, sourceHeight: number,
             fillMode: string, smoothing: boolean): void {
@@ -84,13 +89,13 @@ namespace egret.sys {
             node.image = image;
             node.imageWidth = sourceWidth;
             node.imageHeight = sourceHeight;
-            if (fillMode == egret.BitmapFillMode.SCALE) {
+            if (fillMode == BitmapFillMode.SCALE) {
                 let tsX: number = destW / textureWidth * scale;
                 let tsY: number = destH / textureHeight * scale;
                 node.drawImage(bitmapX, bitmapY,
                     bitmapWidth, bitmapHeight, tsX * offsetX, tsY * offsetY, tsX * bitmapWidth, tsY * bitmapHeight);
             }
-            else if (fillMode == egret.BitmapFillMode.CLIP) {
+            else if (fillMode == BitmapFillMode.CLIP) {
                 let displayW: number = Math.min(textureWidth, destW);
                 let displayH: number = Math.min(textureHeight, destH);
                 let scaledBitmapW = bitmapWidth * scale;
@@ -117,7 +122,7 @@ namespace egret.sys {
          * @private
          * 绘制九宫格位图
          */
-        static $updateTextureDataWithScale9Grid(node: sys.NormalBitmapNode, image: BitmapData, scale9Grid: egret.Rectangle, bitmapX: number, bitmapY: number,
+        static $updateTextureDataWithScale9Grid(node: NormalBitmapNode, image: BitmapData, scale9Grid: Rectangle, bitmapX: number, bitmapY: number,
             bitmapWidth: number, bitmapHeight: number, offsetX: number, offsetY: number,
             textureWidth: number, textureHeight: number, destW: number, destH: number, sourceWidth: number, sourceHeight: number, smoothing: boolean): void {
             node.smoothing = smoothing;
@@ -215,7 +220,7 @@ namespace egret.sys {
         /**
          * @private
          */
-        private static drawClipImage(node: sys.NormalBitmapNode, scale: number, bitmapX: number, bitmapY: number, scaledBitmapW: number,
+        private static drawClipImage(node: NormalBitmapNode, scale: number, bitmapX: number, bitmapY: number, scaledBitmapW: number,
             scaledBitmapH: number, offsetX: number, offsetY: number, destW: number, destH: number,
             startX: number = 0, startY: number = 0): void {
             let offset = offsetX + scaledBitmapW - destW;
@@ -230,4 +235,3 @@ namespace egret.sys {
                 scaledBitmapW / scale, scaledBitmapH / scale, startX + offsetX, startY + offsetY, scaledBitmapW, scaledBitmapH);
         }
     }
-}

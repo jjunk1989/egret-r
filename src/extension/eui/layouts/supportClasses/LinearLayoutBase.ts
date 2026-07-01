@@ -1,7 +1,12 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace eui {
+import { HorizontalAlign } from "../../../../egret/text/HorizontalAlign";
+import { VerticalAlign } from "../../../../egret/text/VerticalAlign";
+import { JustifyAlign } from "../JustifyAlign";
+import { UIComponent } from "../../core/UIComponent";
+import { LayoutBase } from "./LayoutBase";
+
     /**
      * Linear layout base class, usually as the parent class of
      * <code>HorizontalLayout</code> and <code>VerticalLayout</code>.
@@ -28,7 +33,7 @@ namespace eui {
 
         /**
          * The horizontal alignment of layout elements.
-         * <p>The <code>egret.HorizontalAlign</code> and <code>eui.JustifyAlign</code> class
+         * <p>The <code>HorizontalAlign</code> and <code>JustifyAlign</code> class
          * defines the possible values for this property.</p>
          *
          * @default "left"
@@ -40,8 +45,8 @@ namespace eui {
          */
         /**
          * 布局元素的水平对齐策略。
-         * <p><code>egret.HorizontalAlign</code> 和
-         * <code>eui.JustifyAlign</code>类定义此属性的可能值。<p>
+         * <p><code>HorizontalAlign</code> 和
+         * <code>JustifyAlign</code>类定义此属性的可能值。<p>
          *
          * @default "left"
          *
@@ -69,7 +74,7 @@ namespace eui {
 
         /**
          * The vertical alignment of layout elements.
-         * <p>The <code>egret.VerticalAlign</code> and <code>eui.JustifyAlign</code> class
+         * <p>The <code>VerticalAlign</code> and <code>JustifyAlign</code> class
          * defines the possible values for this property.</p>
          *
          * @default "top"
@@ -81,8 +86,8 @@ namespace eui {
          */
         /**
          * 布局元素的垂直对齐策略。请使用 VerticalAlign 定义的常量。
-         * <p><code>egret.VerticalAlign</code> 和
-         * <code>eui.JustifyAlign</code>类定义此属性的可能值。<p>
+         * <p><code>VerticalAlign</code> 和
+         * <code>JustifyAlign</code>类定义此属性的可能值。<p>
          *
          * @default "top"
          *
@@ -785,9 +790,6 @@ namespace eui {
         }
     }
 
-}
-
-namespace eui.sys {
 
     /**
      * @private
@@ -798,7 +800,7 @@ namespace eui.sys {
         /**
          * @private
          */
-        public layoutElement:eui.UIComponent = null;
+        public layoutElement:UIComponent = null;
 
 
         /**
@@ -824,4 +826,3 @@ namespace eui.sys {
          */
         public max:number = NaN;
     }
-}

@@ -1,7 +1,13 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret.sys {
+import { Matrix } from "../../geom/Matrix";
+import { FillPath } from "../paths/FillPath";
+import { GradientFillPath } from "../paths/GradientFillPath";
+import { RenderNode, RenderNodeType } from "./RenderNode";
+import { Path2D } from "../paths/Path2D";
+import { StrokePath } from "../paths/StrokePath";
+
 
     let CAPS_STYLES = ["none", "round", "square"];
     let JOINT_STYLES = ["bevel", "miter", "round"];
@@ -23,7 +29,7 @@ namespace egret.sys {
          * @param beforePath 插入在指定的路径命令之前绘制，通常是插入到当前正在绘制的线条路径之前，以确保线条总在填充的上方。
          */
         public beginFill(color:number, alpha:number = 1, beforePath?:Path2D):Path2D {
-            let path = new sys.FillPath();
+            let path = new FillPath();
             path.fillColor = color;
             path.fillAlpha = alpha;
             if (beforePath) {
@@ -44,12 +50,12 @@ namespace egret.sys {
          * @param colors 渐变中使用的 RGB 十六进制颜色值的数组（例如，红色为 0xFF0000，蓝色为 0x0000FF，等等）。对于每种颜色，请在 alphas 和 ratios 参数中指定对应值。
          * @param alphas colors 数组中对应颜色的 alpha 值数组。
          * @param ratios 颜色分布比率的数组。有效值为 0 到 255。
-         * @param matrix 一个由 egret.Matrix 类定义的转换矩阵。egret.Matrix 类包括 createGradientBox() 方法，通过该方法可以方便地设置矩阵，以便与 beginGradientFill() 方法一起使用
+         * @param matrix 一个由 Matrix 类定义的转换矩阵。Matrix 类包括 createGradientBox() 方法，通过该方法可以方便地设置矩阵，以便与 beginGradientFill() 方法一起使用
          * @param beforePath 插入在指定的路径命令之前绘制，通常是插入到当前正在绘制的线条路径之前，以确保线条总在填充的上方。
          */
         public beginGradientFill(type:string, colors:number[], alphas:number[], ratios:number[],
-                                 matrix?:egret.Matrix, beforePath?:Path2D):Path2D {
-            let m = new egret.Matrix();
+                                 matrix?:Matrix, beforePath?:Path2D):Path2D {
+            let m = new Matrix();
             if (matrix) {
                 m.a = matrix.a * 819.2;
                 m.b = matrix.b * 819.2;
@@ -63,7 +69,7 @@ namespace egret.sys {
                 m.a = 100;
                 m.d = 100;
             }
-            let path = new sys.GradientFillPath();
+            let path = new GradientFillPath();
             path.gradientType = type;
             path.colors = colors;
             path.alphas = alphas;
@@ -165,4 +171,3 @@ namespace egret.sys {
             }
         }
     }
-}

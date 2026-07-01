@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { Scroller } from "../components/Scroller";
+import { UIComponent } from "./UIComponent";
 
-namespace eui {
 
 	/**
 	 * The IViewport interface is implemented by components that support a viewport.
@@ -13,7 +14,7 @@ namespace eui {
 	 * A viewport is a rectangular subset of the area of a component that you want to display,
 	 * rather than displaying the entire component.
 	 *
-	 * @see eui.Scroller
+	 * @see Scroller
 	 *
 	 * @version Egret 2.4
 	 * @version eui 1.0
@@ -27,7 +28,7 @@ namespace eui {
 	 *
 	 * 视区是您希望显示的组件的区域的矩形子集，而不是显示整个组件。
 	 *
-	 * @see eui.Scroller
+	 * @see Scroller
 	 *
 	 * @version Egret 2.4
 	 * @version eui 1.0
@@ -158,4 +159,3 @@ namespace eui {
 		scrollEnabled:boolean;
 	}
 	
-}

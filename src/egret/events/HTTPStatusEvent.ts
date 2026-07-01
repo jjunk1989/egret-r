@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { IEventDispatcher } from "./IEventDispatcher";
+import { Event } from "./Event";
 
-namespace egret {
 
     /**
      * When a network request returns an HTTP status code, the application dispatches HTTPStatusEvent objects.
@@ -78,7 +79,7 @@ namespace egret {
 
         /**
          * EventDispatcher object using the specified event object thrown Event. The objects will be thrown in the object cache pool for the next round robin.
-         * @param target {egret.IEventDispatcher} Distribute event target
+         * @param target {IEventDispatcher} Distribute event target
          * @param status {number} The server returns the HTTP status code
          * @version Egret 2.4
          * @platform Web
@@ -86,7 +87,7 @@ namespace egret {
          */
         /**
          * 使用指定的EventDispatcher对象来抛出Event事件对象。抛出的对象将会缓存在对象池上，供下次循环复用。
-         * @param target {egret.IEventDispatcher} 派发事件目标
+         * @param target {IEventDispatcher} 派发事件目标
          * @param status {number} 由服务器返回的 HTTP 状态代码
          * @version Egret 2.4
          * @platform Web
@@ -100,4 +101,3 @@ namespace egret {
             return result;
         }
     }
-}

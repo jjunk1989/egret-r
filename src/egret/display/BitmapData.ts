@@ -1,7 +1,15 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret {
+import { Bitmap, _BitmapData } from "./Bitmap";
+import { nativeRender } from "../player/Player";
+import { Base64Util } from "../utils/Base64Util";
+import { WebGLUtils } from "../web/rendering/webgl/WebGLUtils";
+import { createMap } from "../utils/DataStructure";
+import { HashObject, Nullable } from "../utils/HashObject";
+import { DisplayObject } from "./DisplayObject";
+import { Image } from "../../extension/eui/components/Image";
+
 
     //refactor
     export class CompressedTextureData {
@@ -20,7 +28,6 @@ namespace egret {
     export const UNPACK_PREMULTIPLY_ALPHA_WEBGL = 'UNPACK_PREMULTIPLY_ALPHA_WEBGL';
 
 
-
     /**
      * A BitmapData object contains an array of pixel data. This data can represent either a fully opaque bitmap or a
      * transparent bitmap that contains alpha channel data. Either type of BitmapData object is stored as a buffer of 32-bit
@@ -28,7 +35,7 @@ namespace egret {
      * Each 32-bit integer is a combination of four 8-bit channel values (from 0 to 255) that describe the alpha transparency
      * and the red, green, and blue (ARGB) values of the pixel. (For ARGB values, the most significant byte represents the
      * alpha channel value, followed by red, green, and blue.)
-     * @see egret.Bitmap
+     * @see Bitmap
      * @version Egret 2.4
      * @platform Web
      * @language en_US
@@ -38,7 +45,7 @@ namespace egret {
      * 以上任一类型的 BitmapData 对象都作为 32 位整数的缓冲区进行存储。每个 32 位整数确定位图中单个像素的属性。<br/>
      * 每个 32 位整数都是四个 8 位通道值（从 0 到 255）的组合，这些值描述像素的 Alpha 透明度以及红色、绿色、蓝色 (ARGB) 值。
      * （对于 ARGB 值，最高有效字节代表 Alpha 通道值，其后的有效字节分别代表红色、绿色和蓝色通道值。）
-     * @see egret.Bitmap
+     * @see Bitmap
      * @version Egret 2.4
      * @platform Web
      * @language zh_CN
@@ -159,7 +166,7 @@ namespace egret {
          */
         constructor(source: any) {
             super();
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 let nativeBitmapData = new egret_native.NativeBitmapData();
                 nativeBitmapData.$init();
                 this.$nativeBitmapData = nativeBitmapData;
@@ -180,7 +187,7 @@ namespace egret {
 
         public set source(value: any) {
             this.$source = value;
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 egret_native.NativeDisplayObject.setSourceToNativeBitmapData(this.$nativeBitmapData, value);
             }
         }
@@ -190,7 +197,7 @@ namespace egret {
         public static create(type: "arraybuffer" | "base64", data: ArrayBuffer | string, callback?: (bitmapData: BitmapData) => void): BitmapData {
             let base64 = "";
             if (type === "arraybuffer") {
-                base64 = egret.Base64Util.encode(data as ArrayBuffer);
+                base64 = Base64Util.encode(data as ArrayBuffer);
             }
             else {
                 base64 = data as string;
@@ -221,7 +228,7 @@ namespace egret {
 
         public $dispose(): void {
             if (Capabilities.renderMode == "webgl" && this.webGLTexture) {
-                egret.WebGLUtils.deleteWebGLTexture(this.webGLTexture);
+                WebGLUtils.deleteWebGLTexture(this.webGLTexture);
                 this.webGLTexture = null;
             }
             //native or WebGLRenderTarget
@@ -241,15 +248,14 @@ namespace egret {
             this.etcAlphaMask = null;
             ///
 
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 egret_native.NativeDisplayObject.disposeNativeBitmapData(this.$nativeBitmapData);
             }
             BitmapData.$dispose(this);
         }
 
 
-
-        private static _displayList = egret.createMap<DisplayObject[]>();
+        private static _displayList = createMap<DisplayObject[]>();
         static $addDisplayObject(displayObject: DisplayObject, bitmapData: BitmapData): void {
             if (!bitmapData) {
                 return;
@@ -299,8 +305,8 @@ namespace egret {
             }
             let tempList: Array<DisplayObject> = BitmapData._displayList[hashCode];
             for (let i: number = 0; i < tempList.length; i++) {
-                if (tempList[i] instanceof egret.Bitmap) {
-                    (<egret.Bitmap>tempList[i]).$refreshImageData();
+                if (tempList[i] instanceof Bitmap) {
+                    (<Bitmap>tempList[i]).$refreshImageData();
                 }
                 let bitmap = tempList[i];
                 bitmap.$renderDirty = true;
@@ -330,7 +336,7 @@ namespace egret {
             }
             let tempList = BitmapData._displayList[hashCode];
             for (let node of tempList) {
-                if (node instanceof egret.Bitmap) {
+                if (node instanceof Bitmap) {
                     node.$bitmapData = null;
                 }
                 node.$renderDirty = true;
@@ -359,7 +365,7 @@ namespace egret {
 
 
         public $setCompressed2dTextureData(levelData: egret.CompressedTextureData[]): void {
-            if (egret.nativeRender && (this.compressedTextureData.length == 0)) {
+            if (nativeRender && (this.compressedTextureData.length == 0)) {
                 egret_native.NativeDisplayObject.setSourceToNativeBitmapData(this.$nativeBitmapData, levelData[0]);
             }
             this.compressedTextureData.push(levelData);
@@ -374,7 +380,7 @@ namespace egret {
         }
 
         public set etcAlphaMask(value: any) {
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 egret_native.NativeDisplayObject.setSourceToNativeBitmapData(this.$nativeBitmapData, value);
             }
             this.$etcAlphaMask = value;
@@ -384,4 +390,3 @@ namespace egret {
             return this.$etcAlphaMask;
         }
     }
-}

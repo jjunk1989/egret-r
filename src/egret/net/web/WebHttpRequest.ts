@@ -1,7 +1,12 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret.web {
+import { HttpRequest } from "../../events/IOErrorEvent";
+import { EventDispatcher } from "../../events/EventDispatcher";
+import { $error } from "../../../Defines.debug";
+import { DEBUG } from "../../../Defines.debug";
+import { $warn } from "";
+
 
     /**
      * @private
@@ -214,7 +219,7 @@ namespace egret.web {
          */
         private onTimeout(): void {
             if (DEBUG) {
-                egret.$warn(1052, this._url);
+                $warn(1052, this._url);
             }
             this.dispatchEventWith(IOErrorEvent.IO_ERROR);
         }
@@ -288,6 +293,5 @@ namespace egret.web {
             }, 0);
         }
     }
-    egret.HttpRequest = WebHttpRequest;
+    HttpRequest = WebHttpRequest;
 
-}

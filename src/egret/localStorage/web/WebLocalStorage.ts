@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret.localStorage.web {
     /**
      * @private
      * 
@@ -25,7 +24,7 @@ namespace egret.localStorage.web {
             return true;
         }
         catch(e){
-            egret.$warn(1047, key, value);
+            $warn(1047, key, value);
             return false;
         }
     }
@@ -51,4 +50,3 @@ namespace egret.localStorage.web {
     localStorage.setItem = setItem;
     localStorage.removeItem = removeItem;
     localStorage.clear = clear;
-}

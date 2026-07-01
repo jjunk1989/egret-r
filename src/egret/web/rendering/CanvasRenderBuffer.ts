@@ -1,13 +1,16 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret.web {
+import { createCanvas, createCanvasRenderBufferSurface, resizeCanvasRenderBuffer } from "../../player/SystemRenderer";
+import { RenderBuffer } from "../../player/RenderBuffer";
+import { CanvasRenderingContext2D } from "../../player/rendering/CanvasRenderer";
+
 
     /**
      * 创建一个canvas。
      */
     function __createCanvas__(width?: number, height?: number): HTMLCanvasElement {
-        let canvas = egret.sys.createCanvas(width, height);
+        let canvas = createCanvas(width, height);
         let context = canvas.getContext("2d");
         if (context["imageSmoothingEnabled"] === undefined) {
             let keys = ["webkitImageSmoothingEnabled", "mozImageSmoothingEnabled", "msImageSmoothingEnabled"];
@@ -41,10 +44,10 @@ namespace egret.web {
      * @private
      * Canvas2D渲染缓冲
      */
-    export class CanvasRenderBuffer implements sys.RenderBuffer {
+    export class CanvasRenderBuffer implements RenderBuffer {
 
         public constructor(width?: number, height?: number, root?: boolean) {
-            this.surface = egret.sys.createCanvasRenderBufferSurface(__createCanvas__, width, height, root);
+            this.surface = createCanvasRenderBufferSurface(__createCanvas__, width, height, root);
             this.context = this.surface.getContext("2d");
             if (this.context) {
                 this.context.$offsetX = 0;
@@ -85,7 +88,7 @@ namespace egret.web {
          * @param useMaxSize 若传入true，则将改变后的尺寸与已有尺寸对比，保留较大的尺寸。
          */
         public resize(width: number, height: number, useMaxSize?: boolean): void {
-            egret.sys.resizeCanvasRenderBuffer(this, width, height, useMaxSize);
+            resizeCanvasRenderBuffer(this, width, height, useMaxSize);
         }
 
         /**
@@ -118,4 +121,3 @@ namespace egret.web {
             this.surface.width = this.surface.height = 0;
         }
     }
-}

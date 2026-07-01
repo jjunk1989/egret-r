@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret {
+import { Stage } from "../display/Stage";
+
     /**
      * @private
      */
@@ -30,11 +31,10 @@ namespace egret {
     export let FPSDisplay:{
         new (stage:Stage, showFPS:boolean, showLog:boolean, logFilter:string,styles:Object): FPSDisplay
     };
-}
 /**
  * @private
  */
-interface FPSData extends Object{
+export interface FPSData extends Object {
     fps:number;
     draw:number;
     costTicker:number;

@@ -1,4 +1,7 @@
-namespace egret.pro {
+
+import { Texture } from "../display/Texture";
+import { args } from "../player/Player";
+
     export let egret2dDriveMode: boolean = false;
     export let mainCanvas: HTMLCanvasElement;
 
@@ -10,7 +13,7 @@ namespace egret.pro {
      * @param textureHeight 贴图高度 ，默认为512
      * @param scaleFactor 贴图质量。系数越大，贴图越清晰
      */
-    export function createTextureFrom3dScene(scenePath: string, textureWidth: number = 512, textureHeight: number = 512, scaleFactor: number = 1): Promise<egret.Texture> {
+    export function createTextureFrom3dScene(scenePath: string, textureWidth: number = 512, textureHeight: number = 512, scaleFactor: number = 1): Promise<Texture> {
         return Application.instance.egretProUtil.execute("createTextureFrom3dScene", scenePath, textureWidth, textureHeight, scaleFactor);
     }
 
@@ -20,13 +23,13 @@ namespace egret.pro {
      * 单一场景需要用到多个摄像机时可使用此方法
      * 被filter过滤掉的Camera组件会将enable设为false
      * @param scenePath 
-     * @param filter 判断该树节点的相机组件是否需要作为egret.Texture返回
+     * @param filter 判断该树节点的相机组件是否需要作为Texture返回
      * @param textureWidth 
      * @param textureHeight 
      * @param scaleFactor 
      */
     export function createTextureForCameras(scenePath: string, filter: (child: TreeNode) => boolean, textureWidth: number = 512, textureHeight: number = 512, scaleFactor: number = 1): Promise<{
-        [key: string]: egret.Texture;
+        [key: string]: Texture;
     }> {
         return Application.instance.egretProUtil.execute("createTextureForCameras", scenePath, filter, textureWidth, textureHeight, scaleFactor);
     }
@@ -97,6 +100,5 @@ namespace egret.pro {
         path: string,
         childCount: number
     }
-}
 
 

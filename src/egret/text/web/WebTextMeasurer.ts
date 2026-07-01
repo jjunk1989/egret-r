@@ -1,8 +1,11 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { measureTextWith } from "../../player/SystemRenderer";
+import { canvasHitTestBuffer } from "../../player/RenderBuffer";
 
-namespace egret.web {
+import { CanvasRenderingContext2D } from "../../player/rendering/CanvasRenderer";
+
 
     /**
      * @private
@@ -33,17 +36,16 @@ namespace egret.web {
         font += ((typeof fontSize == "number" && fontSize >= 0) ? fontSize : 12) + "px ";
         font += ((typeof fontFamily == "string" && fontFamily != "") ? fontFamily : "Arial");
         context.font = font;
-        return egret.sys.measureTextWith(context, text);
+        return measureTextWith(context, text);
     }
 
     /**
      * @private
      */
     function createContext(): void {
-        context = sys.canvasHitTestBuffer.context;
+        context = canvasHitTestBuffer.context;
         context.textAlign = "left";
         context.textBaseline = "middle";
     }
 
     sys.measureText = measureText;
-}

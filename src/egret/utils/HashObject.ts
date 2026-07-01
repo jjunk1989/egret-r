@@ -1,10 +1,6 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-/// <reference path="registerClass.ts" />
-
-
-
 declare var global;
 declare var __global;
 if (typeof global == 'undefined') {
@@ -14,9 +10,8 @@ if (typeof __global == 'undefined') {
     var __global = global;
 }
 
-let __define = this && this.__define || function (o, p, g, s) { Object.defineProperty(o, p, { configurable: true, enumerable: true, get: g, set: s }) };
+let __define = globalThis && (globalThis).__define || function (o, p, g, s) { Object.defineProperty(o, p, { configurable: true, enumerable: true, get: g, set: s }) };
 
-namespace egret {
 
     export type Nullable<T> = T | null;
     
@@ -108,4 +103,3 @@ namespace egret {
             return this.$hashCode;
         }
     }
-}

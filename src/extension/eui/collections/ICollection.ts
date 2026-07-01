@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { IEventDispatcher } from "../../../egret/events/IEventDispatcher";
 
-namespace eui {
 
 	/**
 	 * An <code>ICollectionView</code> is a view onto a collection of data.
@@ -19,7 +19,7 @@ namespace eui {
 	 * @platform Web
 	 * @language zh_CN
 	 */
-	export interface ICollection extends egret.IEventDispatcher{
+	export interface ICollection extends IEventDispatcher{
 		/**
 		 * The number of items in this view.
 		 * 0 means no items, while -1 means that the length is unknown.
@@ -77,4 +77,3 @@ namespace eui {
 		 */
 		getItemIndex(item:any):number;
 	}
-}

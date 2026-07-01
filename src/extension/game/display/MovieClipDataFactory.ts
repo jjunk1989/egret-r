@@ -1,14 +1,18 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret {
+import { EventDispatcher } from "../../../egret/events/EventDispatcher";
+import { SpriteSheet } from "../../../egret/display/SpriteSheet";
+import { Texture } from "../../../egret/display/Texture";
+import { MovieClipData } from "./MovieClipData";
+
     /**
      * @classdesc 使用 MovieClipDataFactory 类，可以生成 MovieClipData 对象用于创建MovieClip
      * @see http://edn.egret.com/cn/docs/page/596 MovieClip序列帧动画
      * @version Egret 2.4
      * @platform Web
      */
-    export class MovieClipDataFactory extends egret.EventDispatcher {
+    export class MovieClipDataFactory extends EventDispatcher {
         /**
          * 是否开启缓存
          * @version Egret 2.4
@@ -147,4 +151,3 @@ namespace egret {
             this.$spriteSheet = value ? new SpriteSheet(value) : null;
         }
     }
-}

@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { ComponentKeys } from "./Component";
+import { ToggleButton } from "./ToggleButton";
+import { RadioButtonGroup } from "./RadioButtonGroup";
 
-namespace eui {
 
     /**
      * @private
@@ -81,7 +83,7 @@ namespace eui {
          * @language zh_CN
          */
         public get enabled():boolean {
-            if (!this.$Component[sys.ComponentKeys.enabled]) {
+            if (!this.$Component[ComponentKeys.enabled]) {
                 return false;
             }
             return !this.$radioButtonGroup ||
@@ -307,5 +309,3 @@ namespace eui {
             return g;
         }
     }
-
-}

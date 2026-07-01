@@ -1,7 +1,16 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret.web {
+import { Geolocation } from "../sensor/Geolocation";
+import { Motion } from "../sensor/Motion";
+import { Capabilities, RuntimeType } from "../system/Capabilities";
+import { WebGLRenderContext } from "../player/Player";
+import { CanvasRenderingContext2D } from "../player/rendering/CanvasRenderer";
+import { BitmapData } from "../display/BitmapData";
+import { fontResourceCache } from "../text/Font";
+import { RenderContext } from "../player/SystemRenderer";
+import { $error } from "../../Defines.debug";
+
     /**
      * @private  
      */
@@ -51,7 +60,7 @@ namespace egret.web {
         }
         return canvas;
     }
-    egret.sys.mainCanvas = mainCanvas;
+    sys.mainCanvas = mainCanvas;
 
     function createCanvas(width?: number, height?: number): HTMLCanvasElement {
         let canvas: HTMLCanvasElement = document.createElement("canvas");
@@ -61,12 +70,12 @@ namespace egret.web {
         }
         return canvas;
     }
-    egret.sys.createCanvas = createCanvas;
+    sys.createCanvas = createCanvas;
 
     /**
-     * sys.resizeContext。
+     * _resizeContext。
      */
-    export function resizeContext(renderContext: egret.sys.RenderContext, width: number, height: number, useMaxSize?: boolean): void {
+    export function resizeContext(renderContext: RenderContext, width: number, height: number, useMaxSize?: boolean): void {
         if (!renderContext) {
             return;
         }
@@ -90,11 +99,11 @@ namespace egret.web {
         }
         webglrendercontext.onResize();
     }
-    egret.sys.resizeContext = resizeContext;
+    sys.resizeContext = resizeContext;
 
 
     /**
-     * sys.getContextWebGL
+     * _getContextWebGL
      */
     function getContextWebGL(surface: HTMLCanvasElement): WebGLRenderingContext {
         const options = {
@@ -119,19 +128,19 @@ namespace egret.web {
         }
         return gl as WebGLRenderingContext;
     }
-    egret.sys.getContextWebGL = getContextWebGL;
+    sys.getContextWebGL = getContextWebGL;
     /**
-     * sys.getContext2d
+     * _getContext2d
      */
     export function getContext2d(surface: HTMLCanvasElement): CanvasRenderingContext2D {
         return surface ? surface.getContext('2d') : null;
     }
-    egret.sys.getContext2d = getContext2d;
+    sys.getContext2d = getContext2d;
 
     /**
      * 创建一个WebGLTexture
      */
-    function createTexture(renderContext: egret.sys.RenderContext, bitmapData: BitmapData): WebGLTexture {
+    function createTexture(renderContext: RenderContext, bitmapData: BitmapData): WebGLTexture {
         const webglrendercontext = <WebGLRenderContext>renderContext;
         const gl: any = webglrendercontext.context;
         const texture = gl.createTexture() as WebGLTexture;
@@ -151,12 +160,12 @@ namespace egret.web {
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
         return texture;
     }
-    egret.sys.createTexture = createTexture;
+    sys.createTexture = createTexture;
 
     /**
      * 创建一个WebGLTexture
      */
-    function _createTexture(renderContext: egret.sys.RenderContext, width: number, height: number, data: any): WebGLTexture {
+    function _createTexture(renderContext: RenderContext, width: number, height: number, data: any): WebGLTexture {
         const webglrendercontext = <WebGLRenderContext>renderContext;
         const gl = webglrendercontext.context as WebGLRenderingContext;
         const texture: WebGLTexture = gl.createTexture() as WebGLTexture;
@@ -177,12 +186,12 @@ namespace egret.web {
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
         return texture;
     }
-    egret.sys._createTexture = _createTexture;
+    sys._createTexture = _createTexture;
 
     /**
      * 画texture
      **/
-    function drawTextureElements(renderContext: egret.sys.RenderContext, data: any, offset: number): number {
+    function drawTextureElements(renderContext: RenderContext, data: any, offset: number): number {
         const webglrendercontext = <WebGLRenderContext>renderContext;
         const gl: WebGLRenderingContext = webglrendercontext.context;
         gl.activeTexture(gl.TEXTURE0);
@@ -191,7 +200,7 @@ namespace egret.web {
         gl.drawElements(gl.TRIANGLES, size, gl.UNSIGNED_SHORT, offset * 2);
         return size;
     }
-    egret.sys.drawTextureElements = drawTextureElements;
+    sys.drawTextureElements = drawTextureElements;
 
     /**
      * 测量文本的宽度
@@ -201,7 +210,7 @@ namespace egret.web {
     function measureTextWith(context: CanvasRenderingContext2D, text: string): number {
         return context.measureText(text).width;
     }
-    egret.sys.measureTextWith = measureTextWith;
+    sys.measureTextWith = measureTextWith;
 
     /**
      * 为CanvasRenderBuffer创建一个HTMLCanvasElement
@@ -213,7 +222,7 @@ namespace egret.web {
     function createCanvasRenderBufferSurface(defaultFunc: (width?: number, height?: number) => HTMLCanvasElement, width?: number, height?: number, root?: boolean): HTMLCanvasElement {
         return defaultFunc(width, height);
     }
-    egret.sys.createCanvasRenderBufferSurface = createCanvasRenderBufferSurface;
+    sys.createCanvasRenderBufferSurface = createCanvasRenderBufferSurface;
 
     /**
      * 改变渲染缓冲的大小并清空缓冲区
@@ -222,7 +231,7 @@ namespace egret.web {
      * @param height 
      * @param useMaxSize 
      */
-    function resizeCanvasRenderBuffer(renderContext: egret.sys.RenderContext, width: number, height: number, useMaxSize?: boolean): void {
+    function resizeCanvasRenderBuffer(renderContext: RenderContext, width: number, height: number, useMaxSize?: boolean): void {
         let canvasRenderBuffer = <CanvasRenderBuffer>renderContext;
         let surface = canvasRenderBuffer.surface;
         if (useMaxSize) {
@@ -252,10 +261,10 @@ namespace egret.web {
         }
         canvasRenderBuffer.clear();
     }
-    egret.sys.resizeCanvasRenderBuffer = resizeCanvasRenderBuffer;
+    sys.resizeCanvasRenderBuffer = resizeCanvasRenderBuffer;
 
-    egret.Geolocation = egret.web.WebGeolocation;
-    egret.Motion = egret.web.WebMotion;
+    Geolocation = egret.web.WebGeolocation;
+    Motion = egret.web.WebMotion;
 
     /**
      * 
@@ -269,10 +278,10 @@ namespace egret.web {
             return loadFontByWebStyle(name, path);
         }
     }
-    egret.sys.registerFontMapping = registerFontMapping;
+    sys.registerFontMapping = registerFontMapping;
 
     function loadFontByFontFace(name: string, path: string): void {
-        const fontResCache = egret.sys.fontResourceCache;
+        const fontResCache = fontResourceCache;
         if (!fontResCache || !fontResCache[path]) {
             console.warn(`registerFontMapping_WARN: Can not find TTF file:${path}, please load file first.`);
             return;
@@ -302,11 +311,10 @@ namespace egret.web {
 
 
     egret.web.isIOS14Device = function () {
-        return egret.Capabilities.runtimeType == egret.RuntimeType.WEB
-            && egret.Capabilities.os == "iOS"
-            && egret.Capabilities.isMobile
+        return Capabilities.runtimeType == RuntimeType.WEB
+            && Capabilities.os == "iOS"
+            && Capabilities.isMobile
             && /iPhone OS 14/.test(window.navigator.userAgent);
     };
-}
 
 

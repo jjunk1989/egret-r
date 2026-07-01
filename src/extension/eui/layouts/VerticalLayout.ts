@@ -1,9 +1,16 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace eui {
+import { HorizontalAlign } from "../../../egret/text/HorizontalAlign";
+import { VerticalAlign } from "../../../egret/text/VerticalAlign";
+import { UIComponent, UIKeys } from "../core/UIComponent";
+import { ChildInfo, LinearLayoutBase } from "./supportClasses/LinearLayoutBase";
+import { $TempRectangle } from "../../../egret/geom/Rectangle";
+import { is } from "../../../egret/utils/is";
+import { JustifyAlign } from "./JustifyAlign";
 
-    let UIComponentClass = "eui.UIComponent";
+
+    let UIComponentClass = "UIComponent";
     /**
      * The VerticalLayout class arranges the layout elements in a vertical sequence,
      * top to bottom, with optional gaps between the elements and optional padding
@@ -39,10 +46,10 @@ namespace eui {
             let numElements = count;
             let measuredWidth = 0;
             let measuredHeight = 0;
-            let bounds = egret.$TempRectangle;
+            let bounds = $TempRectangle;
             for (let i = 0; i < count; i++) {
                 let layoutElement = <UIComponent> (target.getElementAt(i));
-                if (!egret.is(layoutElement, UIComponentClass) || !layoutElement.$includeInLayout) {
+                if (!is(layoutElement, UIComponentClass) || !layoutElement.$includeInLayout) {
                     numElements--;
                     continue;
                 }
@@ -68,12 +75,12 @@ namespace eui {
             let typicalHeight = this.$typicalHeight;
             let measuredHeight = this.getElementTotalSize();
             let measuredWidth = Math.max(this.maxElementSize, this.$typicalWidth);
-            let bounds = egret.$TempRectangle;
+            let bounds = $TempRectangle;
             let endIndex = this.endIndex;
             let elementSizeTable = this.elementSizeTable;
             for (let index = this.startIndex; index < endIndex; index++) {
                 let layoutElement = <UIComponent> (target.getElementAt(index));
-                if (!egret.is(layoutElement, UIComponentClass) || !layoutElement.$includeInLayout) {
+                if (!is(layoutElement, UIComponentClass) || !layoutElement.$includeInLayout) {
                     continue;
                 }
                 layoutElement.getPreferredBounds(bounds);
@@ -107,10 +114,10 @@ namespace eui {
             let hJustify = this.$horizontalAlign == JustifyAlign.JUSTIFY || this.$horizontalAlign == JustifyAlign.CONTENT_JUSTIFY;
             let hAlign = 0;
             if (!hJustify) {
-                if (this.$horizontalAlign == egret.HorizontalAlign.CENTER) {
+                if (this.$horizontalAlign == HorizontalAlign.CENTER) {
                     hAlign = 0.5;
                 }
-                else if (this.$horizontalAlign == egret.HorizontalAlign.RIGHT) {
+                else if (this.$horizontalAlign == HorizontalAlign.RIGHT) {
                     hAlign = 1;
                 }
             }
@@ -125,13 +132,13 @@ namespace eui {
             let totalPreferredHeight = 0;
             let totalPercentHeight = 0;
             let childInfoArray:any[] = [];
-            let childInfo:sys.ChildInfo;
+            let childInfo:ChildInfo;
             let heightToDistribute = targetHeight;
             let maxElementWidth = this.maxElementSize;
-            let bounds = egret.$TempRectangle;
+            let bounds = $TempRectangle;
             for (i = 0; i < count; i++) {
                 let layoutElement = <UIComponent> (target.getElementAt(i));
-                if (!egret.is(layoutElement, UIComponentClass) || !layoutElement.$includeInLayout) {
+                if (!is(layoutElement, UIComponentClass) || !layoutElement.$includeInLayout) {
                     numElements--;
                     continue;
                 }
@@ -142,14 +149,14 @@ namespace eui {
                 }
                 else {
                     let values = layoutElement.$UIComponent;
-                    if (!isNaN(values[sys.UIKeys.percentHeight])) {
-                        totalPercentHeight += values[sys.UIKeys.percentHeight];
+                    if (!isNaN(values[UIKeys.percentHeight])) {
+                        totalPercentHeight += values[UIKeys.percentHeight];
 
-                        childInfo = new sys.ChildInfo();
+                        childInfo = new ChildInfo();
                         childInfo.layoutElement = layoutElement;
-                        childInfo.percent = values[sys.UIKeys.percentHeight];
-                        childInfo.min = values[sys.UIKeys.minHeight];
-                        childInfo.max = values[sys.UIKeys.maxHeight];
+                        childInfo.percent = values[UIKeys.percentHeight];
+                        childInfo.min = values[UIKeys.minHeight];
+                        childInfo.max = values[UIKeys.maxHeight];
                         childInfoArray.push(childInfo);
 
                     }
@@ -170,7 +177,7 @@ namespace eui {
                     averageHeight = heightToDistribute / numElements;
                     for (i = 0; i < count; i++) {
                         layoutElement = <UIComponent> (target.getElementAt(i));
-                        if (!egret.is(layoutElement, UIComponentClass) || !layoutElement.$includeInLayout) {
+                        if (!is(layoutElement, UIComponentClass) || !layoutElement.$includeInLayout) {
                             continue;
                         }
 
@@ -202,10 +209,10 @@ namespace eui {
                 }
             }
 
-            if (this.$verticalAlign == egret.VerticalAlign.MIDDLE) {
+            if (this.$verticalAlign == VerticalAlign.MIDDLE) {
                 y = paddingT + heightToDistribute * 0.5;
             }
-            else if (this.$verticalAlign == egret.VerticalAlign.BOTTOM) {
+            else if (this.$verticalAlign == VerticalAlign.BOTTOM) {
                 y = paddingT + heightToDistribute;
             }
 
@@ -222,7 +229,7 @@ namespace eui {
             for (i = 0; i < count; i++) {
                 let exceesWidth = 0;
                 layoutElement = <UIComponent> (target.getElementAt(i));
-                if (!egret.is(layoutElement, UIComponentClass) || !layoutElement.$includeInLayout) {
+                if (!is(layoutElement, UIComponentClass) || !layoutElement.$includeInLayout) {
                     continue;
                 }
                 layoutElement.getPreferredBounds(bounds);
@@ -251,8 +258,8 @@ namespace eui {
                 else {
                     let layoutElementWidth = NaN;
                     let values = layoutElement.$UIComponent;
-                    if (!isNaN(values[sys.UIKeys.percentWidth])) {
-                        let percent = Math.min(100, values[sys.UIKeys.percentWidth]);
+                    if (!isNaN(values[UIKeys.percentWidth])) {
+                        let percent = Math.min(100, values[UIKeys.percentWidth]);
                         layoutElementWidth = Math.round(targetWidth * percent * 0.01);
                     }
                     layoutElement.setLayoutBoundsSize(layoutElementWidth, layoutElementHeight);
@@ -304,15 +311,15 @@ namespace eui {
             let contentJustify = this.$horizontalAlign == JustifyAlign.CONTENT_JUSTIFY;
             let hAlign = 0;
             if (!justify) {
-                if (this.$horizontalAlign == egret.HorizontalAlign.CENTER) {
+                if (this.$horizontalAlign == HorizontalAlign.CENTER) {
                     hAlign = 0.5;
                 }
-                else if (this.$horizontalAlign == egret.HorizontalAlign.RIGHT) {
+                else if (this.$horizontalAlign == HorizontalAlign.RIGHT) {
                     hAlign = 1;
                 }
             }
 
-            let bounds = egret.$TempRectangle;
+            let bounds = $TempRectangle;
             let targetWidth = Math.max(0, width - paddingL - paddingR);
             let justifyWidth = Math.ceil(targetWidth);
             let layoutElement:UIComponent;
@@ -323,7 +330,7 @@ namespace eui {
             if (contentJustify) {
                 for (let index = this.startIndex; index <= endIndex; index++) {
                     layoutElement = <UIComponent> (target.getVirtualElementAt(index));
-                    if (!egret.is(layoutElement, UIComponentClass) || !layoutElement.$includeInLayout) {
+                    if (!is(layoutElement, UIComponentClass) || !layoutElement.$includeInLayout) {
                         continue;
                     }
                     layoutElement.getPreferredBounds(bounds);
@@ -342,7 +349,7 @@ namespace eui {
             for (let i = this.startIndex; i <= endIndex; i++) {
                 let exceesWidth = 0;
                 layoutElement = <UIComponent> (target.getVirtualElementAt(i));
-                if (!egret.is(layoutElement, UIComponentClass) || !layoutElement.$includeInLayout) {
+                if (!is(layoutElement, UIComponentClass) || !layoutElement.$includeInLayout) {
                     continue;
                 }
                 layoutElement.getPreferredBounds(bounds);
@@ -488,7 +495,7 @@ namespace eui {
             }
 
             let values = target.$UIComponent;
-            if (values[sys.UIKeys.width] == 0 || values[sys.UIKeys.height] == 0) {
+            if (values[UIKeys.width] == 0 || values[UIKeys.height] == 0) {
                 this.startIndex = this.endIndex = -1;
                 return false;
             }
@@ -502,7 +509,7 @@ namespace eui {
                 this.endIndex = -1;
                 return false;
             }
-            let maxVisibleY = target.scrollV + values[sys.UIKeys.height];
+            let maxVisibleY = target.scrollV + values[UIKeys.height];
             if (maxVisibleY < this.$paddingTop) {
                 this.startIndex = -1;
                 this.endIndex = -1;
@@ -520,4 +527,3 @@ namespace eui {
         }
     }
 
-}

@@ -1,15 +1,15 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { EventDispatcher } from "../../../egret/events/EventDispatcher";
 
-namespace egret {
 
     /**
      * @version Egret 2.4
      * @platform Web
      * @private
      */
-    export class FrameLabel extends egret.EventDispatcher {
+    export class FrameLabel extends EventDispatcher {
         /**
          * @private
          */
@@ -96,7 +96,5 @@ namespace egret {
             return new FrameLabel(this._name, this._frame, this._end);
         }
     }
-
-}
 
 

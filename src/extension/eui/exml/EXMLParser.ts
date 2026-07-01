@@ -1,7 +1,18 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace eui.sys {
+import { Rectangle } from "../../../egret/geom/Rectangle";
+import { XML, XMLText } from "../../../egret/utils/XML";
+import { registerClass } from "../../../egret/utils/registerClass";
+import { log } from "../../../egret/system/Console";
+import { Skin } from "../components/Skin";
+import { AddPosition } from "../states/AddItems";
+import { EXMLConfig } from "./EXMLConfig";
+import { EXClass, EXState, EXBinding, EXCodeBlock, EXFunction, EXVariable, EXSetProperty, EXAddItems, EXSetStateProperty } from "./CodeFactory";
+import { $error } from "../../../Defines.debug";
+import { DEBUG } from "../../../Defines.debug";
+import { $warn } from "";
+
 
     /**
      * @private
@@ -14,9 +25,9 @@ namespace eui.sys {
     let innerClassCount = 1;
 
     let HOST_COMPONENT = "hostComponent";
-    let SKIN_CLASS = "eui.Skin";
+    let SKIN_CLASS = "Skin";
     let DECLARATIONS = "Declarations";
-    let RECTANGLE = "egret.Rectangle";
+    let RECTANGLE = "Rectangle";
     let TYPE_CLASS = "Class";
     let TYPE_ARRAY = "Array";
     let TYPE_PERCENTAGE = "Percentage";
@@ -28,14 +39,14 @@ namespace eui.sys {
     let htmlEntities:string[][] = [["<", "&lt;"], [">", "&gt;"], ["&", "&amp;"], ["\"", "&quot;"], ["'", "&apos;"]];
     let jsKeyWords:string[] = ["null", "NaN", "undefined", "true", "false"];
 
-    let getRepeatedIds: (xml: egret.XML) => string[];
+    let getRepeatedIds: (xml: XML) => string[];
     let getIds: (xml: any, result: string[]) => void;
-    let checkDeclarations: (declarations: egret.XML, list: string[]) => void;
+    let checkDeclarations: (declarations: XML, list: string[]) => void;
     if (DEBUG) {
         /**
          * 获取重复的ID名
          */
-        getRepeatedIds = function(xml:egret.XML):string[] {
+        getRepeatedIds = function(xml:XML):string[] {
             let result:string[] = [];
             this.repeatedIdMap = {};
             this.getIds(xml, result);
@@ -65,7 +76,7 @@ namespace eui.sys {
             }
         }
 
-        function toXMLString(node:egret.XML):string {
+        function toXMLString(node:XML):string {
             if (!node) {
                 return "";
             }
@@ -93,7 +104,7 @@ namespace eui.sys {
         /**
          * 清理声明节点里的状态标志
          */
-        checkDeclarations = function(declarations:egret.XML, list:string[]):void {
+        checkDeclarations = function(declarations:XML, list:string[]):void {
             if (!declarations) {
                 return;
             }
@@ -145,7 +156,7 @@ namespace eui.sys {
          * @private
          * 获取重复的ID名
          */
-        public getRepeatedIds:(xml:egret.XML)=>string[];
+        public getRepeatedIds:(xml:XML)=>string[];
         /**
          * @private
          */
@@ -157,7 +168,7 @@ namespace eui.sys {
         /**
          * @private
          */
-        private checkDeclarations:(declarations:egret.XML, list:string[])=>void;
+        private checkDeclarations:(declarations:XML, list:string[])=>void;
 
         /**
          * @private
@@ -177,7 +188,7 @@ namespace eui.sys {
          * @private
          * 当前要编译的EXML文件
          */
-        private currentXML:egret.XML;
+        private currentXML:XML;
         /**
          * @private
          * id缓存字典
@@ -233,7 +244,7 @@ namespace eui.sys {
             let hasClass = true;
 
             if (hasClass && clazz) {
-                egret.registerClass(clazz, className);
+                registerClass(clazz, className);
                 let paths = className.split(".");
                 let length = paths.length;
                 let definition = __global;
@@ -243,7 +254,7 @@ namespace eui.sys {
                 }
                 if (definition[paths[length - 1]]) {
                     if (DEBUG && !parsedClasses[className]) {
-                        egret.$warn(2101, className, codeText);
+                        $warn(2101, className, codeText);
                     }
                 }
                 else {
@@ -265,19 +276,19 @@ namespace eui.sys {
         public parse(text:string):{new():any} {
             if (DEBUG) {
                 if (!text) {
-                    egret.$error(1003, "text");
+                    $error(1003, "text");
                 }
             }
             let xmlData:any = null;
             if (DEBUG) {
                 try {
-                    xmlData = egret.XML.parse(text);
+                    xmlData = XML.parse(text);
                 }
                 catch (e) {
-                    egret.$error(2002, text + "\n" + e.message);
+                    $error(2002, text + "\n" + e.message);
                 }
             } else {
-                xmlData = egret.XML.parse(text);
+                xmlData = XML.parse(text);
             }
 
             let hasClass:boolean = false;
@@ -300,7 +311,7 @@ namespace eui.sys {
                     clazz = geval(code);
                 }
                 catch (e) {
-                    egret.log(code);
+                    log(code);
                     return null;
                 }
             } else {
@@ -308,7 +319,7 @@ namespace eui.sys {
             }
 
             if (hasClass && clazz) {
-                egret.registerClass(clazz, className);
+                registerClass(clazz, className);
                 let paths = className.split(".");
                 let length = paths.length;
                 let definition = __global;
@@ -318,7 +329,7 @@ namespace eui.sys {
                 }
                 if (definition[paths[length - 1]]) {
                     if (DEBUG && !parsedClasses[className]) {
-                        egret.$warn(2101, className, toXMLString(xmlData));
+                        $warn(2101, className, toXMLString(xmlData));
                     }
                 }
                 else {
@@ -335,7 +346,7 @@ namespace eui.sys {
          * @private
          * 编译指定的XML对象为CpClass对象。
          */
-        private parseClass(xmlData:egret.XML, className:string):EXClass {
+        private parseClass(xmlData:XML, className:string):EXClass {
             if (!exmlConfig) {
                 exmlConfig = new EXMLConfig();
             }
@@ -373,7 +384,7 @@ namespace eui.sys {
             if (DEBUG) {
                 let result = this.getRepeatedIds(this.currentXML);
                 if (result.length > 0) {
-                    egret.$error(2004, this.currentClassName, result.join("\n"));
+                    $error(2004, this.currentClassName, result.join("\n"));
                 }
             }
             let superClass = this.getClassNameOfNode(this.currentXML);
@@ -400,14 +411,14 @@ namespace eui.sys {
                 this.checkDeclarations(this.declarations, list);
 
                 if (list.length > 0) {
-                    egret.$error(2020, this.currentClassName, list.join("\n"));
+                    $error(2020, this.currentClassName, list.join("\n"));
                 }
             }
 
 
             if (!this.currentXML.namespace) {
                 if (DEBUG) {
-                    egret.$error(2017, this.currentClassName, toXMLString(this.currentXML));
+                    $error(2017, this.currentClassName, toXMLString(this.currentXML));
                 }
                 return;
             }
@@ -425,13 +436,13 @@ namespace eui.sys {
             }
             let length = items.length;
             for (let i = 0; i < length; i++) {
-                let node:egret.XML = items[i];
+                let node:XML = items[i];
                 if (node.nodeType != 1) {
                     continue;
                 }
                 if (!node.namespace) {
                     if (DEBUG) {
-                        egret.$error(2017, this.currentClassName, toXMLString(node));
+                        $error(2017, this.currentClassName, toXMLString(node));
                     }
                     continue;
                 }
@@ -448,7 +459,7 @@ namespace eui.sys {
                     if (index == -1 || !children || children.length == 0) {
                         continue;
                     }
-                    let firstChild:egret.XML = children[0];
+                    let firstChild:XML = children[0];
                     this.stateIds.push(firstChild.attributes.id);
                 }
                 else if (node.nodeType === 1) {
@@ -456,10 +467,10 @@ namespace eui.sys {
                     if (id) {
                         var e = new RegExp("^[a-zA-Z_$]{1}[a-z0-9A-Z_$]*");
                         if(id.match(e) == null) {
-                            egret.$warn(2022, id);
+                            $warn(2022, id);
                         }
                         if(id.match(new RegExp(/ /g)) != null) {
-                            egret.$warn(2022, id);
+                            $warn(2022, id);
                         }
                         if (this.skinParts.indexOf(id) == -1) {
                             this.skinParts.push(id);
@@ -481,7 +492,7 @@ namespace eui.sys {
          * @private
          * 是否为内部类。
          */
-        private isInnerClass(node:egret.XML):boolean {
+        private isInnerClass(node:XML):boolean {
             if (node.hasOwnProperty("isInnerClass")) {
                 return node["isInnerClass"];
             }
@@ -518,7 +529,7 @@ namespace eui.sys {
          * @private
          * 检测指定节点的属性是否含有视图状态
          */
-        private containsState(node:egret.XML):boolean {
+        private containsState(node:XML):boolean {
             let attributes = node.attributes;
             if (attributes["includeIn"] || attributes["excludeFrom"]) {
                 return true;
@@ -538,7 +549,7 @@ namespace eui.sys {
          * @private
          * 为指定节点创建id属性
          */
-        private createIdForNode(node:egret.XML):void {
+        private createIdForNode(node:XML):void {
             let idName = this.getNodeId(node);
             if (!this.idDic[idName])
                 this.idDic[idName] = 1;
@@ -552,7 +563,7 @@ namespace eui.sys {
          * @private
          * 获取节点ID
          */
-        private getNodeId(node:egret.XML):string {
+        private getNodeId(node:XML):string {
             if (node.attributes["id"])
                 return node.attributes.id;
             return "_" + node.localName;
@@ -562,7 +573,7 @@ namespace eui.sys {
          * @private
          * 为指定节点创建变量
          */
-        private createVarForNode(node:egret.XML):void {
+        private createVarForNode(node:XML):void {
             let moduleName = this.getClassNameOfNode(node);
             if (moduleName == "")
                 return;
@@ -574,7 +585,7 @@ namespace eui.sys {
          * @private
          * 为指定节点创建初始化函数,返回函数名引用
          */
-        private createFuncForNode(node:egret.XML):string {
+        private createFuncForNode(node:XML):string {
             let className = node.localName;
             let isBasicType = this.isBasicTypeData(className);
             if (isBasicType)
@@ -627,14 +638,14 @@ namespace eui.sys {
          * @private
          * 为指定基本数据类型节点实例化,返回实例化后的值。
          */
-        private createBasicTypeForNode(node:egret.XML):string {
+        private createBasicTypeForNode(node:XML):string {
             let className = node.localName;
             let returnValue = "";
             let varItem = this.currentClass.getVariableByName(node.attributes.id);
             let children:any[] = node.children;
             let text = "";
             if (children && children.length > 0) {
-                let firstChild:egret.XMLText = children[0];
+                let firstChild:XMLText = children[0];
                 if (firstChild.nodeType == 3) {
                     text = firstChild.text.trim();
                 }
@@ -645,7 +656,7 @@ namespace eui.sys {
                     if (children) {
                         let length = children.length;
                         for (let i = 0; i < length; i++) {
-                            let child:egret.XML = children[i];
+                            let child:XML = children[i];
                             if (child.nodeType == 1) {
                                 values.push(this.createFuncForNode(child));
                             }
@@ -674,7 +685,7 @@ namespace eui.sys {
          * @private
          * 将节点属性赋值语句添加到代码块
          */
-        private addAttributesToCodeBlock(cb:EXCodeBlock, varName:string, node:egret.XML):void {
+        private addAttributesToCodeBlock(cb:EXCodeBlock, varName:string, node:XML):void {
             let key:string;
             let value:string;
             let attributes = node.attributes;
@@ -725,17 +736,17 @@ namespace eui.sys {
          * @private
          * 初始化子项
          */
-        private initlizeChildNode(node:egret.XML, cb:EXCodeBlock, varName:string):void {
+        private initlizeChildNode(node:XML, cb:EXCodeBlock, varName:string):void {
             let children:any[] = node.children;
             if (!children || children.length == 0)
                 return;
             let className = exmlConfig.getClassNameById(node.localName, node.namespace);
-            let directChild:egret.XML[] = [];
+            let directChild:XML[] = [];
             let length = children.length;
             let propList:string[] = [];
             let errorInfo:any;
             for (let i = 0; i < length; i++) {
-                let child:egret.XML = children[i];
+                let child:XML = children[i];
                 if (child.nodeType != 1 || child.namespace == NS_W) {
                     continue;
                 }
@@ -747,7 +758,7 @@ namespace eui.sys {
                             cb.addAssignment(varName, innerClassName, SKIN_NAME);
                         }
                         else {
-                            egret.$error(2005, this.currentClassName, SKIN_NAME, getPropertyStr(child));
+                            $error(2005, this.currentClassName, SKIN_NAME, getPropertyStr(child));
                         }
                     }
                     continue;
@@ -761,13 +772,13 @@ namespace eui.sys {
                     let type = exmlConfig.getPropertyType(child.localName, className);
                     if (!type) {
                         if (DEBUG) {
-                            egret.$error(2005, this.currentClassName, child.localName, getPropertyStr(child));
+                            $error(2005, this.currentClassName, child.localName, getPropertyStr(child));
                         }
                         continue;
                     }
                     if (!child.children || child.children.length == 0) {
                         if (DEBUG) {
-                            egret.$warn(2102, this.currentClassName, getPropertyStr(child));
+                            $warn(2102, this.currentClassName, getPropertyStr(child));
                         }
                         continue;
                     }
@@ -790,7 +801,7 @@ namespace eui.sys {
             }
             if (!defaultProp || !defaultType) {
                 if (DEBUG) {
-                    egret.$error(2012, this.currentClassName, errorInfo);
+                    $error(2012, this.currentClassName, errorInfo);
                 }
                 return;
             }
@@ -801,7 +812,7 @@ namespace eui.sys {
          * @private
          * 解析内部类节点，并返回类名。
          */
-        private parseInnerClass(node:egret.XML):string {
+        private parseInnerClass(node:XML):string {
             let parser = exmlParserPool.pop();
             if (!parser) {
                 parser = new EXMLParser();
@@ -819,20 +830,20 @@ namespace eui.sys {
          */
         private addChildrenToProp(children:any[], type:string, prop:string,
                                   cb:EXCodeBlock, varName:string, errorInfo:string,
-                                  propList:string[], node:egret.XML):void {
+                                  propList:string[], node:XML):void {
             let childFunc = "";
             let childLength = children.length;
 
             if (childLength > 1) {
                 if (type != TYPE_ARRAY) {
                     if (DEBUG) {
-                        egret.$error(2011, this.currentClassName, prop, errorInfo);
+                        $error(2011, this.currentClassName, prop, errorInfo);
                     }
                     return;
                 }
                 let values:string[] = [];
                 for (let j = 0; j < childLength; j++) {
-                    let item:egret.XML = children[j];
+                    let item:XML = children[j];
                     if (item.nodeType != 1) {
                         continue;
                     }
@@ -845,7 +856,7 @@ namespace eui.sys {
                 childFunc = "[" + values.join(",") + "]";
             }
             else {
-                let firstChild:egret.XML = children[0];
+                let firstChild:XML = children[0];
                 if (type == TYPE_ARRAY) {
                     if (firstChild.localName == TYPE_ARRAY) {
                         let values = [];
@@ -879,7 +890,7 @@ namespace eui.sys {
                     if (type == TYPE_CLASS) {
                         if (childLength > 1) {
                             if (DEBUG) {
-                                egret.$error(2011, this.currentClassName, prop, errorInfo);
+                                $error(2011, this.currentClassName, prop, errorInfo);
                             }
                             return;
                         }
@@ -891,7 +902,7 @@ namespace eui.sys {
                     }
                 }
                 else {
-                    childFunc = this.formatValue(prop, (<egret.XMLText><any>firstChild).text, node);
+                    childFunc = this.formatValue(prop, (<XMLText><any>firstChild).text, node);
                 }
             }
             if (childFunc != "") {
@@ -901,7 +912,7 @@ namespace eui.sys {
                     propList.push(prop);
                 }
                 else if (DEBUG) {
-                    egret.$warn(2103, this.currentClassName, prop, errorInfo);
+                    $warn(2103, this.currentClassName, prop, errorInfo);
                 }
                 cb.addAssignment(varName, childFunc, prop);
             }
@@ -911,7 +922,7 @@ namespace eui.sys {
          * @private
          * 指定节点是否是属性节点
          */
-        private isProperty(node:egret.XML):boolean {
+        private isProperty(node:XML):boolean {
             if (node.hasOwnProperty("isProperty")) {
                 return node["isProperty"];
             }
@@ -963,7 +974,7 @@ namespace eui.sys {
          * @private
          * 格式化值
          */
-        private formatValue(key:string, value:string, node:egret.XML):string {
+        private formatValue(key:string, value:string, node:XML):string {
             if (!value) {
                 value = "";
             }
@@ -972,7 +983,7 @@ namespace eui.sys {
             let className = this.getClassNameOfNode(node);
             let type:string = exmlConfig.getPropertyType(key, className);
             if (DEBUG && !type) {
-                egret.$error(2005, this.currentClassName, key, toXMLString(node));
+                $error(2005, this.currentClassName, key, toXMLString(node));
             }
             let bindingValue = this.formatBinding(key, value, node);
             if (bindingValue) {
@@ -989,7 +1000,7 @@ namespace eui.sys {
                     let rect = value.split(",");
                     if (rect.length != 4 || isNaN(parseInt(rect[0])) || isNaN(parseInt(rect[1])) ||
                         isNaN(parseInt(rect[2])) || isNaN(parseInt(rect[3]))) {
-                        egret.$error(2016, this.currentClassName, toXMLString(node));
+                        $error(2016, this.currentClassName, toXMLString(node));
                     }
                 }
                 value = "new " + RECTANGLE + "(" + value + ")";
@@ -1011,18 +1022,18 @@ namespace eui.sys {
                     case "number":
                         if (value.indexOf("#") == 0) {
                             if (DEBUG && isNaN(<any>value.substring(1))) {
-                                egret.$warn(2021, this.currentClassName, key, value);
+                                $warn(2021, this.currentClassName, key, value);
                             }
                             value = "0x" + value.substring(1);
                         }
                         else if (value.indexOf("%") != -1) {
                             if (DEBUG && isNaN(<any>value.substr(0, value.length - 1))) {
-                                egret.$warn(2021, this.currentClassName, key, value);
+                                $warn(2021, this.currentClassName, key, value);
                             }
                             value = (parseFloat(value.substr(0, value.length - 1))).toString();
                         }
                         else if (DEBUG && isNaN(<any>value)) {
-                            egret.$warn(2021, this.currentClassName, key, value);
+                            $warn(2021, this.currentClassName, key, value);
                         }
                         break;
                     case "boolean":
@@ -1035,7 +1046,7 @@ namespace eui.sys {
                         break;
                     default:
                         if (DEBUG) {
-                            egret.$error(2008, this.currentClassName, "string", key + ":" + type, toXMLString(node));
+                            $error(2008, this.currentClassName, "string", key + ":" + type, toXMLString(node));
                         }
                         break;
                 }
@@ -1056,7 +1067,7 @@ namespace eui.sys {
             return value;
         }
 
-        private formatBinding(key:string, value:string, node:egret.XML):{templates:string[],chainIndex:number[]} {
+        private formatBinding(key:string, value:string, node:XML):{templates:string[],chainIndex:number[]} {
             if (!value) {
                 return null;
             }
@@ -1171,7 +1182,7 @@ namespace eui.sys {
                 if (children && children.length > 0) {
                     let length = children.length;
                     for (let i = 0; i < length; i++) {
-                        let decl:egret.XML = children[i];
+                        let decl:XML = children[i];
                         if (decl.nodeType != 1) {
                             continue;
                         }
@@ -1289,7 +1300,7 @@ namespace eui.sys {
          * @private
          * 是否含有includeIn和excludeFrom属性
          */
-        private isStateNode(node:egret.XML):boolean {
+        private isStateNode(node:XML):boolean {
             let attributes = node.attributes;
             return attributes.hasOwnProperty("includeIn") || attributes.hasOwnProperty("excludeFrom");
         }
@@ -1312,7 +1323,7 @@ namespace eui.sys {
             let stateNames = this.stateNames;
             let stateChildren:any[];
             let children:any[] = root.children;
-            let item:egret.XML;
+            let item:XML;
             if (children) {
                 let length = children.length;
                 for (let i = 0; i < length; i++) {
@@ -1332,10 +1343,10 @@ namespace eui.sys {
 
             if (DEBUG) {
                 if (stateChildren && stateChildren.length == 0) {
-                    egret.$warn(2102, this.currentClassName, getPropertyStr(item));
+                    $warn(2102, this.currentClassName, getPropertyStr(item));
                 }
                 if (stateChildren && statesValue) {
-                    egret.$warn(2103, this.currentClassName, "states", getPropertyStr(item));
+                    $warn(2103, this.currentClassName, "states", getPropertyStr(item));
                 }
             }
 
@@ -1358,7 +1369,7 @@ namespace eui.sys {
 
             let length = stateChildren.length;
             for (let i = 0; i < length; i++) {
-                let state:egret.XML = stateChildren[i];
+                let state:XML = stateChildren[i];
                 if (state.nodeType != 1) {
                     continue;
                 }
@@ -1389,14 +1400,14 @@ namespace eui.sys {
          * @private
          * 解析视图状态代码
          */
-        private createStates(parentNode:egret.XML):void {
+        private createStates(parentNode:XML):void {
             let items:any[] = parentNode.children;
             if (!items) {
                 return;
             }
             let length = items.length;
             for (let i = 0; i < length; i++) {
-                let node:egret.XML = items[i];
+                let node:XML = items[i];
                 if (node.nodeType != 1 || this.isInnerClass(node)) {
                     continue;
                 }
@@ -1417,14 +1428,14 @@ namespace eui.sys {
                     let type = exmlConfig.getPropertyType(prop, className);
                     if (DEBUG) {
                         if (type == TYPE_ARRAY) {
-                            egret.$error(2013, this.currentClassName, getPropertyStr(node));
+                            $error(2013, this.currentClassName, getPropertyStr(node));
                         }
                         if (children.length > 1) {
-                            egret.$error(2011, this.currentClassName, prop, getPropertyStr(node));
+                            $error(2011, this.currentClassName, prop, getPropertyStr(node));
                         }
                     }
 
-                    let firstChild:egret.XML = children[0];
+                    let firstChild:XML = children[0];
                     let value:string;
                     if (firstChild.nodeType == 1) {
                         this.createFuncForNode(firstChild);
@@ -1432,7 +1443,7 @@ namespace eui.sys {
                         value = "this." + firstChild.attributes.id;
                     }
                     else {
-                        value = this.formatValue(prop, (<egret.XMLText><any>firstChild).text, parentNode);
+                        value = this.formatValue(prop, (<XMLText><any>firstChild).text, parentNode);
                     }
 
                     let states = this.getStateByName(stateName, node);
@@ -1454,7 +1465,7 @@ namespace eui.sys {
                     let state:EXState;
                     if (this.isStateNode(node)) {
                         let propertyName = "";
-                        let parent:egret.XML = node.parent;
+                        let parent:XML = node.parent;
                         if (parent.localName == TYPE_ARRAY)
                             parent = parent.parent;
                         if (parent && parent.parent) {
@@ -1545,7 +1556,7 @@ namespace eui.sys {
          * @private
          * 检查指定的ID是否创建了类成员变量，若没创建则为其创建。
          */
-        private checkIdForState(node:egret.XML):void {
+        private checkIdForState(node:XML):void {
             if (!node || this.currentClass.getVariableByName(node.attributes.id)) {
                 return;
             }
@@ -1568,7 +1579,7 @@ namespace eui.sys {
          * @private
          * 通过视图状态名称获取对应的视图状态
          */
-        private getStateByName(name:string, node:egret.XML):EXState[] {
+        private getStateByName(name:string, node:XML):EXState[] {
             let states:EXState[] = [];
             let stateCode = this.stateCode;
             let length = stateCode.length;
@@ -1595,7 +1606,7 @@ namespace eui.sys {
                 }
             }
             if (DEBUG && states.length == 0) {
-                egret.$error(2006, this.currentClassName, name, toXMLString(node));
+                $error(2006, this.currentClassName, name, toXMLString(node));
             }
             return states;
         }
@@ -1604,13 +1615,13 @@ namespace eui.sys {
          * @private
          * 寻找节点的临近节点ID和位置
          */
-        private findNearNodeId(node:egret.XML):any {
-            let parentNode:egret.XML = node.parent;
+        private findNearNodeId(node:XML):any {
+            let parentNode:XML = node.parent;
             let targetId = "";
             let position:number;
             let index = -1;
-            let preItem:egret.XML;
-            let afterItem:egret.XML;
+            let preItem:XML;
+            let afterItem:XML;
             let found = false;
             let children:any[] = parentNode.children;
             let length = children.length;
@@ -1631,15 +1642,15 @@ namespace eui.sys {
                     preItem = item;
             }
             if (index == 0) {
-                position = sys.AddPosition.FIRST;
+                position = AddPosition.FIRST;
                 return {position: position, relativeTo: targetId};
             }
             if (index == length - 1) {
-                position = sys.AddPosition.LAST;
+                position = AddPosition.LAST;
                 return {position: position, relativeTo: targetId};
             }
             if (afterItem) {
-                position = sys.AddPosition.BEFORE;
+                position = AddPosition.BEFORE;
                 targetId = afterItem.attributes.id;
                 if (targetId) {
                     this.checkIdForState(afterItem);
@@ -1647,7 +1658,7 @@ namespace eui.sys {
                 }
 
             }
-            return {position: sys.AddPosition.LAST, relativeTo: targetId};
+            return {position: AddPosition.LAST, relativeTo: targetId};
         }
 
 
@@ -1655,15 +1666,13 @@ namespace eui.sys {
          * @private
          * 获取节点的完整类名，包括模块名
          */
-        private getClassNameOfNode(node:egret.XML):string {
+        private getClassNameOfNode(node:XML):string {
             let className = exmlConfig.getClassNameById(node.localName, node.namespace);
             if (DEBUG && !className) {
-                egret.$error(2003, this.currentClassName, toXMLString(node));
+                $error(2003, this.currentClassName, toXMLString(node));
             }
             return className;
         }
 
     }
 
-
-}

@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { ResourceItem } from "../../assetsmanager/src/shim/ResourceItem";
+import { $warn } from "";
 
-namespace RES {
 
 	/**
 	 * @class RES.ResourceConfig
@@ -19,7 +20,7 @@ namespace RES {
          * 根据组名获取组加载项列表
 		 * @method RES.ResourceConfig#getGroupByName
          * @param name {string} 组名
-		 * @returns {Array<egret.ResourceItem>}
+		 * @returns {Array<ResourceItem>}
          */
         public getGroupByName(name:string):Array<ResourceItem> {
             let group:Array<ResourceItem> = new Array<ResourceItem>();
@@ -78,7 +79,7 @@ namespace RES {
                             group.push(item);
                     }
                     else{
-                        egret.$warn(3200, key);
+                        $warn(3200, key);
                     }
                 }
 
@@ -200,7 +201,7 @@ namespace RES {
          * 获取加载项信息对象
 		 * @method RES.ResourceConfig#getResourceItem
          * @param key {string} 对应配置文件里的key属性或sbuKeys属性的一项。
-		 * @returns {egret.ResourceItem}
+		 * @returns {ResourceItem}
          */
         public getResourceItem(key:string):ResourceItem {
             let data:any = this.keyMap[key];
@@ -218,4 +219,3 @@ namespace RES {
             return resItem;
         }
     }
-}

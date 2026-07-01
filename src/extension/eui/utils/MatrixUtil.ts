@@ -1,7 +1,12 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace eui.sys {
+import { Matrix } from "../../../egret/geom/Matrix";
+import { Point } from "../../../egret/geom/Point";
+import { Rectangle } from "../../../egret/geom/Rectangle";
+import { minWidth, minHeight } from "../core/UIComponent";
+import { $TempRectangle } from "../../../egret/geom/Rectangle";
+
 
     let SOLUTION_TOLERANCE = 0.1;
     let MIN_MAX_TOLERANCE = 0.1;
@@ -14,20 +19,20 @@ namespace eui.sys {
         /**
          * @private
          */
-        public static fitBounds(width:number, height:number, matrix:egret.Matrix,
+        public static fitBounds(width:number, height:number, matrix:Matrix,
                                 explicitWidth:number, explicitHeight:number,
                                 preferredWidth:number, preferredHeight:number,
                                 minWidth:number, minHeight:number,
-                                maxWidth:number, maxHeight:number):egret.Point {
+                                maxWidth:number, maxHeight:number):Point {
             if (isNaN(width) && isNaN(height))
-                return egret.Point.create(preferredWidth, preferredHeight);
+                return Point.create(preferredWidth, preferredHeight);
 
             let newMinWidth = (minWidth < MIN_MAX_TOLERANCE) ? 0 : minWidth - MIN_MAX_TOLERANCE;
             let newMinHeight = (minHeight < MIN_MAX_TOLERANCE) ? 0 : minHeight - MIN_MAX_TOLERANCE;
             let newMaxWidth = maxWidth + MIN_MAX_TOLERANCE;
             let newMaxHeight = maxHeight + MIN_MAX_TOLERANCE;
 
-            let actualSize:egret.Point;
+            let actualSize:Point;
 
             if (!isNaN(width) && !isNaN(height)) {
                 actualSize = calcUBoundsToFitTBounds(width, height, matrix,
@@ -35,7 +40,7 @@ namespace eui.sys {
                     newMaxWidth, newMaxHeight);
 
                 if (!actualSize) {
-                    let actualSize1:egret.Point;
+                    let actualSize1:Point;
                     actualSize1 = fitTBoundsWidth(width, matrix,
                         explicitWidth, explicitHeight,
                         preferredWidth, preferredHeight,
@@ -46,12 +51,12 @@ namespace eui.sys {
                         let fitHeight = transformSize(actualSize1.x, actualSize1.y, matrix).height;
                         if (fitHeight - SOLUTION_TOLERANCE > height)
                         {
-                            egret.Point.release(actualSize1);
+                            Point.release(actualSize1);
                             actualSize1 = null;
                         }
                     }
 
-                    let actualSize2:egret.Point
+                    let actualSize2:Point
                     actualSize2 = fitTBoundsHeight(height, matrix,
                         explicitWidth, explicitHeight,
                         preferredWidth, preferredHeight,
@@ -62,7 +67,7 @@ namespace eui.sys {
                         let fitWidth = transformSize(actualSize2.x, actualSize2.y, matrix).width;
                         if (fitWidth - SOLUTION_TOLERANCE > width)
                         {
-                            egret.Point.release(actualSize2);
+                            Point.release(actualSize2);
                             actualSize2 = null;
                         }
                     }
@@ -76,8 +81,8 @@ namespace eui.sys {
                     else {
                         actualSize = actualSize2;
                     }
-                    egret.Point.release(actualSize1);
-                    egret.Point.release(actualSize2);
+                    Point.release(actualSize1);
+                    Point.release(actualSize2);
                 }
                 return actualSize;
             }
@@ -101,12 +106,12 @@ namespace eui.sys {
     /**
      * @private
      */
-    function fitTBoundsWidth(width:number, matrix:egret.Matrix,
+    function fitTBoundsWidth(width:number, matrix:Matrix,
                              explicitWidth:number, explicitHeight:number,
                              preferredWidth:number, preferredHeight:number,
                              minWidth:number, minHeight:number,
-                             maxWidth:number, maxHeight:number):egret.Point {
-        let actualSize:egret.Point;
+                             maxWidth:number, maxHeight:number):Point {
+        let actualSize:Point;
 
         if (!isNaN(explicitWidth) && isNaN(explicitHeight)) {
             actualSize = calcUBoundsToFitTBoundsWidth(width, matrix,
@@ -137,12 +142,12 @@ namespace eui.sys {
     /**
      * @private
      */
-    function fitTBoundsHeight(height:number, matrix:egret.Matrix,
+    function fitTBoundsHeight(height:number, matrix:Matrix,
                               explicitWidth:number, explicitHeight:number,
                               preferredWidth:number, preferredHeight:number,
                               minWidth:number, minHeight:number,
-                              maxWidth:number, maxHeight:number):egret.Point {
-        let actualSize:egret.Point;
+                              maxWidth:number, maxHeight:number):Point {
+        let actualSize:Point;
 
         if (!isNaN(explicitWidth) && isNaN(explicitHeight)) {
             actualSize = calcUBoundsToFitTBoundsHeight(height, matrix,
@@ -175,13 +180,13 @@ namespace eui.sys {
      * @private
      */
     function calcUBoundsToFitTBoundsHeight(h:number,
-                                           matrix:egret.Matrix,
+                                           matrix:Matrix,
                                            preferredX:number,
                                            preferredY:number,
                                            minX:number,
                                            minY:number,
                                            maxX:number,
-                                           maxY:number):egret.Point {
+                                           maxY:number):Point {
         let b = matrix.b;
         let d = matrix.d;
 
@@ -197,13 +202,13 @@ namespace eui.sys {
             return null;
 
         if (b == 0)
-            return egret.Point.create(preferredX, h / Math.abs(d));
+            return Point.create(preferredX, h / Math.abs(d));
         else if (d == 0)
-            return egret.Point.create(h / Math.abs(b), preferredY);
+            return Point.create(h / Math.abs(b), preferredY);
 
         let d1 = (b * d >= 0) ? d : -d;
 
-        let s:egret.Point;
+        let s:Point;
         let x:number;
         let y:number;
 
@@ -215,7 +220,7 @@ namespace eui.sys {
             y = (h - b * x) * invD1;
             if (minY <= y && y <= maxY &&
                 b * x + d1 * y >= 0) {
-                s = egret.Point.create(x, y);
+                s = Point.create(x, y);
             }
 
             y = (-h - b * x) * invD1;
@@ -223,8 +228,8 @@ namespace eui.sys {
                 b * x + d1 * y < 0) {
                 if (!s || transformSize(s.x, s.y, matrix).width > transformSize(x, y, matrix).width)
                 {
-                    egret.Point.release(s);
-                    s = egret.Point.create(x, y);
+                    Point.release(s);
+                    s = Point.create(x, y);
                 }
             }
         }
@@ -238,7 +243,7 @@ namespace eui.sys {
             if (minX <= x && x <= maxX &&
                 b * x + d1 * y >= 0) {
                 if (!s || transformSize(s.x, s.y, matrix).width > transformSize(x, y, matrix).width)
-                    s = egret.Point.create(x, y);
+                    s = Point.create(x, y);
             }
 
             x = ( -h - d1 * y ) * invB;
@@ -246,8 +251,8 @@ namespace eui.sys {
                 b * x + d1 * y < 0) {
                 if (!s || transformSize(s.x, s.y, matrix).width > transformSize(x, y, matrix).width)
                 {
-                    egret.Point.release(s);
-                    s = egret.Point.create(x, y);
+                    Point.release(s);
+                    s = Point.create(x, y);
                 }
             }
         }
@@ -265,13 +270,13 @@ namespace eui.sys {
      * @private
      */
     function calcUBoundsToFitTBoundsWidth(w:number,
-                                          matrix:egret.Matrix,
+                                          matrix:Matrix,
                                           preferredX:number,
                                           preferredY:number,
                                           minX:number,
                                           minY:number,
                                           maxX:number,
-                                          maxY:number):egret.Point {
+                                          maxY:number):Point {
 
         let a = matrix.a;
         let c = matrix.c;
@@ -285,13 +290,13 @@ namespace eui.sys {
             return null;
 
         if (a == 0)
-            return egret.Point.create(preferredX, w / Math.abs(c));
+            return Point.create(preferredX, w / Math.abs(c));
         else if (c == 0)
-            return egret.Point.create(w / Math.abs(a), preferredY);
+            return Point.create(w / Math.abs(a), preferredY);
 
         let c1 = ( a * c >= 0 ) ? c : -c;
 
-        let s:egret.Point;
+        let s:Point;
         let x:number;
         let y:number;
 
@@ -303,7 +308,7 @@ namespace eui.sys {
             y = (w - a * x) * invC1;
             if (minY <= y && y <= maxY &&
                 a * x + c1 * y >= 0) {
-                s = egret.Point.create(x, y);
+                s = Point.create(x, y);
             }
 
             y = (-w - a * x) * invC1;
@@ -311,8 +316,8 @@ namespace eui.sys {
                 a * x + c1 * y < 0) {
                 if (!s || transformSize(s.x, s.y, matrix).height > transformSize(x, y, matrix).height)
                 {
-                    egret.Point.release(s);
-                    s = egret.Point.create(x, y);
+                    Point.release(s);
+                    s = Point.create(x, y);
                 }
             }
         }
@@ -327,8 +332,8 @@ namespace eui.sys {
                 a * x + c1 * y >= 0) {
                 if (!s || transformSize(s.x, s.y, matrix).height > transformSize(x, y, matrix).height)
                 {
-                    egret.Point.release(s);
-                    s = egret.Point.create(x, y);
+                    Point.release(s);
+                    s = Point.create(x, y);
                 }
             }
 
@@ -337,8 +342,8 @@ namespace eui.sys {
                 a * x + c1 * y < 0) {
                 if (!s || transformSize(s.x, s.y, matrix).height > transformSize(x, y, matrix).height)
                 {
-                    egret.Point.release(s);
-                    s = egret.Point.create(x, y);
+                    Point.release(s);
+                    s = Point.create(x, y);
                 }
             }
         }
@@ -363,7 +368,7 @@ namespace eui.sys {
                            maxX:number,
                            maxY:number,
                            b:number,
-                           d:number):egret.Point {
+                           d:number):Point {
         if (a == 0 || c == 0)
             return null;
 
@@ -387,7 +392,7 @@ namespace eui.sys {
             y = Math.max(rangeMinY, Math.min(y, rangeMaxY));
 
             x = (w - c * y) / a;
-            return egret.Point.create(x, y);
+            return Point.create(x, y);
         }
 
         A = -(minX * a + w) / c;
@@ -405,7 +410,7 @@ namespace eui.sys {
 
             y = Math.max(rangeMinY, Math.min(y, rangeMaxY));
             x = (-w - c * y) / a;
-            return egret.Point.create(x, y);
+            return Point.create(x, y);
 
         }
         return null;
@@ -416,11 +421,11 @@ namespace eui.sys {
      */
     function calcUBoundsToFitTBounds(w:number,
                                      h:number,
-                                     matrix:egret.Matrix,
+                                     matrix:Matrix,
                                      minX:number,
                                      minY:number,
                                      maxX:number,
-                                     maxY:number):egret.Point {
+                                     maxY:number):Point {
 
         let a = matrix.a;
         let b = matrix.b;
@@ -440,14 +445,14 @@ namespace eui.sys {
             if (a == 0 || d == 0)
                 return null;
 
-            return egret.Point.create(w / Math.abs(a), h / Math.abs(d));
+            return Point.create(w / Math.abs(a), h / Math.abs(d));
         }
 
         if (a == 0 && d == 0) {
             if (b == 0 || c == 0)
                 return null;
 
-            return egret.Point.create(h / Math.abs(b), w / Math.abs(c));
+            return Point.create(h / Math.abs(b), w / Math.abs(c));
         }
 
         let c1 = ( a * c >= 0 ) ? c : -c;
@@ -468,7 +473,7 @@ namespace eui.sys {
         w *= invDet;
         h *= invDet;
 
-        let s:egret.Point;
+        let s:Point;
         s = solveSystem(a, c1, b, d1, w, h);
         if (s &&
             minX <= s.x && s.x <= maxX && minY <= s.y && s.y <= maxY &&
@@ -497,16 +502,16 @@ namespace eui.sys {
             b * s.x + d1 * s.y < 0)
             return s;
 
-        egret.Point.release(s);
+        Point.release(s);
         return null;
     }
 
     /**
      * @private
      */
-    function transformSize(width:number, height:number, matrix:egret.Matrix):egret.Rectangle {
+    function transformSize(width:number, height:number, matrix:Matrix):Rectangle {
 
-        let bounds = egret.$TempRectangle.setTo(0, 0, width, height);
+        let bounds = $TempRectangle.setTo(0, 0, width, height);
         matrix.$transformBounds(bounds);
         return bounds;
     }
@@ -519,8 +524,7 @@ namespace eui.sys {
                          b:number,
                          d:number,
                          mOverDet:number,
-                         nOverDet:number):egret.Point {
-        return egret.Point.create(d * mOverDet - c * nOverDet,
+                         nOverDet:number):Point {
+        return Point.create(d * mOverDet - c * nOverDet,
             a * nOverDet - b * mOverDet);
     }
-}

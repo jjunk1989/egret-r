@@ -1,4 +1,9 @@
-namespace egret {
+
+import { getTimer } from "../../../egret/utils/getTimer";
+import { ticker } from "../../../egret/player/SystemTicker";
+import { listener } from "../../eui/binding/Watcher";
+import { args } from "../../../egret/player/Player";
+
     let setIntervalCache: any = {};
     let setIntervalIndex: number = 0;
 
@@ -34,8 +39,8 @@ namespace egret {
 
         setIntervalCount++;
         if (setIntervalCount == 1) {
-            lastTime = egret.getTimer();
-            egret.ticker.$startTick(intervalUpdate, null);
+            lastTime = getTimer();
+            ticker.$startTick(intervalUpdate, null);
         }
         setIntervalIndex++;
         setIntervalCache[setIntervalIndex] = data;
@@ -64,7 +69,7 @@ namespace egret {
 
             delete setIntervalCache[key];
             if (setIntervalCount == 0) {
-                egret.ticker.$stopTick(intervalUpdate, null);
+                ticker.$stopTick(intervalUpdate, null);
             }
         }
     }
@@ -88,4 +93,3 @@ namespace egret {
         }
         return false;
     }
-}

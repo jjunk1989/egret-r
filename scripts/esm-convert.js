@@ -52,12 +52,38 @@ function extractNsRefs(content) {
   while ((m = re.exec(content)) !== null) refs.add(m[1]);
   re = /\beui\.(\w+)\b/g;
   while ((m = re.exec(content)) !== null) refs.add(m[1]);
-  // Handle egret.sys.X — import the X symbol (egret.sys is merged into egret in symbols)
   re = /\begret\.sys\.(\w+)\b/g;
   while ((m = re.exec(content)) !== null) refs.add(m[1]);
-  // Handle eui.sys.X similarly
   re = /\beui\.sys\.(\w+)\b/g;
   while ((m = re.exec(content)) !== null) refs.add(m[1]);
+  // Also detect bare sys.X after namespace unwrapping
+  re = /\bsys\.(\w+)\b/g;
+  while ((m = re.exec(content)) !== null) refs.add(m[1]);
+  return Array.from(refs);
+}
+
+// Find bare type references that were resolved through namespace merging
+function extractBareRefs(content, filePath, symbolMap) {
+  var refs = new Set();
+  // Patterns: extends Foo, implements Foo, : Foo, new Foo(, <Foo>, Foo.
+  var patterns = [
+    /\bextends\s+(\w+)\b/g,
+    /\bimplements\s+(\w+)\b/g,
+    /:\s*(\w+)\b/g,
+    /\bnew\s+(\w+)\s*[\(<]/g,
+    /<\s*(\w+)\s*>/g,
+  ];
+  patterns.forEach(function(re) {
+    var m;
+    while ((m = re.exec(content)) !== null) {
+      var sym = m[1];
+      // Skip common types, keywords, and single-letter names (often function params)
+      if (/^(string|number|boolean|void|any|never|unknown|object|Function|Array|Promise|Error|Map|Set|Date|RegExp|this|true|false|null|undefined|new|return|egret|eui|code)$/.test(sym)) continue;
+      if (sym.length <= 1) continue;
+      if (sym.startsWith('_')) continue;
+      if (symbolMap[sym] && symbolMap[sym] !== filePath) refs.add(sym);
+    }
+  });
   return Array.from(refs);
 }
 
@@ -78,7 +104,7 @@ function removeNamespace(content) {
     changed = false;
     var starts = [];
     for (var i = 0; i < lines.length; i++) {
-      var m = lines[i].match(/^(\s*)namespace\s+([\w.]+)\s*\{/);
+      var m = lines[i].match(/^(\s*)(?:namespace|module)\s+([\w.]+)\s*\{/);
       if (m) starts.push({ lineIdx: i, indent: m[1] });
     }
     // Remove innermost first
@@ -128,6 +154,9 @@ function convertFile(filePath, symbolMap) {
 
   // Step 3: Find namespace references that need imports
   var refs = extractNsRefs(content);
+  // Also detect bare references that need imports (were resolved via namespace)
+  var bareRefs = extractBareRefs(content, filePath, symbolMap);
+  refs = refs.concat(bareRefs.filter(function(r) { return refs.indexOf(r) < 0; }));
   var imports = '';
   var usedNames = {};
 
@@ -146,9 +175,17 @@ function convertFile(filePath, symbolMap) {
       content = content.replace(new RegExp('\\beui\\.' + sym + '\\b', 'g'), importVar);
       content = content.replace(new RegExp('\\begret\\.sys\\.' + sym + '\\b', 'g'), importVar);
       content = content.replace(new RegExp('\\beui\\.sys\\.' + sym + '\\b', 'g'), importVar);
+      content = content.replace(new RegExp('\\bsys\\.' + sym + '\\b', 'g'), importVar);
 
       if (!usedNames[importPath]) usedNames[importPath] = [];
       if (usedNames[importPath].indexOf(importVar) < 0) usedNames[importPath].push(importVar);
+    } else if (symbolMap[sym]) {
+      // Same-file reference: strip sys. / egret. / eui. prefix
+      content = content.replace(new RegExp('\\begret\\.sys\\.' + sym + '\\b', 'g'), sym);
+      content = content.replace(new RegExp('\\beui\\.sys\\.' + sym + '\\b', 'g'), sym);
+      content = content.replace(new RegExp('\\bsys\\.' + sym + '\\b', 'g'), sym);
+      content = content.replace(new RegExp('\\begret\\.' + sym + '\\b', 'g'), sym);
+      content = content.replace(new RegExp('\\beui\\.' + sym + '\\b', 'g'), sym);
     }
   }
 
@@ -164,9 +201,20 @@ function convertFile(filePath, symbolMap) {
 
   // Step 5: Add imports at top, after copyright
   if (imports) {
-    var copyrightEnd = content.indexOf('\n\n');
-    if (copyrightEnd < 0) copyrightEnd = 0;
-    content = content.substring(0, copyrightEnd + 2) + imports + '\n' + content.substring(copyrightEnd + 2);
+    // Find end of copyright header reliably
+    var lines = content.split(/\r?\n/);
+    var insertAt = 0;
+    for (var li = 0; li < lines.length; li++) {
+      if (lines[li].startsWith('// SPDX') || lines[li].startsWith('// Copyright')) {
+        insertAt = li + 1;
+      } else if (lines[li].trim() === '' && insertAt > 0) {
+        insertAt = li + 1;
+        break;
+      }
+    }
+    var beforeImport = lines.slice(0, insertAt).join('\n');
+    var afterImport = lines.slice(insertAt).join('\n');
+    content = beforeImport + '\n' + imports + '\n' + afterImport;
   }
 
   // Step 6: Fix this -> globalThis

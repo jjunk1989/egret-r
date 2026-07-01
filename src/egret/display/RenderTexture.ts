@@ -1,11 +1,18 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret {
+import { Texture } from "./Texture";
+import { BitmapData } from "./Bitmap";
+import { DisplayObject } from "./DisplayObject";
+import { Rectangle } from "../geom/Rectangle";
+import { nativeRender } from "../player/Player";
+import { RenderBuffer } from "../player/RenderBuffer";
+import { systemRenderer } from "../player/SystemRenderer";
+
 
     /**
      * RenderTexture is a dynamic texture
-     * @extends egret.Texture
+     * @extends Texture
      * @version Egret 2.4
      * @platform Web
      * @includeExample egret/display/RenderTexture.ts
@@ -13,27 +20,27 @@ namespace egret {
      */
     /**
      * RenderTexture 是动态纹理类，他实现了将显示对象及其子对象绘制成为一个纹理的功能
-     * @extends egret.Texture
+     * @extends Texture
      * @version Egret 2.4
      * @platform Web
      * @includeExample egret/display/RenderTexture.ts
      * @language zh_CN
      */
-    export class RenderTexture extends egret.Texture {
+    export class RenderTexture extends Texture {
 
         constructor() {
             super();
-            this.$renderBuffer = new sys.RenderBuffer();
-            let bitmapData = new egret.BitmapData(this.$renderBuffer.surface);
+            this.$renderBuffer = new RenderBuffer();
+            let bitmapData = new BitmapData(this.$renderBuffer.surface);
             bitmapData.$deleteSource = false;
             this._setBitmapData(bitmapData);
         }
 
-        public $renderBuffer: sys.RenderBuffer;
+        public $renderBuffer: RenderBuffer;
         /**
          * The specified display object is drawn as a texture
-         * @param displayObject {egret.DisplayObject} the display to draw
-         * @param clipBounds {egret.Rectangle} clip rect
+         * @param displayObject {DisplayObject} the display to draw
+         * @param clipBounds {Rectangle} clip rect
          * @param scale {number} scale factor
          * @version Egret 2.4
          * @platform Web
@@ -41,14 +48,14 @@ namespace egret {
          */
         /**
          * 将指定显示对象绘制为一个纹理
-         * @param displayObject {egret.DisplayObject} 需要绘制的显示对象
-         * @param clipBounds {egret.Rectangle} 绘制矩形区域
+         * @param displayObject {DisplayObject} 需要绘制的显示对象
+         * @param clipBounds {Rectangle} 绘制矩形区域
          * @param scale {number} 缩放比例
          * @version Egret 2.4
          * @platform Web
          * @language zh_CN
          */
-        public drawToTexture(displayObject: egret.DisplayObject, clipBounds?: Rectangle, scale: number = 1): boolean {
+        public drawToTexture(displayObject: DisplayObject, clipBounds?: Rectangle, scale: number = 1): boolean {
             if (clipBounds && (clipBounds.width == 0 || clipBounds.height == 0)) {
                 return false;
             }
@@ -74,7 +81,7 @@ namespace egret {
             this.$bitmapData.width = width;
             this.$bitmapData.height = height;
 
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 egret_native.activateBuffer(this.$renderBuffer);
                 let useClip = false;
                 let clipX = 0;
@@ -100,7 +107,7 @@ namespace egret {
                 if (clipBounds) {
                     matrix.translate(-clipBounds.x, -clipBounds.y);
                 }
-                sys.systemRenderer.render(displayObject, renderBuffer, matrix, true);
+                systemRenderer.render(displayObject, renderBuffer, matrix, true);
                 Matrix.release(matrix);
             }
 
@@ -132,4 +139,3 @@ namespace egret {
             this.$renderBuffer = null;
         }
     }
-}

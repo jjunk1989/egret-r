@@ -1,8 +1,11 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { IEventDispatcher } from "./IEventDispatcher";
+import { Event } from "./Event";
+import { IOErrorEvent } from "./IOErrorEvent";
 
-namespace egret {
+
 	export interface Stage{
 		addEventListener<Z>(type: "orientationChange"
 			, listener: (this: Z, e: StageOrientationEvent) => void, thisObject: Z, useCapture?: boolean, priority?: number);
@@ -62,16 +65,16 @@ namespace egret {
 
         /**
          * 派发一个屏幕旋转的事件。
-		 * @param target {egret.IEventDispatcher} 派发事件目标
-		 * @param type {egret.IEventDispatcher} 派发事件类型
+		 * @param target {IEventDispatcher} 派发事件目标
+		 * @param type {IEventDispatcher} 派发事件类型
          * @version Egret 2.4
          * @platform Web
          * @language en_US
          */
         /**
          * 派发一个屏幕旋转的事件。
-		 * @param target {egret.IEventDispatcher} Distribute event target
-		 * @param type {egret.IEventDispatcher} Distribute event type
+		 * @param target {IEventDispatcher} Distribute event target
+		 * @param type {IEventDispatcher} Distribute event type
          * @version Egret 2.4
          * @platform Web
          * @language zh_CN
@@ -83,4 +86,3 @@ namespace egret {
             return result;
         }
     }
-}

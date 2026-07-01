@@ -1,8 +1,13 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { EventDispatcher } from "../../../../egret/events/EventDispatcher";
+import { Event } from "../../../../egret/events/Event";
+import { ResourceInfo } from "./ResourceConfig";
+import { PromiseTaskReporter, ResourceManagerError } from "./ResourceManager";
+import { ResourceItem } from "../shim/ResourceItem";
 
-module RES {
+
 	/**
 	 * @class RES.ResourceLoader
 	 * @classdesc
@@ -50,13 +55,13 @@ module RES {
 			this.itemListPriorityDic[Number.NEGATIVE_INFINITY] = this.lazyLoadList;
 			this.updatelistPriority(this.lazyLoadList, Number.NEGATIVE_INFINITY);
 
-			const dispatcher = new egret.EventDispatcher();
+			const dispatcher = new EventDispatcher();
 			this.dispatcherDic[resInfo.root + resInfo.name] = dispatcher;
 			const promise = new Promise((resolve, reject) => {
-				dispatcher.addEventListener("complete", function (e: egret.Event) {
+				dispatcher.addEventListener("complete", function (e: Event) {
 					resolve(e.data);
 				}, null);
-				dispatcher.addEventListener("error", function (e: egret.Event) {
+				dispatcher.addEventListener("error", function (e: Event) {
 					reject(e.data);
 				}, null);
 			});
@@ -83,11 +88,11 @@ module RES {
 			this.numLoadedDic[groupName] = 0;
 			this.updatelistPriority(list, priority);
 			this.reporterDic[groupName] = reporter;
-			const dispatcher = new egret.EventDispatcher();
+			const dispatcher = new EventDispatcher();
 			this.dispatcherDic[groupName] = dispatcher;
 			const promise = new Promise((resolve, reject) => {
 				dispatcher.addEventListener("complete", resolve, null);
-				dispatcher.addEventListener("error", function (e: egret.Event) {
+				dispatcher.addEventListener("error", function (e: Event) {
 					reject(e.data);
 				}, null);
 			});
@@ -162,7 +167,7 @@ module RES {
 					delete this.itemLoadDic[r.root + r.name];
 					host.save(r, response);
 					if (this.promiseHash[r.root + r.name]) {
-						const dispatcher: egret.EventDispatcher = this.deleteDispatcher(r.root + r.name);
+						const dispatcher: EventDispatcher = this.deleteDispatcher(r.root + r.name);
 						dispatcher.dispatchEventWith("complete", false, response);
 					}
 					const groupNames = r.groupNames;
@@ -189,7 +194,7 @@ module RES {
 					if (times > this.maxRetryTimes) {
 						delete this.retryTimesDic[r.name];
 						if (this.promiseHash[r.root + r.name]) {
-							const dispatcher: egret.EventDispatcher = this.deleteDispatcher(r.root + r.name);
+							const dispatcher: EventDispatcher = this.deleteDispatcher(r.root + r.name);
 							dispatcher.dispatchEventWith("error", false, { r, error });
 						}
 						const groupNames = r.groupNames;
@@ -348,4 +353,3 @@ module RES {
 			}
 		}
 	}
-}

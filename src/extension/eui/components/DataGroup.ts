@@ -1,8 +1,21 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { Event } from "../../../egret/events/Event";
+import { DisplayObject } from "../../../egret/display/DisplayObject";
+import { Rectangle } from "../../../egret/geom/Rectangle";
+import { Group } from "./Group";
+import { LayoutBase } from "../layouts/supportClasses/LayoutBase";
+import { IItemRenderer } from "../core/IItemRenderer";
+import { ICollection } from "../collections/ICollection";
+import { ArrayCollection } from "../collections/ArrayCollection";
+import { CollectionEvent } from "../events/CollectionEvent";
+import { ComponentKeys, Component } from "./Component";
+import { UIKeys, UIComponent } from "../core/UIComponent";
+import { VerticalLayout } from "../layouts/VerticalLayout";
+import { $TempRectangle } from "../../../egret/geom/Rectangle";
+import { $warn } from "";
 
-namespace eui {
 
     /**
      * @private
@@ -31,7 +44,7 @@ namespace eui {
      * While this container can hold visual elements, it is often used only
      * to hold data items as children.
      *
-     * @see eui.Group
+     * @see Group
      * @see http://edn.egret.com/cn/article/index/id/527 Data container
      * @see http://edn.egret.com/cn/article/index/id/528 Array collection
      * @defaultProperty dataProvider
@@ -45,7 +58,7 @@ namespace eui {
      * DataGroup 类将数据项目转换为可视元素以进行显示。
      * 尽管此容器可以包含可视元素，但它通常仅用于包含作为子项的数据项目。
      *
-     * @see eui.Group
+     * @see Group
      * @see http://edn.egret.com/cn/article/index/id/527 数据容器
      * @see http://edn.egret.com/cn/article/index/id/528 数组集合
      * @defaultProperty dataProvider
@@ -97,7 +110,7 @@ namespace eui {
         $DataGroup: Object;
 
         /**
-         * @copy eui.LayoutBase#useVirtualLayout
+         * @copy LayoutBase#useVirtualLayout
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -152,7 +165,7 @@ namespace eui {
          * @private
          * 是否使用虚拟布局标记改变
          */
-        private onUseVirtualLayoutChanged(event?: egret.Event): void {
+        private onUseVirtualLayoutChanged(event?: Event): void {
             let values = this.$DataGroup;
             values[Keys.useVirtualLayoutChanged] = true;
             values[Keys.cleanFreeRenderer] = true;
@@ -189,7 +202,7 @@ namespace eui {
          * @version eui 1.0
          * @platform Web
          */
-        public getElementAt(index: number): egret.DisplayObject {
+        public getElementAt(index: number): DisplayObject {
             return this.$indexToRenderer[index];
         }
 
@@ -289,7 +302,7 @@ namespace eui {
             let renderer = <IItemRenderer>(new rendererClass());
             let values = this.$DataGroup;
             values[Keys.rendererToClassMap][renderer.$hashCode] = rendererClass;
-            if (!egret.is(renderer, "eui.IItemRenderer")) {
+            if (!_is(renderer, "IItemRenderer")) {
                 return null;
             }
             if (values[Keys.itemRendererSkinName]) {
@@ -306,9 +319,9 @@ namespace eui {
         private setItemRenderSkinName(renderer: IItemRenderer, skinName: any): void {
             if (renderer && renderer instanceof Component) {
                 let comp: Component = <Component><any>renderer;
-                if (!comp.$Component[sys.ComponentKeys.skinNameExplicitlySet]) {
+                if (!comp.$Component[ComponentKeys.skinNameExplicitlySet]) {
                     comp.skinName = skinName;
-                    comp.$Component[sys.ComponentKeys.skinNameExplicitlySet] = false;
+                    comp.$Component[ComponentKeys.skinNameExplicitlySet] = false;
                 }
 
             }
@@ -328,8 +341,8 @@ namespace eui {
          * The data provider for this DataGroup.
          * It must be an ICollection, such as ArrayCollection
          *
-         * @see eui.ICollection
-         * @see eui.ArrayCollection
+         * @see ICollection
+         * @see ArrayCollection
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -339,8 +352,8 @@ namespace eui {
         /**
          * 列表数据源，请使用实现了ICollection接口的数据类型，例如 ArrayCollection
          *
-         * @see eui.ICollection
-         * @see eui.ArrayCollection
+         * @see ICollection
+         * @see ArrayCollection
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -387,7 +400,7 @@ namespace eui {
          * Called when contents within the dataProvider changes.  We will catch certain
          * events and update our children based on that.
          *
-         * @param event 事件<code>eui.CollectionEvent</code>的对象。
+         * @param event 事件<code>CollectionEvent</code>的对象。
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -397,7 +410,7 @@ namespace eui {
         /**
          * 数据源改变事件处理。
          *
-         * @param event 事件<code>eui.CollectionEvent</code>的对象。
+         * @param event 事件<code>CollectionEvent</code>的对象。
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -432,7 +445,7 @@ namespace eui {
                     break;
                 }
                 default: {
-                    egret.$warn(2204, event.kind);
+                    $warn(2204, event.kind);
                     break;
                 }
             }
@@ -670,7 +683,7 @@ namespace eui {
             if (values[Keys.itemRendererSkinName] == value)
                 return;
             values[Keys.itemRendererSkinName] = value;
-            if (this.$UIComponent[sys.UIKeys.initialized]) {
+            if (this.$UIComponent[UIKeys.initialized]) {
                 values[Keys.itemRendererSkinNameChange] = true;
                 this.invalidateProperties();
             }
@@ -851,7 +864,7 @@ namespace eui {
                 if (rect) {
                     let renderer = this.$indexToRenderer[0];
                     if (renderer) {
-                        let bounds = egret.$TempRectangle;
+                        let bounds = $TempRectangle;
                         renderer.getPreferredBounds(bounds);
                         if (bounds.width != rect.width || bounds.height != rect.height) {
                             values[Keys.typicalLayoutRect] = null;
@@ -892,9 +905,9 @@ namespace eui {
             }
             this.updateRenderer(typicalRenderer, 0, values[Keys.typicalItem]);
             typicalRenderer.validateNow();
-            let bounds = egret.$TempRectangle;
+            let bounds = $TempRectangle;
             typicalRenderer.getPreferredBounds(bounds);
-            let rect = new egret.Rectangle(0, 0, bounds.width, bounds.height);
+            let rect = new Rectangle(0, 0, bounds.width, bounds.height);
             if (this.$layout && this.$layout.$useVirtualLayout) {
                 if (values[Keys.createNewRendererFlag]) {
                     this.rendererAdded(typicalRenderer, 0, values[Keys.typicalItem]);
@@ -912,7 +925,7 @@ namespace eui {
          * @private
          * 设置项目默认大小
          */
-        private setTypicalLayoutRect(rect: egret.Rectangle): void {
+        private setTypicalLayoutRect(rect: Rectangle): void {
             this.$DataGroup[Keys.typicalLayoutRect] = rect;
             if (this.$layout) {
                 if (rect) {
@@ -1115,6 +1128,5 @@ namespace eui {
 
     registerProperty(DataGroup, "itemRenderer", "Class");
     registerProperty(DataGroup, "itemRendererSkinName", "Class");
-    registerProperty(DataGroup, "dataProvider", "eui.ICollection", true);
+    registerProperty(DataGroup, "dataProvider", "ICollection", true);
 
-}

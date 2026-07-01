@@ -1,14 +1,15 @@
-namespace egret {
 
-    egret.$locale_strings = egret.$locale_strings || {};
-    egret.$locale_strings["zh_CN"] = egret.$locale_strings["zh_CN"] || {};
-    let locale_strings = egret.$locale_strings["zh_CN"];
+import { $locale_strings } from "./tr";
+
+
+    $locale_strings["zh_CN"] = $locale_strings["zh_CN"] || {};
+    let locale_strings = $locale_strings["zh_CN"];
 
     //eui 2000-2999    
 
     //core  1000-1999
     locale_strings[1001] = "找不到Egret入口类: {0}。";
-    locale_strings[1002] = "Egret入口类 {0} 必须继承自egret.DisplayObject。";
+    locale_strings[1002] = "Egret入口类 {0} 必须继承自DisplayObject。";
     locale_strings[1003] = "参数 {0} 不能为 null。";
     locale_strings[1004] = "无法将对象添加为它的一个子对象（或子对象的子对象等）的子对象。";
     locale_strings[1005] = "不能将对象添加为其自身的子对象。";
@@ -89,4 +90,3 @@ namespace egret {
     //4500-5000 platform
     locale_strings[4500] = "该平台不支持 {0} 适配模式，已经自动替换为 {1} 模式，请修改您的代码适配逻辑";
 
-}

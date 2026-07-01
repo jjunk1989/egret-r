@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace eui {
 
     let key = "__bindables__";
 
@@ -31,10 +30,10 @@ namespace eui {
     export function registerBindable(instance:any,property:string):void{
         if (DEBUG) {
             if(!instance){
-                egret.$error(1003, "instance");
+                $error(1003, "instance");
             }
             if(!property){
-                egret.$error(1003, "property");
+                $error(1003, "property");
             }
         }
 
@@ -49,4 +48,3 @@ namespace eui {
             instance[key] = list;
         }
     }
-}

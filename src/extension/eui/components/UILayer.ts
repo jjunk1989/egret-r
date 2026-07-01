@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace eui {
+import { Event } from "../../../egret/events/Event";
+import { Group } from "./Group";
+
     /**
      * The UILayer class is the subclass of the Group class.It not only has the standard function of the Group class,but also
      * can keep its size the same to the stage size (Stage.stageWidth,Stage.stageHeight).Its size will changes as the stage size changes.
@@ -39,33 +41,32 @@ namespace eui {
          */
         public constructor(){
             super();
-            this.addEventListener(egret.Event.ADDED_TO_STAGE,this.onAddToStage,this);
-            this.addEventListener(egret.Event.REMOVED_FROM_STAGE,this.onRemoveFromStage,this);
+            this.addEventListener(Event.ADDED_TO_STAGE,this.onAddToStage,this);
+            this.addEventListener(Event.REMOVED_FROM_STAGE,this.onRemoveFromStage,this);
         }
         /**
          * @private
          * 添加到舞台
          */
-        private onAddToStage(event?:egret.Event):void{
-            this.$stage.addEventListener(egret.Event.RESIZE,this.onResize,this);
+        private onAddToStage(event?:Event):void{
+            this.$stage.addEventListener(Event.RESIZE,this.onResize,this);
             this.onResize();
         }
         /**
          * @private
          * 从舞台移除
          */
-        private onRemoveFromStage(event:egret.Event):void{
-            this.$stage.removeEventListener(egret.Event.RESIZE,this.onResize,this);
+        private onRemoveFromStage(event:Event):void{
+            this.$stage.removeEventListener(Event.RESIZE,this.onResize,this);
         }
 
         /**
          * @private
          * 舞台尺寸改变
          */
-        private onResize(event?:egret.Event):void{
+        private onResize(event?:Event):void{
             let stage = this.$stage;
             this.$setWidth(stage.$stageWidth);
             this.$setHeight(stage.$stageHeight);
         }
     }
-}

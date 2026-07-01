@@ -1,7 +1,15 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret.sys {
+import { getTimer } from "../utils/getTimer";
+import { $callAsyncFunctionList, $callAsyncThisList, $callAsyncArgsList } from "../utils/callLater";
+import { Stage } from "../display/Stage";
+import { DisplayObject } from "../display/DisplayObject";
+import { Player } from "./Player";
+import { Event } from "../events/Event";
+import { $error } from "../../Defines.debug";
+import { DEBUG } from "../../Defines.debug";
+
     /**
      * @private
      */
@@ -224,12 +232,12 @@ namespace egret.sys {
          * 执行一次刷新
          */
         public update(forceUpdate?: boolean): void {
-            let t1 = egret.getTimer();
+            let t1 = getTimer();
             let callBackList = this.callBackList;
             let thisObjectList = this.thisObjectList;
             let length = callBackList.length;
             let requestRenderingFlag = $requestRenderingFlag;
-            let timeStamp = egret.getTimer();
+            let timeStamp = getTimer();
             let contexts = lifecycle.contexts;
             for (let c of contexts) {
                 if (c.onUpdate) {
@@ -246,7 +254,7 @@ namespace egret.sys {
                     requestRenderingFlag = true;
                 }
             }
-            let t2 = egret.getTimer();
+            let t2 = getTimer();
             let deltaTime = timeStamp - this.lastTimeStamp;
             this.lastTimeStamp = timeStamp;
             if (deltaTime >= this.frameDeltaTime || forceUpdate) {
@@ -263,9 +271,9 @@ namespace egret.sys {
                 this.lastCount += this.frameInterval;
             }
             this.render(true, this.costEnterFrame + t2 - t1);
-            let t3 = egret.getTimer();
+            let t3 = getTimer();
             this.broadcastEnterFrame();
-            let t4 = egret.getTimer();
+            let t4 = getTimer();
             this.costEnterFrame = t4 - t3;
         }
 
@@ -379,7 +387,7 @@ namespace egret.sys {
             let callBackList = this.callBackList;
             let thisObjectList = this.thisObjectList;
             let length = callBackList.length;
-            let timeStamp = egret.getTimer();
+            let timeStamp = getTimer();
             let contexts = lifecycle.contexts;
             for (let c of contexts) {
                 if (c.onUpdate) {
@@ -396,9 +404,9 @@ namespace egret.sys {
             }
 
             this.callLaters();
-            if (sys.$invalidateRenderFlag) {
+            if ($invalidateRenderFlag) {
                 this.broadcastRender();
-                sys.$invalidateRenderFlag = false;
+                $invalidateRenderFlag = false;
             }
         };
 
@@ -410,9 +418,7 @@ namespace egret.sys {
             this.broadcastEnterFrame();
         };
     }
-}
 
-module egret {
 
     export namespace lifecycle {
 
@@ -421,7 +427,7 @@ module egret {
         /**
          * @private
          */
-        export let stage: egret.Stage;
+        export let stage: Stage;
 
         /**
          * @private
@@ -468,13 +474,12 @@ module egret {
     /**
      * 心跳计时器单例
      */
-    export let ticker: sys.SystemTicker = new sys.SystemTicker();
-}
+    export let ticker: SystemTicker = new SystemTicker();
 
 /**
  * @private
  */
-declare let egret_stages: egret.Stage[];
+declare let egret_stages: Stage[];
 if (DEBUG) {
     global.egret_stages = [];
 }

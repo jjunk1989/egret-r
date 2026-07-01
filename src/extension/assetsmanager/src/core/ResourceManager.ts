@@ -1,4 +1,8 @@
-module RES {
+
+import { Texture } from "../../../../egret/display/Texture";
+import { ResourceInfo, ResourceConfig } from "./ResourceConfig";
+import { ResourceLoader } from "./ResourceLoader";
+
 
     const __tempCache = {};
     /**
@@ -20,7 +24,7 @@ module RES {
         let totalImageSize = 0;
         for (var key in __tempCache) {
             let img = __tempCache[key]
-            if (img instanceof egret.Texture) {
+            if (img instanceof Texture) {
                 totalImageSize += img.$bitmapWidth * img.$bitmapHeight * 4;
             }
         }
@@ -96,7 +100,6 @@ module RES {
     export class ResourceManagerError extends Error {
 
 
-
         static errorMessage = {
             1001: '文件加载失败:{0}',
             1002: "ResourceManager 初始化失败：配置文件加载失败",
@@ -122,9 +125,6 @@ module RES {
     }
 
 
-}
-
-namespace RES {
     /**
      * Resource group loading progress prompt
      * @version Egret 5.2
@@ -165,6 +165,5 @@ namespace RES {
         // onCancel?: () => void;
 
     }
-}
 
 

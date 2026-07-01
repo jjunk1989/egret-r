@@ -1,7 +1,10 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace eui {
+import { Graphics } from "../../../egret/display/Graphics";
+import { Rectangle } from "../../../egret/geom/Rectangle";
+import { Component } from "./Component";
+
     /**
      * The Rect component is a rectangular shape. It can be touched.
      * @version Egret 2.5.5
@@ -20,7 +23,7 @@ namespace eui {
         constructor(width?: number, height?: number, fillColor?: number) {
             super();
             this.touchChildren = false;
-            this.$graphics = new egret.Graphics();
+            this.$graphics = new Graphics();
             this.$graphics.$setTarget(this);
             this.width = width;
             this.height = height;
@@ -35,16 +38,16 @@ namespace eui {
         /**
          * @private
          */
-        $graphics: egret.Graphics;
+        $graphics: Graphics;
 
-        public get graphics(): egret.Graphics {
+        public get graphics(): Graphics {
             return this.$graphics;
         }
 
         /**
          * @private
          */
-        $measureContentBounds(bounds: egret.Rectangle): void {
+        $measureContentBounds(bounds: Rectangle): void {
             if (this.$graphics) {
                 bounds.setTo(0, 0, this.width, this.height);
             }
@@ -233,7 +236,7 @@ namespace eui {
         }
 
         /**
-         * @copy eui.UIComponent#updateDisplayList
+         * @copy UIComponent#updateDisplayList
          *
          * @version Egret 2.5.5
          * @version eui 1.0
@@ -272,4 +275,3 @@ namespace eui {
             }
         }
     }
-}

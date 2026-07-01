@@ -1,7 +1,10 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret.web {
+import { Sound, usingChannel } from "../media/Sound";
+import { HashObject } from "../utils/HashObject";
+import { WebAudioSoundChannel } from "../media/web/WebAudioSoundChannel";
+
 
     /**
      * @private
@@ -69,7 +72,7 @@ namespace egret.web {
                         WebAudioDecode.ctx = new (window["AudioContext"] || window["webkitAudioContext"] || window["mozAudioContext"])();
 
 
-                        let useingChannel = egret.sys.usingChannel;
+                        let useingChannel = usingChannel;
                         for (let channel of useingChannel) {
                             let webSoundChannel: WebAudioSoundChannel = channel as any;
                             webSoundChannel.context = WebAudioDecode.ctx;
@@ -124,7 +127,7 @@ namespace egret.web {
                 Html5Capatibility._canUseBlob = true;
             }
 
-            egret.Sound = Html5Capatibility._AudioClass;
+            Sound = Html5Capatibility._AudioClass;
         }
 
         private static setAudioType(type: number): void {
@@ -204,4 +207,3 @@ namespace egret.web {
 
         return "";
     }
-}

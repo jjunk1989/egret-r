@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace eui {
 
 	/**
 	 * The ColumnAlign class defines the possible values for the
@@ -77,4 +76,3 @@ namespace eui {
 		 */
 		public static JUSTIFY_USING_WIDTH:string = "justifyUsingWidth";
 	}
-}

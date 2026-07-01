@@ -1,8 +1,12 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { DisplayObject } from "../../../egret/display/DisplayObject";
+import { Event } from "../../../egret/events/Event";
+import { EventDispatcher } from "../../../egret/events/EventDispatcher";
+import { RadioButton } from "./RadioButton";
+import { registerBindable } from "../utils/registerBindable";
 
-namespace eui {
 
     let groupCount:number = 0;
 
@@ -10,7 +14,7 @@ namespace eui {
      * @private
      * 显示列表深度排序
      */
-    function breadthOrderCompare(a:egret.DisplayObject, b:egret.DisplayObject):number {
+    function breadthOrderCompare(a:DisplayObject, b:DisplayObject):number {
         let aParent = a.parent;
         let bParent = b.parent;
 
@@ -43,7 +47,7 @@ namespace eui {
      * that act as a single mutually exclusive component; therefore,
      * a user can select only one RadioButton component at a time.
      *
-     * @event egret.Event.CHANGE Dispatched when the value of the selected RadioButton component in
+     * @event Event.CHANGE Dispatched when the value of the selected RadioButton component in
      * this group changes.
      *
      * @version Egret 2.4
@@ -55,7 +59,7 @@ namespace eui {
     /**
      * RadioButtonGroup 组件定义一组 RadioButton 组件，这些组件相互排斥；因此，用户每次只能选择一个 RadioButton 组件
      *
-     * @event egret.Event.CHANGE 此组中所选 RadioButton 组件的值更改时分派。
+     * @event Event.CHANGE 此组中所选 RadioButton 组件的值更改时分派。
      *
      * @version Egret 2.4
      * @version eui 1.0
@@ -63,7 +67,7 @@ namespace eui {
      * @includeExample  extension/eui/components/RadioButtonGroupExample.ts
      * @language zh_CN
      */
-    export class RadioButtonGroup extends egret.EventDispatcher {
+    export class RadioButtonGroup extends EventDispatcher {
 
         /**
          * Constructor.
@@ -306,7 +310,7 @@ namespace eui {
          * 添加单选按钮到组内
          */
         $addInstance(instance:RadioButton):void {
-            instance.addEventListener(egret.Event.REMOVED_FROM_STAGE, this.removedHandler, this);
+            instance.addEventListener(Event.REMOVED_FROM_STAGE, this.removedHandler, this);
             let buttons = this.radioButtons;
             buttons.push(instance);
             buttons.sort(breadthOrderCompare);
@@ -339,7 +343,7 @@ namespace eui {
                     }
                     else if (rb == instance) {
                         if (addListener)
-                            instance.addEventListener(egret.Event.ADDED_TO_STAGE, this.addedHandler, this);
+                            instance.addEventListener(Event.ADDED_TO_STAGE, this.addedHandler, this);
                         if (instance == this._selection)
                             this._selection = null;
                         instance.$radioButtonGroup = null;
@@ -366,7 +370,7 @@ namespace eui {
                     this._selection.selected = false;
                     this._selection = null;
                     if (fireChange)
-                        this.dispatchEventWith(egret.Event.CHANGE);
+                        this.dispatchEventWith(Event.CHANGE);
                 }
             }
             else {
@@ -395,7 +399,7 @@ namespace eui {
                 this._selection = rb;
                 this._selection.selected = true;
                 if (fireChange)
-                    this.dispatchEventWith(egret.Event.CHANGE);
+                    this.dispatchEventWith(Event.CHANGE);
             }
         }
 
@@ -404,10 +408,10 @@ namespace eui {
          * @private
          * 单选按钮添加到显示列表
          */
-        private addedHandler(event:egret.Event):void {
+        private addedHandler(event:Event):void {
             let rb:RadioButton = event.target;
             if (rb == event.currentTarget) {
-                rb.removeEventListener(egret.Event.ADDED_TO_STAGE, this.addedHandler, this);
+                rb.removeEventListener(Event.ADDED_TO_STAGE, this.addedHandler, this);
                 this.$addInstance(rb);
             }
         }
@@ -416,14 +420,12 @@ namespace eui {
          * @private
          * 单选按钮从显示列表移除
          */
-        private removedHandler(event:egret.Event):void {
+        private removedHandler(event:Event):void {
             let rb:RadioButton = event.target;
             if (rb == event.currentTarget) {
-                rb.removeEventListener(egret.Event.REMOVED_FROM_STAGE, this.removedHandler, this);
+                rb.removeEventListener(Event.REMOVED_FROM_STAGE, this.removedHandler, this);
                 this.$removeInstance(rb, true);
             }
         }
     }
     registerBindable(RadioButtonGroup.prototype,"selectedValue");
-
-}

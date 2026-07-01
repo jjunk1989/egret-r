@@ -1,4 +1,3 @@
-module RES {
     /**
      * Decorator, determine if the parameter is null
      * @internal
@@ -37,7 +36,6 @@ module RES {
     }
 
 
-
     /**
      * @internal
      */
@@ -52,4 +50,3 @@ module RES {
             _level = level;
         }
     }
-}

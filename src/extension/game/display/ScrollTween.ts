@@ -1,8 +1,11 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { EventDispatcher } from "../../../egret/events/EventDispatcher";
+import { getTimer } from "../../../egret/utils/getTimer";
+import { ticker } from "../../../egret/player/SystemTicker";
+import { $error } from "../../../Defines.debug";
 
-namespace egret {
 
     /**
      * @private
@@ -13,7 +16,7 @@ namespace egret {
          * @platform Web
          */
         constructor() {
-            egret.$error(1014);
+            $error(1014);
         }
 
         /**
@@ -69,7 +72,7 @@ namespace egret {
 	/**
      * @private
 	 */
-    export class ScrollTween extends egret.EventDispatcher {
+    export class ScrollTween extends EventDispatcher {
 
         /**
          * @private
@@ -245,8 +248,8 @@ namespace egret {
                 }
                 tweens.push(tween);
                 if (!ScrollTween._inited) {
-                    ScrollTween._lastTime = egret.getTimer();
-                    egret.ticker.$startTick(ScrollTween.tick, null);
+                    ScrollTween._lastTime = getTimer();
+                    ticker.$startTick(ScrollTween.tick, null);
                     ScrollTween._inited = true;
                 }
             } else {
@@ -636,4 +639,3 @@ namespace egret {
             this.setPosition(this._prevPosition + delta);
         }
     }
-}

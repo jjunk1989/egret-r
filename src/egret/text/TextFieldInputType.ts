@@ -28,7 +28,6 @@
 //
 //////////////////////////////////////////////////////////////////////////////////////
 
-namespace egret {
 
 	/**
      * TextFieldInputType class is an enumeration of constant value used in setting the inputType property of the TextField class.
@@ -86,4 +85,3 @@ namespace egret {
 		 */
         public static PASSWORD:string = "password";
     }
-}

@@ -1,8 +1,13 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { HttpRequest, IOErrorEvent } from "../../../egret/events/IOErrorEvent";
+import { HttpResponseType } from "../../../egret/net/HttpResponseType";
+import { Event } from "../../../egret/events/Event";
+import { AnalyzerBase } from "./AnalyzerBase";
+import { ResourceItem } from "../../assetsmanager/src/shim/ResourceItem";
 
-namespace RES {
+
     /**
      * @private
      */
@@ -31,7 +36,7 @@ namespace RES {
                 compFunc.call(thisObject, resItem);
                 return;
             }
-            let request:egret.HttpRequest = this.getRequest();
+            let request:HttpRequest = this.getRequest();
             this.resItemDic[request.hashCode] = {item: resItem, func: compFunc, thisObject: thisObject};
 
 
@@ -39,21 +44,21 @@ namespace RES {
             request.send();
         }
 
-        public _dataFormat:string = egret.HttpResponseType.ARRAY_BUFFER;
+        public _dataFormat:string = HttpResponseType.ARRAY_BUFFER;
 
         /**
          * Loader对象池
          */
-        protected recycler:egret.HttpRequest[] = [];
+        protected recycler:HttpRequest[] = [];
         /**
          * 获取一个URLLoader对象
          */
-        private getRequest():egret.HttpRequest {
-            let request:egret.HttpRequest = this.recycler.pop();
+        private getRequest():HttpRequest {
+            let request:HttpRequest = this.recycler.pop();
             if (!request) {
-                request = new egret.HttpRequest();
-                request.addEventListener(egret.Event.COMPLETE, this.onLoadFinish, this);
-                request.addEventListener(egret.IOErrorEvent.IO_ERROR, this.onLoadFinish, this);
+                request = new HttpRequest();
+                request.addEventListener(Event.COMPLETE, this.onLoadFinish, this);
+                request.addEventListener(IOErrorEvent.IO_ERROR, this.onLoadFinish, this);
             }
             request.responseType = this._dataFormat;
             return request;
@@ -62,13 +67,13 @@ namespace RES {
         /**
          * 一项加载结束
          */
-        public onLoadFinish(event:egret.Event):void {
-            let request:egret.HttpRequest = <egret.HttpRequest> (event.target);
+        public onLoadFinish(event:Event):void {
+            let request:HttpRequest = <HttpRequest> (event.target);
             let data:any = this.resItemDic[request.hashCode];
             delete this.resItemDic[request.hashCode];
             let resItem:ResourceItem = data.item;
             let compFunc:Function = data.func;
-            resItem.loaded = (event.type == egret.Event.COMPLETE);
+            resItem.loaded = (event.type == Event.COMPLETE);
             if (resItem.loaded) {
                 this.analyzeData(resItem, request.response)
             }
@@ -117,4 +122,3 @@ namespace RES {
         protected onResourceDestroy(resource:any) {
         }
     }
-}

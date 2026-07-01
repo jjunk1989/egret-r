@@ -1,8 +1,20 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { DisplayObjectContainer } from "../../../egret/display/DisplayObjectContainer";
+import { DisplayObject } from "../../../egret/display/DisplayObject";
+import { ScrollViewProperties } from "./ScrollViewProperties";
+import { Rectangle } from "../../../egret/geom/Rectangle";
+import { Timer } from "../../../egret/events/TimerEvent";
+import { callLater } from "../../../egret/utils/callLater";
+import { Event } from "../../../egret/events/Event";
+import { getTimer } from "../../../egret/utils/getTimer";
+import { ScrollTween, ScrollEase } from "./ScrollTween";
+import { Stage } from "../../../egret/display/Stage";
+import { TouchEvent } from "../../../egret/events/TouchEvent";
+import { $error } from "../../../Defines.debug";
 
-namespace egret {
+
     /**
      * ScrollView auxiliary classes for slides, you will pass a display object constructor. It can display more than the range display object within the specified size range. And can easily drag in this range.
      * @version Egret 2.4
@@ -17,7 +29,7 @@ namespace egret {
      * @includeExample extension/game/display/ScrollView.ts
      * @language zh_CN
      */
-    export class ScrollView extends egret.DisplayObjectContainer {
+    export class ScrollView extends DisplayObjectContainer {
 
         /**
          * @private
@@ -78,14 +90,14 @@ namespace egret {
 
         /**
          * Create a egret.ScrollView objects
-         * @param content {egret.DisplayObject} You need to scroll object
+         * @param content {DisplayObject} You need to scroll object
          * @version Egret 2.4
          * @platform Web
          * @language en_US
          */
         /**
          * 创建一个 egret.ScrollView 对象
-         * @param content {egret.DisplayObject} 需要滚动的对象
+         * @param content {DisplayObject} 需要滚动的对象
          * @version Egret 2.4
          * @platform Web
          * @language zh_CN
@@ -93,7 +105,7 @@ namespace egret {
         constructor(content: DisplayObject = null) {
             super();
             this.touchEnabled = true;
-            this._ScrV_Props_ = new egret.ScrollViewProperties();
+            this._ScrV_Props_ = new ScrollViewProperties();
             if (content) {
                 this.setContent(content);
             }
@@ -106,14 +118,14 @@ namespace egret {
 
         /**
          * Set to scroll object
-         * @param content {egret.DisplayObject} You need to scroll object
+         * @param content {DisplayObject} You need to scroll object
          * @version Egret 2.4
          * @platform Web
          * @language en_US
          */
         /**
          * 设置需要滚动的对象
-         * @param content {egret.DisplayObject} 需要滚动的对象
+         * @param content {DisplayObject} 需要滚动的对象
          * @version Egret 2.4
          * @platform Web
          * @language zh_CN
@@ -356,7 +368,7 @@ namespace egret {
             let height = this.height;
             let width = this.width;
             //这里将坐标取整，避免有些浏览器精度低产生“黑线”问题
-            this.scrollRect = new egret.Rectangle(Math.round(this._ScrV_Props_._scrollLeft), Math.round(this._ScrV_Props_._scrollTop), width, height);
+            this.scrollRect = new Rectangle(Math.round(this._ScrV_Props_._scrollLeft), Math.round(this._ScrV_Props_._scrollTop), width, height);
             this.dispatchEvent(new Event(Event.CHANGE));
         }
 
@@ -477,7 +489,7 @@ namespace egret {
             let evt: TouchEvent = this.cloneTouchEvent(event);
             this.delayTouchBeginEvent = evt;
             if (!this.touchBeginTimer) {
-                this.touchBeginTimer = new egret.Timer(100, 1);
+                this.touchBeginTimer = new Timer(100, 1);
                 this.touchBeginTimer.addEventListener(TimerEvent.TIMER_COMPLETE, this._onTouchBeginTimer, this);
             }
             this.touchBeginTimer.start();
@@ -497,7 +509,7 @@ namespace egret {
             this._onTouchBeginTimer();
             event.stopPropagation();
             let evt: TouchEvent = this.cloneTouchEvent(event);
-            egret.callLater(() => {
+            callLater(() => {
                 if (this.stage) {
                     this.dispatchPropagationEvent(evt);
                 }
@@ -524,7 +536,7 @@ namespace egret {
          * @returns
          */
         private dispatchPropagationEvent(event: TouchEvent): void {
-            let target: egret.DisplayObject = event.$target;
+            let target: DisplayObject = event.$target;
             let list = this.$getPropagationList(target);
             let length = list.length;
             let targetIndex = list.length * 0.5;
@@ -538,7 +550,7 @@ namespace egret {
             list.splice(0, startIndex + 1);
             targetIndex -= startIndex + 1;
             this.$dispatchPropagationEvent(event, list, targetIndex);
-            egret.Event.release(event);
+            Event.release(event);
         }
 
         /**
@@ -612,7 +624,7 @@ namespace egret {
             this._ScrV_Props_._lastTouchPosition.x = e.stageX;
             this._ScrV_Props_._lastTouchPosition.y = e.stageY;
             this._ScrV_Props_._lastTouchEvent = this.cloneTouchEvent(e);
-            this._ScrV_Props_._lastTouchTime = egret.getTimer();
+            this._ScrV_Props_._lastTouchTime = getTimer();
         }
 
         /**
@@ -811,9 +823,9 @@ namespace egret {
             }
             if (this._ScrV_Props_._bounces == false)
                 scrollTop = finalPosition;
-            let vtween = egret.ScrollTween.get(this).to({ scrollTop: scrollTop }, duration, egret.ScrollEase.quartOut);
+            let vtween = ScrollTween.get(this).to({ scrollTop: scrollTop }, duration, ScrollEase.quartOut);
             if (finalPosition != scrollTop) {
-                vtween.to({ scrollTop: finalPosition }, 300, egret.ScrollEase.quintOut);
+                vtween.to({ scrollTop: finalPosition }, 300, ScrollEase.quintOut);
             }
             this._ScrV_Props_._isVTweenPlaying = true;
             this._ScrV_Props_._vScrollTween = vtween;
@@ -848,9 +860,9 @@ namespace egret {
             }
             if (this._ScrV_Props_._bounces == false)
                 scrollLeft = finalPosition;
-            let htween = egret.ScrollTween.get(this).to({ scrollLeft: scrollLeft }, duration, egret.ScrollEase.quartOut);
+            let htween = ScrollTween.get(this).to({ scrollLeft: scrollLeft }, duration, ScrollEase.quartOut);
             if (finalPosition != scrollLeft) {
-                htween.to({ scrollLeft: finalPosition }, 300, egret.ScrollEase.quintOut);
+                htween.to({ scrollLeft: finalPosition }, 300, ScrollEase.quintOut);
             }
             this._ScrV_Props_._isHTweenPlaying = true;
             this._ScrV_Props_._hScrollTween = htween;
@@ -924,7 +936,7 @@ namespace egret {
          * @returns
          */
         private throwNotSupportedError(): void {
-            egret.$error(1023);
+            $error(1023);
         }
 
         /**
@@ -1003,4 +1015,3 @@ namespace egret {
         }
 
     }
-}

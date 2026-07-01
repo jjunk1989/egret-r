@@ -1,7 +1,16 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret.sys {
+import { BitmapData } from "../display/BitmapData";
+import { nativeRender } from "./Player";
+import { RenderNode } from "./nodes/RenderNode";
+import { systemRenderer } from "./SystemRenderer";
+import { HashObject } from "../utils/HashObject";
+import { DisplayObject } from "../display/DisplayObject";
+import { RenderBuffer } from "./RenderBuffer";
+import { Matrix } from "../geom/Matrix";
+import { BitmapNode } from "./nodes/BitmapNode";
+
 
     let displayListPool: DisplayList[] = [];
     let blendModes = ["source-over", "lighter", "destination-out"];
@@ -51,7 +60,7 @@ namespace egret.sys {
          * @private
          * 获取渲染节点
          */
-        $getRenderNode(): sys.RenderNode {
+        $getRenderNode(): RenderNode {
             return this.$renderNode;
         }
 
@@ -112,7 +121,7 @@ namespace egret.sys {
                 let width = surface.width;
                 let height = surface.height;
                 if (!this.bitmapData) {
-                    this.bitmapData = new egret.BitmapData(surface);
+                    this.bitmapData = new BitmapData(surface);
                 }
                 else {
                     this.bitmapData.source = surface;
@@ -128,7 +137,7 @@ namespace egret.sys {
             return drawCalls;
         }
 
-        private bitmapData: egret.BitmapData;
+        private bitmapData: BitmapData;
 
         /**
          * @private
@@ -171,7 +180,7 @@ namespace egret.sys {
         public static $setCanvasScale(x: number, y: number): void {
             DisplayList.$canvasScaleX = x;
             DisplayList.$canvasScaleY = y;
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 egret_native.nrSetCanvasScaleFactor(DisplayList.$canvasScaleFactor, x, y);
             }
         }
@@ -182,7 +191,6 @@ namespace egret.sys {
          * stage渲染
          */
         public $stageRenderToSurface = function () {
-            sys.systemRenderer.render(this.root, this.renderBuffer, this.offsetMatrix);
+            systemRenderer.render(this.root, this.renderBuffer, this.offsetMatrix);
         };
     }
-}

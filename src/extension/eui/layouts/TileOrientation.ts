@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace eui {
 
     /**
      * The TileOrientation class defines the possible values for the
@@ -59,4 +58,3 @@ namespace eui {
          */
         public static COLUMNS:string = "columns";
     }
-}

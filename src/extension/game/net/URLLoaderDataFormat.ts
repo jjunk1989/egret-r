@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret {
 
 	/**
 	 * The URLLoaderDataFormat class provides values that specify how downloaded data is received.
@@ -92,4 +91,3 @@ namespace egret {
         public static SOUND:string = "sound";
 
     }
-}

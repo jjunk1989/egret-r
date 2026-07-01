@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret {
+import { Event } from "./Event";
+import { DeviceAcceleration, DeviceRotationRate } from "../sensor/Motion";
+
     /**
      * MotionEvent represents the device's movement
      * Acceleration and accelerationIncludingGravity to represents the device's acceleration
@@ -61,4 +63,3 @@ namespace egret {
          */
         rotationRate: DeviceRotationRate;
     }
-}

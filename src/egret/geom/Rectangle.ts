@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { HashObject } from "../utils/HashObject";
+import { Point } from "./Point";
 
-namespace egret {
 
     let rectanglePool:Rectangle[] = [];
     /**
@@ -728,4 +729,3 @@ namespace egret {
      * 仅供框架内复用，要防止暴露引用到外部。
      */
     export let $TempRectangle = new Rectangle();
-}

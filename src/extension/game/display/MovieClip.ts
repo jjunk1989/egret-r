@@ -1,7 +1,21 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret {
+import { DisplayObject } from "../../../egret/display/DisplayObject";
+import { Event } from "../../../egret/events/Event";
+import { Point } from "../../../egret/geom/Point";
+import { nativeRender } from "../../../egret/player/Player";
+import { BitmapFillMode } from "../../../egret/display/BitmapFillMode";
+import { FrameLabel } from "./FrameLabel";
+import { getTimer } from "../../../egret/utils/getTimer";
+import { ticker } from "../../../egret/player/SystemTicker";
+import { NormalBitmapNode } from "../../../egret/player/nodes/NormalBitmapNode";
+import { BitmapNode } from "../../../egret/player/nodes/BitmapNode";
+import { Texture } from "../../../egret/display/Texture";
+import { MovieClipData } from "./MovieClipData";
+import { Rectangle } from "../../../egret/geom/Rectangle";
+import { Stage } from "../../../egret/display/Stage";
+import { $error } from "../../../Defines.debug";
 
 
     /**
@@ -12,22 +26,22 @@ namespace egret {
     */
     /**
      * 影片剪辑，可以通过影片剪辑播放序列帧动画。MovieClip 类从以下类继承而来：DisplayObject 和 EventDispatcher。不同于 DisplayObject 对象，MovieClip 对象拥有一个时间轴。
-     * @extends egret.DisplayObject
-     * @event egret.Event.COMPLETE 动画播放完成。
-     * @event egret.Event.LOOP_COMPLETE 动画循环播放完成。循环最后一次只派发 COMPLETE 事件，不派发 LOOP_COMPLETE 事件。
+     * @extends DisplayObject
+     * @event Event.COMPLETE 动画播放完成。
+     * @event Event.LOOP_COMPLETE 动画循环播放完成。循环最后一次只派发 COMPLETE 事件，不派发 LOOP_COMPLETE 事件。
      * @see http://edn.egret.com/cn/docs/page/596 MovieClip序列帧动画
      * @version Egret 2.4
      * @platform Web
      * @includeExample extension/game/display/MovieClip.ts
      * @language zh_CN
      */
-    export class MovieClip extends egret.DisplayObject {
+    export class MovieClip extends DisplayObject {
 
         //Render Property
         $texture: Texture = null;
 
         //Render Property
-        private offsetPoint: egret.Point = egret.Point.create(0, 0);
+        private offsetPoint: Point = Point.create(0, 0);
 
         //Data Property
         $movieClipData: MovieClipData = null;
@@ -116,8 +130,8 @@ namespace egret {
             super();
             this.$smoothing = Bitmap.defaultSmoothing;
             this.setMovieClipData(movieClipData);
-            if (!egret.nativeRender) {
-                this.$renderNode = new sys.NormalBitmapNode();
+            if (!nativeRender) {
+                this.$renderNode = new NormalBitmapNode();
             }
         }
 
@@ -150,7 +164,7 @@ namespace egret {
                 return;
             }
             this.$smoothing = value;
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 if (this.$nativeDisplayObject.setSmoothing) {
                     this.$nativeDisplayObject.setSmoothing(value);
                 }
@@ -220,8 +234,8 @@ namespace egret {
                 let sourceWidth: number = texture.$sourceWidth;
                 let sourceHeight: number = texture.$sourceHeight;
 
-                sys.BitmapNode.$updateTextureData(<sys.NormalBitmapNode>this.$renderNode, texture.$bitmapData, texture.$bitmapX, texture.$bitmapY,
-                    bitmapWidth, bitmapHeight, offsetX, offsetY, textureWidth, textureHeight, destW, destH, sourceWidth, sourceHeight, egret.BitmapFillMode.SCALE, this.$smoothing);
+                BitmapNode.$updateTextureData(<NormalBitmapNode>this.$renderNode, texture.$bitmapData, texture.$bitmapX, texture.$bitmapY,
+                    bitmapWidth, bitmapHeight, offsetX, offsetY, textureWidth, textureHeight, destW, destH, sourceWidth, sourceHeight, BitmapFillMode.SCALE, this.$smoothing);
             }
         }
 
@@ -272,7 +286,7 @@ namespace egret {
          * 返回帧标签为指定字符串的FrameLabel对象
          * @param labelName {string} 帧标签名
          * @param ignoreCase {boolean} 是否忽略大小写，可选参数，默认false
-         * @returns {egret.FrameLabel} FrameLabel对象
+         * @returns {FrameLabel} FrameLabel对象
          */
         private getFrameLabelByName(labelName: string, ignoreCase: boolean = false): FrameLabel {
             if (ignoreCase) {
@@ -314,7 +328,7 @@ namespace egret {
          * @private
          * 返回指定序号的帧的FrameLabel对象
          * @param frame {number} 帧序号
-         * @returns {egret.FrameLabel} FrameLabel对象
+         * @returns {FrameLabel} FrameLabel对象
          */
         private getFrameLabelByFrame(frame: number): FrameLabel {
             let frameLabels = this.frameLabels;
@@ -335,7 +349,7 @@ namespace egret {
          * 返回指定序号的帧对应的FrameLabel对象，如果当前帧没有标签，则返回前面最近的有标签的帧的FrameLabel对象
          * @method egret.MovieClip#getFrameLabelForFrame
          * @param frame {number} 帧序号
-         * @returns {egret.FrameLabel} FrameLabel对象
+         * @returns {FrameLabel} FrameLabel对象
          */
         private getFrameLabelForFrame(frame: number): FrameLabel {
             let outputFrameLabel: FrameLabel = null;
@@ -362,7 +376,7 @@ namespace egret {
          * @platform Web
          */
         public play(playTimes: number = 0): void {
-            this.lastTime = egret.getTimer();
+            this.lastTime = getTimer();
             this.passedTime = 0;
             this.$isPlaying = true;
             this.setPlayTimes(playTimes);
@@ -408,7 +422,7 @@ namespace egret {
          */
         public gotoAndPlay(frame: string | number, playTimes: number = 0): void {
             if (arguments.length == 0 || arguments.length > 2) {
-                egret.$error(1022, "MovieClip.gotoAndPlay()");
+                $error(1022, "MovieClip.gotoAndPlay()");
             }
             if (typeof frame === "string") {
                 this.getFrameStartEnd(frame);
@@ -428,7 +442,7 @@ namespace egret {
          */
         public gotoAndStop(frame: string | number): void {
             if (arguments.length != 1) {
-                egret.$error(1022, "MovieClip.gotoAndStop()");
+                $error(1022, "MovieClip.gotoAndStop()");
             }
             this.stop();
             this.gotoFrame(frame);
@@ -446,7 +460,7 @@ namespace egret {
             } else {
                 frameNum = parseInt(frame + '', 10);
                 if (<any>frameNum != frame) {
-                    egret.$error(1022, "Frame Label Not Found");
+                    $error(1022, "Frame Label Not Found");
                 }
             }
 
@@ -552,7 +566,7 @@ namespace egret {
 
             self.displayedKeyFrameNum = currentFrameNum;
             self.$renderDirty = true;
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 self.$nativeDisplayObject.setDataToBitmapNode(self.$nativeDisplayObject.id, texture,
                     [texture.$bitmapX, texture.$bitmapY, texture.$bitmapWidth, texture.$bitmapHeight,
                     self.offsetPoint.x, self.offsetPoint.y, texture.$getScaleBitmapWidth(), texture.$getScaleBitmapHeight(),
@@ -742,12 +756,11 @@ namespace egret {
             }
             this.isStopped = value;
             if (value) {
-                egret.ticker.$stopTick(this.advanceTime, this);
+                ticker.$stopTick(this.advanceTime, this);
             } else {
                 this.playTimes = this.playTimes == 0 ? 1 : this.playTimes;
-                this.lastTime = egret.getTimer();
-                egret.ticker.$startTick(this.advanceTime, this);
+                this.lastTime = getTimer();
+                ticker.$startTick(this.advanceTime, this);
             }
         }
     }
-}

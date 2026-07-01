@@ -1,14 +1,19 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret {
+import { HashObject } from "../../../egret/utils/HashObject";
+import { Texture } from "../../../egret/display/Texture";
+import { SpriteSheet } from "../../../egret/display/SpriteSheet";
+import { Point } from "../../../egret/geom/Point";
+import { FrameLabel } from "./FrameLabel";
+
     /**
      * @classdesc 使用 MovieClipData 类，您可以创建 MovieClip 对象和处理 MovieClip 对象的数据。MovieClipData 一般由MovieClipDataFactory生成
      * @see http://edn.egret.com/cn/docs/page/596 MovieClip序列帧动画
      * @version Egret 2.4
      * @platform Web
      */
-    export class MovieClipData extends egret.HashObject {
+    export class MovieClipData extends HashObject {
         /**
          * @private
          * MovieClip数据
@@ -102,7 +107,7 @@ namespace egret {
         /**
          * 根据指定帧序号获取该帧对应的Texture对象
          * @param frame {number} 帧序号
-         * @returns {egret.Texture} Texture对象
+         * @returns {Texture} Texture对象
          * @version Egret 2.4
          * @platform Web
          */
@@ -260,4 +265,3 @@ namespace egret {
             }
         }
     }
-}

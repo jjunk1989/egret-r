@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret.sys {
+import { Matrix } from "../../geom/Matrix";
+import { RenderNode, RenderNodeType } from "./RenderNode";
+
     /**
      * @private
      * 组渲染节点,用于组合多个渲染节点
@@ -11,7 +13,7 @@ namespace egret.sys {
         /**
          * 相对偏移矩阵。
          */
-        public matrix: egret.Matrix;
+        public matrix: Matrix;
         
         public constructor() {
             super();
@@ -42,4 +44,3 @@ namespace egret.sys {
             return result;
         }
     }
-}

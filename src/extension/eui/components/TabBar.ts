@@ -1,7 +1,15 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace eui {
+import { Event } from "../../../egret/events/Event";
+import { ViewStack } from "./ViewStack";
+import { ListBase } from "./supportClasses/ListBase";
+import { Group } from "./Group";
+import { ICollection } from "../collections/ICollection";
+import { PropertyEvent } from "../events/PropertyEvent";
+import { HorizontalLayout } from "../layouts/HorizontalLayout";
+import { JustifyAlign } from "../layouts/JustifyAlign";
+
 
     /**
      * The TabBar class displays a set of identical tabs.
@@ -94,14 +102,14 @@ namespace eui {
          */
         $setDataProvider(value:ICollection):boolean{
             let dp = this.$dataProvider;
-            if(dp&&dp instanceof eui.ViewStack){
+            if(dp&&dp instanceof ViewStack){
                 dp.removeEventListener(PropertyEvent.PROPERTY_CHANGE,this.onViewStackIndexChange,this);
-                this.removeEventListener(egret.Event.CHANGE,this.onIndexChanged,this);
+                this.removeEventListener(Event.CHANGE,this.onIndexChanged,this);
             }
 
-            if(value&&value instanceof eui.ViewStack){
+            if(value&&value instanceof ViewStack){
                 value.addEventListener(PropertyEvent.PROPERTY_CHANGE,this.onViewStackIndexChange,this);
-                this.addEventListener(egret.Event.CHANGE,this.onIndexChanged,this);
+                this.addEventListener(Event.CHANGE,this.onIndexChanged,this);
             }
             return super.$setDataProvider(value);
         }
@@ -114,7 +122,7 @@ namespace eui {
          * @private
          * 触摸点击的选中项改变
          */
-        private onIndexChanged(event:egret.Event):void{
+        private onIndexChanged(event:Event):void{
             this.indexBeingUpdated = true;
             (<ViewStack><any> (this.$dataProvider)).selectedIndex = this.selectedIndex;
             this.indexBeingUpdated = false;
@@ -130,5 +138,3 @@ namespace eui {
             }
         }
     }
-
-}

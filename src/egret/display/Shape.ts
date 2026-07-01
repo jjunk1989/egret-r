@@ -1,13 +1,15 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { Graphics } from "./Graphics";
+import { DisplayObject } from "./DisplayObject";
+import { Rectangle } from "../geom/Rectangle";
 
-namespace egret {
 
     /**
      * This class is used to create lightweight shapes using the drawing application program interface (API). The Shape
      * class includes a graphics property, which lets you access methods from the Graphics class.
-     * @see egret.Graphics
+     * @see Graphics
      * @version Egret 2.4
      * @platform Web
      * @includeExample egret/display/Shape.ts
@@ -15,7 +17,7 @@ namespace egret {
      */
     /**
      * 此类用于使用绘图应用程序编程接口 (API) 创建简单形状。Shape 类含有 graphics 属性，通过该属性您可以访问各种矢量绘图方法。
-     * @see egret.Graphics
+     * @see Graphics
      * @version Egret 2.4
      * @platform Web
      * @includeExample egret/display/Shape.ts
@@ -91,5 +93,3 @@ namespace egret {
             }
         }
     }
-
-}

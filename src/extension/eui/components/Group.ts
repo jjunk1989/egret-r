@@ -1,10 +1,20 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-/// <reference path="../states/State.ts" />
-/// <reference path="../core/UIComponent.ts" />
-/// <reference path="../utils/registerProperty.ts" />
-namespace eui {
+import { DisplayObjectContainer } from "../../../egret/display/DisplayObjectContainer";
+import { DisplayObject } from "../../../egret/display/DisplayObject";
+import { Stage } from "../../../egret/display/Stage";
+import { Rectangle } from "../../../egret/geom/Rectangle";
+import { BasicLayout } from "../layouts/BasicLayout";
+import { IViewport } from "../core/IViewport";
+import { Component } from "./Component";
+import { Skin } from "./Skin";
+import { UIKeys, UIComponentImpl, implementUIComponent, mixin } from "../core/UIComponent";
+import { StateValues, StateClient, State } from "../states/State";
+import { LayoutBase } from "../layouts/supportClasses/LayoutBase";
+import { $TempRectangle } from "../../../egret/geom/Rectangle";
+import { $TempPoint } from "../../../egret/geom/Point";
+
 
     /**
      * @private
@@ -44,7 +54,7 @@ namespace eui {
      * @platform Web
      * @language zh_CN
      */
-    export class Group extends egret.DisplayObjectContainer implements IViewport {
+    export class Group extends DisplayObjectContainer implements IViewport {
 
         /**
          * Constructor.
@@ -93,7 +103,7 @@ namespace eui {
          * @platform Web
          * @language zh_CN
          */
-        public set elementsContent(value:egret.DisplayObject[]) {
+        public set elementsContent(value:DisplayObject[]) {
             if (value) {
                 let length = value.length;
                 for (let i = 0; i < length; i++) {
@@ -112,7 +122,7 @@ namespace eui {
          * This object is responsible for the measurement and layout of
          * the UIcomponent in the container.
          *
-         * @default eui.BasicLayout
+         * @default BasicLayout
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -122,7 +132,7 @@ namespace eui {
         /**
          * 此容器的布局对象。
          *
-         * s@default eui.BasicLayout
+         * s@default BasicLayout
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -161,7 +171,7 @@ namespace eui {
         }
 
         /**
-         * @copy eui.IViewport#contentWidth
+         * @copy IViewport#contentWidth
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web
@@ -171,7 +181,7 @@ namespace eui {
         }
 
         /**
-         * @copy eui.IViewport#contentHeight
+         * @copy IViewport#contentHeight
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web
@@ -228,7 +238,7 @@ namespace eui {
             }
         }
         /**
-         * @copy eui.IViewport#scrollEnabled
+         * @copy IViewport#scrollEnabled
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -248,7 +258,7 @@ namespace eui {
         }
 
         /**
-         * @copy eui.IViewport#scrollH
+         * @copy IViewport#scrollH
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -271,7 +281,7 @@ namespace eui {
         }
 
         /**
-         * @copy eui.IViewport#scrollV
+         * @copy IViewport#scrollV
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -303,9 +313,9 @@ namespace eui {
             let hasClip = values[Keys.scrollEnabled];
             if (hasClip) {
                 let uiValues = this.$UIComponent;
-                this.scrollRect = egret.$TempRectangle.setTo(values[Keys.scrollH],
+                this.scrollRect = $TempRectangle.setTo(values[Keys.scrollH],
                     values[Keys.scrollV],
-                    uiValues[sys.UIKeys.width], uiValues[sys.UIKeys.height]);
+                    uiValues[UIKeys.width], uiValues[UIKeys.height]);
             }
             else if (this.$scrollRect) {
                 this.scrollRect = null;
@@ -349,10 +359,10 @@ namespace eui {
          * @platform Web
          * @language zh_CN
          */
-        public getElementAt(index:number):egret.DisplayObject {
+        public getElementAt(index:number):DisplayObject {
             return this.$children[index];
         }
-        public getVirtualElementAt(index:number):egret.DisplayObject{
+        public getVirtualElementAt(index:number):DisplayObject{
             return this.getElementAt(index);
         }
 
@@ -414,7 +424,7 @@ namespace eui {
         /**
          * @private
          */
-        $hitTest(stageX:number, stageY:number):egret.DisplayObject {
+        $hitTest(stageX:number, stageY:number):DisplayObject {
             //Bug: 当 group.sacleX or scaleY ==0 的时候，随便点击那里都点击成功
             //虽然 super.$hitTest里面检测过一次 宽高大小，但是没有直接退出这个函数，所以要再判断一次;
             if (!this.$visible || (!this.touchEnabled && !this.touchChildren) || this.scaleX === 0 || this.scaleY === 0) {
@@ -424,9 +434,9 @@ namespace eui {
             if (target || this.$Group[Keys.touchThrough]) {
                 return target;
             }
-            let point = this.globalToLocal(stageX, stageY, egret.$TempPoint);
+            let point = this.globalToLocal(stageX, stageY, $TempPoint);
             let values = this.$UIComponent;
-            let bounds = egret.$TempRectangle.setTo(0, 0, values[sys.UIKeys.width], values[sys.UIKeys.height]);
+            let bounds = $TempRectangle.setTo(0, 0, values[UIKeys.width], values[UIKeys.height]);
             let scrollRect = this.$scrollRect;
             if(scrollRect){
                 bounds.x = scrollRect.x;
@@ -442,7 +452,7 @@ namespace eui {
         /**
          * @private
          */
-        $stateValues:sys.StateValues = new sys.StateValues();
+        $stateValues:StateValues = new StateValues();
 
         /**
          * The list of state for this component.
@@ -463,7 +473,7 @@ namespace eui {
         public states:State[];
 
         /**
-         * @copy eui.Component#currentState
+         * @copy Component#currentState
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -472,7 +482,7 @@ namespace eui {
         public currentState:string;
 
         /**
-         * @copy eui.Skin#hasState()
+         * @copy Skin#hasState()
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -483,7 +493,7 @@ namespace eui {
          * @private
          * 初始化所有视图状态
          */
-        private initializeStates:(stage:egret.Stage)=>void;
+        private initializeStates:(stage:Stage)=>void;
         /**
          * @private
          * 应用当前的视图状态。子类覆盖此方法在视图状态发生改变时执行相应更新操作。
@@ -491,7 +501,7 @@ namespace eui {
         private commitCurrentState:()=>void;
 
         /**
-         * @copy eui.Component#invalidateState()
+         * @copy Component#invalidateState()
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -507,7 +517,7 @@ namespace eui {
         }
 
         /**
-         * @copy eui.Component#getCurrentState()
+         * @copy Component#getCurrentState()
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -526,7 +536,7 @@ namespace eui {
         private initializeUIValues:()=>void;
 
         /**
-         * @copy eui.Component#createChildren()
+         * @copy Component#createChildren()
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -540,7 +550,7 @@ namespace eui {
         }
 
         /**
-         * @copy eui.Component#childrenCreated()
+         * @copy Component#childrenCreated()
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -551,14 +561,14 @@ namespace eui {
         }
 
         /**
-         * @copy eui.Component#commitProperties()
+         * @copy Component#commitProperties()
          *
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web
          */
         protected commitProperties():void {
-            sys.UIComponentImpl.prototype["commitProperties"].call(this);
+            UIComponentImpl.prototype["commitProperties"].call(this);
             let values = this.$stateValues;
             if (values.stateIsDirty) {
                 values.stateIsDirty = false;
@@ -570,7 +580,7 @@ namespace eui {
         }
 
         /**
-         * @copy eui.Component#measure()
+         * @copy Component#measure()
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -585,7 +595,7 @@ namespace eui {
         }
 
         /**
-         * @copy eui.Component#updateDisplayList()
+         * @copy Component#updateDisplayList()
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -600,7 +610,7 @@ namespace eui {
 
 
         /**
-         * @copy eui.Component#invalidateParentLayout()
+         * @copy Component#invalidateParentLayout()
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -862,7 +872,7 @@ namespace eui {
          * @version eui 1.0
          * @platform Web
          */
-        public getLayoutBounds(bounds:egret.Rectangle):void {
+        public getLayoutBounds(bounds:Rectangle):void {
         }
 
         /**
@@ -872,13 +882,12 @@ namespace eui {
          * @version eui 1.0
          * @platform Web
          */
-        public getPreferredBounds(bounds:egret.Rectangle):void {
+        public getPreferredBounds(bounds:Rectangle):void {
         }
     }
 
-    sys.implementUIComponent(Group, egret.DisplayObjectContainer, true);
-    sys.mixin(Group, sys.StateClient);
+    implementUIComponent(Group, DisplayObjectContainer, true);
+    mixin(Group, StateClient);
     registerProperty(Group, "elementsContent", "Array", true);
     registerProperty(Group, "states", "State[]");
 
-}

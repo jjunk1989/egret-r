@@ -1,12 +1,13 @@
-namespace egret {
 
-    egret.$locale_strings = egret.$locale_strings || {};
-    egret.$locale_strings["en_US"] = egret.$locale_strings["en_US"] || {};
-    let locale_strings = egret.$locale_strings["en_US"];
+import { $locale_strings } from "./tr";
+
+
+    $locale_strings["en_US"] = $locale_strings["en_US"] || {};
+    let locale_strings = $locale_strings["en_US"];
 
     //core  1000-1999
     locale_strings[1001] = "Could not find Egret entry class: {0}。";
-    locale_strings[1002] = "Egret entry class '{0}' must inherit from egret.DisplayObject.";
+    locale_strings[1002] = "Egret entry class '{0}' must inherit from DisplayObject.";
     locale_strings[1003] = "Parameter {0} must be non-null.";
     locale_strings[1004] = "An object cannot be added as a child to one of it's children (or children's children, etc.).";
     locale_strings[1005] = "An object cannot be added as a child of itself.";
@@ -85,4 +86,3 @@ namespace egret {
     //4500-5000 platform
     locale_strings[4500] = "The platform does not support {0} adapter mode and has been automatically replaced with {1} mode, please modify your code adapter logic";
 
-}

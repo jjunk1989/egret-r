@@ -1,13 +1,17 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret.web {
+import { EventDispatcher } from "../../events/EventDispatcher";
+import { SoundChannel } from "../SoundChannel";
+import { Event } from "../../events/Event";
+import { $error } from "../../../Defines.debug";
+
 
     /**
      * @private
      * @inheritDoc
      */
-    export class HtmlSoundChannel extends egret.EventDispatcher implements egret.SoundChannel {
+    export class HtmlSoundChannel extends EventDispatcher implements SoundChannel {
 
 
         /**
@@ -54,7 +58,7 @@ namespace egret.web {
 
         $play():void {
             if (this.isStopped) {
-                egret.$error(1036);
+                $error(1036);
                 return;
             }
 
@@ -77,7 +81,7 @@ namespace egret.web {
             if (this.$loops == 1) {
                 this.stop();
 
-                this.dispatchEventWith(egret.Event.SOUND_COMPLETE);
+                this.dispatchEventWith(Event.SOUND_COMPLETE);
                 return;
             }
 
@@ -137,7 +141,7 @@ namespace egret.web {
          */
         public set volume(value:number) {
             if (this.isStopped) {
-                egret.$error(1036);
+                $error(1036);
                 return;
             }
             this._volume = value;
@@ -156,4 +160,3 @@ namespace egret.web {
             return this.audio.currentTime;
         }
     }
-}

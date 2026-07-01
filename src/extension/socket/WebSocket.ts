@@ -1,17 +1,23 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-/// <reference path="ISocket.ts" />
+import { Event } from "../../egret/events/Event";
+import { ProgressEvent } from "../../egret/events/ProgressEvent";
+import { IOErrorEvent } from "../../egret/events/IOErrorEvent";
+import { EventDispatcher } from "../../egret/events/EventDispatcher";
+import { ISocket } from "./ISocket";
+import { callLater } from "../../egret/utils/callLater";
+import { ByteArray } from "../../egret/utils/ByteArray";
+import { $warn } from "../../Defines.debug";
 
-namespace egret {
     /**
      * The egret.WebSocket class enables code to establish a TCP socket connection, for sending and receiving character string or binary data.
      * To use the methods of the egret.WebSocket class, first use the constructor function new egret.WebSocket to create an egret.WebSocket object.
      * The socket transmits and receives data in asynchronous mode.
-     * @event egret.Event.CONNECT Successfully connect to the server。
-     * @event egret.ProgressEvent.SOCKET_DATA Receiving server data。
-     * @event egret.Event.CLOSE Dispatched when the server closes the connection.
-     * @event egret.ProgressEvent Dispatched when an IO error causes a send or load operation to fail.
+     * @event Event.CONNECT Successfully connect to the server。
+     * @event ProgressEvent.SOCKET_DATA Receiving server data。
+     * @event Event.CLOSE Dispatched when the server closes the connection.
+     * @event ProgressEvent Dispatched when an IO error causes a send or load operation to fail.
      * @see http://edn.egret.com/cn/docs/page/602 WebSocket
      * @version Egret 2.4
      * @platform Web
@@ -22,17 +28,17 @@ namespace egret {
      * egret.WebSocket 类启用代码以建立传输控制协议 (TCP) 套接字连接，用于发送和接收字符串或二进制数据。
      * 要使用 egret.WebSocket 类的方法，请先使用构造函数 new egret.WebSocket 创建一个 egret.WebSocket 对象。
      * 套接字以异步方式传输和接收数据。
-     * @event egret.Event.CONNECT 连接服务器成功。
-     * @event egret.ProgressEvent.SOCKET_DATA 接收服务器数据。
-     * @event egret.Event.CLOSE 在服务器关闭连接时调度。
-     * @event egret.IOErrorEvent.IO_ERROR 在出现输入/输出错误并导致发送或加载操作失败时调度。。
+     * @event Event.CONNECT 连接服务器成功。
+     * @event ProgressEvent.SOCKET_DATA 接收服务器数据。
+     * @event Event.CLOSE 在服务器关闭连接时调度。
+     * @event IOErrorEvent.IO_ERROR 在出现输入/输出错误并导致发送或加载操作失败时调度。。
      * @see http://edn.egret.com/cn/docs/page/602 WebSocket
      * @version Egret 2.4
      * @platform Web
      * @includeExample extension/socket/WebSocket.ts
      * @language zh_CN
      */
-    export class WebSocket extends egret.EventDispatcher {
+    export class WebSocket extends EventDispatcher {
         /**
          * Send and receive data in character string format
          * @version Egret 2.4
@@ -103,7 +109,7 @@ namespace egret {
             this._writeMessage = "";
             this._readMessage = "";
 
-            this.socket = new egret.ISocket();
+            this.socket = new ISocket();
             this.socket.addCallBacks(this.onConnect, this.onClose, this.onSocketData, this.onError, this);
         }
 
@@ -166,7 +172,7 @@ namespace egret {
         private onConnect(): void {
             this._connected = true;
             this._connecting = false;
-            this.dispatchEventWith(egret.Event.CONNECT);
+            this.dispatchEventWith(Event.CONNECT);
         }
 
         /**
@@ -175,7 +181,7 @@ namespace egret {
          */
         private onClose(): void {
             this._connected = false;
-            this.dispatchEventWith(egret.Event.CLOSE);
+            this.dispatchEventWith(Event.CLOSE);
         }
 
         /**
@@ -186,7 +192,7 @@ namespace egret {
             if (this._connecting) {
                 this._connecting = false;
             }
-            this.dispatchEventWith(egret.IOErrorEvent.IO_ERROR);
+            this.dispatchEventWith(IOErrorEvent.IO_ERROR);
         }
 
         /**
@@ -201,7 +207,7 @@ namespace egret {
             else {
                 this._readByte._writeUint8Array(new Uint8Array(message));
             }
-            egret.ProgressEvent.dispatchProgressEvent(this, egret.ProgressEvent.SOCKET_DATA);
+            ProgressEvent.dispatchProgressEvent(this, ProgressEvent.SOCKET_DATA);
         }
 
         /**
@@ -218,7 +224,7 @@ namespace egret {
          */
         public flush(): void {
             if (!this._connected) {
-                egret.$warn(3101);
+                $warn(3101);
                 return;
             }
             if (this._writeMessage) {
@@ -254,7 +260,7 @@ namespace egret {
          */
         public writeUTF(message: string): void {
             if (!this._connected) {
-                egret.$warn(3101);
+                $warn(3101);
                 return;
             }
             if (this._type == WebSocket.TYPE_BINARY) {
@@ -271,7 +277,7 @@ namespace egret {
             //     return;
             // }
             // this._isReadySend = true;
-            // egret.callLater(this.flush, this);
+            // callLater(this.flush, this);
         }
 
         /**
@@ -339,11 +345,11 @@ namespace egret {
          */
         public writeBytes(bytes: ByteArray, offset: number = 0, length: number = 0): void {
             if (!this._connected) {
-                egret.$warn(3101);
+                $warn(3101);
                 return;
             }
             if (!this._writeByte) {
-                egret.$warn(3102);
+                $warn(3102);
                 return;
             }
             this._bytesWrite = true;
@@ -371,7 +377,7 @@ namespace egret {
          */
         public readBytes(bytes: ByteArray, offset: number = 0, length: number = 0): void {
             if (!this._readByte) {
-                egret.$warn(3102);
+                $warn(3102);
                 return;
             }
             this._readByte.position = 0;
@@ -427,4 +433,3 @@ namespace egret {
 
         public static URI: "ws://" | "wss://" = "ws://";
     }
-}

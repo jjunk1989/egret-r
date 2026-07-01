@@ -1,6 +1,6 @@
-namespace egret {
 
-    $locale_strings = $locale_strings || {};
+import { $locale_strings } from "../../../egret/i18n/tr";
+
     $locale_strings["zh_CN"] = $locale_strings["zh_CN"] || {};
     let locale_strings = $locale_strings["zh_CN"];
 
@@ -9,4 +9,3 @@ namespace egret {
     locale_strings[3201] = "RES加载了不存在或空的资源组:\"{0}\"";
     locale_strings[3202] = "请不要使用不同的类型方式来加载同一个素材！";
     locale_strings[3203] = "找不到指定文件类型的解析器:{0}。 请先在项目初始化里注册指定文件类型的解析器，再启动资源加载。";
-}

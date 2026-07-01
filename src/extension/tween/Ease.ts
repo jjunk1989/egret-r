@@ -2,7 +2,6 @@
 // Copyright (c) 2014-present, Egret Technology.
 
 
-namespace egret {
     /**
      * Easing function set. Different easing functions are used to make an animation proceed according to the corresponding equation
      * @see http://edn.egret.com/cn/index.php/article/index/id/53 Easing effect Demo
@@ -23,7 +22,7 @@ namespace egret {
          * @platform Web
          */
         constructor() {
-            egret.$error(1014);
+            $error(1014);
         }
 
         /**
@@ -627,4 +626,3 @@ namespace egret {
          */
         public static elasticInOut = Ease.getElasticInOut(1, 0.3 * 1.5);
     }
-}

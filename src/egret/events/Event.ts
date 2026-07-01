@@ -1,7 +1,12 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret {
+import { EventDispatcher } from "./EventDispatcher";
+import { EventPhase } from "./EventPhase";
+import { IEventDispatcher } from "./IEventDispatcher";
+import { HashObject } from "../utils/HashObject";
+import { IOErrorEvent } from "./IOErrorEvent";
+
     /**
      * The Event class is used as the base class for the creation of Event objects, which are passed as parameters to event
      * listeners when an event occurs.The properties of the Event class carry basic information about an event, such as
@@ -15,7 +20,7 @@ namespace egret {
      * object. Some events have an associated default behavior. Your event listener can cancel this behavior by calling the
      * preventDefault() method. You can also make the current event listener the last one to process an event by calling
      * the stopPropagation() or stopImmediatePropagation() method.
-     * @see egret.EventDispatcher
+     * @see EventDispatcher
      * @version Egret 2.4
      * @platform Web
      * @includeExample egret/events/Event.ts
@@ -29,7 +34,7 @@ namespace egret {
      * Egret API 为需要其他信息的常见事件定义多个 Event 子类。与每个 Event 子类关联的事件将在每个类的文档中加以介绍。Event 类的方法可以在
      * 事件侦听器函数中使用以影响事件对象的行为。某些事件有关联的默认行为，通过调用 preventDefault() 方法，您的事件侦听器可以取消此行为。
      * 可以通过调用 stopPropagation() 或 stopImmediatePropagation() 方法，将当前事件侦听器作为处理事件的最后一个事件侦听器。
-     * @see egret.EventDispatcher
+     * @see EventDispatcher
      * @version Egret 2.4
      * @platform Web
      * @includeExample egret/events/Event.ts
@@ -392,7 +397,7 @@ namespace egret {
          * The capture phase (EventPhase.CAPTURING_PHASE).
          * The target phase (EventPhase.AT_TARGET)
          * The bubbling phase (EventPhase.BUBBLING_PHASE).
-         * @see egret.EventPhase
+         * @see EventPhase
          * @version Egret 2.4
          * @platform Web
          * @language en_US
@@ -402,7 +407,7 @@ namespace egret {
          * 捕获阶段 (EventPhase.CAPTURING_PHASE)。
          * 目标阶段 (EventPhase.AT_TARGET)。
          * 冒泡阶段 (EventPhase.BUBBLING_PHASE)。
-         * @see egret.EventPhase
+         * @see EventPhase
          * @version Egret 2.4
          * @platform Web
          * @language zh_CN
@@ -622,7 +627,7 @@ namespace egret {
          */
         /**
          * 使用指定的 EventDispatcher 对象来抛出 Event 事件对象。抛出的对象将会缓存在对象池上，供下次循环复用。
-         * @param target {egret.IEventDispatcher} 派发事件目标
+         * @param target {IEventDispatcher} 派发事件目标
          * @param type {string} 事件类型
          * @param bubbles {boolean} 确定 Event 对象是否参与事件流的冒泡阶段。默认值为 false。
          * @param data {any} 事件data
@@ -762,5 +767,3 @@ namespace egret {
         }
 
     }
-
-}

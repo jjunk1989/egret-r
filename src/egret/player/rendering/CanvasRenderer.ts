@@ -1,29 +1,53 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { RenderBuffer, CanvasRenderBuffer } from "../RenderBuffer";
+import { RenderNode, RenderNodeType } from "../nodes/RenderNode";
+import { DisplayList } from "../DisplayList";
+import { BitmapNode } from "../nodes/BitmapNode";
+import { TextNode } from "../nodes/TextNode";
+import { GraphicsNode } from "../nodes/GraphicsNode";
+import { GroupNode } from "../nodes/GroupNode";
+import { MeshNode } from "../nodes/MeshNode";
+import { NormalBitmapNode } from "../nodes/NormalBitmapNode";
+import { Path2D, PathType, PathCommand } from "../paths/Path2D";
+import { FillPath } from "../paths/FillPath";
+import { TextFormat } from "../nodes/TextFormat";
+import { GradientFillPath } from "../paths/GradientFillPath";
+import { StrokePath } from "../paths/StrokePath";
+import { DisplayObject } from "../../display/DisplayObject";
+import { Matrix } from "../../geom/Matrix";
+import { BitmapData } from "../../display/BitmapData";
+import { Rectangle } from "../../geom/Rectangle";
+import { ColorMatrixFilter } from "../../filters/ColorMatrixFilter";
+import { BlurFilter } from "../../filters/BlurFilter";
+import { GlowFilter } from "../../filters/GlowFilter";
+import { DropShadowFilter } from "../../filters/DropShadowFilter";
+import { GradientType } from "../../display/GradientType";
+import { RenderMode } from "../../display/DisplayObject";
+
 /**
  * @private
  */
-interface CanvasRenderingContext2D {
+export interface CanvasRenderingContext2D {
     imageSmoothingEnabled: boolean;
     $imageSmoothingEnabled: boolean;
     $offsetX: number;
     $offsetY: number;
 }
 
-namespace egret {
 
     let blendModes = ["source-over", "lighter", "destination-out"];
     let defaultCompositeOp = "source-over";
     let BLACK_COLOR = "#000000";
     let CAPS_STYLES = { none: 'butt', square: 'square', round: 'round' };
-    let renderBufferPool: sys.RenderBuffer[] = [];//渲染缓冲区对象池
-    let renderBufferPool_Filters: sys.RenderBuffer[] = [];//滤镜缓冲区对象池
+    let renderBufferPool: RenderBuffer[] = [];//渲染缓冲区对象池
+    let renderBufferPool_Filters: RenderBuffer[] = [];//滤镜缓冲区对象池
     export class CanvasRenderer {
 
         private nestLevel: number = 0;//渲染的嵌套层次，0表示在调用堆栈的最外层。
 
-        public render(displayObject: DisplayObject, buffer: sys.RenderBuffer, matrix: Matrix, forRenderTexture?: boolean): number {
+        public render(displayObject: DisplayObject, buffer: RenderBuffer, matrix: Matrix, forRenderTexture?: boolean): number {
             this.nestLevel++;
             let context: CanvasRenderingContext2D = buffer.context;
             let root: DisplayObject = forRenderTexture ? displayObject : null;
@@ -54,12 +78,12 @@ namespace egret {
          */
         private drawDisplayObject(displayObject: DisplayObject, context: CanvasRenderingContext2D, offsetX: number, offsetY: number, isStage?: boolean): number {
             let drawCalls = 0;
-            let node: sys.RenderNode;
+            let node: RenderNode;
             let displayList = displayObject.$displayList;
             if (displayList && !isStage) {
                 if (displayObject.$cacheDirty || displayObject.$renderDirty ||
-                    displayList.$canvasScaleX != sys.DisplayList.$canvasScaleX ||
-                    displayList.$canvasScaleY != sys.DisplayList.$canvasScaleY) {
+                    displayList.$canvasScaleX != DisplayList.$canvasScaleX ||
+                    displayList.$canvasScaleY != DisplayList.$canvasScaleY) {
                     drawCalls += displayList.drawToSurface();
                 }
                 node = displayList.$renderNode;
@@ -78,23 +102,23 @@ namespace egret {
                 context.$offsetX = offsetX;
                 context.$offsetY = offsetY;
                 switch (node.type) {
-                    case sys.RenderNodeType.BitmapNode:
-                        this.renderBitmap(<sys.BitmapNode>node, context);
+                    case RenderNodeType.BitmapNode:
+                        this.renderBitmap(<BitmapNode>node, context);
                         break;
-                    case sys.RenderNodeType.TextNode:
-                        this.renderText(<sys.TextNode>node, context);
+                    case RenderNodeType.TextNode:
+                        this.renderText(<TextNode>node, context);
                         break;
-                    case sys.RenderNodeType.GraphicsNode:
-                        this.renderGraphics(<sys.GraphicsNode>node, context);
+                    case RenderNodeType.GraphicsNode:
+                        this.renderGraphics(<GraphicsNode>node, context);
                         break;
-                    case sys.RenderNodeType.GroupNode:
-                        this.renderGroup(<sys.GroupNode>node, context);
+                    case RenderNodeType.GroupNode:
+                        this.renderGroup(<GroupNode>node, context);
                         break;
-                    case sys.RenderNodeType.MeshNode:
-                        this.renderMesh(<sys.MeshNode>node, context);
+                    case RenderNodeType.MeshNode:
+                        this.renderMesh(<MeshNode>node, context);
                         break;
-                    case sys.RenderNodeType.NormalBitmapNode:
-                        this.renderNormalBitmap(<sys.NormalBitmapNode>node, context);
+                    case RenderNodeType.NormalBitmapNode:
+                        this.renderNormalBitmap(<NormalBitmapNode>node, context);
                         break;
                 }
                 context.$offsetX = 0;
@@ -280,10 +304,10 @@ namespace egret {
             if (mask) {
                 let maskRenderNode = mask.$getRenderNode();
                 if ((!mask.$children || mask.$children.length == 0) &&
-                    maskRenderNode && maskRenderNode.type == sys.RenderNodeType.GraphicsNode &&
+                    maskRenderNode && maskRenderNode.type == RenderNodeType.GraphicsNode &&
                     maskRenderNode.drawData.length == 1 &&
-                    (<sys.Path2D>maskRenderNode.drawData[0]).type == sys.PathType.Fill &&
-                    (<sys.FillPath>maskRenderNode.drawData[0]).fillAlpha == 1) {
+                    (<Path2D>maskRenderNode.drawData[0]).type == PathType.Fill &&
+                    (<FillPath>maskRenderNode.drawData[0]).fillAlpha == 1) {
                     this.renderingMask = true;
                     context.save();
                     let maskMatrix = Matrix.create();
@@ -397,7 +421,7 @@ namespace egret {
             return drawCalls;
         }
 
-        public drawNodeToBuffer(node: sys.RenderNode, buffer: sys.RenderBuffer, matrix: Matrix, forHitTest?: boolean): void {
+        public drawNodeToBuffer(node: RenderNode, buffer: RenderBuffer, matrix: Matrix, forHitTest?: boolean): void {
             let context: CanvasRenderingContext2D = buffer.context;
             context.setTransform(matrix.a, matrix.b, matrix.c, matrix.d, matrix.tx, matrix.ty);
             this.renderNode(node, context, forHitTest);
@@ -409,12 +433,12 @@ namespace egret {
          * @param buffer 渲染缓冲
          * @param matrix 要叠加的矩阵
          */
-        public drawDisplayToBuffer(displayObject: DisplayObject, buffer: sys.RenderBuffer, matrix: Matrix): number {
+        public drawDisplayToBuffer(displayObject: DisplayObject, buffer: RenderBuffer, matrix: Matrix): number {
             let context: CanvasRenderingContext2D = buffer.context;
             if (matrix) {
                 context.setTransform(matrix.a, matrix.b, matrix.c, matrix.d, matrix.tx, matrix.ty);
             }
-            let node: sys.RenderNode;
+            let node: RenderNode;
             if (displayObject.$renderDirty) {
                 node = displayObject.$getRenderNode();
             }
@@ -425,23 +449,23 @@ namespace egret {
             if (node) {
                 drawCalls++;
                 switch (node.type) {
-                    case sys.RenderNodeType.BitmapNode:
-                        this.renderBitmap(<sys.BitmapNode>node, context);
+                    case RenderNodeType.BitmapNode:
+                        this.renderBitmap(<BitmapNode>node, context);
                         break;
-                    case sys.RenderNodeType.TextNode:
-                        this.renderText(<sys.TextNode>node, context);
+                    case RenderNodeType.TextNode:
+                        this.renderText(<TextNode>node, context);
                         break;
-                    case sys.RenderNodeType.GraphicsNode:
-                        this.renderGraphics(<sys.GraphicsNode>node, context);
+                    case RenderNodeType.GraphicsNode:
+                        this.renderGraphics(<GraphicsNode>node, context);
                         break;
-                    case sys.RenderNodeType.GroupNode:
-                        this.renderGroup(<sys.GroupNode>node, context);
+                    case RenderNodeType.GroupNode:
+                        this.renderGroup(<GroupNode>node, context);
                         break;
-                    case sys.RenderNodeType.MeshNode:
-                        this.renderMesh(<sys.MeshNode>node, context);
+                    case RenderNodeType.MeshNode:
+                        this.renderMesh(<MeshNode>node, context);
                         break;
-                    case sys.RenderNodeType.NormalBitmapNode:
-                        this.renderNormalBitmap(<sys.NormalBitmapNode>node, context);
+                    case RenderNodeType.NormalBitmapNode:
+                        this.renderNormalBitmap(<NormalBitmapNode>node, context);
                         break;
                 }
             }
@@ -471,33 +495,33 @@ namespace egret {
             return drawCalls;
         }
 
-        private renderNode(node: sys.RenderNode, context: CanvasRenderingContext2D, forHitTest?: boolean): number {
+        private renderNode(node: RenderNode, context: CanvasRenderingContext2D, forHitTest?: boolean): number {
             let drawCalls = 0;
             switch (node.type) {
-                case sys.RenderNodeType.BitmapNode:
-                    drawCalls = this.renderBitmap(<sys.BitmapNode>node, context);
+                case RenderNodeType.BitmapNode:
+                    drawCalls = this.renderBitmap(<BitmapNode>node, context);
                     break;
-                case sys.RenderNodeType.TextNode:
+                case RenderNodeType.TextNode:
                     drawCalls = 1;
-                    this.renderText(<sys.TextNode>node, context);
+                    this.renderText(<TextNode>node, context);
                     break;
-                case sys.RenderNodeType.GraphicsNode:
-                    drawCalls = this.renderGraphics(<sys.GraphicsNode>node, context, forHitTest);
+                case RenderNodeType.GraphicsNode:
+                    drawCalls = this.renderGraphics(<GraphicsNode>node, context, forHitTest);
                     break;
-                case sys.RenderNodeType.GroupNode:
-                    drawCalls = this.renderGroup(<sys.GroupNode>node, context);
+                case RenderNodeType.GroupNode:
+                    drawCalls = this.renderGroup(<GroupNode>node, context);
                     break;
-                case sys.RenderNodeType.MeshNode:
-                    drawCalls = this.renderMesh(<sys.MeshNode>node, context);
+                case RenderNodeType.MeshNode:
+                    drawCalls = this.renderMesh(<MeshNode>node, context);
                     break;
-                case sys.RenderNodeType.NormalBitmapNode:
-                    drawCalls += this.renderNormalBitmap(<sys.NormalBitmapNode>node, context);
+                case RenderNodeType.NormalBitmapNode:
+                    drawCalls += this.renderNormalBitmap(<NormalBitmapNode>node, context);
                     break;
             }
             return drawCalls;
         }
 
-        private renderNormalBitmap(node: sys.NormalBitmapNode, context: CanvasRenderingContext2D): number {
+        private renderNormalBitmap(node: NormalBitmapNode, context: CanvasRenderingContext2D): number {
             let image = node.image;
             if (!image || !image.source) {
                 return 0;
@@ -529,7 +553,7 @@ namespace egret {
             return 1;
         }
 
-        private renderBitmap(node: sys.BitmapNode, context: CanvasRenderingContext2D): number {
+        private renderBitmap(node: BitmapNode, context: CanvasRenderingContext2D): number {
             let image = node.image;
             if (!image || !image.source) {
                 return 0;
@@ -647,7 +671,7 @@ namespace egret {
             return drawCalls;
         }
 
-        private renderMesh(node: sys.MeshNode, context: CanvasRenderingContext2D): number {
+        private renderMesh(node: MeshNode, context: CanvasRenderingContext2D): number {
             let image = node.image;
             let data = node.drawData;
             let dataLength = data.length;
@@ -795,8 +819,7 @@ namespace egret {
         }
 
 
-
-        public renderText(node: sys.TextNode, context: CanvasRenderingContext2D): void {
+        public renderText(node: TextNode, context: CanvasRenderingContext2D): void {
             context.textAlign = "left";
             context.textBaseline = "middle";
             context.lineJoin = "round";//确保描边样式是圆角
@@ -807,7 +830,7 @@ namespace egret {
                 let x = drawData[pos++];
                 let y = drawData[pos++];
                 let text = drawData[pos++];
-                let format: sys.TextFormat = drawData[pos++];
+                let format: TextFormat = drawData[pos++];
                 context.font = getFontString(node, format);
                 let textColor = format.textColor == null ? node.textColor : format.textColor;
                 let strokeColor = format.strokeColor == null ? node.strokeColor : format.strokeColor;
@@ -827,15 +850,15 @@ namespace egret {
         /**
          * @private
          */
-        public renderGraphics(node: sys.GraphicsNode, context: CanvasRenderingContext2D, forHitTest?: boolean): number {
+        public renderGraphics(node: GraphicsNode, context: CanvasRenderingContext2D, forHitTest?: boolean): number {
             let drawData = node.drawData;
             let length = drawData.length;
             forHitTest = !!forHitTest;
             for (let i = 0; i < length; i++) {
-                let path: sys.Path2D = drawData[i];
+                let path: Path2D = drawData[i];
                 switch (path.type) {
-                    case sys.PathType.Fill:
-                        let fillPath = <sys.FillPath>path;
+                    case PathType.Fill:
+                        let fillPath = <FillPath>path;
                         context.fillStyle = forHitTest ? BLACK_COLOR : getRGBAString(fillPath.fillColor, fillPath.fillAlpha);
                         this.renderPath(path, context);
                         if (this.renderingMask) {
@@ -845,8 +868,8 @@ namespace egret {
                             context.fill();
                         }
                         break;
-                    case sys.PathType.GradientFill:
-                        let g = <sys.GradientFillPath>path;
+                    case PathType.GradientFill:
+                        let g = <GradientFillPath>path;
                         context.fillStyle = forHitTest ? BLACK_COLOR : getGradient(context, g.gradientType, g.colors, g.alphas, g.ratios, g.matrix);
                         context.save();
                         let m = g.matrix;
@@ -855,8 +878,8 @@ namespace egret {
                         context.fill();
                         context.restore();
                         break;
-                    case sys.PathType.Stroke:
-                        let strokeFill = <sys.StrokePath>path;
+                    case PathType.Stroke:
+                        let strokeFill = <StrokePath>path;
                         let lineWidth = strokeFill.lineWidth;
                         context.lineWidth = lineWidth;
                         context.strokeStyle = forHitTest ? BLACK_COLOR : getRGBAString(strokeFill.lineColor, strokeFill.lineAlpha);
@@ -882,7 +905,7 @@ namespace egret {
             return length == 0 ? 0 : 1;
         }
 
-        private renderPath(path: sys.Path2D, context: CanvasRenderingContext2D): void {
+        private renderPath(path: Path2D, context: CanvasRenderingContext2D): void {
             context.beginPath();
             let data = path.$data;
             let commands = path.$commands;
@@ -891,23 +914,23 @@ namespace egret {
             for (let commandIndex = 0; commandIndex < commandCount; commandIndex++) {
                 let command = commands[commandIndex];
                 switch (command) {
-                    case sys.PathCommand.CubicCurveTo:
+                    case PathCommand.CubicCurveTo:
                         context.bezierCurveTo(data[pos++] + context.$offsetX, data[pos++] + context.$offsetY, data[pos++] + context.$offsetX, data[pos++] + context.$offsetY, data[pos++] + context.$offsetX, data[pos++] + context.$offsetY);
                         break;
-                    case sys.PathCommand.CurveTo:
+                    case PathCommand.CurveTo:
                         context.quadraticCurveTo(data[pos++] + context.$offsetX, data[pos++] + context.$offsetY, data[pos++] + context.$offsetX, data[pos++] + context.$offsetY);
                         break;
-                    case sys.PathCommand.LineTo:
+                    case PathCommand.LineTo:
                         context.lineTo(data[pos++] + context.$offsetX, data[pos++] + context.$offsetY);
                         break;
-                    case sys.PathCommand.MoveTo:
+                    case PathCommand.MoveTo:
                         context.moveTo(data[pos++] + context.$offsetX, data[pos++] + context.$offsetY);
                         break;
                 }
             }
         }
 
-        private renderGroup(groupNode: sys.GroupNode, context: CanvasRenderingContext2D): number {
+        private renderGroup(groupNode: GroupNode, context: CanvasRenderingContext2D): number {
             let m = groupNode.matrix;
             let saved = false;
             let offsetX;
@@ -928,7 +951,7 @@ namespace egret {
             let children = groupNode.drawData;
             let length = children.length;
             for (let i = 0; i < length; i++) {
-                let node: sys.RenderNode = children[i];
+                let node: RenderNode = children[i];
                 drawCalls += this.renderNode(node, context);
             }
 
@@ -944,13 +967,13 @@ namespace egret {
             return drawCalls;
         }
 
-        private createRenderBuffer(width: number, height: number, useForFilters?: boolean): sys.RenderBuffer {
+        private createRenderBuffer(width: number, height: number, useForFilters?: boolean): RenderBuffer {
             let buffer = useForFilters ? renderBufferPool_Filters.pop() : renderBufferPool.pop();
             if (buffer) {
                 buffer.resize(width, height, true);
             }
             else {
-                buffer = new sys.CanvasRenderBuffer(width, height);
+                buffer = new CanvasRenderBuffer(width, height);
             }
             return buffer;
         }
@@ -964,7 +987,7 @@ namespace egret {
      * @private
      * 获取字体字符串
      */
-    export function getFontString(node: sys.TextNode, format: sys.TextFormat): string {
+    export function getFontString(node: TextNode, format: TextFormat): string {
         let italic: boolean = format.italic == null ? node.italic : format.italic;
         let bold: boolean = format.bold == null ? node.bold : format.bold;
         let size: number = format.size == null ? node.size : format.size;
@@ -1429,4 +1452,3 @@ namespace egret {
             setArray(buffer, plane);
         }
     }
-}

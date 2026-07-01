@@ -1,12 +1,13 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret {
+import { Filter } from "./Filter";
+
     /**
      * @class egret.GlowFilter
      * @classdesc
      * 使用 GlowFilter 类可以对显示对象应用发光效果。在投影滤镜的 distance 和 angle 属性设置为 0 时，发光滤镜与投影滤镜极为相似。
-     * @extends egret.Filter
+     * @extends Filter
      * @version Egret 3.1.4
      * @platform Web
      */
@@ -342,4 +343,3 @@ namespace egret {
         }
 
     }
-}

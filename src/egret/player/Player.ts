@@ -1,9 +1,22 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret.sys {
+import { Stage } from "../display/Stage";
+import { getDefinitionByName } from "../utils/getDefinitionByName";
+import { DisplayObject } from "../display/DisplayObject";
+import { getTimer } from "../utils/getTimer";
+import { log, warn, error, assert } from "../system/Console";
+import { systemRenderer, RenderContext } from "./SystemRenderer";
+import { HashObject } from "../utils/HashObject";
+import { RenderBuffer } from "./RenderBuffer";
+import { DisplayList } from "./DisplayList";
+import { FPSDisplay } from "./FPSDisplay";
+import { $error } from "../../Defines.debug";
+import { DEBUG } from "../../Defines.debug";
+import { $warn } from "";
 
-    export let $TempStage: egret.Stage;
+
+    export let $TempStage: Stage;
 
     /**
      * @private
@@ -94,12 +107,12 @@ namespace egret.sys {
         private initialize(): void {
             let rootClass;
             if (this.entryClassName) {
-                rootClass = egret.getDefinitionByName(this.entryClassName);
+                rootClass = getDefinitionByName(this.entryClassName);
             }
             if (rootClass) {
                 let rootContainer: any = new rootClass();
                 this.root = rootContainer;
-                if (rootContainer instanceof egret.DisplayObject) {
+                if (rootContainer instanceof DisplayObject) {
                     this.stage.addChild(rootContainer);
                 }
                 else {
@@ -143,14 +156,14 @@ namespace egret.sys {
                 return;
             }
 
-            if (egret.sys.systemRenderer.renderClear) {
-                egret.sys.systemRenderer.renderClear();
+            if (systemRenderer.renderClear) {
+                systemRenderer.renderClear();
             }
 
             let stage = this.stage;
-            let t1 = egret.getTimer();
+            let t1 = getTimer();
             let drawCalls = stage.$displayList.drawToSurface();
-            let t2 = egret.getTimer();
+            let t2 = getTimer();
             if (triggerByFrame && this.showFPS) {
                 fpsDisplay.update(drawCalls, t2 - t1, costTicker);
             }
@@ -185,7 +198,7 @@ namespace egret.sys {
         public displayFPS(showFPS: boolean, showLog: boolean, logFilter: string, styles: Object) {
             showLog = !!showLog;
             if (showLog) {
-                egret.log = function () {
+                log = function () {
                     let length = arguments.length;
                     let info = "";
                     for (let i = 0; i < length; i++) {
@@ -194,7 +207,7 @@ namespace egret.sys {
                     sys.$logToFPS(info);
                     console.log.apply(console, toArray(arguments));
                 };
-                egret.warn = function () {
+                warn = function () {
                     let length = arguments.length;
                     let info = "";
                     for (let i = 0; i < length; i++) {
@@ -203,7 +216,7 @@ namespace egret.sys {
                     sys.$warnToFPS(info);
                     console.warn.apply(console, toArray(arguments));
                 };
-                egret.error = function () {
+                error = function () {
                     let length = arguments.length;
                     let info = "";
                     for (let i = 0; i < length; i++) {
@@ -332,11 +345,11 @@ namespace egret.sys {
         private drawCalls = 0;
         private costRender = 0;
         private costTicker = 0;
-        private _stage: egret.Stage;
+        private _stage: Stage;
         private fpsDisplay: FPSDisplay;
         private filter: any;
 
-        constructor(stage: egret.Stage, private showFPS: boolean, private showLog: boolean, private logFilter: string, private styles?: Object) {
+        constructor(stage: Stage, private showFPS: boolean, private showLog: boolean, private logFilter: string, private styles?: Object) {
             this.infoLines = [];
             this.totalTime = 0;
             this.totalTick = 0;
@@ -366,7 +379,7 @@ namespace egret.sys {
         }
 
         update(drawCalls: number, costRender, costTicker) {
-            let current = egret.getTimer();
+            let current = getTimer();
             this.totalTime += current - this.lastTime;
             this.lastTime = current;
             //todo 多Player
@@ -456,29 +469,27 @@ namespace egret.sys {
         return args;
     }
 
-    egret.warn = function () {
+    warn = function () {
         console.warn.apply(console, toArray(arguments))
     };
-    egret.error = function () {
+    error = function () {
         console.error.apply(console, toArray(arguments))
     };
-    egret.assert = function () {
+    assert = function () {
         console.assert.apply(console, toArray(arguments))
     };
-    egret.log = function () {
+    log = function () {
         console.log.apply(console, toArray(arguments));
     };
 
     export let setRenderMode: (renderMode: string) => void;
 
     export let WebGLRenderContext: { new(width?: number, height?: number, context?: WebGLRenderingContext): RenderContext };
-}
 
 
 /**
  * @private
  */
-module egret {
     /**
      * @private
      */
@@ -493,13 +504,12 @@ module egret {
             nativeRender = false;
             const msg = "需要升级微端版本到 0.1.14 才可以开启原生渲染加速";
             sys.$warnToFPS(msg);
-            egret.warn(msg);
+            warn(msg);
         }
         else if (nrABIVersion > requiredNrABIVersion) {
             nativeRender = false;
             const msg = `需要升级引擎版本到 ${nrMinEgretVersion} 才可以开启原生渲染加速`;
             sys.$warnToFPS(msg);
-            egret.warn(msg);
+            warn(msg);
         }
     }
-}

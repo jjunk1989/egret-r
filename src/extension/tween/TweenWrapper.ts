@@ -1,8 +1,11 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { EventDispatcher } from "../../egret/events/EventDispatcher";
+import { props, Event } from "../../egret/events/Event";
+import { paths } from "../../egret/utils/getDefinitionByName";
+import { Tween } from "./Tween";
 
-namespace egret.tween {
 
     export type EaseType =
         'quadIn' | 'quadOut' | 'quadOut' | 'quadInOut' |
@@ -27,7 +30,7 @@ namespace egret.tween {
      * @platform Web
      * @language zh_CN
      */
-    export abstract class BasePath extends egret.EventDispatcher {
+    export abstract class BasePath extends EventDispatcher {
         /**
          * the name of this action.
          * @version Egret 3.1.8
@@ -257,7 +260,7 @@ namespace egret.tween {
      * 	</tween:TweenItem>
      * ```
      */
-    export class TweenItem extends egret.EventDispatcher {
+    export class TweenItem extends EventDispatcher {
 
         private tween: Tween;
 
@@ -466,7 +469,7 @@ namespace egret.tween {
      * @includeExample extension/tween/TweenWrapper.ts
      * @language zh_CN
      */
-    export class TweenGroup extends egret.EventDispatcher {
+    export class TweenGroup extends EventDispatcher {
 
         private completeCount: number = 0;
 
@@ -600,4 +603,3 @@ namespace egret.tween {
             prototype.__defaultProperty__ = property;
         }
     }
-}

@@ -1,13 +1,28 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret.web {
+import { DisplayObject } from "../../display/DisplayObject";
+import { Video } from "../Video";
+import { Event } from "../../events/Event";
+import { Capabilities } from "../../system/Capabilities";
+import { stopTick } from "../../utils/stopTick";
+import { startTick } from "../../utils/startTick";
+import { IOErrorEvent } from "../../events/IOErrorEvent";
+import { ImageLoader } from "../../net/ImageLoader";
+import { nativeRender } from "../../player/Player";
+import { Texture } from "../../display/Texture";
+import { BitmapNode } from "../../player/nodes/BitmapNode";
+import { BitmapData } from "../../display/Bitmap";
+import { Rectangle } from "../../geom/Rectangle";
+import { $error } from "../../../Defines.debug";
+import { DEBUG } from "../../../Defines.debug";
+
 
     /**
      * @private
      * @inheritDoc
      */
-    export class WebVideo extends egret.DisplayObject implements egret.Video {
+    export class WebVideo extends DisplayObject implements Video {
 
         /**
          * @inheritDoc
@@ -63,9 +78,9 @@ namespace egret.web {
          */
         constructor(url?: string, cache: boolean = true) {
             super();
-            this.$renderNode = new sys.BitmapNode();
+            this.$renderNode = new BitmapNode();
             this.src = url;
-            this.once(egret.Event.ADDED_TO_STAGE, this.loadPoster, this);
+            this.once(Event.ADDED_TO_STAGE, this.loadPoster, this);
             if (url) {
                 this.load();
             }
@@ -82,13 +97,13 @@ namespace egret.web {
             url = url || this.src;
             this.src = url;
             if (DEBUG && !url) {
-                egret.$error(3002);
+                $error(3002);
             }
             if (this.video && this.video.src == url) {
                 return;
             }
             let video: HTMLVideoElement;
-            if (!this.video || egret.Capabilities.isMobile) {
+            if (!this.video || Capabilities.isMobile) {
                 video = document.createElement("video");
                 this.video = video;
                 video.controls = null;
@@ -143,7 +158,7 @@ namespace egret.web {
         public play(startTime?: number, loop: boolean = false) {
             if (this.loaded == false) {
                 this.load(this.src);
-                this.once(egret.Event.COMPLETE, e => this.play(startTime, loop), this);
+                this.once(Event.COMPLETE, e => this.play(startTime, loop), this);
                 return;
             }
 
@@ -154,7 +169,7 @@ namespace egret.web {
                 video.currentTime = +startTime || 0;
             }
             video.loop = !!loop;
-            if (egret.Capabilities.isMobile) {
+            if (Capabilities.isMobile) {
                 video.style.zIndex = "-88888"; //移动端，就算设置成最小，只要全屏，都会在最上层，而且在自动退出去后，不担心挡住canvas
             }
             else {
@@ -165,7 +180,7 @@ namespace egret.web {
             video.style.left = "0px";
             video.height = video.videoHeight;
             video.width = video.videoWidth;
-            if (egret.Capabilities.os != "Windows PC" && egret.Capabilities.os != "Mac OS") {
+            if (Capabilities.os != "Windows PC" && Capabilities.os != "Mac OS") {
                 window.setTimeout(function () {//为了解决视频返回挤压页面内容
                     video.width = 0;
                 }, 1000);
@@ -192,7 +207,7 @@ namespace egret.web {
                     video.removeAttribute("playsinline");
                     document.body.appendChild(video);
                 }
-                egret.stopTick(this.markDirty, this);
+                stopTick(this.markDirty, this);
                 this.goFullscreen();
             }
             else {
@@ -204,9 +219,9 @@ namespace egret.web {
 
                 this.setFullScreenMonitor(false);
 
-                egret.startTick(this.markDirty, this);
+                startTick(this.markDirty, this);
 
-                if (egret.Capabilities.isMobile) {
+                if (Capabilities.isMobile) {
                     this.video.currentTime = 0;
                     this.onVideoEnded();
                     return;
@@ -256,7 +271,7 @@ namespace egret.web {
         }
 
         private screenError(): void {
-            egret.$error(3014);
+            $error(3014);
         }
 
         private screenChanged = (e): void => {
@@ -264,7 +279,7 @@ namespace egret.web {
             if (!isfullscreen) {
                 this.checkFullScreen(false);
 
-                if (!egret.Capabilities.isMobile) {
+                if (!Capabilities.isMobile) {
                     this._fullscreen = isfullscreen;
                 }
             }
@@ -300,7 +315,7 @@ namespace egret.web {
             if (this._fullscreen) {
                 this.exitFullscreen();
             }
-            this.dispatchEventWith(egret.Event.ENDED);
+            this.dispatchEventWith(Event.ENDED);
         }
 
         /**
@@ -309,7 +324,7 @@ namespace egret.web {
          */
         private onVideoError() {
             console.error("video errorCode:", this.video.error.code);
-            this.dispatchEventWith(egret.IOErrorEvent.IO_ERROR);
+            this.dispatchEventWith(IOErrorEvent.IO_ERROR);
         }
 
         /**
@@ -343,7 +358,7 @@ namespace egret.web {
             }
             this.userPause = false;
             this.video.pause();
-            egret.stopTick(this.markDirty, this);
+            stopTick(this.markDirty, this);
         }
 
 
@@ -395,7 +410,7 @@ namespace egret.web {
          * @inheritDoc
          */
         public set fullscreen(value: boolean) {
-            if (egret.Capabilities.isMobile) {
+            if (Capabilities.isMobile) {
                 return;
             }
             this._fullscreen = !!value;
@@ -425,16 +440,16 @@ namespace egret.web {
             let poster = this.poster;
             if (!poster)
                 return;
-            let imageLoader = new egret.ImageLoader();
-            imageLoader.once(egret.Event.COMPLETE, e => {
+            let imageLoader = new ImageLoader();
+            imageLoader.once(Event.COMPLETE, e => {
                 let posterData = <HTMLImageElement><any>imageLoader.data;
                 this.posterData = imageLoader.data;
                 this.$renderDirty = true;
                 this.posterData.width = this.getPlayWidth();
                 this.posterData.height = this.getPlayHeight();
 
-                if (egret.nativeRender) {
-                    const texture = new egret.Texture();
+                if (nativeRender) {
+                    const texture = new Texture();
                     texture._setBitmapData(this.posterData);
                     this.$nativeDisplayObject.setTexture(texture);
                 }
@@ -459,7 +474,7 @@ namespace egret.web {
             video.width = video.videoWidth;
             video.height = video.videoHeight;
             window.setTimeout(() => {
-                this.dispatchEventWith(egret.Event.COMPLETE);
+                this.dispatchEventWith(Event.COMPLETE);
             }, 200);
         };
 
@@ -516,12 +531,12 @@ namespace egret.web {
          * @private
          */
         $updateRenderNode(): void {
-            let node = <sys.BitmapNode>this.$renderNode;
+            let node = <BitmapNode>this.$renderNode;
             let bitmapData = this.bitmapData;
             let posterData = this.posterData;
             let width = this.getPlayWidth();
             let height = this.getPlayHeight();
-            if ((!this.isPlayed || egret.Capabilities.isMobile) && posterData) {
+            if ((!this.isPlayed || Capabilities.isMobile) && posterData) {
                 node.image = posterData;
                 node.imageWidth = width;
                 node.imageHeight = height;
@@ -591,5 +606,4 @@ namespace egret.web {
         }
     }
 
-    egret.Video = WebVideo;
-}
+    Video = WebVideo;

@@ -1,8 +1,11 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { RangeKeys } from "./supportClasses/Range";
+import { SliderBase } from "./supportClasses/SliderBase";
+import { $TempRectangle } from "../../../egret/geom/Rectangle";
+import { $TempPoint } from "../../../egret/geom/Point";
 
-namespace eui {
 
     /**
      * The VSlider (vertical slider) control lets users select a value
@@ -59,9 +62,9 @@ namespace eui {
                 return 0;
 
             let values = this.$Range;
-            let range = values[sys.RangeKeys.maximum] - values[sys.RangeKeys.minimum];
+            let range = values[RangeKeys.maximum] - values[RangeKeys.minimum];
             let thumbRange = this.getThumbRange();
-            return values[sys.RangeKeys.minimum] + ((thumbRange != 0) ? ((thumbRange - y) / thumbRange) * range : 0);
+            return values[RangeKeys.minimum] + ((thumbRange != 0) ? ((thumbRange - y) / thumbRange) * range : 0);
         }
 
         /**
@@ -70,7 +73,7 @@ namespace eui {
          * @returns 
          */
         private getThumbRange():number {
-            let bounds = egret.$TempRectangle;
+            let bounds = $TempRectangle;
             this.track.getLayoutBounds(bounds);
             let thumbRange = bounds.height;
             this.thumb.getLayoutBounds(bounds);
@@ -90,23 +93,21 @@ namespace eui {
                 return;
             let values = this.$Range
             let thumbRange = this.getThumbRange();
-            let range = values[sys.RangeKeys.maximum] - values[sys.RangeKeys.minimum];
-            let thumbPosTrackY:number = (range > 0) ? thumbRange - (((this.pendingValue - values[sys.RangeKeys.minimum]) / range) * thumbRange) : 0;
-            let thumbPos = this.track.localToGlobal(0, thumbPosTrackY,egret.$TempPoint);
+            let range = values[RangeKeys.maximum] - values[RangeKeys.minimum];
+            let thumbPosTrackY:number = (range > 0) ? thumbRange - (((this.pendingValue - values[RangeKeys.minimum]) / range) * thumbRange) : 0;
+            let thumbPos = this.track.localToGlobal(0, thumbPosTrackY,$TempPoint);
             let thumbPosX = thumbPos.x;
             let thumbPosY = thumbPos.y;
-            let thumbPosParentY = this.thumb.$parent.globalToLocal(thumbPosX, thumbPosY, egret.$TempPoint).y;
+            let thumbPosParentY = this.thumb.$parent.globalToLocal(thumbPosX, thumbPosY, $TempPoint).y;
 
-            let bounds = egret.$TempRectangle;
+            let bounds = $TempRectangle;
             let thumbHeight = bounds.height;
             this.thumb.getLayoutBounds(bounds);
             this.thumb.setLayoutBoundsPosition(bounds.x, Math.round(thumbPosParentY));
             if (this.trackHighlight) {
-                let trackHighlightY = this.trackHighlight.$parent.globalToLocal(thumbPosX, thumbPosY, egret.$TempPoint).y;
+                let trackHighlightY = this.trackHighlight.$parent.globalToLocal(thumbPosX, thumbPosY, $TempPoint).y;
                 this.trackHighlight.y = Math.round(trackHighlightY + thumbHeight);
                 this.trackHighlight.height = Math.round(thumbRange - trackHighlightY);
             }
         }
     }
-
-}

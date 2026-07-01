@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret.sys {
-
+import { RenderNode, RenderNodeType } from "./RenderNode";
+import { BitmapData } from "../../display/BitmapData";
 
 
     /**
@@ -70,4 +70,3 @@ namespace egret.sys {
             this.image = null;
         }
     }
-}

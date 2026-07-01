@@ -1,7 +1,16 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret {
+import { Texture } from "./Texture";
+import { nativeRender } from "../player/Player";
+import { Rectangle } from "../geom/Rectangle";
+import { BitmapFillMode } from "./BitmapFillMode";
+import { NormalBitmapNode } from "../player/nodes/NormalBitmapNode";
+import { BitmapNode } from "../player/nodes/BitmapNode";
+import { BitmapData } from './BitmapData';
+import { DisplayObject } from "./DisplayObject";
+import { Stage } from "./Stage";
+
 
     /**
      * The Bitmap class represents display objects that represent bitmap images.
@@ -12,7 +21,7 @@ namespace egret {
      * that reference the same texture object, multiple display objects can use the same complex texture object
      * without incurring the memory overhead of a texture object for each display object instance.
      *
-     * @see egret.Texture
+     * @see Texture
      * @version Egret 2.4
      * @platform Web
      * @includeExample egret/display/Bitmap.ts
@@ -26,7 +35,7 @@ namespace egret {
      * 由于能够创建引用相同 texture 对象的多个 Bitmap 对象，因此，多个显示对象可以使用相同的 texture 对象，
      * 而不会因为每个显示对象实例使用一个 texture 对象而产生额外内存开销。
      *
-     * @see egret.Texture
+     * @see Texture
      * @version Egret 2.4
      * @platform Web
      * @includeExample egret/display/Bitmap.ts
@@ -50,10 +59,10 @@ namespace egret {
          */
         public constructor(value?: Texture) {
             super();
-            this.$renderNode = new sys.NormalBitmapNode();
+            this.$renderNode = new NormalBitmapNode();
             this.$setTexture(value);
             if (value) {
-                (<sys.NormalBitmapNode>this.$renderNode).rotated = value.$rotated;
+                (<NormalBitmapNode>this.$renderNode).rotated = value.$rotated;
             }
         }
 
@@ -125,7 +134,7 @@ namespace egret {
             let self = this;
             self.$setTexture(value);
             if (value && self.$renderNode) {
-                (<sys.BitmapNode>self.$renderNode).rotated = value.$rotated;
+                (<BitmapNode>self.$renderNode).rotated = value.$rotated;
             }
         }
 
@@ -158,7 +167,7 @@ namespace egret {
                     maskedObject.$cacheDirty = true;
                     maskedObject.$cacheDirtyUp();
                 }
-                if (egret.nativeRender) {
+                if (nativeRender) {
                     this.setBitmapDataToWasm(null);
                 }
                 return true;
@@ -218,7 +227,7 @@ namespace egret {
         public $refreshImageData(): void {
             let texture: Texture = this.$texture;
             if (texture) {
-                if (egret.nativeRender) {
+                if (nativeRender) {
                     this.setBitmapDataToWasm(texture);
                 }
                 this.setImageData(texture.$bitmapData,
@@ -229,7 +238,7 @@ namespace egret {
                     texture.$sourceWidth, texture.$sourceHeight);
             }
             else {
-                if (egret.nativeRender) {
+                if (nativeRender) {
                     this.setBitmapDataToWasm(null);
                 }
             }
@@ -256,7 +265,7 @@ namespace egret {
         /**
          * @private
          */
-        $scale9Grid: egret.Rectangle = null;
+        $scale9Grid: Rectangle = null;
 
         /**
          * Represent a Rectangle Area that the 9 scale area of Image.
@@ -275,19 +284,19 @@ namespace egret {
          * @platform Web
          * @language zh_CN
          */
-        public get scale9Grid(): egret.Rectangle {
+        public get scale9Grid(): Rectangle {
             return this.$scale9Grid;
         }
 
-        public set scale9Grid(value: egret.Rectangle) {
+        public set scale9Grid(value: Rectangle) {
             this.$setScale9Grid(value);
         }
 
-        protected $setScale9Grid(value: egret.Rectangle): void {
+        protected $setScale9Grid(value: Rectangle): void {
             let self = this;
             self.$scale9Grid = value;
             self.$renderDirty = true;
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 if (value) {
                     self.$nativeDisplayObject.setScale9Grid(value.x, value.y, value.width, value.height);
                 } else {
@@ -351,7 +360,7 @@ namespace egret {
             }
             self.$fillMode = value;
 
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 self.$nativeDisplayObject.setBitmapFillMode(self.$fillMode);
             }
             else {
@@ -411,8 +420,8 @@ namespace egret {
                 return;
             }
             this.$smoothing = value;
-            (<sys.BitmapNode>this.$renderNode).smoothing = value;
-            if (!egret.nativeRender) {
+            (<BitmapNode>this.$renderNode).smoothing = value;
+            if (!nativeRender) {
                 let p = self.$parent;
                 if (p && !p.$cacheDirty) {
                     p.$cacheDirty = true;
@@ -440,7 +449,7 @@ namespace egret {
             }
             self.$explicitBitmapWidth = value;
             self.$renderDirty = true;
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 self.$nativeDisplayObject.setWidth(value);
             }
             else {
@@ -470,7 +479,7 @@ namespace egret {
             }
             self.$explicitBitmapHeight = value;
             self.$renderDirty = true;
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 self.$nativeDisplayObject.setHeight(value);
             }
             else {
@@ -531,19 +540,19 @@ namespace egret {
 
                 let scale9Grid = this.scale9Grid || this.$texture["scale9Grid"];
                 if (scale9Grid) {
-                    if (this.$renderNode instanceof sys.NormalBitmapNode) {
-                        this.$renderNode = new sys.BitmapNode();
+                    if (this.$renderNode instanceof NormalBitmapNode) {
+                        this.$renderNode = new BitmapNode();
                     }
-                    sys.BitmapNode.$updateTextureDataWithScale9Grid(<sys.NormalBitmapNode>this.$renderNode, this.$bitmapData, scale9Grid,
+                    BitmapNode.$updateTextureDataWithScale9Grid(<NormalBitmapNode>this.$renderNode, this.$bitmapData, scale9Grid,
                         this.$bitmapX, this.$bitmapY, this.$bitmapWidth, this.$bitmapHeight,
                         this.$offsetX, this.$offsetY, this.$textureWidth, this.$textureHeight,
                         destW, destH, this.$sourceWidth, this.$sourceHeight, this.$smoothing);
                 }
                 else {
-                    if (this.fillMode == egret.BitmapFillMode.REPEAT && this.$renderNode instanceof sys.NormalBitmapNode) {
-                        this.$renderNode = new sys.BitmapNode();
+                    if (this.fillMode == BitmapFillMode.REPEAT && this.$renderNode instanceof NormalBitmapNode) {
+                        this.$renderNode = new BitmapNode();
                     }
-                    sys.BitmapNode.$updateTextureData(<sys.NormalBitmapNode>this.$renderNode, this.$bitmapData,
+                    BitmapNode.$updateTextureData(<NormalBitmapNode>this.$renderNode, this.$bitmapData,
                         this.$bitmapX, this.$bitmapY, this.$bitmapWidth, this.$bitmapHeight,
                         this.$offsetX, this.$offsetY, this.$textureWidth, this.$textureHeight,
                         destW, destH, this.$sourceWidth, this.$sourceHeight, this.$fillMode, this.$smoothing);
@@ -589,4 +598,3 @@ namespace egret {
             return target;
         }
     }
-}

@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { TextField } from "./TextField";
+import { EventDispatcher } from "../events/EventDispatcher";
 
-namespace egret {
+
     /**
      * @private
      * @version Egret 2.4
@@ -12,13 +14,13 @@ namespace egret {
         /**
          * @private
          */
-        $textfield:egret.TextField;
+        $textfield:TextField;
         /**
          * @private
          * 
          * @param textfield 
          */
-        $setTextField(textfield:egret.TextField):boolean;
+        $setTextField(textfield:TextField):boolean;
 
         /**
          * @private
@@ -78,4 +80,3 @@ namespace egret {
      * @platform Web
      */
     export let StageText:{new():StageText};
-}

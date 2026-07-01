@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret.web {
+import { WEBGL_UNIFORM_TYPE } from "../../WebSysImpl";
+
     /**
      * @private 
      */
@@ -231,4 +232,3 @@ namespace egret.web {
             }
         }
     }
-}

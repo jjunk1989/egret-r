@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { HashObject } from "../../../egret/utils/HashObject";
 
-namespace egret {
 
     /**
      * The URLVariables class allows you to transfer variables between an application and a server.
@@ -22,7 +22,7 @@ namespace egret {
      * @includeExample extension/game/net/URLVariables.ts
      * @language zh_CN
      */
-    export class URLVariables extends egret.HashObject {
+    export class URLVariables extends HashObject {
 
         /**
          * Create an egret.URLVariable object
@@ -152,4 +152,3 @@ namespace egret {
             return value.map(v=> encodeURIComponent(key) + "=" + encodeURIComponent(v)).join("&");
         }
     }
-}

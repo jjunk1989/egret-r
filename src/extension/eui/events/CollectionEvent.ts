@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { Event } from "../../../egret/events/Event";
+import { IEventDispatcher } from "../../../egret/events/IEventDispatcher";
 
-namespace eui {
 
     /**
      * The eui.CollectionEvent class represents an event that is
@@ -21,7 +22,7 @@ namespace eui {
      * @includeExample  extension/eui/events/CollectionEventExample.ts
      * @language zh_CN
      */
-    export class CollectionEvent extends egret.Event {
+    export class CollectionEvent extends Event {
         /**
          * Dispatched when a collection has changed.
          * @version Egret 2.4
@@ -269,17 +270,15 @@ namespace eui {
          * @platform Web
          * @language zh_CN
          */
-        public static dispatchCollectionEvent(target:egret.IEventDispatcher, eventType:string, kind?:string, location?:number,
+        public static dispatchCollectionEvent(target:IEventDispatcher, eventType:string, kind?:string, location?:number,
                                           oldLocation?:number, items?:any[], oldItems?:any[]):boolean {
             if (!target.hasEventListener(eventType)) {
                 return true;
             }
-            let event = egret.Event.create(CollectionEvent, eventType);
+            let event = Event.create(CollectionEvent, eventType);
             event.$initTo(kind, location, oldLocation, items, oldItems);
             let result = target.dispatchEvent(event);
-            egret.Event.release(event);
+            Event.release(event);
             return result;
         }
     }
-
-}

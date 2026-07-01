@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret.web {
+import { EgretWebGLUniform } from "./EgretWebGLUniform";
+import { EgretWebGLAttribute } from "./EgretWebGLAttribute";
+
 
     function loadShader(gl:WebGLRenderingContext, type:number, source:string):WebGLShader {
         let shader = gl.createShader(type);
@@ -124,4 +126,3 @@ namespace egret.web {
             this.attributes = extractAttributes(gl, this.id);
         }
     }
-}

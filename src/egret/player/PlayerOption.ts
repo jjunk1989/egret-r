@@ -4,7 +4,7 @@
 /**
  * @private
  */
-interface PlayerOption {
+export interface PlayerOption {
     /**
      * 入口类完整类名
      */

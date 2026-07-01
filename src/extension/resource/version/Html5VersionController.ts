@@ -1,12 +1,17 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace RES.web {
+import { EventDispatcher } from "../../../egret/events/EventDispatcher";
+import { HttpRequest, IOErrorEvent } from "../../../egret/events/IOErrorEvent";
+import { Event } from "../../../egret/events/Event";
+import { VersionController } from "../../assetsmanager/src/shim/version/IVersionController";
+import { DEBUG } from "../../../Defines.debug";
+
 
     /**
      * @private
      */
-    export class Html5VersionController extends egret.EventDispatcher implements VersionController {
+    export class Html5VersionController extends EventDispatcher implements VersionController {
 
         constructor() {
             super();
@@ -33,14 +38,14 @@ namespace RES.web {
 
             let virtualUrl:string = "all.manifest";
 
-            let httpLoader:egret.HttpRequest = new egret.HttpRequest();
-            httpLoader.addEventListener(egret.Event.COMPLETE, onLoadComplete, this);
-            httpLoader.addEventListener(egret.IOErrorEvent.IO_ERROR, onError, this);
+            let httpLoader:HttpRequest = new HttpRequest();
+            httpLoader.addEventListener(Event.COMPLETE, onLoadComplete, this);
+            httpLoader.addEventListener(IOErrorEvent.IO_ERROR, onError, this);
 
             httpLoader.open(virtualUrl + "?r=" + Date.now(), "get");
             httpLoader.send();
 
-            function onError(event:egret.IOErrorEvent) {
+            function onError(event:IOErrorEvent) {
                 removeListeners();
                 self.dispatchEvent(event);
             }
@@ -51,13 +56,13 @@ namespace RES.web {
                 self._versionInfo = JSON.parse(httpLoader.response);
 
                 window.setTimeout(function () {
-                    self.dispatchEvent(new egret.Event(egret.Event.COMPLETE));
+                    self.dispatchEvent(new Event(Event.COMPLETE));
                 }, 0);
             }
 
             function removeListeners():void {
-                httpLoader.removeEventListener(egret.Event.COMPLETE, onLoadComplete, self);
-                httpLoader.removeEventListener(egret.IOErrorEvent.IO_ERROR, onError, self);
+                httpLoader.removeEventListener(Event.COMPLETE, onLoadComplete, self);
+                httpLoader.removeEventListener(IOErrorEvent.IO_ERROR, onError, self);
             }
 
             */
@@ -94,4 +99,3 @@ namespace RES.web {
     }
 
     VersionController = Html5VersionController;
-}

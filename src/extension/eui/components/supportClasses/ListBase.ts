@@ -1,7 +1,15 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace eui.sys {
+import { Event } from "../../../../egret/events/Event";
+import { TouchEvent } from "../../../../egret/events/TouchEvent";
+import { Stage } from "../../../../egret/display/Stage";
+import { ItemTapEvent } from "../../events/ItemTapEvent";
+import { DataGroup } from "../DataGroup";
+import { IItemRenderer } from "../../core/IItemRenderer";
+import { CollectionEvent } from "../../events/CollectionEvent";
+import { registerBindable } from "../../utils/registerBindable";
+
 
     /**
      * @private
@@ -44,22 +52,20 @@ namespace eui.sys {
          */
         touchCancle
     }
-}
 
-namespace eui {
 
     /**
      * The ListBase class is the base class for list component.
      * It can display items of list as vertical or horizontal such as SELECT of HTML.
-     * @event egret.Event.CHANGE Dispatched after the selection has changed.
+     * @event Event.CHANGE Dispatched after the selection has changed.
      * This event is dispatched when the user interacts with the control.
-     * @event egret.Event.CHANGING Dispatched when the selection is going to change.
+     * @event Event.CHANGING Dispatched when the selection is going to change.
      * Calling the <code>preventDefault()</code> method
      * on the event prevents the selection from changing.<p/>
      * This event is dispatched when the user interacts with the control.
      *
-     * @event eui.ItemTapEvent.ITEM_TAP dispatched when the user tap an item in the control.
-     * @event egret.TouchEvent.TOUCH_CANCEL canceled the touch
+     * @event ItemTapEvent.ITEM_TAP dispatched when the user tap an item in the control.
+     * @event TouchEvent.TOUCH_CANCEL canceled the touch
      *
      * @version Egret 2.4
      * @version eui 1.0
@@ -68,12 +74,12 @@ namespace eui {
      */
     /**
      * ListBase 是列表控件基类。可显示垂直或水平的项目列表。其功能与 HTML 中的 SELECT 表单元素的功能相似。
-     * @event egret.Event.CHANGE 选中的索引已经发生改变,注意：此事件仅在索引改变是由用户触摸操作引起时才抛出。
-     * @event egret.Event.CHANGING 选中的索引即将发生改变，可以通过调用事件对象的 preventDefault() 方法来阻止改变。<p/>
+     * @event Event.CHANGE 选中的索引已经发生改变,注意：此事件仅在索引改变是由用户触摸操作引起时才抛出。
+     * @event Event.CHANGING 选中的索引即将发生改变，可以通过调用事件对象的 preventDefault() 方法来阻止改变。<p/>
      * 注意：此事件仅在索引改变是由用户触摸操作引起时才抛出。
      *
-     * @event eui.ItemTapEvent.ITEM_TAP 项呈示器单击事件。
-     * @event egret.TouchEvent.TOUCH_CANCEL 取消触摸事件
+     * @event ItemTapEvent.ITEM_TAP 项呈示器单击事件。
+     * @event TouchEvent.TOUCH_CANCEL 取消触摸事件
      *
      * @version Egret 2.4
      * @version eui 1.0
@@ -544,7 +550,7 @@ namespace eui {
 
 
             if (values[sys.ListBaseKeys.dispatchChangeAfterSelection]) {
-                let result = this.dispatchEventWith(egret.Event.CHANGING, false, true, true);
+                let result = this.dispatchEventWith(Event.CHANGING, false, true, true);
                 if (!result) {
                     this.itemSelected(values[sys.ListBaseKeys.proposedSelectedIndex], false);
                     values[sys.ListBaseKeys.proposedSelectedIndex] = ListBase.NO_PROPOSED_SELECTION;
@@ -565,7 +571,7 @@ namespace eui {
             //子类若需要自身抛出Change事件，而不是在此处抛出，可以设置dispatchChangedEvents为false
             if (dispatchChangedEvents) {
                 if (values[sys.ListBaseKeys.dispatchChangeAfterSelection]) {
-                    this.dispatchEventWith(egret.Event.CHANGE);
+                    this.dispatchEventWith(Event.CHANGE);
                     values[sys.ListBaseKeys.dispatchChangeAfterSelection] = false;
                 }
                 PropertyEvent.dispatchPropertyEvent(this, PropertyEvent.PROPERTY_CHANGE, "selectedIndex");
@@ -753,9 +759,9 @@ namespace eui {
          * @language zh_CN
          */
         protected rendererAdded(renderer:IItemRenderer, index:number, item:any):void {
-            renderer.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onRendererTouchBegin, this);
-            renderer.addEventListener(egret.TouchEvent.TOUCH_END, this.onRendererTouchEnd, this);
-            renderer.addEventListener(egret.TouchEvent.TOUCH_CANCEL, this.onRendererTouchCancle, this);
+            renderer.addEventListener(TouchEvent.TOUCH_BEGIN, this.onRendererTouchBegin, this);
+            renderer.addEventListener(TouchEvent.TOUCH_END, this.onRendererTouchEnd, this);
+            renderer.addEventListener(TouchEvent.TOUCH_CANCEL, this.onRendererTouchCancle, this);
         }
 
         /**
@@ -779,30 +785,30 @@ namespace eui {
          * @language zh_CN
          */
         protected rendererRemoved(renderer:IItemRenderer, index:number, item:any):void {
-            renderer.removeEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onRendererTouchBegin, this);
-            renderer.removeEventListener(egret.TouchEvent.TOUCH_END, this.onRendererTouchEnd, this);
-            renderer.removeEventListener(egret.TouchEvent.TOUCH_CANCEL, this.onRendererTouchCancle, this);
+            renderer.removeEventListener(TouchEvent.TOUCH_BEGIN, this.onRendererTouchBegin, this);
+            renderer.removeEventListener(TouchEvent.TOUCH_END, this.onRendererTouchEnd, this);
+            renderer.removeEventListener(TouchEvent.TOUCH_CANCEL, this.onRendererTouchCancle, this);
         }
 
         /**
-         * Handles <code>egret.TouchEvent.TOUCH_BEGIN</code> events from any of the
-         * item renderers. This method handles <code>egret.TouchEvent.TOUCH_END</code>.
-         * @param event The <code>egret.TouchEvent</code> object.
+         * Handles <code>TouchEvent.TOUCH_BEGIN</code> events from any of the
+         * item renderers. This method handles <code>TouchEvent.TOUCH_END</code>.
+         * @param event The <code>TouchEvent</code> object.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web
          * @language en_US
          */
         /**
-         * 侦听项呈示器<code>egret.TouchEvent.TOUCH_BEGIN</code>事件的方法。同时会添加对舞台<code>egret.TouchEvent.TOUCH_END</code>
+         * 侦听项呈示器<code>TouchEvent.TOUCH_BEGIN</code>事件的方法。同时会添加对舞台<code>TouchEvent.TOUCH_END</code>
          * 事件的侦听。
-         * @param event 事件<code>egret.TouchEvent</code>的对象。
+         * @param event 事件<code>TouchEvent</code>的对象。
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web
          * @language zh_CN
          */
-        protected onRendererTouchBegin(event:egret.TouchEvent):void {
+        protected onRendererTouchBegin(event:TouchEvent):void {
             if(!this.$stage) {
                 return;
             }
@@ -811,37 +817,37 @@ namespace eui {
                 return;
             values[sys.ListBaseKeys.touchCancle] = false;
             values[sys.ListBaseKeys.touchDownItemRenderer] = <IItemRenderer> (event.$currentTarget);
-            this.$stage.addEventListener(egret.TouchEvent.TOUCH_END, this.stage_touchEndHandler, this);
+            this.$stage.addEventListener(TouchEvent.TOUCH_END, this.stage_touchEndHandler, this);
         }
         /**
-         * Handles <code>egret.TouchEvent.TOUCH_CANCEL</code> events from any of the
-         * item renderers. This method will cancel the handles <code>egret.TouchEvent.TOUCH_END</code> and <code>egret.TouchEvent.TOUCH_TAP</code>.
-         * @param event The <code>egret.TouchEvent</code> object.
+         * Handles <code>TouchEvent.TOUCH_CANCEL</code> events from any of the
+         * item renderers. This method will cancel the handles <code>TouchEvent.TOUCH_END</code> and <code>TouchEvent.TOUCH_TAP</code>.
+         * @param event The <code>TouchEvent</code> object.
          * @version Egret 3.0.1
          * @version eui 1.0
          * @platform Web
          * @language en_US
          */
         /**
-         * 侦听项呈示器<code>egret.TouchEvent.TOUCH_CANCEL</code>事件的方法。触发时会取消对舞台<code>egret.TouchEvent.TOUCH_END</code>
-         * 和<code>egret.TouchEvent.TOUCH_TAP</code>事件的侦听。
-         * @param event 事件<code>egret.TouchEvent</code>的对象。
+         * 侦听项呈示器<code>TouchEvent.TOUCH_CANCEL</code>事件的方法。触发时会取消对舞台<code>TouchEvent.TOUCH_END</code>
+         * 和<code>TouchEvent.TOUCH_TAP</code>事件的侦听。
+         * @param event 事件<code>TouchEvent</code>的对象。
          * @version Egret 3.0.1
          * @version eui 1.0
          * @platform Web
          * @language zh_CN
          */
-        protected onRendererTouchCancle(event:egret.TouchEvent):void {
+        protected onRendererTouchCancle(event:TouchEvent):void {
             let values = this.$ListBase;
             values[sys.ListBaseKeys.touchDownItemRenderer] = null;
             values[sys.ListBaseKeys.touchCancle] = true;
             if(this.$stage){
-                this.$stage.removeEventListener(egret.TouchEvent.TOUCH_END, this.stage_touchEndHandler, this);
+                this.$stage.removeEventListener(TouchEvent.TOUCH_END, this.stage_touchEndHandler, this);
             }
         }
         /**
-         * Handles <code>egret.TouchEvent.TOUCH_END</code> events and dispatch <code>ItemTapEvent.ITEM_TAP</code> event.
-         * @param event The <code>egret.TouchEvent</code> object.
+         * Handles <code>TouchEvent.TOUCH_END</code> events and dispatch <code>ItemTapEvent.ITEM_TAP</code> event.
+         * @param event The <code>TouchEvent</code> object.
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web
@@ -849,13 +855,13 @@ namespace eui {
          */
         /**
          * 触摸在项呈示器上结束，抛出<code>ItemTapEvent.ITEM_TAP</code>事件。
-         * @param event 事件<code>egret.TouchEvent</code>的对象。
+         * @param event 事件<code>TouchEvent</code>的对象。
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web
          * @language zh_CN
          */
-        protected onRendererTouchEnd(event:egret.TouchEvent):void {
+        protected onRendererTouchEnd(event:TouchEvent):void {
             let values = this.$ListBase;
             let itemRenderer = <IItemRenderer> (event.$currentTarget);
             let touchDownItemRenderer = values[sys.ListBaseKeys.touchDownItemRenderer];
@@ -872,9 +878,9 @@ namespace eui {
          * @private
          * 触摸在舞台上结束
          */
-        private stage_touchEndHandler(event:egret.Event):void {
-            let stage = <egret.Stage>event.$currentTarget;
-            stage.removeEventListener(egret.TouchEvent.TOUCH_END, this.stage_touchEndHandler, this);
+        private stage_touchEndHandler(event:Event):void {
+            let stage = <Stage>event.$currentTarget;
+            stage.removeEventListener(TouchEvent.TOUCH_END, this.stage_touchEndHandler, this);
             this.$ListBase[sys.ListBaseKeys.touchDownItemRenderer] = null;
         }
     }
@@ -882,4 +888,3 @@ namespace eui {
     registerBindable(ListBase.prototype, "selectedIndex");
 
     registerBindable(ListBase.prototype, "selectedItem");
-}

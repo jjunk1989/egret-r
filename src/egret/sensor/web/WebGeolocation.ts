@@ -1,9 +1,18 @@
+
+import { tr } from "../../i18n/tr";
+import { Geolocation } from "../Geolocation";
+import { GeolocationEvent } from "../../events/GeolocationEvent";
+import { EventDispatcher } from "../../events/EventDispatcher";
+
 /**
  * @private
  */
+interface Position {
+    coords: { latitude: number; longitude: number; altitude: number | null; accuracy: number; altitudeAccuracy: number | null; heading: number | null; speed: number | null };
+    timestamp: number;
+}
 interface BrowerGeolocation extends Geolocation { }
 
-namespace egret.web {
     /**
      * @private
      */
@@ -35,7 +44,7 @@ namespace egret.web {
             else
                 this.onError({
                     code: 2,
-                    message: egret.sys.tr(3004),
+                    message: tr(3004),
                     PERMISSION_DENIED: 1,
                     POSITION_UNAVAILABLE:2
                 });
@@ -81,4 +90,3 @@ namespace egret.web {
             this.dispatchEvent(event);
         };
     }
-}

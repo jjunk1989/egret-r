@@ -1,13 +1,22 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret {
+import { Event } from "../events/Event";
+import { registerImplementation, getImplementation } from "../system/Implementation";
+import { StageScaleMode } from "../player/StageScaleMode";
+import { OrientationMode } from "./OrientationMode";
+import { Screen } from "../player/Screen";
+import { DisplayObjectContainer } from "./DisplayObjectContainer";
+import { Sprite } from './Sprite';
+import { $invalidateRenderFlag, ticker } from '../player/SystemTicker' from "./Sprite";
+import { DEBUG } from "../../Defines.debug";
+
     /**
      * The Stage class represents the main drawing area.The Stage object is not globally accessible. You need to access
      * it through the stage property of a DisplayObject instance.<br/>
      * The Stage class has several ancestor classes — Sprite, DisplayObject, and EventDispatcher — from which it inherits
      * properties and methods. Many of these properties and methods are inapplicable to Stage objects.
-     * @event egret.Event.RESIZE Dispatched when the stageWidth or stageHeight property of the Stage object is changed.
+     * @event Event.RESIZE Dispatched when the stageWidth or stageHeight property of the Stage object is changed.
      * @version Egret 2.4
      * @platform Web
      * @includeExample egret/display/Stage.ts
@@ -18,9 +27,9 @@ namespace egret {
      * 可以利用 DisplayObject 实例的 stage 属性进行访问。<br/>
      * Stage 类具有多个祖代类: Sprite、DisplayObject 和 EventDispatcher，属性和方法便是从这些类继承而来的。
      * 从这些继承的许多属性和方法不适用于 Stage 对象。
-     * @event egret.Event.RESIZE 当stageWidth或stageHeight属性发生改变时调度
-     * @event egret.Event.DEACTIVATE 当stage失去焦点后调度
-     * @event egret.Event.ACTIVATE 当stage获得焦点后调度
+     * @event Event.RESIZE 当stageWidth或stageHeight属性发生改变时调度
+     * @event Event.DEACTIVATE 当stage失去焦点后调度
+     * @event Event.ACTIVATE 当stage获得焦点后调度
      *
      * @version Egret 2.4
      * @platform Web
@@ -128,30 +137,30 @@ namespace egret {
          * @language zh_CN
          */
         public invalidate(): void {
-            sys.$invalidateRenderFlag = true;
+            $invalidateRenderFlag = true;
         }
 
         /**
          * @deprecated
          */
         public registerImplementation(interfaceName: string, instance: any): void {
-            egret.registerImplementation(interfaceName, instance);
+            registerImplementation(interfaceName, instance);
         }
 
         /**
          * @deprecated
          */
         public getImplementation(interfaceName: string): any {
-            return egret.getImplementation(interfaceName);
+            return getImplementation(interfaceName);
         }
 
         /**
          * @private
          * 设备屏幕引用
          */
-        $screen: egret.sys.Screen;
+        $screen: Screen;
 
-        $scaleMode: string = egret.StageScaleMode.SHOW_ALL;
+        $scaleMode: string = StageScaleMode.SHOW_ALL;
         /**
          * A StageScaleMode class that specifies which scale mode to use. The following are valid values:<br/>
          * <ul>
@@ -162,7 +171,7 @@ namespace egret {
          * <li>StageScaleMode.FIXED_WIDTH -- Keep the original aspect ratio scaling application content, after scaling application content in the horizontal and vertical directions to fill the viewport player, but only to keep the contents of the original application constant width, height may change.</li>
          * <li>StageScaleMode.FIXED_HEIGHT -- Keep the original aspect ratio scaling application content, after scaling application content in the horizontal and vertical directions to fill the viewport player, but only to keep the contents of the original application constant height, width may change.</li>
          * </ul>
-         * @default egret.StageScaleMode.SHOW_ALL
+         * @default StageScaleMode.SHOW_ALL
          * @language en_US
          */
         /**
@@ -175,7 +184,7 @@ namespace egret {
          * <li>StageScaleMode.FIXED_WIDTH -- 保持原始宽高比缩放应用程序内容，缩放后应用程序内容在水平和垂直方向都填满播放器视口，但只保持应用程序内容的原始宽度不变，高度可能会改变。</li>
          * <li>StageScaleMode.FIXED_HEIGHT -- 保持原始宽高比缩放应用程序内容，缩放后应用程序内容在水平和垂直方向都填满播放器视口，但只保持应用程序内容的原始高度不变，宽度可能会改变。</li>
          * </ul>
-         * @default egret.StageScaleMode.SHOW_ALL
+         * @default StageScaleMode.SHOW_ALL
          * @language zh_CN
          */
         public get scaleMode(): string {
@@ -190,7 +199,7 @@ namespace egret {
             this.$screen.updateScreenSize();
         }
 
-        $orientation: string = egret.OrientationMode.AUTO;
+        $orientation: string = OrientationMode.AUTO;
         public set orientation(value: string) {
             if (this.$orientation == value) {
                 return;
@@ -200,24 +209,24 @@ namespace egret {
         }
 
         /**
-         * Horizontal and vertical screen display screen, can only be set under the current Native in the configuration file. A egret.OrientationMode class that specifies which display mode to use. The following are valid values:<br/>
+         * Horizontal and vertical screen display screen, can only be set under the current Native in the configuration file. A OrientationMode class that specifies which display mode to use. The following are valid values:<br/>
          * <ul>
-         * <li>egret.OrientationMode.AUTO -- Always follow the direction of application display screen, always guaranteed by the look down.</li>
-         * <li>egret.OrientationMode.PORTRAIT -- Applications remain portrait mode, namely horizontal screen look, the screen from left to right.</li>
-         * <li>egret.OrientationMode.LANDSCAPE -- Applications remain horizontal screen mode, namely vertical screen, the screen from right to left.</li>
-         * <li>egret.OrientationMode.LANDSCAPE_FLIPPED -- Applications remain horizontal screen mode, namely vertical screen, the screen from left to right.</li>
+         * <li>OrientationMode.AUTO -- Always follow the direction of application display screen, always guaranteed by the look down.</li>
+         * <li>OrientationMode.PORTRAIT -- Applications remain portrait mode, namely horizontal screen look, the screen from left to right.</li>
+         * <li>OrientationMode.LANDSCAPE -- Applications remain horizontal screen mode, namely vertical screen, the screen from right to left.</li>
+         * <li>OrientationMode.LANDSCAPE_FLIPPED -- Applications remain horizontal screen mode, namely vertical screen, the screen from left to right.</li>
          * </ul>
          * @platform Web
          * @version 2.4
          * @language en_US
          */
         /**
-         * 屏幕横竖屏显示方式，目前 Native 下只能在配置文件里设置。一个 egret.OrientationMode 类中指定要使用哪种显示方式。以下是有效值：<br/>
+         * 屏幕横竖屏显示方式，目前 Native 下只能在配置文件里设置。一个 OrientationMode 类中指定要使用哪种显示方式。以下是有效值：<br/>
          * <ul>
-         * <li>egret.OrientationMode.AUTO -- 应用始终跟随屏幕的方向显示，始终保证由上往下看。</li>
-         * <li>egret.OrientationMode.PORTRAIT -- 应用始终保持竖屏模式，即横屏看时，屏幕由左往右看。</li>
-         * <li>egret.OrientationMode.LANDSCAPE -- 应用始终保持横屏模式，即竖屏看时，屏幕显示由右往左。</li>
-         * <li>egret.OrientationMode.LANDSCAPE_FLIPPED -- 应用始终保持横屏模式，即竖屏看时，屏幕显示由左往右。</li>
+         * <li>OrientationMode.AUTO -- 应用始终跟随屏幕的方向显示，始终保证由上往下看。</li>
+         * <li>OrientationMode.PORTRAIT -- 应用始终保持竖屏模式，即横屏看时，屏幕由左往右看。</li>
+         * <li>OrientationMode.LANDSCAPE -- 应用始终保持横屏模式，即竖屏看时，屏幕显示由右往左。</li>
+         * <li>OrientationMode.LANDSCAPE_FLIPPED -- 应用始终保持横屏模式，即竖屏看时，屏幕显示由左往右。</li>
          * </ul>
          * @platform Web
          * @version 2.4
@@ -315,7 +324,7 @@ namespace egret {
             this.$stageWidth = width;
             this.$stageHeight = height;
             this.$displayList.renderBuffer.resize(width, height);
-            this.dispatchEventWith(egret.Event.RESIZE);
+            this.dispatchEventWith(Event.RESIZE);
         };
     }
 
@@ -335,5 +344,3 @@ namespace egret {
         egret.$markCannotUse(Stage, "touchEnabled", true);
         egret.$markCannotUse(Stage, "matrix", null);
     }
-
-}

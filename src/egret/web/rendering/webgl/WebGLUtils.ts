@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret {
+import { DEBUG } from "../../../../Defines.debug";
+import { $warn } from "";
+
     /**
      * @private
      */
@@ -35,7 +37,7 @@ namespace egret {
             gl.compileShader(shader);
 
             if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-                //egret.info(gl.getShaderInfoLog(shader));
+                //info(gl.getShaderInfoLog(shader));
                 return null;
             }
             return shader;
@@ -109,4 +111,3 @@ namespace egret {
             return (alpha * 255 << 24) + (R << 16) + (G << 8) + B;
         }
     }
-}

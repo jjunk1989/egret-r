@@ -1,9 +1,11 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-/// <reference path="../geom/Point.ts" />
+import { Event } from "./Event";
+import { Scroller } from "../../extension/eui/components/Scroller";
+import { Point } from "../geom/Point";
+import { IEventDispatcher } from "./IEventDispatcher";
 
-namespace egret {
 
     export interface DisplayObject {
 
@@ -96,13 +98,13 @@ namespace egret {
         public static TOUCH_END: "touchEnd" = "touchEnd";
         /**
          * Dispatched when an event of some kind occurred that canceled the touch.
-         * Such as the eui.Scroller will dispatch 'TOUCH_CANCEL' when it start move, the 'TOUCH_END' and 'TOUCH_TAP' will not be triggered.
+         * Such as the Scroller will dispatch 'TOUCH_CANCEL' when it start move, the 'TOUCH_END' and 'TOUCH_TAP' will not be triggered.
          * @version Egret 3.0.1
          * @platform Web
          * @language en_US
          */
         /**
-         * 由于某个事件取消了触摸时触发。比如 eui.Scroller 在开始滚动后会触发 'TOUCH_CANCEL' 事件，不再触发后续的 'TOUCH_END' 和 'TOUCH_TAP' 事件
+         * 由于某个事件取消了触摸时触发。比如 Scroller 在开始滚动后会触发 'TOUCH_CANCEL' 事件，不再触发后续的 'TOUCH_END' 和 'TOUCH_TAP' 事件
          * @version Egret 3.0.1
          * @platform Web
          * @language zh_CN
@@ -334,8 +336,8 @@ namespace egret {
          * @param stageY The vertical coordinate at which the event occurred in global Stage coordinates.
          * @param touchPointID A unique identification number (as an int) assigned to the touch point.
          *
-         * @see egret.Event.create()
-         * @see egret.Event.release()
+         * @see Event.create()
+         * @see Event.release()
          *
          * @version Egret 2.4
          * @platform Web
@@ -351,8 +353,8 @@ namespace egret {
          * @param stageY 事件发生点在全局舞台坐标系中的垂直坐标
          * @param touchPointID 分配给触摸点的唯一标识号
          *
-         * @see egret.Event.create()
-         * @see egret.Event.release()
+         * @see Event.create()
+         * @see Event.release()
          *
          * @version Egret 2.4
          * @platform Web
@@ -371,5 +373,3 @@ namespace egret {
             return result;
         }
     }
-
-}

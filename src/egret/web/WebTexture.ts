@@ -1,8 +1,15 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { Texture } from "../display/Texture";
+import { Rectangle } from "../geom/Rectangle";
+import { RenderTexture } from "../display/RenderTexture";
+import { Bitmap } from "../display/Bitmap";
+import { createCanvas, systemRenderer } from "../player/SystemRenderer";
+import { CanvasRenderingContext2D } from "../player/rendering/CanvasRenderer";
+import { $error } from "../../Defines.debug";
+import { $warn } from "";
 
-namespace egret.web {
 
     let sharedCanvas: HTMLCanvasElement;
     let sharedContext: CanvasRenderingContext2D;
@@ -10,16 +17,16 @@ namespace egret.web {
     /**
      * @private
      */
-    function convertImageToCanvas(texture: egret.Texture, rect?: egret.Rectangle): HTMLCanvasElement {
+    function convertImageToCanvas(texture: Texture, rect?: Rectangle): HTMLCanvasElement {
         if (!sharedCanvas) {
-            sharedCanvas = egret.sys.createCanvas()
+            sharedCanvas = createCanvas()
             sharedContext = sharedCanvas.getContext("2d");
         }
 
         let w = texture.$getTextureWidth();
         let h = texture.$getTextureHeight();
         if (rect == null) {
-            rect = egret.$TempRectangle;
+            rect = $TempRectangle;
             rect.x = 0;
             rect.y = 0;
             rect.width = w;
@@ -43,11 +50,11 @@ namespace egret.web {
             let renderTexture: RenderTexture;
             //webgl下非RenderTexture纹理先画到RenderTexture
             if (!(<RenderTexture>texture).$renderBuffer) {
-                if (egret.sys.systemRenderer.renderClear) {
-                    egret.sys.systemRenderer.renderClear();
+                if (systemRenderer.renderClear) {
+                    systemRenderer.renderClear();
                 }
-                renderTexture = new egret.RenderTexture();
-                renderTexture.drawToTexture(new egret.Bitmap(texture));
+                renderTexture = new RenderTexture();
+                renderTexture.drawToTexture(new Bitmap(texture));
             }
             else {
                 renderTexture = <RenderTexture>texture;
@@ -81,14 +88,14 @@ namespace egret.web {
     /**
      * @private
      */
-    function toDataURL(type: string, rect?: egret.Rectangle, encoderOptions?): string {
+    function toDataURL(type: string, rect?: Rectangle, encoderOptions?): string {
         try {
             let surface = convertImageToCanvas(this, rect);
             let result = surface.toDataURL(type, encoderOptions);
             return result;
         }
         catch (e) {
-            egret.$error(1033);
+            $error(1033);
         }
         return null;
     }
@@ -96,7 +103,7 @@ namespace egret.web {
     /**
      * 有些杀毒软件认为 saveToFile 可能是一个病毒文件
      */
-    function eliFoTevas(type: string, filePath: string, rect?: egret.Rectangle, encoderOptions?): void {
+    function eliFoTevas(type: string, filePath: string, rect?: Rectangle, encoderOptions?): void {
         let base64 = toDataURL.call(this, type, rect, encoderOptions);
         if (base64 == null) {
             return;
@@ -112,7 +119,7 @@ namespace egret.web {
     }
 
     function getPixel32(x: number, y: number): number[] {
-        egret.$warn(1041, "getPixel32", "getPixels");
+        $warn(1041, "getPixel32", "getPixels");
         return this.getPixels(x, y);
     }
 
@@ -122,8 +129,8 @@ namespace egret.web {
             let renderTexture: RenderTexture;
             //webgl下非RenderTexture纹理先画到RenderTexture
             if (!(<RenderTexture>this).$renderBuffer) {
-                renderTexture = new egret.RenderTexture();
-                renderTexture.drawToTexture(new egret.Bitmap(this));
+                renderTexture = new RenderTexture();
+                renderTexture.drawToTexture(new Bitmap(this));
             }
             else {
                 renderTexture = <RenderTexture>this;
@@ -138,7 +145,7 @@ namespace egret.web {
             return <number[]><any>result;
         }
         catch (e) {
-            egret.$error(1039);
+            $error(1039);
         }
     }
 
@@ -146,4 +153,3 @@ namespace egret.web {
     Texture.prototype.saveToFile = eliFoTevas;
     Texture.prototype.getPixel32 = getPixel32;
     Texture.prototype.getPixels = getPixels;
-}

@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace eui {
 
     /**
      * The CollectionEventKind class contains constants for the valid values
@@ -119,4 +118,3 @@ namespace eui {
          */
         public static readonly UPDATE: string = "update";
     }
-}

@@ -1,4 +1,21 @@
-module RES.processor {
+
+import { ImageLoader } from "../../../../egret/net/ImageLoader";
+import { HttpRequest, IOErrorEvent } from "../../../../egret/events/IOErrorEvent";
+import { Sound } from "../../../../egret/media/Sound";
+import { Event } from "../../../../egret/events/Event";
+import { Texture } from "../../../../egret/display/Texture";
+import { Rectangle } from "../../../../egret/geom/Rectangle";
+import { KTXContainer } from "../../../../egret/display/KTXContainer";
+import { BitmapData } from "../../../../egret/display/BitmapData";
+import { HttpResponseType } from "../../../../egret/net/HttpResponseType";
+import { XML } from "../../../../egret/utils/XML";
+import { SpriteSheet } from "../../../../egret/display/SpriteSheet";
+import { BitmapFont } from "../../../../egret/text/BitmapFont";
+import { MovieClipDataFactory } from "../../../game/display/MovieClipDataFactory";
+import { Capabilities, RuntimeType } from "../../../../egret/system/Capabilities";
+import { fontResourceCache } from "../../../../egret/text/Font";
+import { ProcessHost, ResourceManagerError } from "../core/ResourceManager";
+import { ResourceInfo } from "../core/ResourceConfig";
 
 
     export interface Processor {
@@ -90,7 +107,7 @@ module RES.processor {
     /**
     * @internal
     */
-    function promisify(loader: egret.ImageLoader | egret.HttpRequest | egret.Sound, resource: ResourceInfo): Promise<any> {
+    function promisify(loader: ImageLoader | HttpRequest | Sound, resource: ResourceInfo): Promise<any> {
 
         return new Promise((resolve, reject) => {
             let onSuccess = () => {
@@ -102,8 +119,8 @@ module RES.processor {
                 let e = new ResourceManagerError(1001, resource.url);
                 reject(e);
             }
-            loader.addEventListener(egret.Event.COMPLETE, onSuccess, this);
-            loader.addEventListener(egret.IOErrorEvent.IO_ERROR, onError, this);
+            loader.addEventListener(Event.COMPLETE, onSuccess, this);
+            loader.addEventListener(IOErrorEvent.IO_ERROR, onError, this);
         })
     }
     /**
@@ -136,16 +153,16 @@ module RES.processor {
     export var ImageProcessor: Processor = {
 
         onLoadStart(host, resource) {
-            var loader = new egret.ImageLoader();
+            var loader = new ImageLoader();
             loader.load(RES.getVirtualUrl(resource.root + resource.url));
             return promisify(loader, resource)
                 .then((bitmapData) => {
-                    let texture = new egret.Texture();
+                    let texture = new Texture();
                     texture._setBitmapData(bitmapData);
                     let r = host.resourceConfig.getResource(resource.name);
                     if (r && r.scale9grid) {
                         var list: Array<string> = r.scale9grid.split(",");
-                        texture["scale9Grid"] = new egret.Rectangle(parseInt(list[0]), parseInt(list[1]), parseInt(list[2]), parseInt(list[3]));
+                        texture["scale9Grid"] = new Rectangle(parseInt(list[0]), parseInt(list[1]), parseInt(list[2]), parseInt(list[3]));
                     }
                     return texture;
                 })
@@ -165,23 +182,23 @@ module RES.processor {
                     console.error('ktx:' + resource.root + resource.url + ' is null');
                     return null;
                 }
-                const ktx = new egret.KTXContainer(data, 1);
+                const ktx = new KTXContainer(data, 1);
                 if (ktx.isInvalid) {
                     console.error('ktx:' + resource.root + resource.url + ' is invalid');
                     return null;
                 }
                 //
-                const bitmapData = new egret.BitmapData(data);
+                const bitmapData = new BitmapData(data);
                 bitmapData.debugCompressedTextureURL = resource.root + resource.url;
                 bitmapData.format = 'ktx';
                 ktx.uploadLevels(bitmapData, false);
                 //
-                const texture = new egret.Texture();
-                texture._setBitmapData(<egret.BitmapData>bitmapData);
+                const texture = new Texture();
+                texture._setBitmapData(<BitmapData>bitmapData);
                 const r = host.resourceConfig.getResource(resource.name);
                 if (r && r.scale9grid) {
                     const list: Array<string> = r.scale9grid.split(",");
-                    texture["scale9Grid"] = new egret.Rectangle(parseInt(list[0]), parseInt(list[1]), parseInt(list[2]), parseInt(list[3]));
+                    texture["scale9Grid"] = new Rectangle(parseInt(list[0]), parseInt(list[1]), parseInt(list[2]), parseInt(list[3]));
                 }
                 //
                 host.save(resource as ResourceInfo, texture);
@@ -259,8 +276,8 @@ module RES.processor {
     export var BinaryProcessor: Processor = {
 
         onLoadStart(host, resource) {
-            var request: egret.HttpRequest = new egret.HttpRequest();
-            request.responseType = egret.HttpResponseType.ARRAY_BUFFER;
+            var request: HttpRequest = new HttpRequest();
+            request.responseType = HttpResponseType.ARRAY_BUFFER;
             request.open(RES.getVirtualUrl(resource.root + resource.url), "get");
             request.send();
             return promisify(request, resource)
@@ -274,8 +291,8 @@ module RES.processor {
     export var TextProcessor: Processor = {
 
         onLoadStart(host, resource) {
-            var request: egret.HttpRequest = new egret.HttpRequest();
-            request.responseType = egret.HttpResponseType.TEXT;
+            var request: HttpRequest = new HttpRequest();
+            request.responseType = HttpResponseType.TEXT;
             request.open(RES.getVirtualUrl(resource.root + resource.url), "get");
             request.send();
             return promisify(request, resource)
@@ -306,7 +323,7 @@ module RES.processor {
 
         onLoadStart(host, resource) {
             return host.load(resource, 'text').then((text) => {
-                let data = egret.XML.parse(text);
+                let data = XML.parse(text);
                 return data;
             })
         },
@@ -359,7 +376,7 @@ module RES.processor {
                             return null;
                         }
                         var frames: any = data.frames;
-                        var spriteSheet = new egret.SpriteSheet(bitmapData);
+                        var spriteSheet = new SpriteSheet(bitmapData);
                         spriteSheet["$resourceInfo"] = r;
                         for (var subkey in frames) {
                             var config: any = frames[subkey];
@@ -367,7 +384,7 @@ module RES.processor {
                             if (config["scale9grid"]) {
                                 var str: string = config["scale9grid"];
                                 var list: Array<string> = str.split(",");
-                                texture["scale9Grid"] = new egret.Rectangle(parseInt(list[0]), parseInt(list[1]), parseInt(list[2]), parseInt(list[3]));
+                                texture["scale9Grid"] = new Rectangle(parseInt(list[0]), parseInt(list[1]), parseInt(list[2]), parseInt(list[3]));
                             }
                         }
                         host.save(r as ResourceInfo, bitmapData);
@@ -381,7 +398,7 @@ module RES.processor {
 
 
         getData(host, resource, key, subkey) {
-            let data: egret.SpriteSheet = host.get(resource);
+            let data: SpriteSheet = host.get(resource);
             if (data) {
                 return data.getTexture(subkey);
             }
@@ -392,7 +409,7 @@ module RES.processor {
 
 
         onRemoveStart(host, resource) {
-            const sheet: egret.SpriteSheet = host.get(resource);
+            const sheet: SpriteSheet = host.get(resource);
             const r = sheet["$resourceInfo"];
             sheet.dispose();
             host.unload(r);
@@ -451,9 +468,9 @@ module RES.processor {
                     r = { name: RES.nameSelector(imageName), url: imageName, type: 'image', root: resource.root };
                     host.resourceConfig.addResourceData(r);
                 }
-                // var texture: egret.Texture = await host.load(r);
+                // var texture: Texture = await host.load(r);
                 return host.load(r).then((texture) => {
-                    var font = new egret.BitmapFont(texture, config);
+                    var font = new BitmapFont(texture, config);
                     font["$resourceInfo"] = r;
                     // todo refactor
                     host.save(r as ResourceInfo, texture);
@@ -466,7 +483,7 @@ module RES.processor {
         },
 
         onRemoveStart(host, resource) {
-            const font: egret.BitmapFont = host.get(resource);
+            const font: BitmapFont = host.get(resource);
             const r = font["$resourceInfo"];
             host.unload(r);
         }
@@ -474,14 +491,14 @@ module RES.processor {
 
     export var SoundProcessor: Processor = {
         onLoadStart(host, resource) {
-            var sound: egret.Sound = new egret.Sound();
+            var sound: Sound = new Sound();
             sound.load(RES.getVirtualUrl(resource.root + resource.url));
             return promisify(sound, resource).then(() => {
                 return sound;
             });
         },
         onRemoveStart(host, resource) {
-            const sound: egret.Sound = host.get(resource);
+            const sound: Sound = host.get(resource);
             sound.close();
         }
     }
@@ -505,13 +522,13 @@ module RES.processor {
                     return host.load(imageResource);
                 }).then((value) => {
                     host.save(imageResource, value);
-                    var mcTexture: egret.Texture = value;
-                    var mcDataFactory = new egret.MovieClipDataFactory(mcData, mcTexture);
+                    var mcTexture: Texture = value;
+                    var mcDataFactory = new MovieClipDataFactory(mcData, mcTexture);
                     return mcDataFactory;
                 })
         },
         onRemoveStart(host, resource) {
-            let mcFactory = host.get(resource) as egret.MovieClipDataFactory;
+            let mcFactory = host.get(resource) as MovieClipDataFactory;
             mcFactory.clearCache();
             mcFactory.$spriteSheet.dispose();
             // refactor
@@ -563,18 +580,18 @@ module RES.processor {
     export const TTFProcessor: Processor = {
         onLoadStart(host, resource) {
             return host.load(resource, "bin").then((data) => {
-                if (egret.Capabilities.runtimeType == egret.RuntimeType.WEB) {
-                    if (!egret.sys.fontResourceCache) {
-                        egret.sys.fontResourceCache = {};
+                if (Capabilities.runtimeType == RuntimeType.WEB) {
+                    if (!fontResourceCache) {
+                        fontResourceCache = {};
                     }
-                    egret.sys.fontResourceCache[resource.root + resource.url] = data;
+                    fontResourceCache[resource.root + resource.url] = data;
                 }
             });
         },
 
         onRemoveStart(host, resource) {
-            if (egret.Capabilities.runtimeType == egret.RuntimeType.WEB) {
-                const fontResCache = egret.sys.fontResourceCache;
+            if (Capabilities.runtimeType == RuntimeType.WEB) {
+                const fontResCache = fontResourceCache;
                 if (fontResCache && fontResCache[resource.url]) {
                     fontResCache[resource.root + resource.url] = null;
                 }
@@ -608,8 +625,6 @@ module RES.processor {
         onLoadStart(host, resource) {
 
 
-
-
             return host.load(resource, 'json').then((data: LegacyResourceConfig) => {
                 const resConfigData = RES.config.config;
                 const root = resource.root;
@@ -640,7 +655,6 @@ module RES.processor {
                     } as FileSystem;
                     resConfigData.fileSystem = fileSystem;
                 }
-
 
 
                 let groups = resConfigData.groups;
@@ -697,6 +711,5 @@ module RES.processor {
         "ttf": TTFProcessor
         // "zip": ZipProcessor
     }
-}
 
 

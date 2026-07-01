@@ -1,10 +1,14 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { ImageLoader } from "../../../../egret/net/ImageLoader";
+import { Event } from "../../../../egret/events/Event";
+import { IOErrorEvent } from "../../../../egret/events/IOErrorEvent";
+import { Texture } from "../../../../egret/display/Texture";
+import { IAssetAdapter } from "../../core/IAssetAdapter";
 
-namespace eui {
 
-    let loaderPool:egret.ImageLoader[] = [];
+    let loaderPool:ImageLoader[] = [];
     let callBackMap:any = {};
     let loaderMap:any = {};
 
@@ -55,13 +59,13 @@ namespace eui {
             }
             let loader = loaderPool.pop();
             if (!loader) {
-                loader = new egret.ImageLoader();
+                loader = new ImageLoader();
             }
             callBackMap[source] = [[callBack, thisObject]];
             loaderMap[loader.$hashCode] = source;
 
-            loader.addEventListener(egret.Event.COMPLETE, this.onLoadFinish, this);
-            loader.addEventListener(egret.IOErrorEvent.IO_ERROR, this.onLoadFinish, this);
+            loader.addEventListener(Event.COMPLETE, this.onLoadFinish, this);
+            loader.addEventListener(IOErrorEvent.IO_ERROR, this.onLoadFinish, this);
             loader.load(source);
         }
 
@@ -70,13 +74,13 @@ namespace eui {
          * 
          * @param event 
          */
-        private onLoadFinish(event:egret.Event):void {
+        private onLoadFinish(event:Event):void {
             let loader = event.currentTarget;
-            loader.removeEventListener(egret.Event.COMPLETE, this.onLoadFinish, this);
-            loader.removeEventListener(egret.IOErrorEvent.IO_ERROR, this.onLoadFinish, this);
-            let data:egret.Texture;
-            if (event.$type == egret.Event.COMPLETE) {
-                data = new egret.Texture();
+            loader.removeEventListener(Event.COMPLETE, this.onLoadFinish, this);
+            loader.removeEventListener(IOErrorEvent.IO_ERROR, this.onLoadFinish, this);
+            let data:Texture;
+            if (event.$type == Event.COMPLETE) {
+                data = new Texture();
                 data._setBitmapData(loader.data);
                 loader.data = null;
             }
@@ -92,4 +96,3 @@ namespace eui {
             }
         }
     }
-}

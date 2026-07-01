@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { Texture } from "../display/Texture";
+import { SpriteSheet } from "../display/SpriteSheet";
 
-namespace egret {
+
     /**
      * Bitmap font, texture set of a font. It is generally used as the value of the BitmapText.font attribute.
      * @see http://bbs.egret-labs.org/thread-918-1-1.html TextureMerger
@@ -25,7 +27,7 @@ namespace egret {
 
         /**
          * Create an egret.BitmapFont object
-         * @param texture {egret.Texture} Texture set that use TextureMerger create
+         * @param texture {Texture} Texture set that use TextureMerger create
          * @param config {any} Configure data that use TextureMerger create
          * @version Egret 2.4
          * @platform Web
@@ -33,7 +35,7 @@ namespace egret {
          */
         /**
          * 创建一个 egret.BitmapFont 对象
-         * @param texture {egret.Texture} 使用TextureMerger生成的纹理集
+         * @param texture {Texture} 使用TextureMerger生成的纹理集
          * @param config {any} 使用TextureMerger生成的配置数据
          * @version Egret 2.4
          * @platform Web
@@ -60,7 +62,7 @@ namespace egret {
         /**
          * Obtain corresponding texture through the name attribute
          * @param name {string} name Attribute
-         * @returns {egret.Texture}
+         * @returns {Texture}
          * @version Egret 2.4
          * @platform Web
          * @language en_US
@@ -68,7 +70,7 @@ namespace egret {
         /**
          * 通过 name 属性获取对应纹理
          * @param name {string} name属性
-         * @returns {egret.Texture}
+         * @returns {Texture}
          * @version Egret 2.4
          * @platform Web
          * @language zh_CN
@@ -182,5 +184,3 @@ namespace egret {
         }
 
     }
-
-}

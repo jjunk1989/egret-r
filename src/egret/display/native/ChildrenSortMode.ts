@@ -1,16 +1,17 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { DisplayObjectContainer } from "../DisplayObjectContainer";
 
-namespace egret {
+
     /**
-     * The ChildrenSortMode class defines a pattern enumeration for children sort mode of egret.DisplayObjectContainer.
+     * The ChildrenSortMode class defines a pattern enumeration for children sort mode of DisplayObjectContainer.
      * @version Egret 5.2.19
      * @platform Native
      * @language en_US
      */
     /**
-     * BitmapFillMode 类定义egret.DisplayObjectContainer的子项目排序方式。
+     * BitmapFillMode 类定义DisplayObjectContainer的子项目排序方式。
      * @version Egret 5.2.19
      * @platform Native
      * @language zh_CN
@@ -57,4 +58,3 @@ namespace egret {
          */
         DECREASE_Y: "decreaseY"
     }
-}

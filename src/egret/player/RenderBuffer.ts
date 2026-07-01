@@ -1,17 +1,17 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret.sys {
+
     /**
      * @private
      * 共享的用于碰撞检测的渲染缓冲
      */
-    export let customHitTestBuffer:sys.RenderBuffer;
+    export let customHitTestBuffer:RenderBuffer;
     /**
      * @private
      * 共享的用于canvas碰撞检测的渲染缓冲
      */
-    export let canvasHitTestBuffer:sys.RenderBuffer;
+    export let canvasHitTestBuffer:RenderBuffer;
     /**
      * @private
      * 渲染缓冲
@@ -97,4 +97,3 @@ namespace egret.sys {
          */
         new(width?:number, height?:number):RenderBuffer;
     };
-}

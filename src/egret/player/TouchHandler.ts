@@ -1,7 +1,10 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret.sys {
+import { HashObject } from "../utils/HashObject";
+import { Stage } from "../display/Stage";
+import { DisplayObject } from "../display/DisplayObject";
+
 
     /**
      * @private
@@ -145,4 +148,3 @@ namespace egret.sys {
             this.maxTouches = value;
         };
     }
-}

@@ -1,7 +1,17 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-module RES {
+import { BitmapData } from "../../../../egret/display/BitmapData";
+import { warn } from "../../../../egret/system/Console";
+import { EventDispatcher } from "../../../../egret/events/EventDispatcher";
+import { callLater } from "../../../../egret/utils/callLater";
+import { tr } from "../../../../egret/i18n/tr";
+import { PromiseTaskReporter, ResourceManagerError } from "../core/ResourceManager";
+import { Texture } from "../../../../egret/display/Texture";
+import { HtmlSound } from "../../../../egret/media/web/HtmlSound";
+import { VersionController } from "./version/IVersionController";
+import { ResourceInfo } from "../core/ResourceConfig";
+import { ResourceItem } from "./ResourceItem";
 
 
     export type GetResAsyncCallback = (value?: any, key?: string) => any;
@@ -295,7 +305,7 @@ module RES {
      * The synchronization method for obtaining the cache has been loaded with the success of the resource.
      * <br>The type of resource and the corresponding return value types are as follows:
      * <br>RES.ResourceItem.TYPE_BIN : ArrayBuffer JavaScript primary object
-     * <br>RES.ResourceItem.TYPE_IMAGE : img Html Object，or egret.BitmapData interface。
+     * <br>RES.ResourceItem.TYPE_IMAGE : img Html Object，or BitmapData interface。
      * <br>RES.ResourceItem.TYPE_JSON : Object
      * <br>RES.ResourceItem.TYPE_SHEET : Object
      * <br>  1. If the incoming parameter is the name of the entire SpriteSheet is returned is {image1: Texture, "image2": Texture}.
@@ -315,7 +325,7 @@ module RES {
      * 同步方式获取缓存的已经加载成功的资源。
      * <br>资源类型和对应的返回值类型关系如下：
      * <br>RES.ResourceItem.TYPE_BIN : ArrayBuffer JavaScript 原生对象
-     * <br>RES.ResourceItem.TYPE_IMAGE : img Html 对象，或者 egret.BitmapData 接口。
+     * <br>RES.ResourceItem.TYPE_IMAGE : img Html 对象，或者 BitmapData 接口。
      * <br>RES.ResourceItem.TYPE_JSON : Object
      * <br>RES.ResourceItem.TYPE_SHEET : Object
      * <br>  1. 如果传入的参数是整个 SpriteSheet 的名称返回的是 {"image1":Texture,"image2":Texture} 这样的格式。
@@ -433,8 +443,8 @@ module RES {
      */
     export function getResByUrl(url: string, compFunc?: Function, thisObject?: any, type: string = ""): Promise<any> {
         if (!instance) {
-            let message = egret.sys.tr(3200)
-            egret.warn(message)
+            let message = tr(3200)
+            warn(message)
             return Promise.reject(message);
         }
         return compatiblePromise(instance.getResByUrl(url, compFunc, thisObject, type));
@@ -538,7 +548,7 @@ module RES {
      * @platform Web
      * @language zh_CN
      */
-    export function addEventListener(type: string, listener: (event: egret.Event) => void, thisObject: any, useCapture: boolean = false, priority: number = 0): void {
+    export function addEventListener(type: string, listener: (event: _Event) => void, thisObject: any, useCapture: boolean = false, priority: number = 0): void {
         if (!instance) instance = new Resource();
         instance.addEventListener(type, listener, thisObject, useCapture, priority);
     }
@@ -562,7 +572,7 @@ module RES {
      * @platform Web
      * @language zh_CN
      */
-    export function removeEventListener(type: string, listener: (event: egret.Event) => void, thisObject: any, useCapture: boolean = false): void {
+    export function removeEventListener(type: string, listener: (event: _Event) => void, thisObject: any, useCapture: boolean = false): void {
         instance.removeEventListener(type, listener, thisObject, useCapture);
     }
 
@@ -649,7 +659,7 @@ module RES {
     /**
      * @private
      */
-    export class Resource extends egret.EventDispatcher {
+    export class Resource extends EventDispatcher {
         vcs: VersionController;
         isVcsInit = false;
         constructor() {
@@ -835,7 +845,7 @@ module RES {
             let data = this.getRes(key);
             if (data) {
                 if (compFunc) {
-                    egret.callLater(() => {
+                    callLater(() => {
                         compFunc.call(thisObject, data, paramKey);
                     }, this)
                 }
@@ -987,8 +997,5 @@ module RES {
      * Resource单例
      */
     var instance: Resource;
-
-}
-
 
 

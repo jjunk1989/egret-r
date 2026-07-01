@@ -1,7 +1,11 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret {
+import { Event } from "../events/Event";
+import { IOErrorEvent } from "../events/IOErrorEvent";
+import { DisplayObject } from "../display/DisplayObject";
+import { BitmapData } from "../display/Bitmap";
+
 
     /**
      * The Video class lets you work with video in an application.
@@ -10,9 +14,9 @@ namespace egret {
      *
      * @param url URL of the media to play, Video will start to load if the url is not empty
      *
-     * @event egret.Event.COMPLETE Dispatch when the video resource is loaded and ready to play
-     * @event egret.Event.ENDED Dispatch when the video playback ended
-     * @event egret.IOErrorEvent.IO_ERROR when the video is failed to load
+     * @event Event.COMPLETE Dispatch when the video resource is loaded and ready to play
+     * @event Event.ENDED Dispatch when the video playback ended
+     * @event IOErrorEvent.IO_ERROR when the video is failed to load
      * @version Egret 2.4
      * @platform Web
      * @includeExample egret/media/Video.ts
@@ -25,9 +29,9 @@ namespace egret {
      *
      * @param url 要播放的视频的URL，如果url不为空，Video会立即加载这个视频
      *
-     * @event egret.Event.COMPLETE 视频加载完成时抛出
-     * @event egret.Event.ENDED 视频播放完成时抛出
-     * @event egret.IOErrorEvent.IO_ERROR 视频加载失败时触发
+     * @event Event.COMPLETE 视频加载完成时抛出
+     * @event Event.ENDED 视频播放完成时抛出
+     * @event IOErrorEvent.IO_ERROR 视频加载失败时触发
      * @version Egret 2.4
      * @platform Web
      * @includeExample egret/media/Video.ts
@@ -224,4 +228,3 @@ namespace egret {
     export let Video:{
         new (url?:string,cache?:boolean): Video
     };
-}

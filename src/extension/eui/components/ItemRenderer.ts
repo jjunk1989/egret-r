@@ -1,8 +1,12 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-/// <reference path="../utils/registerBindable.ts" />
-namespace eui {
+import { TouchEvent } from "../../../egret/events/TouchEvent";
+import { Event } from "../../../egret/events/Event";
+import { Component } from "./Component";
+import { IItemRenderer } from "../core/IItemRenderer";
+import { registerBindable } from "../utils/registerBindable";
+
 
     /**
      * The ItemRenderer class is the base class for item renderers.
@@ -50,7 +54,7 @@ namespace eui {
          */
         public constructor() {
             super();
-            this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
+            this.addEventListener(TouchEvent.TOUCH_BEGIN, this.onTouchBegin, this);
         }
 
         /**
@@ -173,11 +177,11 @@ namespace eui {
          * @platform Web
          * @language zh_CN
          */
-        protected onTouchCancle(event: egret.TouchEvent): void {
+        protected onTouchCancle(event: TouchEvent): void {
             this.touchCaptured = false;
             let stage = event.$currentTarget;
-            stage.removeEventListener(egret.TouchEvent.TOUCH_CANCEL, this.onTouchCancle, this);
-            stage.removeEventListener(egret.TouchEvent.TOUCH_END, this.onStageTouchEnd, this);
+            stage.removeEventListener(TouchEvent.TOUCH_CANCEL, this.onTouchCancle, this);
+            stage.removeEventListener(TouchEvent.TOUCH_END, this.onStageTouchEnd, this);
             this.invalidateState();
         }
 
@@ -197,12 +201,12 @@ namespace eui {
          * @platform Web
          * @language zh_CN
          */
-        protected onTouchBegin(event: egret.TouchEvent): void {
+        protected onTouchBegin(event: TouchEvent): void {
             if(!this.$stage) {
                 return;
             }
-            this.$stage.addEventListener(egret.TouchEvent.TOUCH_CANCEL, this.onTouchCancle, this);
-            this.$stage.addEventListener(egret.TouchEvent.TOUCH_END, this.onStageTouchEnd, this);
+            this.$stage.addEventListener(TouchEvent.TOUCH_CANCEL, this.onTouchCancle, this);
+            this.$stage.addEventListener(TouchEvent.TOUCH_END, this.onStageTouchEnd, this);
             this.touchCaptured = true;
             this.invalidateState();
             event.updateAfterEvent();
@@ -211,10 +215,10 @@ namespace eui {
          * @private
          * 舞台上触摸弹起事件
          */
-        private onStageTouchEnd(event: egret.Event): void {
+        private onStageTouchEnd(event: Event): void {
             let stage = event.$currentTarget;
-            stage.removeEventListener(egret.TouchEvent.TOUCH_CANCEL, this.onTouchCancle, this);
-            stage.removeEventListener(egret.TouchEvent.TOUCH_END, this.onStageTouchEnd, this);
+            stage.removeEventListener(TouchEvent.TOUCH_CANCEL, this.onTouchCancle, this);
+            stage.removeEventListener(TouchEvent.TOUCH_END, this.onStageTouchEnd, this);
             this.touchCaptured = false;
             this.invalidateState();
         }
@@ -247,4 +251,3 @@ namespace eui {
     }
 
     registerBindable(ItemRenderer.prototype, "data");
-}

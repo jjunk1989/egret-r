@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret {
+import { Event } from "./Event";
+
 
     export interface Geolocation{
         addEventListener<Z>(type: "ioError"
@@ -184,4 +185,3 @@ namespace egret {
          */
         errorMessage: string;
     }
-}

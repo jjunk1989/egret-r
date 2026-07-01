@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret {
-
 
     /**
      * @version Egret 2.4
@@ -131,7 +129,6 @@ namespace egret {
         }
 
     }
-}
 
 /**
  * @private
@@ -162,7 +159,7 @@ if (!Function.prototype.bind) {
     Function.prototype.bind = function (oThis) {
         if (typeof this !== "function") {
             // closest thing possible to the ECMAScript 5 internal IsCallable function
-            egret.$error(1029);
+            $error(1029);
         }
 
         let aArgs = Array.prototype.slice.call(arguments, 1),

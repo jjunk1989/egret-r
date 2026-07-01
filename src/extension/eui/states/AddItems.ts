@@ -1,7 +1,13 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace eui.sys {
+import { DisplayObjectContainer } from "../../../egret/display/DisplayObjectContainer";
+import { DisplayObject } from "../../../egret/display/DisplayObject";
+import { Component, ComponentKeys } from "../components/Component";
+import { IOverride } from "./IOverride";
+import { Skin } from "../components/Skin";
+import { is } from "../../../egret/utils/is";
+
 
     /**
      * @private
@@ -28,9 +34,7 @@ namespace eui.sys {
          */
         AFTER
     }
-}
 
-namespace eui {
 
     /**
      * The operation of adding a state to view.
@@ -139,11 +143,11 @@ namespace eui {
          * @version eui 1.0
          * @platform Web
          */
-        public apply(host:any, parent:egret.DisplayObjectContainer):void {
+        public apply(host:any, parent:DisplayObjectContainer):void {
             let index:number;
-            let relative:egret.DisplayObject = host[this.relativeTo];
-            let target:egret.DisplayObject = host[this.target];
-            let container:egret.DisplayObjectContainer = this.propertyName ? host[this.propertyName] : parent;
+            let relative:DisplayObject = host[this.relativeTo];
+            let target:DisplayObject = host[this.target];
+            let container:DisplayObjectContainer = this.propertyName ? host[this.propertyName] : parent;
             if (!target || !container)
                 return;
             switch (this.position) {
@@ -163,8 +167,8 @@ namespace eui {
             if (index == -1){
                 index = container.numChildren;
             }
-            if (egret.is(container, "eui.Component")) {
-                (<Skin>(<Component>container).$Component[sys.ComponentKeys.skin]).$elementsContent.push(target);
+            if (is(container, "Component")) {
+                (<Skin>(<Component>container).$Component[ComponentKeys.skin]).$elementsContent.push(target);
             }
             container.addChildAt(target, index);
         }
@@ -176,16 +180,16 @@ namespace eui {
          * @version eui 1.0
          * @platform Web
          */
-        public remove(host:any,parent:egret.DisplayObjectContainer):void {
-            let container:egret.DisplayObjectContainer = this.propertyName ? host[this.propertyName] : parent;
-            let target:egret.DisplayObject = host[this.target];
+        public remove(host:any,parent:DisplayObjectContainer):void {
+            let container:DisplayObjectContainer = this.propertyName ? host[this.propertyName] : parent;
+            let target:DisplayObject = host[this.target];
             if (!target || !container)
                 return;
             if (target.$parent === container) {
                 container.removeChild(target);
             }
-            if (egret.is(container, "eui.Component")) {
-                let arr = (<Skin>(<Component>container).$Component[sys.ComponentKeys.skin]).$elementsContent;
+            if (is(container, "Component")) {
+                let arr = (<Skin>(<Component>container).$Component[ComponentKeys.skin]).$elementsContent;
                 let idx = arr.indexOf(target);
                 if (idx > -1) {
                     arr.splice(idx, 1);
@@ -194,5 +198,4 @@ namespace eui {
         }
     }
 
-}
 

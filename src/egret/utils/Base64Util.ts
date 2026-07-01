@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret {
     /**
     * @language en_US
     * The Base64Util class provides methods for encoding and decoding base64.
@@ -94,7 +93,6 @@ namespace egret {
             return arraybuffer;
         }
     }
-}
 /**
  * @private
  */

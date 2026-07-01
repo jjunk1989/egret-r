@@ -1,21 +1,18 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret {
 
     /**
      * @private
      */
-    export let $locale_strings:any = egret.$locale_strings||{};
+    export let $locale_strings:any = {};
 
     /**
      * @private
      */
     export let $language: string = "en_US";
 
-}
 
-namespace egret.sys {
     /**
      * @private
      * 全局多语言翻译函数
@@ -34,4 +31,3 @@ namespace egret.sys {
         }
         return text;
     }
-}

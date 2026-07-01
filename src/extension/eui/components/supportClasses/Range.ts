@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace eui.sys {
+import { Component } from "../Component";
+import { registerBindable } from "../../utils/registerBindable";
+
     
     /**
      * @private
@@ -18,9 +20,7 @@ namespace eui.sys {
         snapIntervalChanged,
         explicitSnapInterval
     }
-}
 
-namespace eui {
 
     /**
      * The Range class holds a value and an allowed range for that
@@ -500,4 +500,3 @@ namespace eui {
     }
 
     registerBindable(Range.prototype,"value");
-}

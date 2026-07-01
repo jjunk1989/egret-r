@@ -1,7 +1,16 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret {
+import { nativeRender } from "../player/Player";
+import { HorizontalAlign } from "./HorizontalAlign";
+import { VerticalAlign } from "./VerticalAlign";
+import { BitmapNode } from "../player/nodes/BitmapNode";
+import { DisplayObject } from "../display/DisplayObject";
+import { BitmapFont } from "./BitmapFont";
+import { Rectangle } from "../geom/Rectangle";
+import { Bitmap } from "../display/Bitmap";
+import { $warn } from "";
+
     /**
      * Bitmap font adopts the Bitmap+SpriteSheet mode to render text.
      * @version Egret 2.4
@@ -32,8 +41,8 @@ namespace egret {
          */
         public constructor() {
             super();
-            if (!egret.nativeRender) {
-                this.$renderNode = new sys.BitmapNode();
+            if (!nativeRender) {
+                this.$renderNode = new BitmapNode();
             }
         }
 
@@ -67,7 +76,7 @@ namespace egret {
                 return;
             }
             self.$smoothing = value;
-            if (!egret.nativeRender) {
+            if (!nativeRender) {
                 let p = self.$parent;
                 if (p && !p.$cacheDirty) {
                     p.$cacheDirty = true;
@@ -157,7 +166,7 @@ namespace egret {
             this.$textLinesChanged = true;
             //todo lcj
             this.$updateRenderNode();
-            if (!egret.nativeRender) {
+            if (!nativeRender) {
                 let p = this.$parent;
                 if (p && !p.$cacheDirty) {
                     p.$cacheDirty = true;
@@ -299,18 +308,18 @@ namespace egret {
             return true;
         }
 
-        private $textAlign: string = egret.HorizontalAlign.LEFT;
+        private $textAlign: string = HorizontalAlign.LEFT;
 
         /**
          * Horizontal alignment of text.
-         * @default：egret.HorizontalAlign.LEFT
+         * @default：HorizontalAlign.LEFT
          * @version Egret 2.5.6
          * @platform Web
          * @language en_US
          */
         /**
          * 文本的水平对齐方式。
-         * @default：egret.HorizontalAlign.LEFT
+         * @default：HorizontalAlign.LEFT
          * @version Egret 2.5.6
          * @platform Web
          * @language zh_CN
@@ -333,18 +342,18 @@ namespace egret {
             return true;
         }
 
-        private $verticalAlign: string = egret.VerticalAlign.TOP;
+        private $verticalAlign: string = VerticalAlign.TOP;
 
         /**
          * Vertical alignment of text.
-         * @default：egret.VerticalAlign.TOP
+         * @default：VerticalAlign.TOP
          * @version Egret 2.5.6
          * @platform Web
          * @language en_US
          */
         /**
          * 文字的垂直对齐方式。
-         * @default：egret.VerticalAlign.TOP
+         * @default：VerticalAlign.TOP
          * @version Egret 2.5.6
          * @platform Web
          * @language zh_CN
@@ -391,7 +400,7 @@ namespace egret {
             let textLines: string[] = this.$getTextLines();
             let length: number = textLines.length;
             if (length == 0) {
-                if (egret.nativeRender && self.$font) {
+                if (nativeRender && self.$font) {
                     self.$nativeDisplayObject.setDataToBitmapNode(self.$nativeDisplayObject.id, self.$font.$texture, []);
                     self.$nativeDisplayObject.setWidth(0);
                     self.$nativeDisplayObject.setHeight(0);
@@ -402,8 +411,8 @@ namespace egret {
             let textLinesWidth: number[] = this.$textLinesWidth;
             let bitmapFont: BitmapFont = self.$font;
             let node
-            if (!egret.nativeRender) {
-                node = <sys.BitmapNode>this.$renderNode;
+            if (!nativeRender) {
+                node = <BitmapNode>this.$renderNode;
                 if (bitmapFont.$texture) {
                     node.image = bitmapFont.$texture.$bitmapData;
                 }
@@ -427,11 +436,11 @@ namespace egret {
                 let len = line.length;
                 let xPos = this.$textOffsetX;
 
-                if (align != egret.HorizontalAlign.LEFT) {
+                if (align != HorizontalAlign.LEFT) {
                     let countWidth: number = textFieldWidth > textWidth ? textFieldWidth : textWidth;
-                    if (align == egret.HorizontalAlign.RIGHT) {
+                    if (align == HorizontalAlign.RIGHT) {
                         xPos += countWidth - textLinesWidth[i];
-                    } else if (align == egret.HorizontalAlign.CENTER) {
+                    } else if (align == HorizontalAlign.CENTER) {
                         xPos += Math.floor((countWidth - textLinesWidth[i]) / 2);
 
                     }
@@ -444,13 +453,13 @@ namespace egret {
                             xPos += emptyWidth;
                         }
                         else {
-                            egret.$warn(1046, character);
+                            $warn(1046, character);
                         }
                         continue;
                     }
                     let bitmapWidth = texture.$bitmapWidth;
                     let bitmapHeight = texture.$bitmapHeight;
-                    if (egret.nativeRender) {
+                    if (nativeRender) {
                         drawArr.push(texture.$bitmapX, texture.$bitmapY,
                             bitmapWidth, bitmapHeight, xPos + texture.$offsetX, yPos + texture.$offsetY,
                             texture.$getScaleBitmapWidth(), texture.$getScaleBitmapHeight(),
@@ -467,7 +476,7 @@ namespace egret {
                 }
                 yPos += lineHeight + self.$lineSpacing;
             }
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 self.$nativeDisplayObject.setDataToBitmapNode(self.$nativeDisplayObject.id, bitmapFont.$texture, drawArr);
                 let bounds = self.$getContentBounds();
                 self.$nativeDisplayObject.setWidth(bounds.width);
@@ -622,7 +631,7 @@ namespace egret {
                             textureHeight = emptyHeight;
                         }
                         else {
-                            egret.$warn(1046, character);
+                            $warn(1046, character);
                             if (isFirstChar) {
                                 isFirstChar = false;
                             }
@@ -701,21 +710,20 @@ namespace egret {
             let alignType;
             if (textFieldWidth > textWidth) {
                 alignType = self.$textAlign;
-                if (alignType == egret.HorizontalAlign.RIGHT) {
+                if (alignType == HorizontalAlign.RIGHT) {
                     this.$textStartX = textFieldWidth - textWidth;
-                } else if (alignType == egret.HorizontalAlign.CENTER) {
+                } else if (alignType == HorizontalAlign.CENTER) {
                     this.$textStartX = Math.floor((textFieldWidth - textWidth) / 2);
                 }
             }
             if (textFieldHeight > textHeight) {
                 alignType = self.$verticalAlign;
-                if (alignType == egret.VerticalAlign.BOTTOM) {
+                if (alignType == VerticalAlign.BOTTOM) {
                     this.$textStartY = textFieldHeight - textHeight;
-                } else if (alignType == egret.VerticalAlign.MIDDLE) {
+                } else if (alignType == VerticalAlign.MIDDLE) {
                     this.$textStartY = Math.floor((textFieldHeight - textHeight) / 2);
                 }
             }
             return textLines;
         }
     }
-}

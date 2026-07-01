@@ -1,7 +1,13 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret.sys {
+import { RenderNode } from "./nodes/RenderNode";
+import { DisplayObject } from "../display/DisplayObject";
+import { RenderBuffer } from "./RenderBuffer";
+import { Matrix } from "../geom/Matrix";
+import { CanvasRenderingContext2D } from "./rendering/CanvasRenderer";
+import { BitmapData } from "../display/BitmapData";
+
 
     /**
      * @private
@@ -34,7 +40,7 @@ namespace egret.sys {
          * @param matrix 要叠加的矩阵
          * @param forHitTest 绘制结果是用于碰撞检测。若为true，当渲染GraphicsNode时，会忽略透明度样式设置，全都绘制为不透明的。
          */
-        drawNodeToBuffer(node: sys.RenderNode, buffer: RenderBuffer, matrix: Matrix, forHitTest?: boolean): void;
+        drawNodeToBuffer(node: RenderNode, buffer: RenderBuffer, matrix: Matrix, forHitTest?: boolean): void;
 
         renderClear();
     }
@@ -48,7 +54,7 @@ namespace egret.sys {
      * 创建一个canvas。
      */
     export function mainCanvas(width?: number, height?: number): HTMLCanvasElement {
-        console.error(`empty sys.mainCanvas = ${width}, ${height}`);
+        console.error(`empty mainCanvas = ${width}, ${height}`);
         return null;
     }
 
@@ -131,4 +137,3 @@ namespace egret.sys {
     export function resizeCanvasRenderBuffer(renderContext: RenderContext, width: number, height: number, useMaxSize?: boolean): void {
         console.error(`empty sys.resizeContext = ${renderContext}, ${width}, ${height}, ${useMaxSize}`);
     }
-}

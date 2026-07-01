@@ -1,9 +1,18 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-/// <reference path="../core/UIComponent.ts" />
-/// <reference path="../utils/registerProperty.ts" />
-namespace eui.sys {
+import { Event } from "../../../egret/events/Event";
+import { DisplayObjectContainer } from "../../../egret/display/DisplayObjectContainer";
+import { getImplementation } from "../../../egret/system/Implementation";
+import { getDefinitionByName } from "../../../egret/utils/getDefinitionByName";
+import { Rectangle } from "../../../egret/geom/Rectangle";
+import { Theme } from "../core/Theme";
+import { Skin } from "./Skin";
+import { UIComponentImpl, UIKeys, implementUIComponent, UIComponent } from "../core/UIComponent";
+import { measure, updateDisplayList } from "../layouts/BasicLayout";
+import { $error } from "../../../Defines.debug";
+import { DEBUG } from "../../../Defines.debug";
+
 
     /**
      * @private
@@ -19,9 +28,6 @@ namespace eui.sys {
         explicitTouchEnabled,
         skin
     }
-}
-
-namespace eui {
 
 
     /**
@@ -31,7 +37,7 @@ namespace eui {
      *
      * Associate a skin class with a component class by setting the <code>skinName</code> property of the
      * component class.
-     * @event egret.Event.COMPLETE Dispatch when <code>skinName</code> property is set the path of external EXML file and the EXML file is resolved.
+     * @event Event.COMPLETE Dispatch when <code>skinName</code> property is set the path of external EXML file and the EXML file is resolved.
      *
      * @includeExample  extension/eui/components/ComponentExample.ts
      * @version Egret 2.4
@@ -42,7 +48,7 @@ namespace eui {
     /**
      * Component 类定义可设置外观的组件的基类。Component 类所使用的外观通常是 Skin 类的子类。<p/>
      * 通过设置 component 类的 skinName 属性，将 skin 类与 component 类相关联。
-     * @event egret.Event.COMPLETE 当设置skinName为外部exml文件路径时，加载并完成EXML解析后调度。
+     * @event Event.COMPLETE 当设置skinName为外部exml文件路径时，加载并完成EXML解析后调度。
      *
      * @includeExample  extension/eui/components/ComponentExample.ts
      * @version Egret 2.4
@@ -50,7 +56,7 @@ namespace eui {
      * @platform Web
      * @language zh_CN
      */
-    export class Component extends egret.DisplayObjectContainer implements UIComponent {
+    export class Component extends DisplayObjectContainer implements UIComponent {
         /**
          * Constructor.
          *
@@ -92,7 +98,7 @@ namespace eui {
          * A identifier of host component which can determine only one component names.
          * Usually used for quering a default skin name in theme.
          * @default null
-         * @see eui.Theme#getSkinName()
+         * @see Theme#getSkinName()
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web
@@ -102,7 +108,7 @@ namespace eui {
          * 主机组件标识符。用于唯一确定一个组件的名称。通常用于在主题中查询默认皮肤名。
          *
          * @default null
-         * @see eui.Theme#getSkinName()
+         * @see Theme#getSkinName()
          * @version Egret 2.4
          * @version eui 1.0
          * @platform Web
@@ -143,7 +149,7 @@ namespace eui {
             if (value) {
                 values[sys.ComponentKeys.skinName] = value;
             } else {
-                let theme = egret.getImplementation("eui.Theme");
+                let theme = getImplementation("Theme");
                 if (theme) {
                     let skinName = theme.getSkinName(this);
                     if (skinName) {
@@ -172,7 +178,7 @@ namespace eui {
                         clazz = EXML.parse(text);
                     }
                     else {
-                        clazz = egret.getDefinitionByName(skinName);
+                        clazz = getDefinitionByName(skinName);
                         if (!clazz && text.toLowerCase().indexOf(".exml") != -1) {
                             EXML.load(skinName, this.onExmlLoaded, this, true);
                             return;
@@ -235,9 +241,9 @@ namespace eui {
          * @language zh_CN
          */
         protected setSkin(skin: Skin): void {
-            if (skin && !(skin instanceof eui.Skin)) {
+            if (skin && !(skin instanceof Skin)) {
                 skin = null;
-                DEBUG && egret.$error(2202);
+                DEBUG && $error(2202);
             }
             let values = this.$Component;
             let oldSkin: Skin = values[sys.ComponentKeys.skin];
@@ -283,7 +289,7 @@ namespace eui {
             }
             this.invalidateSize();
             this.invalidateDisplayList();
-            this.dispatchEventWith(egret.Event.COMPLETE);
+            this.dispatchEventWith(Event.COMPLETE);
         }
 
 
@@ -583,7 +589,7 @@ namespace eui {
         protected createChildren(): void {
             let values = this.$Component;
             if (!values[sys.ComponentKeys.skinName]) {
-                let theme = egret.getImplementation("eui.Theme");
+                let theme = getImplementation("Theme");
                 if (theme) {
                     let skinName = theme.getSkinName(this);
                     if (skinName) {
@@ -630,7 +636,7 @@ namespace eui {
          * @language zh_CN
          */
         protected commitProperties(): void {
-            sys.UIComponentImpl.prototype["commitProperties"].call(this);
+            UIComponentImpl.prototype["commitProperties"].call(this);
             let values = this.$Component;
             if (values[sys.ComponentKeys.stateIsDirty]) {
                 values[sys.ComponentKeys.stateIsDirty] = false;
@@ -655,33 +661,33 @@ namespace eui {
          * @language zh_CN
          */
         protected measure(): void {
-            sys.measure(this);
+            measure(this);
             let skin = this.$Component[sys.ComponentKeys.skin];
             if (!skin) {
                 return;
             }
             let values = this.$UIComponent;
             if (!isNaN(skin.width)) {
-                values[sys.UIKeys.measuredWidth] = skin.width;
+                values[UIKeys.measuredWidth] = skin.width;
             }
             else {
-                if (values[sys.UIKeys.measuredWidth] < skin.minWidth) {
-                    values[sys.UIKeys.measuredWidth] = skin.minWidth;
+                if (values[UIKeys.measuredWidth] < skin.minWidth) {
+                    values[UIKeys.measuredWidth] = skin.minWidth;
                 }
-                if (values[sys.UIKeys.measuredWidth] > skin.maxWidth) {
-                    values[sys.UIKeys.measuredWidth] = skin.maxWidth;
+                if (values[UIKeys.measuredWidth] > skin.maxWidth) {
+                    values[UIKeys.measuredWidth] = skin.maxWidth;
                 }
             }
 
             if (!isNaN(skin.height)) {
-                values[sys.UIKeys.measuredHeight] = skin.height;
+                values[UIKeys.measuredHeight] = skin.height;
             }
             else {
-                if (values[sys.UIKeys.measuredHeight] < skin.minHeight) {
-                    values[sys.UIKeys.measuredHeight] = skin.minHeight;
+                if (values[UIKeys.measuredHeight] < skin.minHeight) {
+                    values[UIKeys.measuredHeight] = skin.minHeight;
                 }
-                if (values[sys.UIKeys.measuredHeight] > skin.maxHeight) {
-                    values[sys.UIKeys.measuredHeight] = skin.maxHeight;
+                if (values[UIKeys.measuredHeight] > skin.maxHeight) {
+                    values[UIKeys.measuredHeight] = skin.maxHeight;
                 }
             }
         }
@@ -701,7 +707,7 @@ namespace eui {
          * @language zh_CN
          */
         protected updateDisplayList(unscaledWidth: number, unscaledHeight: number): void {
-            sys.updateDisplayList(this, unscaledWidth, unscaledHeight);
+            updateDisplayList(this, unscaledWidth, unscaledHeight);
         }
 
         /**
@@ -973,7 +979,7 @@ namespace eui {
          * @version eui 1.0
          * @platform Web
          */
-        public getLayoutBounds(bounds: egret.Rectangle): void {
+        public getLayoutBounds(bounds: Rectangle): void {
         }
 
         /**
@@ -983,7 +989,7 @@ namespace eui {
          * @version eui 1.0
          * @platform Web
          */
-        public getPreferredBounds(bounds: egret.Rectangle): void {
+        public getPreferredBounds(bounds: Rectangle): void {
         }
 
 
@@ -994,6 +1000,4 @@ namespace eui {
         }
     }
     registerProperty(Component, "skinName", "Class");
-    sys.implementUIComponent(Component, egret.DisplayObjectContainer, true);
-
-}
+    implementUIComponent(Component, DisplayObjectContainer, true);

@@ -1,12 +1,14 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret {
+import { GlowFilter } from "./GlowFilter";
+import { NumberUtils } from "../utils/NumberUtils";
+
     /**
      * @class egret.DropShadowFilter
      * @classdesc
      * 可使用 DropShadowFilter 类向显示对象添加投影。
-     * @extends egret.GlowFilter
+     * @extends GlowFilter
      * @version Egret 3.1.4
      * @platform Web
      */
@@ -169,14 +171,14 @@ namespace egret {
             let distanceX = 0;
             let distanceY = 0;
             if (distance != 0) {
-                distanceX = distance * egret.NumberUtils.cos(angle);
+                distanceX = distance * NumberUtils.cos(angle);
                 if (distanceX > 0) {
                     distanceX = Math.ceil(distanceX);
                 }
                 else {
                     distanceX = Math.floor(distanceX);
                 }
-                distanceY = distance * egret.NumberUtils.sin(angle);
+                distanceY = distance * NumberUtils.sin(angle);
                 if (distanceY > 0) {
                     distanceY = Math.ceil(distanceY);
                 }
@@ -190,4 +192,3 @@ namespace egret {
             }
         }
     }
-}

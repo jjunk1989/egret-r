@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { Event } from "./Event";
+import { IEventDispatcher } from "./IEventDispatcher";
 
-namespace egret {
+
     // export interface TextField{
     //     addEventListener<Z>(type: "link"
     //         , listener: (this: Z, e: TextEvent) => void, thisObject: Z, useCapture?: boolean, priority?: number);
@@ -105,4 +107,3 @@ namespace egret {
 
         }
     }
-}

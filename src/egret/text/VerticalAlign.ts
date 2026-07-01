@@ -1,18 +1,19 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret {
+import { TextField } from "./TextField";
+
 
     /**
      * The VerticalAlign class defines the possible values for the vertical alignment.
-     * @see egret.TextField#verticalAlign
+     * @see TextField#verticalAlign
      * @version Egret 2.4
      * @platform Web
      * @language en_US
      */
     /**
      * VerticalAlign 类为垂直对齐方式定义可能的值。
-     * @see egret.TextField#verticalAlign
+     * @see TextField#verticalAlign
      * @version Egret 2.4
      * @platform Web
      * @language zh_CN
@@ -95,4 +96,3 @@ namespace egret {
          */
         public static CONTENT_JUSTIFY:string = "contentJustify";
     }
-}

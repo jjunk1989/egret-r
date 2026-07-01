@@ -1,11 +1,14 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret.web {
+import { FPSDisplay, FPSData } from "../player/FPSDisplay";
+import { Capabilities } from "../system/Capabilities";
+import { Stage } from "../display/Stage";
+
     /**
      * @private
      */
-    export class WebFps implements egret.FPSDisplay {
+    export class WebFps implements FPSDisplay {
         private panelX: number;
         private panelY: number;
         private fontColor: string;
@@ -18,7 +21,7 @@ namespace egret.web {
 
         constructor(stage: Stage, showFPS: boolean, showLog: boolean, logFilter: string, styles: Object) {
             if (showFPS || showLog) {
-                if (egret.Capabilities.renderMode == 'canvas') {
+                if (Capabilities.renderMode == 'canvas') {
                     this.renderMode = "Canvas";
                 } else {
                     this.renderMode = "WebGL";
@@ -27,7 +30,7 @@ namespace egret.web {
                 this.panelY = styles["y"] === undefined ? 0 : parseInt(styles['y']);
                 this.fontColor = styles["textColor"] === undefined ? '#ffffff' : styles['textColor'].replace("0x", "#");
                 this.fontSize = styles["size"] === undefined ? 12 : parseInt(styles['size']);
-                if (egret.Capabilities.isMobile) {
+                if (Capabilities.isMobile) {
                     this.fontSize -= 2;
                 }
                 let all = document.createElement('div');
@@ -235,5 +238,4 @@ namespace egret.web {
             }
         }
     }
-    egret.FPSDisplay = WebFps;
-}
+    FPSDisplay = WebFps;

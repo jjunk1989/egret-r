@@ -1,8 +1,12 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { Event } from "../../../../egret/events/Event";
+import { IViewport } from "../../core/IViewport";
+import { UIComponent } from "../../core/UIComponent";
+import { PropertyEvent } from "../../events/PropertyEvent";
+import { Component } from "../Component";
 
-namespace eui {
 
     /**
      * The ScrollBarBase class helps to position
@@ -11,7 +15,7 @@ namespace eui {
      * The ScrollBarBase class displays a pair of viewport and a thumb.
      * viewport is a instance that implements IViewport.
      *
-     * @see eui.IViewport
+     * @see IViewport
      *
      * @version Egret 2.4
      * @version eui 1.0
@@ -23,7 +27,7 @@ namespace eui {
      * ScrollBarBase 类显示视区的一部分和一个指示滑块。
      * 视区是一个IViewport接口实现的实例。
      *
-     * @see eui.IViewport
+     * @see IViewport
      *
      * @version Egret 2.4
      * @version eui 1.0
@@ -65,7 +69,7 @@ namespace eui {
          * @platform Web
          * @language zh_CN
          */
-        public thumb:eui.UIComponent = null;
+        public thumb:UIComponent = null;
 
         /**
          * @private
@@ -87,8 +91,8 @@ namespace eui {
          * sync with the viewport.
          *
          * @default null
-         * @see eui.VScrollBar
-         * @see eui.HScrollBar
+         * @see VScrollBar
+         * @see HScrollBar
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -107,8 +111,8 @@ namespace eui {
          * VScrollBar 和 HScrollBar 类需要重写这些方法以保证属性与视区的同步。
          *
          * @default null
-         * @see eui.VScrollBar
-         * @see eui.HScrollBar
+         * @see VScrollBar
+         * @see HScrollBar
          *
          * @version Egret 2.4
          * @version eui 1.0
@@ -126,14 +130,14 @@ namespace eui {
             let viewport = this.$viewport;
             if (viewport)
             {
-                viewport.removeEventListener(eui.PropertyEvent.PROPERTY_CHANGE, this.onPropertyChanged,this);
-                viewport.removeEventListener(egret.Event.RESIZE, this.onViewportResize,this);
+                viewport.removeEventListener(PropertyEvent.PROPERTY_CHANGE, this.onPropertyChanged,this);
+                viewport.removeEventListener(Event.RESIZE, this.onViewportResize,this);
             }
             this.$viewport = value;
             if (value)
             {
-                value.addEventListener(eui.PropertyEvent.PROPERTY_CHANGE, this.onPropertyChanged,this);
-                value.addEventListener(egret.Event.RESIZE, this.onViewportResize,this);
+                value.addEventListener(PropertyEvent.PROPERTY_CHANGE, this.onPropertyChanged,this);
+                value.addEventListener(Event.RESIZE, this.onViewportResize,this);
             }
             this.invalidateDisplayList();
         }
@@ -143,7 +147,7 @@ namespace eui {
          *
          * @param event
          */
-        private onViewportResize(event?:egret.Event):void{
+        private onViewportResize(event?:Event):void{
             this.invalidateDisplayList();
         }
 
@@ -163,7 +167,7 @@ namespace eui {
          * @platform Web
          * @language zh_CN
          */
-        protected onPropertyChanged(event:eui.PropertyEvent):void{
+        protected onPropertyChanged(event:PropertyEvent):void{
 
         }
         /**
@@ -182,5 +186,3 @@ namespace eui {
          */
         public autoVisibility:boolean = true;
     }
-
-}

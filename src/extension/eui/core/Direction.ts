@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace eui {
 
 	/**
 	 * Defines values for setting the <code>direction</code> property
@@ -82,4 +81,3 @@ namespace eui {
 		 */
 		public static BTT:string = "btt";
 	}
-}

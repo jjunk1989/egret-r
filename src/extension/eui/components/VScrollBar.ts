@@ -1,7 +1,10 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace eui {
+import { PropertyEvent } from "../events/PropertyEvent";
+import { ScrollBarBase } from "./supportClasses/ScrollBarBase";
+import { $TempRectangle } from "../../../egret/geom/Rectangle";
+
 
     /**
      * The VScrollBar (vertical scrollbar) control lets you control
@@ -44,7 +47,7 @@ namespace eui {
             if (!thumb || !viewport) {
                 return;
             }
-            let bounds = egret.$TempRectangle;
+            let bounds = $TempRectangle;
             thumb.getPreferredBounds(bounds);
             let thumbHeight = bounds.height;
             let thumbX = bounds.x;
@@ -78,7 +81,7 @@ namespace eui {
          * @version eui 1.0
          * @platform Web
          */
-        protected onPropertyChanged(event:eui.PropertyEvent):void {
+        protected onPropertyChanged(event:PropertyEvent):void {
             switch (event.property) {
                 case "scrollV":
                 case "contentHeight":
@@ -87,5 +90,3 @@ namespace eui {
             }
         }
     }
-
-}

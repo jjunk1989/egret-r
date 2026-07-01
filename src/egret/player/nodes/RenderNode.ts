@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret.sys {
     /**
      * @private
      * 渲染节点类型
@@ -63,4 +62,3 @@ namespace egret.sys {
             return this.renderCount;
         }
     }
-}

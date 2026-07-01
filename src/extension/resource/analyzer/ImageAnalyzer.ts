@@ -1,8 +1,16 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { ImageLoader } from "../../../egret/net/ImageLoader";
+import { Event } from "../../../egret/events/Event";
+import { IOErrorEvent } from "../../../egret/events/IOErrorEvent";
+import { Texture } from "../../../egret/display/Texture";
+import { Rectangle } from "../../../egret/geom/Rectangle";
+import { AnalyzerBase } from "./AnalyzerBase";
+import { ResourceItem } from "../../assetsmanager/src/shim/ResourceItem";
+import { $getVirtualUrl } from "../Resource";
 
-namespace RES {
+
     /**
      * @private
      */
@@ -40,17 +48,17 @@ namespace RES {
         /**
          * Loader对象池
          */
-        protected recycler:egret.ImageLoader[] = [];
+        protected recycler:ImageLoader[] = [];
 
         /**
          * 获取一个Loader对象
          */
-        private getLoader():egret.ImageLoader {
+        private getLoader():ImageLoader {
             let loader = this.recycler.pop();
             if (!loader) {
-                loader = new egret.ImageLoader();
-                loader.addEventListener(egret.Event.COMPLETE, this.onLoadFinish, this);
-                loader.addEventListener(egret.IOErrorEvent.IO_ERROR, this.onLoadFinish, this);
+                loader = new ImageLoader();
+                loader.addEventListener(Event.COMPLETE, this.onLoadFinish, this);
+                loader.addEventListener(IOErrorEvent.IO_ERROR, this.onLoadFinish, this);
             }
             return loader;
         }
@@ -58,15 +66,15 @@ namespace RES {
         /**
          * 一项加载结束
          */
-        protected onLoadFinish(event:egret.Event):void {
-            let request = <egret.ImageLoader> (event.$target);
+        protected onLoadFinish(event:Event):void {
+            let request = <ImageLoader> (event.$target);
             let data:any = this.resItemDic[request.$hashCode];
             delete this.resItemDic[request.$hashCode];
             let resItem:ResourceItem = data.item;
             let compFunc:Function = data.func;
-            resItem.loaded = (event.$type == egret.Event.COMPLETE);
+            resItem.loaded = (event.$type == Event.COMPLETE);
             if (resItem.loaded) {
-                let texture:egret.Texture = new egret.Texture();
+                let texture:Texture = new Texture();
                 texture._setBitmapData(request.data);
 
                 this.analyzeData(resItem, texture)
@@ -78,7 +86,7 @@ namespace RES {
         /**
          * 解析并缓存加载成功的数据
          */
-        protected analyzeData(resItem:ResourceItem, texture:egret.Texture):void {
+        protected analyzeData(resItem:ResourceItem, texture:Texture):void {
             let name:string = resItem.name;
             if (this.fileDic[name] || !texture) {
                 return;
@@ -89,7 +97,7 @@ namespace RES {
             if (config && config["scale9grid"]) {
                 let str:string = config["scale9grid"];
                 let list:string[] = str.split(",");
-                texture["scale9Grid"] = new egret.Rectangle(parseInt(list[0]), parseInt(list[1]), parseInt(list[2]), parseInt(list[3]));
+                texture["scale9Grid"] = new Rectangle(parseInt(list[0]), parseInt(list[1]), parseInt(list[2]), parseInt(list[3]));
             }
         }
 
@@ -124,4 +132,3 @@ namespace RES {
             texture.dispose();
         }
     }
-}

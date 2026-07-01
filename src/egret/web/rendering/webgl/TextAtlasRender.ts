@@ -1,7 +1,14 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace egret.web {
+import { getContext2d, createCanvas, createTexture, _createTexture } from "../../../player/SystemRenderer";
+import { measureText } from "../../../text/TextMeasurer";
+import { TextFormat } from "../../../player/nodes/TextFormat";
+import { TextNode } from "../../../player/nodes/TextNode";
+import { HashObject } from "../../../utils/HashObject";
+import { TextBlock, Book } from "./TextAtlasStrategy";
+import { Rectangle } from "../../../geom/Rectangle";
+import { WebGLRenderContext } from "../../../player/Player";
 
     //测试开关,打开会截住老的字体渲染
     export const textAtlasRenderEnable: boolean = false;
@@ -64,10 +71,10 @@ namespace egret.web {
         public readonly italic: boolean;
         public readonly fontFamily: string;
         public readonly font: string;
-        public readonly format: sys.TextFormat = null;
+        public readonly format: TextFormat = null;
         public readonly description: string;
         //
-        constructor(textNode: sys.TextNode, format: sys.TextFormat) {
+        constructor(textNode: TextNode, format: TextFormat) {
             super();
             //debug强制红色
             let saveTextColorForDebug = 0;
@@ -144,7 +151,7 @@ namespace egret.web {
             }
             //读取设置
             const text = this.char;
-            const format: sys.TextFormat = this.styleInfo.format;
+            const format: TextFormat = this.styleInfo.format;
             const textColor = (!format.textColor ? this.styleInfo.textColor : format.textColor);
             const strokeColor = (!format.strokeColor ? this.styleInfo.strokeColor : format.strokeColor);
             const stroke = (!format.stroke ? this.styleInfo.stroke : format.stroke);
@@ -172,7 +179,7 @@ namespace egret.web {
             this.canvasWidthOffset = Math.floor(this.canvasWidthOffset * precision) / precision;
             this.canvasHeightOffset = Math.floor(this.canvasHeightOffset * precision) / precision;
             //再开始绘制---------------------------------------
-            const context = egret.sys.getContext2d(canvas);
+            const context = getContext2d(canvas);
             context.save();
             context.textAlign = 'center';
             context.textBaseline = 'middle';
@@ -196,7 +203,7 @@ namespace egret.web {
                     return CharImageRender.chineseCharacterMeasureFastMap[styleKey.font];
                 }
             }
-            const measureTextWidth = egret.sys.measureText(text, styleKey.fontFamily, textFlowSize || styleKey.size, styleKey.bold, styleKey.italic);
+            const measureTextWidth = measureText(text, styleKey.fontFamily, textFlowSize || styleKey.size, styleKey.bold, styleKey.italic);
             if (isChinese) {
                 CharImageRender.chineseCharacterMeasureFastMap[styleKey.font] = measureTextWidth;
             }
@@ -222,7 +229,7 @@ namespace egret.web {
         }
 
         //分析textNode，把数据提取出来，然后给textNode挂上渲染的信息
-        public static analysisTextNodeAndFlushDrawLabel(textNode: sys.TextNode): void {
+        public static analysisTextNodeAndFlushDrawLabel(textNode: TextNode): void {
             if (!textNode) {
                 return;
             }
@@ -246,13 +253,13 @@ namespace egret.web {
             let anchorX = 0;
             let anchorY = 0;
             let labelString = '';
-            let labelFormat: sys.TextFormat = {};
+            let labelFormat: TextFormat = {};
             let resultAsRenderTextBlocks: TextBlock[] = [];
             for (let i = 0, length = drawData.length; i < length; i += offset) {
                 anchorX = drawData[i + 0] as number;
                 anchorY = drawData[i + 1] as number;
                 labelString = drawData[i + 2] as string;
-                labelFormat = drawData[i + 3] as sys.TextFormat || {};
+                labelFormat = drawData[i + 3] as TextFormat || {};
                 resultAsRenderTextBlocks.length = 0;
                 //提取数据
                 __textAtlasRender__.convertLabelStringToTextAtlas(labelString, new StyleInfo(textNode, labelFormat), resultAsRenderTextBlocks);
@@ -315,15 +322,15 @@ namespace egret.web {
             let texture: WebGLTexture = null;
             if (debug) {
                 //做一个黑底子的，方便调试代码
-                const canvas = egret.sys.createCanvas(width, width);
-                const context = egret.sys.getContext2d(canvas);
+                const canvas = createCanvas(width, width);
+                const context = getContext2d(canvas);
                 context.fillStyle = 'black';
                 context.fillRect(0, 0, width, width);
-                texture = egret.sys.createTexture(this.webglRenderContext, canvas);
+                texture = createTexture(this.webglRenderContext, canvas);
             }
             else {
                 //真的
-                texture = egret.sys._createTexture(this.webglRenderContext, width, height, null);
+                texture = _createTexture(this.webglRenderContext, width, height, null);
             }
             if (texture) {
                 //存起来，未来可以删除，或者查看
@@ -336,9 +343,8 @@ namespace egret.web {
         private get canvas(): HTMLCanvasElement {
             if (!this._canvas) {
                 //就用默认体积24
-                this._canvas = egret.sys.createCanvas(24, 24);
+                this._canvas = createCanvas(24, 24);
             }
             return this._canvas;
         }
     }
-}

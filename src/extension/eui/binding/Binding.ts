@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace eui {
+import { Skin } from "../components/Skin";
+import { Watcher } from "./Watcher";
+
 
     function joinValues(templates: any[]): any {
         let first = templates[0];
@@ -72,7 +74,7 @@ namespace eui {
                 };
                 watcher.setHandler(assign, null);
                 assign(watcher.getValue());
-                if (egret.is(host, "eui.Skin")) {
+                if (is(host, "Skin")) {
                     let skin = (host as Skin);
                     if (!skin.$watchers) {
                         skin.$watchers = [];
@@ -141,7 +143,7 @@ namespace eui {
                 if (watcher) {
                     templates[index] = watcher;
                     watcher.setHandler(assign, null);
-                    if (egret.is(host, "eui.Skin")) {
+                    if (is(host, "Skin")) {
                         let skin = (host as Skin);
                         if (!skin.$watchers) {
                             skin.$watchers = [];
@@ -155,4 +157,3 @@ namespace eui {
             return watcher;
         }
     }
-}

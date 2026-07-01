@@ -1,7 +1,10 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-namespace eui {
+import { Event } from "../../../egret/events/Event";
+import { IEventDispatcher } from "../../../egret/events/IEventDispatcher";
+import { IItemRenderer } from "../core/IItemRenderer";
+
 
     /**
      * Represents events that are dispatched when a item has been touched.
@@ -19,7 +22,7 @@ namespace eui {
      * @includeExample  extension/eui/events/ItemTapEventExample.ts
      * @language zh_CN
      */
-    export class ItemTapEvent extends egret.Event {
+    export class ItemTapEvent extends Event {
         /**
          * The type of the event object for an <code>itemTap</code> event.
          * @version Egret 2.4
@@ -121,18 +124,16 @@ namespace eui {
          * @platform Web
          * @language zh_CN
          */
-        public static dispatchItemTapEvent(target:egret.IEventDispatcher, eventType:string, itemRenderer?:IItemRenderer):boolean {
+        public static dispatchItemTapEvent(target:IEventDispatcher, eventType:string, itemRenderer?:IItemRenderer):boolean {
             if (!target.hasEventListener(eventType)) {
                 return true;
             }
-            let event = egret.Event.create(ItemTapEvent, eventType);
+            let event = Event.create(ItemTapEvent, eventType);
             event.item = itemRenderer.data;
             event.itemIndex = itemRenderer.itemIndex;
             event.itemRenderer = itemRenderer;
             let result = target.dispatchEvent(event);
-            egret.Event.release(event);
+            Event.release(event);
             return result;
         }
     }
-
-}
