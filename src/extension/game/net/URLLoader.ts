@@ -2,7 +2,7 @@
 // Copyright (c) 2014-present, Egret Technology.
 
 import { Event } from "../../../egret/events/Event";
-import { IOErrorEvent, HttpRequest } from "../../../egret/events/IOErrorEvent";
+import { IOErrorEvent } from "../../../egret/events/IOErrorEvent";
 import { EventDispatcher } from "../../../egret/events/EventDispatcher";
 import { URLLoaderDataFormat } from "./URLLoaderDataFormat";
 import { URLRequestHeader } from "./URLRequestHeader";

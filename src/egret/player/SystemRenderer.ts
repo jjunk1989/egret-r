@@ -13,11 +13,9 @@ import { BitmapData } from "../display/BitmapData";
      * @private
      */
     export let systemRenderer: SystemRenderer;
-    /**
-     * @private
-     * 用于碰撞检测绘制
-     */
     export let canvasRenderer: SystemRenderer;
+    export function setSystemRenderer(v: SystemRenderer) { systemRenderer = v; }
+    export function setCanvasRenderer(v: SystemRenderer) { canvasRenderer = v; }
     /**
      * @private
      * 显示渲染器接口

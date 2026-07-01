@@ -15,43 +15,11 @@
      * @param optionalParams 要输出到控制台的额外可选信息
      * @language zh_CN
      */
-export declare function assert(assertion?:boolean, message?:string, ...optionalParams:any[]):void;
-    /**
-     * Writes a warning message to the console.
-     * @param message the message written to the console
-     * @param optionalParams the extra messages written to the console
-     * @language en_US
-     */
-    /**
-     * 输出一个警告信息到控制台。
-     * @param message 要输出到控制台的信息
-     * @param optionalParams 要输出到控制台的额外信息
-     * @language zh_CN
-     */
-export declare function warn(message?:any, ...optionalParams:any[]):void;
-    /**
-     * Writes an error message to the console.
-     * @param message the message written to the console
-     * @param optionalParams the extra messages written to the console
-     * @language en_US
-     */
-    /**
-     * 输出一个错误信息到控制台。
-     * @param message 要输出到控制台的信息
-     * @param optionalParams 要输出到控制台的额外信息
-     * @language zh_CN
-     */
-export declare function error(message?:any, ...optionalParams:any[]): void;
-    /**
-     * Writes an message to the console.
-     * @param message the message written to the console
-     * @param optionalParams the extra messages written to the console
-     * @language en_US
-     */
-    /**
-     * 输出一个日志信息到控制台。
-     * @param message 要输出到控制台的信息
-     * @param optionalParams 要输出到控制台的额外信息
-     * @language zh_CN
-     */
-export declare function log(message?:any, ...optionalParams:any[]):void;
+export let assert: (assertion?: boolean, message?: string, ...optionalParams: any[]) => void = function() {};
+export function setAssert(fn: typeof assert) { assert = fn; }
+export let warn: (message?: any, ...optionalParams: any[]) => void = function() {};
+export let error: (message?: any, ...optionalParams: any[]) => void = function() {};
+export let log: (message?: any, ...optionalParams: any[]) => void = function() {};
+export function setWarn(fn: typeof warn) { warn = fn; }
+export function setError(fn: typeof error) { error = fn; }
+export function setLog(fn: typeof log) { log = fn; }

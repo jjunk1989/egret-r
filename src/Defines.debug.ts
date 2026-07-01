@@ -47,19 +47,19 @@ export const RELEASE: boolean = false;
     /**
      * @private
      */
-    export declare function $error(code: number, ...params: any[]): void;
+    export let $error: (code: number, ...params: any[]) => void = function() {};
     /**
      * @private
      */
-    export declare function $warn(code: number, ...params: any[]): void;
+    export let $warn: (code: number, ...params: any[]) => void = function() {};
     /**
      * @private
      */
-    export declare function getString(code: number, ...params: any[]): string;
+    export let getString: (code: number, ...params: any[]) => string = function(): string { return ''; };
     /**
      * @private
      */
-    export declare function $markCannotUse(instance: any, property: string, defaultVale: any): void;
+    export let $markCannotUse: (instance: any, property: string, defaultVale: any) => void = function() {};
 
     /**
      * @private

@@ -3,7 +3,7 @@
 
 import { error } from "../system/Console";
 import { KTXContainer } from "./KTXContainer";
-import { BitmapData } from "./Bitmap";
+import { BitmapData } from "./BitmapData";
 import { Rectangle } from "../geom/Rectangle";
 import { HashObject } from "../utils/HashObject";
 

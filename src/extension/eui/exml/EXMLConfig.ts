@@ -4,7 +4,7 @@
 import { getDefinitionByName } from "../../../egret/utils/getDefinitionByName";
 import { error } from "../../../egret/system/Console";
 import { DEBUG } from "../../../Defines.debug";
-import { $warn } from "";
+import { $warn } from "../../../Defines.debug";
 
 
     /**

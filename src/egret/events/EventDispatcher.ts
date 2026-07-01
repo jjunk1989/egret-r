@@ -8,6 +8,7 @@ import { type } from "../text/TextField";
 import { listener } from "../../extension/eui/binding/Watcher";
 import { priority } from "../../extension/assetsmanager/src/core/ResourceLoader";
 import { Event } from "./Event";
+import { EventPhase } from "./EventPhase";
 import { $error } from "../../Defines.debug";
 import { DEBUG } from "../../Defines.debug";
 

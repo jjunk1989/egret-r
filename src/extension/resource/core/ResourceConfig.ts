@@ -2,7 +2,7 @@
 // Copyright (c) 2014-present, Egret Technology.
 
 import { ResourceItem } from "../../assetsmanager/src/shim/ResourceItem";
-import { $warn } from "";
+import { $warn } from "../../../Defines.debug";
 
 
 	/**

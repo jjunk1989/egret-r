@@ -7,11 +7,9 @@
      * 共享的用于碰撞检测的渲染缓冲
      */
     export let customHitTestBuffer:RenderBuffer;
-    /**
-     * @private
-     * 共享的用于canvas碰撞检测的渲染缓冲
-     */
     export let canvasHitTestBuffer:RenderBuffer;
+    export function setCustomHitTestBuffer(v: RenderBuffer) { customHitTestBuffer = v; }
+    export function setCanvasHitTestBuffer(v: RenderBuffer) { canvasHitTestBuffer = v; }
     /**
      * @private
      * 渲染缓冲

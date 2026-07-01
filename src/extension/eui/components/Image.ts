@@ -5,12 +5,12 @@ import { Event } from "../../../egret/events/Event";
 import { Bitmap } from "../../../egret/display/Bitmap";
 import { Texture } from "../../../egret/display/Texture";
 import { Rectangle } from "../../../egret/geom/Rectangle";
-import { is } from "../../../egret/display/CapsStyle";
+
 import { BitmapFillMode } from "../../../egret/display/BitmapFillMode";
 import { UIComponent, UIKeys, UIComponentImpl, implementUIComponent } from "../core/UIComponent";
 import { NormalBitmapNode } from "../../../egret/player/nodes/NormalBitmapNode";
 import { BitmapNode } from "../../../egret/player/nodes/BitmapNode";
-import { $warn } from "";
+import { $warn } from "../../../Defines.debug";
 
 
     /**

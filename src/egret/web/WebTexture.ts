@@ -2,13 +2,13 @@
 // Copyright (c) 2014-present, Egret Technology.
 
 import { Texture } from "../display/Texture";
-import { Rectangle } from "../geom/Rectangle";
+import { Rectangle, $TempRectangle } from "../geom/Rectangle";
 import { RenderTexture } from "../display/RenderTexture";
 import { Bitmap } from "../display/Bitmap";
 import { createCanvas, systemRenderer } from "../player/SystemRenderer";
 import { CanvasRenderingContext2D } from "../player/rendering/CanvasRenderer";
 import { $error } from "../../Defines.debug";
-import { $warn } from "";
+import { $warn } from "../../Defines.debug";
 
 
     let sharedCanvas: HTMLCanvasElement;

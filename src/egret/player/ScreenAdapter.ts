@@ -58,6 +58,7 @@ import { StageScaleMode } from "./StageScaleMode";
      * 屏幕适配器实例，开发者可以通过给这个变量赋值实现了IScreenAdapter接口的实例，从而注入自定义的屏幕适配器。
      */
     export let screenAdapter: IScreenAdapter;
+    export function setScreenAdapter(adapter: IScreenAdapter) { screenAdapter = adapter; }
 
     /**
      * @private

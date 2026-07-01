@@ -5,7 +5,7 @@ import { ChildrenSortMode } from "./native/ChildrenSortMode";
 import { nativeRender } from "../player/Player";
 import { DisplayObject } from "./DisplayObject";
 import { Stage } from "./Stage";
-import { Rectangle } from "../geom/Rectangle";
+import { Rectangle, $TempRectangle } from "../geom/Rectangle";
 import { $error } from "../../Defines.debug";
 import { DEBUG } from "../../Defines.debug";
 

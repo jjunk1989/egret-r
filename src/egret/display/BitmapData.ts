@@ -8,7 +8,6 @@ import { WebGLUtils } from "../web/rendering/webgl/WebGLUtils";
 import { createMap } from "../utils/DataStructure";
 import { HashObject, Nullable } from "../utils/HashObject";
 import { DisplayObject } from "./DisplayObject";
-import { Image } from "../../extension/eui/components/Image";
 
 
     //refactor

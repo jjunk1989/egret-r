@@ -2,7 +2,7 @@
 // Copyright (c) 2014-present, Egret Technology.
 
 import { Event } from "../../../../egret/events/Event";
-import { HttpRequest, IOErrorEvent } from "../../../../egret/events/IOErrorEvent";
+import { IOErrorEvent } from "../../../../egret/events/IOErrorEvent";
 import { HttpResponseType } from "../../../../egret/net/HttpResponseType";
 import { IThemeAdapter } from "../../core/IThemeAdapter";
 

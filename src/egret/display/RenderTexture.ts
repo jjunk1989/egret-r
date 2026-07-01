@@ -2,7 +2,7 @@
 // Copyright (c) 2014-present, Egret Technology.
 
 import { Texture } from "./Texture";
-import { BitmapData } from "./Bitmap";
+import { BitmapData } from "./BitmapData";
 import { DisplayObject } from "./DisplayObject";
 import { Rectangle } from "../geom/Rectangle";
 import { nativeRender } from "../player/Player";

@@ -11,7 +11,7 @@ import { EXMLConfig } from "./EXMLConfig";
 import { EXClass, EXState, EXBinding, EXCodeBlock, EXFunction, EXVariable, EXSetProperty, EXAddItems, EXSetStateProperty } from "./CodeFactory";
 import { $error } from "../../../Defines.debug";
 import { DEBUG } from "../../../Defines.debug";
-import { $warn } from "";
+import { $warn } from "../../../Defines.debug";
 
 
     /**

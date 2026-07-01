@@ -4,6 +4,7 @@
 import { startTick } from "./startTick";
 import { $error } from "../../Defines.debug";
 import { DEBUG } from "../../Defines.debug";
+import { ticker } from "../player/SystemTicker";
 
 
     /**

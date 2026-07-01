@@ -11,6 +11,7 @@
      * @private
      */
     export let $language: string = "en_US";
+    export function set$language(v: string) { $language = v; }
 
 
     /**

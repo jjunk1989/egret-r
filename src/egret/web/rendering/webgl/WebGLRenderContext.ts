@@ -2,12 +2,13 @@
 // Copyright (c) 2014-present, Egret Technology.
 
 import { nativeRender } from "../../../player/Player";
+import { setWebGLRenderContext } from "../../../player/Player";
 import { Capabilities } from "../../../system/Capabilities";
 import { Rectangle } from "../../../geom/Rectangle";
 import { RenderContext, resizeContext, getContextWebGL, createTexture, createCanvas, getContext2d, drawTextureElements } from "../../../player/SystemRenderer";
 import { mainCanvas } from "../../../3d/EgretPro";
 import { DisplayList } from "../../../player/DisplayList";
-import { WebGLVertexArrayObject } from "./WebGLVertexArrayObject";
+import { WebGLVertexArrayObject, isIOS14Device } from "./WebGLVertexArrayObject";
 import { WebGLDrawCmdManager } from "./WebGLDrawCmdManager";
 import { WebGLRenderBuffer } from "./WebGLRenderBuffer";
 import { BitmapData } from "../../../display/BitmapData";
@@ -1369,4 +1370,4 @@ import { DEBUG } from "../../../../Defines.debug";
 
     WebGLRenderContext.initBlendMode();
 
-    _WebGLRenderContext = WebGLRenderContext;
+    setWebGLRenderContext(WebGLRenderContext);

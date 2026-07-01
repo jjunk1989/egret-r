@@ -1,14 +1,12 @@
 
-import { Event } from "../../events/Event";
 import { IOErrorEvent } from "../../events/IOErrorEvent";
-import { BitmapData } from "../../display/Bitmap";
-import { ImageLoader } from "../ImageLoader";
+import { BitmapData } from "../../display/BitmapData";
+import { setImageLoader } from "../ImageLoader";
 import { EventDispatcher } from "../../events/EventDispatcher";
 import { WebHttpRequest } from "./WebHttpRequest";
-import { Image } from "../../../extension/eui/components/Image";
 import { $error } from "../../../Defines.debug";
 import { DEBUG } from "../../../Defines.debug";
-import { $warn } from "";
+import { $warn } from "../../../Defines.debug";
 
 
 //////////////////////////////////////////////////////////////////////////////////////
@@ -231,4 +229,4 @@ import { $warn } from "";
 
     }
 
-    ImageLoader = WebImageLoader;
+    setImageLoader(WebImageLoader);

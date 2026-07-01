@@ -5,7 +5,7 @@ import { DisplayObjectContainer } from "../../../egret/display/DisplayObjectCont
 import { DisplayObject } from "../../../egret/display/DisplayObject";
 import { ScrollViewProperties } from "./ScrollViewProperties";
 import { Rectangle } from "../../../egret/geom/Rectangle";
-import { Timer } from "../../../egret/events/TimerEvent";
+
 import { callLater } from "../../../egret/utils/callLater";
 import { Event } from "../../../egret/events/Event";
 import { getTimer } from "../../../egret/utils/getTimer";

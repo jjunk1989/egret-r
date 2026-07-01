@@ -16,7 +16,7 @@
      * @includeExample egret/events/EventPhase.ts
      * @language zh_CN
      */
-    export const enum EventPhase{
+    export enum EventPhase{
 
         /**
          * The capturing phase, which is the first phase of the event flow.

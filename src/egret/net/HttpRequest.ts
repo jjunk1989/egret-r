@@ -211,5 +211,6 @@ import { EventDispatcher } from "../events/EventDispatcher";
      * @platform Web
      * @language zh_CN
      */
-    export let HttpRequest:{ new (): HttpRequest };
+        export function setHttpRequest(cls: typeof HttpRequest) { HttpRequest = cls; }
+export let HttpRequest:{ new (): HttpRequest };
 

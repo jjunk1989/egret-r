@@ -2,11 +2,11 @@
 // Copyright (c) 2014-present, Egret Technology.
 
 import { EventDispatcher } from "../../../egret/events/EventDispatcher";
-import { $TempStage } from "../../../egret/display/Stage";
+import { $TempStage } from "../../../egret/player/Player";
 import { Capabilities } from "../../../egret/system/Capabilities";
 import { Ticker } from "../player/Ticker";
 import { Stage } from "../../../egret/display/Stage";
-import { $warn } from "";
+import { $warn } from "../../../Defines.debug";
 
 
     /**

@@ -2,7 +2,7 @@
 // Copyright (c) 2014-present, Egret Technology.
 
 import { DEBUG } from "../../../../Defines.debug";
-import { $warn } from "";
+import { $warn } from "../../../../Defines.debug";
 
     /**
      * @private

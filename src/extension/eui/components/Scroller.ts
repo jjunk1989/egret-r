@@ -5,7 +5,7 @@ import { Event } from "../../../egret/events/Event";
 import { TouchEvent } from "../../../egret/events/TouchEvent";
 import { DisplayObject } from "../../../egret/display/DisplayObject";
 import { Stage } from "../../../egret/display/Stage";
-import { Timer, TimerEvent } from "../../../egret/events/TimerEvent";
+import { TimerEvent } from "../../../egret/events/TimerEvent";
 import { UIEvent } from "../events/UIEvent";
 import { ScrollerThrowEvent } from "../events/ScrollerThrowEvent";
 import { HScrollBar } from "./HScrollBar";

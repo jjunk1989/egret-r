@@ -12,7 +12,7 @@ import { ImageLoader } from "../../net/ImageLoader";
 import { nativeRender } from "../../player/Player";
 import { Texture } from "../../display/Texture";
 import { BitmapNode } from "../../player/nodes/BitmapNode";
-import { BitmapData } from "../../display/Bitmap";
+import { BitmapData } from "../../display/BitmapData";
 import { Rectangle } from "../../geom/Rectangle";
 import { $error } from "../../../Defines.debug";
 import { DEBUG } from "../../../Defines.debug";

@@ -28,7 +28,8 @@ import { Stage } from "../display/Stage";
     /**
      * @private
      */
-    export let FPSDisplay:{
+        export function setFPSDisplay(cls: typeof FPSDisplay) { FPSDisplay = cls; }
+export let FPSDisplay:{
         new (stage:Stage, showFPS:boolean, showLog:boolean, logFilter:string,styles:Object): FPSDisplay
     };
 /**

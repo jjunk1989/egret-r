@@ -14,7 +14,7 @@ import { ResourceConfig } from "../assetsmanager/src/core/ResourceConfig";
 import { ResourceEvent } from "../assetsmanager/src/shim/ResourceEvent";
 import { $error } from "../../Defines.debug";
 import { DEBUG } from "../../Defines.debug";
-import { $warn } from "";
+import { $warn } from "../../Defines.debug";
 
     /**
      * Conduct mapping injection with class definition as the value.

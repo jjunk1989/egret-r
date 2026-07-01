@@ -7,7 +7,8 @@ import { EventDispatcher } from "../events/EventDispatcher";
     /**
      * @copy egret.Motion
      */
-    export let Motion: { new (): Motion };
+        export function setMotion(cls: typeof Motion) { Motion = cls; }
+export let Motion: { new (): Motion };
 
     /**
      * The Motion class emits events based on activity detected by the device's motion sensor.

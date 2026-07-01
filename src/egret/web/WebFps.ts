@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { FPSDisplay, FPSData } from "../player/FPSDisplay";
+import { FPSDisplay, FPSData, setFPSDisplay } from "../player/FPSDisplay";
 import { Capabilities } from "../system/Capabilities";
 import { Stage } from "../display/Stage";
 
@@ -238,4 +238,4 @@ import { Stage } from "../display/Stage";
             }
         }
     }
-    FPSDisplay = WebFps;
+    setFPSDisplay(WebFps);

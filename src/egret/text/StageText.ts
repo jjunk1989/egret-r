@@ -80,3 +80,4 @@ import { EventDispatcher } from "../events/EventDispatcher";
      * @platform Web
      */
     export let StageText:{new():StageText};
+    export function setStageText(cls: typeof StageText) { StageText = cls; }

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { ISocket } from "../ISocket";
+import { ISocket, setISocket } from "../ISocket";
 import { $error } from "../../../Defines.debug";
 
     /**
@@ -91,4 +91,4 @@ import { $error } from "../../../Defines.debug";
         }
     }
 
-    ISocket = HTML5WebSocket;
+    setISocket(HTML5WebSocket);

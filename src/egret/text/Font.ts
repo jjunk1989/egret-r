@@ -3,7 +3,8 @@
 
     export let fontResourceCache: { [url: string]: any } = {}
 
-    export function registerFontMapping(name: string, path: string): void {
+        export function setRegisterFontMapping(fn: typeof registerFontMapping) { registerFontMapping = fn; }
+export function registerFontMapping(name: string, path: string): void {
         console.error(`empty sys.registerFontMapping = ${name}, ${path}`);
     }
     /**
@@ -30,5 +31,5 @@
     }
 
     if (!registerFontMapping) {
-        registerFontMapping = _registerFontMapping;
+        setRegisterFontMapping(_registerFontMapping);
     }

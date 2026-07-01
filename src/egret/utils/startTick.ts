@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { $error } from "../../Defines.debug";
+import { DEBUG } from "../../Defines.debug";
+import { ticker } from "../player/SystemTicker";
+
 
     /**
      * Register and start a timer,which will notify the callback method at a rate of 60 FPS ,and pass the current time stamp as parameters.<br/>

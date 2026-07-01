@@ -4,7 +4,7 @@
 import { HttpResponseType } from "../../../egret/net/HttpResponseType";
 import { BinAnalyzer } from "./BinAnalyzer";
 import { ResourceItem } from "../../assetsmanager/src/shim/ResourceItem";
-import { $warn } from "";
+import { $warn } from "../../../Defines.debug";
 
 
     /**

@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { Geolocation } from "../sensor/Geolocation";
-import { Motion } from "../sensor/Motion";
+import { setGeolocation } from "../sensor/Geolocation";
+import { setMotion } from "../sensor/Motion";
+import { WebGeolocation } from "../sensor/web/WebGeolocation";
+import { WebMotion } from "../sensor/web/WebMotion";
 import { Capabilities, RuntimeType } from "../system/Capabilities";
 import { WebGLRenderContext } from "../player/Player";
 import { CanvasRenderingContext2D } from "../player/rendering/CanvasRenderer";
@@ -10,6 +12,7 @@ import { BitmapData } from "../display/BitmapData";
 import { fontResourceCache } from "../text/Font";
 import { RenderContext } from "../player/SystemRenderer";
 import { $error } from "../../Defines.debug";
+import { isIOS14Device, setIsIOS14Device } from "./rendering/webgl/WebGLVertexArrayObject";
 
     /**
      * @private  
@@ -263,8 +266,8 @@ import { $error } from "../../Defines.debug";
     }
     sys.resizeCanvasRenderBuffer = resizeCanvasRenderBuffer;
 
-    Geolocation = WebGeolocation;
-    Motion = WebMotion;
+    setGeolocation(WebGeolocation);
+    setMotion(WebMotion);
 
     /**
      * 
@@ -310,11 +313,11 @@ import { $error } from "../../Defines.debug";
     }
 
 
-    isIOS14Device = function () {
+    setIsIOS14Device(function () {
         return Capabilities.runtimeType == RuntimeType.WEB
             && Capabilities.os == "iOS"
             && Capabilities.isMobile
             && /iPhone OS 14/.test(window.navigator.userAgent);
-    };
+    });
 
 

@@ -2,11 +2,12 @@
 // Copyright (c) 2014-present, Egret Technology.
 
 import { Event } from "../events/Event";
+import { EventPhase } from "../events/EventPhase";
 import { TouchEvent } from "../events/TouchEvent";
 import { nativeRender } from "../player/Player";
 import { Matrix } from "../geom/Matrix";
-import { Rectangle } from "../geom/Rectangle";
-import { DisplayObjectContainer } from "./DisplayObjectContainer";
+import { Rectangle, $TempRectangle } from "../geom/Rectangle";
+import type { DisplayObjectContainer } from "./DisplayObjectContainer";
 import { BlendMode, numberToBlendMode, blendModeToNumber } from "./BlendMode";
 import { NumberUtils } from "../utils/NumberUtils";
 import { DisplayList } from "../player/DisplayList";

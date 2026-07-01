@@ -14,7 +14,7 @@ import { ComponentKeys, Component } from "./Component";
 import { UIKeys, UIComponent } from "../core/UIComponent";
 import { VerticalLayout } from "../layouts/VerticalLayout";
 import { $TempRectangle } from "../../../egret/geom/Rectangle";
-import { $warn } from "";
+import { $warn } from "../../../Defines.debug";
 
 
     /**

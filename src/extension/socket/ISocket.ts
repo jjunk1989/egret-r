@@ -115,3 +115,4 @@
      * @language zh_CN
      */
     export let ISocket: any = undefined;
+    export function setISocket(v: any) { ISocket = v; }

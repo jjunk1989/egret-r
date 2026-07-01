@@ -3,6 +3,9 @@
 
 import { TimerEvent } from "../events/TimerEvent";
 import { EventDispatcher } from "../events/EventDispatcher";
+import { getTimer } from "../utils/getTimer";
+import { ticker } from "../player/SystemTicker";
+import { stopTick } from "./stopTick";
 
 	/**
      * The Timer class is the interface to timers, which let you run code on a specified time sequence. Use the start()

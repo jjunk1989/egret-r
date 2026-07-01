@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { Sound, usingChannel } from "../media/Sound";
+import { setSound, usingChannel } from "../media/Sound";
 import { HashObject } from "../utils/HashObject";
 import { WebAudioSoundChannel } from "../media/web/WebAudioSoundChannel";
 
@@ -127,7 +127,7 @@ import { WebAudioSoundChannel } from "../media/web/WebAudioSoundChannel";
                 Html5Capatibility._canUseBlob = true;
             }
 
-            Sound = Html5Capatibility._AudioClass;
+            setSound(Html5Capatibility._AudioClass);
         }
 
         private static setAudioType(type: number): void {

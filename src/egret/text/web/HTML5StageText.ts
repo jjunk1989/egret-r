@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { StageText } from "../StageText";
+import { setStageText } from "../StageText";
 import { TextField } from "../../text/TextField";
 import { Event } from "../../events/Event";
 import { TextFieldUtils } from "../TextFieldUtils";
@@ -461,7 +461,7 @@ import { EventDispatcher } from "../../events/EventDispatcher";
         }
     }
 
-    StageText = HTML5StageText;
+    setStageText(HTML5StageText);
 
     /**
      * @private

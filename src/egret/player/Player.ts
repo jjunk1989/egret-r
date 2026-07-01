@@ -5,7 +5,7 @@ import { Stage } from "../display/Stage";
 import { getDefinitionByName } from "../utils/getDefinitionByName";
 import { DisplayObject } from "../display/DisplayObject";
 import { getTimer } from "../utils/getTimer";
-import { log, warn, error, assert } from "../system/Console";
+import { setLog, setWarn, setError, setAssert } from "../system/Console";
 import { systemRenderer, RenderContext } from "./SystemRenderer";
 import { HashObject } from "../utils/HashObject";
 import { RenderBuffer } from "./RenderBuffer";
@@ -13,7 +13,7 @@ import { DisplayList } from "./DisplayList";
 import { FPSDisplay } from "./FPSDisplay";
 import { $error } from "../../Defines.debug";
 import { DEBUG } from "../../Defines.debug";
-import { $warn } from "";
+import { $warn } from "../../Defines.debug";
 
 
     export let $TempStage: Stage;
@@ -198,7 +198,7 @@ import { $warn } from "";
         public displayFPS(showFPS: boolean, showLog: boolean, logFilter: string, styles: Object) {
             showLog = !!showLog;
             if (showLog) {
-                log = function () {
+                setLog(function () {
                     let length = arguments.length;
                     let info = "";
                     for (let i = 0; i < length; i++) {
@@ -206,8 +206,8 @@ import { $warn } from "";
                     }
                     sys.$logToFPS(info);
                     console.log.apply(console, toArray(arguments));
-                };
-                warn = function () {
+                });
+                setWarn(function () {
                     let length = arguments.length;
                     let info = "";
                     for (let i = 0; i < length; i++) {
@@ -215,8 +215,8 @@ import { $warn } from "";
                     }
                     sys.$warnToFPS(info);
                     console.warn.apply(console, toArray(arguments));
-                };
-                error = function () {
+                });
+                setError(function () {
                     let length = arguments.length;
                     let info = "";
                     for (let i = 0; i < length; i++) {
@@ -224,7 +224,7 @@ import { $warn } from "";
                     }
                     sys.$errorToFPS(info);
                     console.error.apply(console, toArray(arguments));
-                };
+                });
             }
             this.showFPS = !!showFPS;
             this.showLog = showLog;
@@ -469,22 +469,23 @@ import { $warn } from "";
         return args;
     }
 
-    warn = function () {
+    setWarn(function () {
         console.warn.apply(console, toArray(arguments))
-    };
-    error = function () {
+    });
+    setError(function () {
         console.error.apply(console, toArray(arguments))
-    };
-    assert = function () {
+    });
+    setAssert(function () {
         console.assert.apply(console, toArray(arguments))
-    };
-    log = function () {
+    });
+    setLog(function () {
         console.log.apply(console, toArray(arguments));
-    };
+    });
 
     export let setRenderMode: (renderMode: string) => void;
 
-    export let WebGLRenderContext: { new(width?: number, height?: number, context?: WebGLRenderingContext): RenderContext };
+        export function setWebGLRenderContext(cls: typeof WebGLRenderContext) { WebGLRenderContext = cls; }
+export let WebGLRenderContext: { new(width?: number, height?: number, context?: WebGLRenderingContext): RenderContext };
 
 
 /**

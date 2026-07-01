@@ -407,3 +407,4 @@ import { WebGLRenderBuffer } from "./WebGLRenderBuffer";
     export var isIOS14Device = () => {
         return false;
     };
+    export function setIsIOS14Device(v: () => boolean) { isIOS14Device = v; }

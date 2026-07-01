@@ -5,7 +5,7 @@ import { EventDispatcher } from "../../../egret/events/EventDispatcher";
 import { ResourceItem } from "../../assetsmanager/src/shim/ResourceItem";
 import { ResourceEvent } from "../../assetsmanager/src/shim/ResourceEvent";
 import { AnalyzerBase } from "../analyzer/AnalyzerBase";
-import { $warn } from "";
+import { $warn } from "../../../Defines.debug";
 
 
 	/**

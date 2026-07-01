@@ -64,7 +64,8 @@ import { EventDispatcher } from "../events/EventDispatcher";
     /**
      * @copy _Geolocation
      */
-    export let Geolocation: {
+        export function setGeolocation(cls: typeof Geolocation) { Geolocation = cls; }
+export let Geolocation: {
         /**
          * constructor
          * @version Egret 2.4

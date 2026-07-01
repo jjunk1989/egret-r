@@ -4,16 +4,17 @@
 import { nativeRender } from "../player/Player";
 import { ticker, SystemTicker } from "../player/SystemTicker";
 import { runEgretOptions } from "../player/EgretEntry";
-import { screenAdapter, DefaultScreenAdapter } from "../player/ScreenAdapter";
-import { CanvasRenderBuffer, canvasHitTestBuffer, RenderBuffer, customHitTestBuffer } from "../player/RenderBuffer";
+import { screenAdapter, setScreenAdapter, DefaultScreenAdapter } from "../player/ScreenAdapter";
+import { CanvasRenderBuffer, canvasHitTestBuffer, RenderBuffer, customHitTestBuffer, setCanvasHitTestBuffer, setCustomHitTestBuffer } from "../player/RenderBuffer";
 import { DisplayList } from "../player/DisplayList";
-import { systemRenderer, canvasRenderer } from "../player/SystemRenderer";
+import { systemRenderer, canvasRenderer, setSystemRenderer, setCanvasRenderer } from "../player/SystemRenderer";
 import { WebPlayer } from "./WebPlayer";
 import { WebGLRenderer } from "./rendering/webgl/WebGLRenderer";
 import { CanvasRenderer } from "../player/rendering/CanvasRenderer";
 import { WebGLRenderBuffer } from "./rendering/webgl/WebGLRenderBuffer";
 import { DEBUG } from "../../Defines.debug";
-import { $warn } from "";
+import { $warn } from "../../Defines.debug";
+import { $locale_strings, $language, set$language } from "../i18n/tr";
 
     /**
      * @private
@@ -96,10 +97,10 @@ import { $warn } from "";
                 let ticker = ticker;
                 startTicker(ticker);
                 if (options.screenAdapter) {
-                    screenAdapter = options.screenAdapter;
+                    setScreenAdapter(options.screenAdapter);
                 }
                 else if (!screenAdapter) {
-                    screenAdapter = new DefaultScreenAdapter();
+                    setScreenAdapter(new DefaultScreenAdapter)();
                 }
 
                 let list = document.querySelectorAll(".egret-player");
@@ -159,10 +160,10 @@ import { $warn } from "";
             let ticker = ticker;
             startTicker(ticker);
             if (options.screenAdapter) {
-                screenAdapter = options.screenAdapter;
+                setScreenAdapter(options.screenAdapter);
             }
             else if (!screenAdapter) {
-                screenAdapter = new DefaultScreenAdapter();
+                setScreenAdapter(new DefaultScreenAdapter)();
             }
 
             let list = document.querySelectorAll(".egret-player");
@@ -188,18 +189,18 @@ import { $warn } from "";
     function setRenderMode(renderMode: string): void {
         if (renderMode == "webgl" && WebGLUtils.checkCanUseWebGL()) {
             sys.RenderBuffer = web.WebGLRenderBuffer;
-            systemRenderer = new WebGLRenderer();
-            canvasRenderer = new CanvasRenderer();
-            customHitTestBuffer = new WebGLRenderBuffer(3, 3);
-            canvasHitTestBuffer = new CanvasRenderBuffer(3, 3);
+            setSystemRenderer(new WebGLRenderer());
+            setCanvasRenderer(new CanvasRenderer());
+            setCustomHitTestBuffer(new WebGLRenderBuffer(3, 3));
+            setCanvasHitTestBuffer(new CanvasRenderBuffer(3, 3));
             Capabilities["renderMode" + ""] = "webgl";
         }
         else {
             sys.RenderBuffer = web.CanvasRenderBuffer;
-            systemRenderer = new CanvasRenderer();
-            canvasRenderer = systemRenderer;
-            customHitTestBuffer = new CanvasRenderBuffer(3, 3);
-            canvasHitTestBuffer = customHitTestBuffer;
+            setSystemRenderer(new CanvasRenderer());
+            setCanvasRenderer(systemRenderer);
+            setCustomHitTestBuffer(new CanvasRenderBuffer(3, 3));
+            setCanvasHitTestBuffer(customHitTestBuffer);
             Capabilities["renderMode" + ""] = "canvas";
         }
     }
@@ -253,6 +254,6 @@ if (DEBUG) {
     let language = navigator.language || navigator["browserLanguage"] || "en_US";
     language = language.replace("-", "_");
 
-    if (language in egret.$locale_strings)
-        egret.$language = language;
+    if (language in $locale_strings)
+        set$language(language);
 }

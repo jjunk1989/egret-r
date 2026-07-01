@@ -144,7 +144,8 @@ import { SoundChannel } from "./SoundChannel";
     /**
      * @copy egret.Sound
      */
-    export let Sound: {
+        export function setSound(cls: typeof Sound) { Sound = cls; }
+export let Sound: {
 
         /**
          * Create Sound object, load an external audio file and play

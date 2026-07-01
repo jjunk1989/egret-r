@@ -2,7 +2,6 @@
 // Copyright (c) 2014-present, Egret Technology.
 
 import { Event } from "./Event";
-import { Scroller } from "../../extension/eui/components/Scroller";
 import { Point } from "../geom/Point";
 import { IEventDispatcher } from "./IEventDispatcher";
 

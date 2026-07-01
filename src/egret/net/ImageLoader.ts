@@ -95,7 +95,8 @@ import { BitmapData } from "../display/BitmapData";
      * @platform Web
      * @language zh_CN
      */
-    export let ImageLoader:{
+        export function setImageLoader(cls: typeof ImageLoader) { ImageLoader = cls; }
+export let ImageLoader:{
         /**
          * constructor
          * @version Egret 2.4
