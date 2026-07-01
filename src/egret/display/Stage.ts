@@ -7,8 +7,8 @@ import { StageScaleMode } from "../player/StageScaleMode";
 import { OrientationMode } from "./OrientationMode";
 import { Screen } from "../player/Screen";
 import { DisplayObjectContainer } from "./DisplayObjectContainer";
-import { Sprite } from './Sprite';
-import { $invalidateRenderFlag, ticker } from '../player/SystemTicker' from "./Sprite";
+import { Sprite } from "./Sprite";
+import { $invalidateRenderFlag, ticker } from "../player/SystemTicker";
 import { DEBUG } from "../../Defines.debug";
 
     /**

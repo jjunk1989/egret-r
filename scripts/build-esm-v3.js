@@ -307,6 +307,18 @@ async function buildPackage(pkg) {
     if (fs.existsSync(prePath)) {
       var preCode = fs.readFileSync(prePath, 'utf8');
       preCode = preCode.replace(/\/\/\/\s*<reference\s+path\s*=\s*["'][^"']+["']\s*\/>\s*\n?/g, '');
+      // Strip ESM import/export from preamble too (same rules)
+      preCode = preCode.replace(/^import\s+\{[^}]*\}\s+from\s+["'][^"']*["'];?\s*$/gm, '');
+      preCode = preCode.replace(/^import\s+\*\s+as\s+\w+\s+from\s+["'][^"']*["'];?\s*$/gm, '');
+      preCode = preCode.replace(/^import\s+["'][^"']*["'];?\s*$/gm, '');
+      preCode = preCode.replace(/^import\s+\w+\s*(?:,\s*\{[^}]*\})?\s+from\s+["'][^"']*["'];?\s*$/gm, '');
+      preCode = preCode.replace(/^import\s*\{[\s\S]*?\}\s*from\s*["'][^"']+["'];?\s*$/gm, '');
+      preCode = preCode.replace(/^export\s*\{[^}]*\}\s*;?\s*$/gm, '');
+      preCode = preCode.replace(/^export\s+default\s+/gm, '');
+      preCode = preCode.replace(/(^|\n)(\s*)export\s+(?=class\s|function\s|let\s|const\s|var\s|interface\s|enum\s|type\s|namespace\s|abstract\s|declare\s)/gm, '$1$2');
+      // Remove declare function/class (type-only, not needed at runtime)
+      preCode = preCode.replace(/^(\s*)declare\s+(function|class|let|const|var)\s+/gm, '$1// declare $2 ');
+      preCode = preCode.replace(/^(\s*)(let|const)\s+(?!enum\b)(\w[\w$]*\s*[:=])/gm, '$1var $3');
       preambleCodes += '\n// === preamble: ' + pkg.preambles[pre] + ' ===\n' + preCode + '\n';
     }
   }
@@ -331,6 +343,24 @@ async function buildPackage(pkg) {
     var rel = path.relative(pkgSrc, order[j]).replace(/\\/g, '/');
     var srcCode = fs.readFileSync(order[j], 'utf8');
     srcCode = srcCode.replace(/\/\/\/\s*<reference\s+path\s*=\s*["'][^"']+["']\s*\/>\s*\n?/g, '');
+
+    // Strip ESM import/export — namespace wrapping provides module scope
+    // Remove import lines (including multi-line)
+    srcCode = srcCode.replace(/^import\s+\{[^}]*\}\s+from\s+["'][^"']+["'];?\s*$/gm, '');
+    srcCode = srcCode.replace(/^import\s+\*\s+as\s+\w+\s+from\s+["'][^"']+["'];?\s*$/gm, '');
+    srcCode = srcCode.replace(/^import\s+["'][^"']+["'];?\s*$/gm, '');
+    srcCode = srcCode.replace(/^import\s+\w+\s*(?:,\s*\{[^}]*\})?\s+from\s+["'][^"']+["'];?\s*$/gm, '');
+    // Multi-line imports: import { ...\n... } from "..."
+    srcCode = srcCode.replace(/^import\s*\{[\s\S]*?\}\s*from\s*["'][^"']+["'];?\s*$/gm, '');
+    // export { ... };
+    srcCode = srcCode.replace(/^export\s*\{[^}]*\}\s*;?\s*$/gm, '');
+    // export default ...
+    srcCode = srcCode.replace(/^export\s+default\s+/gm, '');
+    // Remove standalone export keyword at line start (before class/function/let/const/var/interface/enum/type/namespace/abstract)
+    srcCode = srcCode.replace(/(^|\n)(\s*)export\s+(?=class\s|function\s|let\s|const\s|var\s|interface\s|enum\s|type\s|namespace\s|abstract\s|declare\s)/gm, '$1$2');
+    // Convert let/const with assignment to var (allows duplicates in namespace), skip const enum and type-only declarations
+    srcCode = srcCode.replace(/^(\s*)(let|const)\s+(?!enum\b)(\w[\w$]*\s*[:=])/gm, '$1var $3');
+
     entryContent += '\n// === ' + rel + ' ===\n';
     entryContent += srcCode + '\n';
   }
@@ -369,7 +399,7 @@ async function buildPackage(pkg) {
     if (skipNames[name] || KEYWORDS[name]) {
       continue;
     }
-    var declaredRe = new RegExp('(?:^|[^\\w$])(?:var|let|const|function|class)\\s+' + escapeRegExp(name) + '\\b');
+    var declaredRe = new RegExp('(?:^|[^\\w$])(?<!declare\\s)(?:var|let|const|function|class)\\s+' + escapeRegExp(name) + '\\b');
     if (declaredRe.test(entryContent)) {
       continue;
     }

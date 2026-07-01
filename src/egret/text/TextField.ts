@@ -2431,4 +2431,3 @@ import { TextFieldType } from "./TextFieldType";
             , listener: (this: Z, e: FocusEvent) => void, thisObject: Z, useCapture?: boolean, priority?: number);
         addEventListener(type: string, listener: Function, thisObject: any, useCapture?: boolean, priority?: number);
     }
-}
