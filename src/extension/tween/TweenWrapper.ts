@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { registerProperty } from "../../extension/eui/utils/registerProperty";
+
 import { EventDispatcher } from "../../egret/events/EventDispatcher";
 import { props, Event } from "../../egret/events/Event";
 import { paths } from "../../egret/utils/getDefinitionByName";

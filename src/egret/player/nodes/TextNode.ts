@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { RenderNode } from "./RenderNode";
+import { RenderNode, RenderNodeType } from "./RenderNode";
 import { TextFormat } from "./TextFormat";
 
 

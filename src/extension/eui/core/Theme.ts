@@ -8,6 +8,7 @@ import { Stage } from "../../../egret/display/Stage";
 import { getTheme } from "./UIComponent";
 import { Component, ComponentKeys } from "../components/Component";
 import { Button } from "../components/Button";
+import { EXML } from "../exml/EXML";
 import { $error } from "../../../Defines.debug";
 import { DEBUG } from "../../../Defines.debug";
 

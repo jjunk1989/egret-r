@@ -8,6 +8,8 @@ import { EXMLParser } from "./EXMLParser";
 import { $error } from "../../../Defines.debug";
 import { DEBUG } from "../../../Defines.debug";
 
+export let EXML: any = {};
+
 
     let parser = new EXMLParser();
 

@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { registerProperty } from "../utils/registerProperty";
+import { EXML } from "../exml/EXML";
+
 import { Event } from "../../../egret/events/Event";
 import { DisplayObjectContainer } from "../../../egret/display/DisplayObjectContainer";
 import { getImplementation } from "../../../egret/system/Implementation";

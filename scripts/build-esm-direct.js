@@ -67,6 +67,25 @@ async function buildPkg(pkg) {
     return !/[\\\/]native[\\\/]/.test(f) && !/NativeContext\.ts$/.test(f);
   });
 
+  // For non-core packages, also include core egret files for proper ordering
+  var hasEgret = pkg.srcDirs.some(function(d) { return d === 'src/egret'; });
+  if (!hasEgret) {
+    var coreDir = path.join(ROOT, 'src/egret');
+    if (fs.existsSync(coreDir)) {
+      var coreFiles = walkTs(coreDir).filter(function(f) {
+        return !/[\\\/]native[\\\/]/.test(f) && !/NativeContext\.ts$/.test(f);
+      });
+      var existingSet = {};
+      for (var ei = 0; ei < files.length; ei++) existingSet[files[ei]] = true;
+      for (var ci = 0; ci < coreFiles.length; ci++) {
+        if (!existingSet[coreFiles[ci]]) {
+          existingSet[coreFiles[ci]] = true;
+          files.push(coreFiles[ci]);
+        }
+      }
+    }
+  }
+
   var nsAssignments = [];
   var globalSeen = {};
 
@@ -89,8 +108,7 @@ async function buildPkg(pkg) {
 
   // Generate entry with inline namespace assignments
   var entry = '// Auto-generated ESM entry\n';
-  var hasEgret = pkg.srcDirs.some(function(d) { return d === 'src/egret'; });
-  if (hasEgret) {
+  if (hasEgret || files.some(function(f) { return f.indexOf('/egret/') >= 0; })) {
     var defRel = path.relative(path.dirname(entryPath), path.join(ROOT, 'src/Defines.debug')).replace(/\\/g, '/');
     entry += 'import "' + defRel + '";\n';
   }
@@ -182,6 +200,22 @@ async function buildPkg(pkg) {
     if (!r6.startsWith('.')) r6 = './' + r6;
     if (sorted.indexOf(r6) < 0) sortedFiles.push(files[fi5]);
   }
+
+  // CRITICAL: For non-core packages, ensure all core files come BEFORE extension files
+  // This prevents "Class extends undefined" from extension classes extending core classes
+  if (!hasEgret) {
+    var coreFirst = [];
+    var extLast = [];
+    for (var cf = 0; cf < sortedFiles.length; cf++) {
+      var relCf = path.relative(ROOT, sortedFiles[cf]).replace(/\\/g, '/');
+      if (relCf.startsWith('src/egret/') || relCf.startsWith('src/Defines.')) {
+        coreFirst.push(sortedFiles[cf]);
+      } else {
+        extLast.push(sortedFiles[cf]);
+      }
+    }
+    sortedFiles = coreFirst.concat(extLast);
+  }
   files = sortedFiles;
   // Reset for fileExportMap
   var exportSeen = {};
@@ -256,7 +290,8 @@ async function buildPkg(pkg) {
     header += 'var __global = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : {};\n';
     header += 'var DEBUG = true, RELEASE = false;\n';
     var wrapped = header + '(function() {\n' + bundled + '\n}).call(window);\n';
-    wrapped += 'export { egret, eui }; globalThis.egret = egret; globalThis.eui = eui;\n';
+    wrapped += 'if (typeof globalThis !== "undefined") { globalThis.egret = globalThis.egret || {}; Object.assign(globalThis.egret, egret); globalThis.eui = globalThis.eui || {}; Object.assign(globalThis.eui, eui); }\n';
+    wrapped += 'export { egret, eui };\n';
     fs.writeFileSync(path.join(distDir, 'index.js'), wrapped, 'utf8');
     fs.unlinkSync(path.join(distDir, 'index_tmp.js'));
 

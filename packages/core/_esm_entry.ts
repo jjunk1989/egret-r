@@ -18,6 +18,7 @@ egret.removeItem = $m4.removeItem;
 egret.clear = $m4.clear;
 import * as $m5 from "../../src/egret/player/nodes/RenderNode";
 egret.RenderNode = $m5.RenderNode;
+egret.RenderNodeType = $m5.RenderNodeType;
 import * as $m6 from "../../src/egret/player/paths/Path2D";
 egret.Path2D = $m6.Path2D;
 import * as $m7 from "../../src/egret/player/RenderBuffer";

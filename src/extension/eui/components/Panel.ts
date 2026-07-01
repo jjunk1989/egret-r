@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { registerProperty } from "../utils/registerProperty";
+
 import { TouchEvent } from "../../../egret/events/TouchEvent";
 import { DisplayObject } from "../../../egret/display/DisplayObject";
 import { UIEvent } from "../events/UIEvent";

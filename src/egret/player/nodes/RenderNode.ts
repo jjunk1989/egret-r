@@ -5,7 +5,7 @@
      * @private
      * 渲染节点类型
      */
-    export const enum RenderNodeType {
+    export enum RenderNodeType {
         /**
          * 位图渲染节点
          */
