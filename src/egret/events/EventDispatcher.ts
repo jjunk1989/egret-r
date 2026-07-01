@@ -23,7 +23,7 @@ import { DEBUG } from "../../Defines.debug";
     }
 
 
-    let ONCE_EVENT_LIST:egret.sys.EventBin[] = [];
+    let ONCE_EVENT_LIST:EventBin[] = [];
 
     /**
      * The EventDispatcher class is the base class for all classes that dispatchEvent events. The EventDispatcher class implements
@@ -132,7 +132,7 @@ import { DEBUG } from "../../Defines.debug";
             }
             let values = this.$EventDispatcher;
             let eventMap:any = useCapture ? values[Keys.captureEventsMap] : values[Keys.eventsMap];
-            let list:egret.sys.EventBin[] = eventMap[type];
+            let list:EventBin[] = eventMap[type];
             if (!list) {
                 list = eventMap[type] = [];
             }
@@ -156,7 +156,7 @@ import { DEBUG } from "../../Defines.debug";
                     insertIndex = i;
                 }
             }
-            let eventBin:sys.EventBin = {
+            let eventBin:EventBin = {
                 type: type, listener: listener, thisObject: thisObject, priority: priority,
                 target: this, useCapture: useCapture, dispatchOnce: !!dispatchOnce
             };
@@ -178,7 +178,7 @@ import { DEBUG } from "../../Defines.debug";
 
             let values = this.$EventDispatcher;
             let eventMap:Object = useCapture ? values[Keys.captureEventsMap] : values[Keys.eventsMap];
-            let list:egret.sys.EventBin[] = eventMap[type];
+            let list:EventBin[] = eventMap[type];
             if (!list) {
                 return;
             }
@@ -243,7 +243,7 @@ import { DEBUG } from "../../Defines.debug";
         $notifyListener(event:Event, capturePhase:boolean):boolean {
             let values = this.$EventDispatcher;
             let eventMap:Object = capturePhase ? values[Keys.captureEventsMap] : values[Keys.eventsMap];
-            let list:egret.sys.EventBin[] = eventMap[event.$type];
+            let list:EventBin[] = eventMap[event.$type];
             if (!list) {
                 return true;
             }

@@ -55,3 +55,4 @@ import { EventDispatcher } from "../events/EventDispatcher";
      * @copy egret.Orientation
      */
     export let DeviceOrientation: { new (): DeviceOrientation } = null;
+    export function setDeviceOrientation(cls: { new (): DeviceOrientation }) { DeviceOrientation = cls; }

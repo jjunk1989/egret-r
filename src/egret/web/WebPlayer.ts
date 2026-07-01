@@ -159,7 +159,7 @@ import { HTMLInput } from "../text/web/HTML5StageText";
 
         private webTouchHandler: WebTouchHandler;
         private player: Player;
-        private webInput: egret.web.HTMLInput;
+        private webInput: HTMLInput;
 
 
         private updateAfterTyping: boolean = false;
@@ -203,7 +203,7 @@ import { HTMLInput } from "../text/web/HTML5StageText";
             let stageHeight = stageSize.stageHeight;
             let displayWidth = stageSize.displayWidth;
             let displayHeight = stageSize.displayHeight;
-            canvas.style[egret.web.getPrefixStyleName("transformOrigin")] = "0% 0% 0px";
+            canvas.style[getPrefixStyleName("transformOrigin")] = "0% 0% 0px";
             if (canvas.width !== stageWidth) {
                 canvas.width = stageWidth;
             }
@@ -242,7 +242,7 @@ import { HTMLInput } from "../text/web/HTML5StageText";
             m.rotate(rotation * Math.PI / 180);
             let transform = `matrix(${m.a},${m.b},${m.c},${m.d},${m.tx},${m.ty})`;
             Matrix.release(m);
-            canvas.style[egret.web.getPrefixStyleName("transform")] = transform;
+            canvas.style[getPrefixStyleName("transform")] = transform;
             DisplayList.$setCanvasScale(canvasScaleX, canvasScaleY);
             this.webTouchHandler.updateScaleMode(scalex, scaley, rotation);
             this.webInput.$updateSize();

@@ -563,7 +563,7 @@ import { Point } from "./Point";
          * @platform Web
          * @language zh_CN
          */
-        public containsRect(rect:egret.Rectangle):boolean {
+        public containsRect(rect:Rectangle):boolean {
             let r1 = rect.x + rect.width;
             let b1 = rect.y + rect.height;
             let r2 = this.x + this.width;

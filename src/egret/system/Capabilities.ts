@@ -306,9 +306,9 @@
         /**
          * It indicates the current type of operation. runtimeType property returns the following string:
          * <ul>
-         * <li>Run on Web     egret.RuntimeType.WEB</li>
-         * <li>Run on Runtime2.0     egret.RuntimeType.RUNTIME2</li>
-         * <li>Run on WeChat mini game     egret.RuntimeType.WXGAME</li>
+         * <li>Run on Web     RuntimeType.WEB</li>
+         * <li>Run on Runtime2.0     RuntimeType.RUNTIME2</li>
+         * <li>Run on WeChat mini game     RuntimeType.WXGAME</li>
          * </ul>
          * @version Egret 2.4
          * @platform Web
@@ -317,9 +317,9 @@
         /**
          * 指示当前的运行类型。runtimeType 属性返回下列字符串：
          * <ul>
-         * <li>运行在Web上     egret.RuntimeType.WEB</li>
-         * <li>运行在Runtime2.0上     egret.RuntimeType.RUNTIME2</li>
-         * <li>运行在微信小游戏上    egret.RuntimeType.WXGAME</li>
+         * <li>运行在Web上     RuntimeType.WEB</li>
+         * <li>运行在Runtime2.0上     RuntimeType.RUNTIME2</li>
+         * <li>运行在微信小游戏上    RuntimeType.WXGAME</li>
          * </ul>
          * @version Egret 2.4
          * @platform Web

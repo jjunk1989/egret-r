@@ -42,7 +42,7 @@ import { $warn } from "";
             this.showLog = false;
             this.stageDisplayList = null;
 
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 egret_native.rootWebGLBuffer = buffer;
             }
         }
@@ -150,7 +150,7 @@ import { $warn } from "";
          * 渲染屏幕
          */
         $render(triggerByFrame: boolean, costTicker: number): void {
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 egret_native.updateNativeRender();
                 egret_native.nrRender();
                 return;
@@ -179,7 +179,7 @@ import { $warn } from "";
             let stage = this.stage;
             stage.$stageWidth = stageWidth;
             stage.$stageHeight = stageHeight;
-            if (egret.nativeRender) {
+            if (nativeRender) {
                 egret_native.nrResize(stageWidth, stageHeight);
             } else {
                 this.screenDisplayList.setClipRect(stageWidth, stageHeight);

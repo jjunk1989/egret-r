@@ -45,16 +45,13 @@
 
     /**
      * @private
+     * Mutable state for async call scheduling
      */
-    export let $callAsyncFunctionList:any[] = [];
-    /**
-     * @private
-     */
-    export let $callAsyncThisList:any[] = [];
-    /**
-     * @private
-     */
-    export let $callAsyncArgsList:any[] = [];
+    export const callAsyncState = {
+        functionList: [] as any[],
+        thisList: [] as any[],
+        argsList: [] as any[],
+    };
     /**
      * 异步调用函数
      * @param method {Function} 要异步调用的函数
@@ -64,7 +61,7 @@
      */
     export function $callAsync(method:Function,thisObject:any,...args):void
     {
-        $callAsyncFunctionList.push(method);
-        $callAsyncThisList.push(thisObject);
-        $callAsyncArgsList.push(args);
+        callAsyncState.functionList.push(method);
+        callAsyncState.thisList.push(thisObject);
+        callAsyncState.argsList.push(args);
     }

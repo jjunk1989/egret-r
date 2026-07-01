@@ -9,7 +9,7 @@ import { DisplayObject } from "../display/DisplayObject";
 import { BitmapFont } from "./BitmapFont";
 import { Rectangle } from "../geom/Rectangle";
 import { Bitmap } from "../display/Bitmap";
-import { $warn } from "";
+import { $warn } from "../../Defines.debug";
 
     /**
      * Bitmap font adopts the Bitmap+SpriteSheet mode to render text.

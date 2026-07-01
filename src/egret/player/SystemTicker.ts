@@ -2,7 +2,7 @@
 // Copyright (c) 2014-present, Egret Technology.
 
 import { getTimer } from "../utils/getTimer";
-import { $callAsyncFunctionList, $callAsyncThisList, $callAsyncArgsList } from "../utils/callLater";
+import { callAsyncState } from "../utils/callLater";
 import { Stage } from "../display/Stage";
 import { DisplayObject } from "../display/DisplayObject";
 import { Player } from "./Player";
@@ -20,6 +20,7 @@ import { DEBUG } from "../../Defines.debug";
      * 是否要广播Event.RENDER事件的标志。
      */
     export let $invalidateRenderFlag: boolean = false;
+    export function invalidateRenderFlag() { $invalidateRenderFlag = true; }
     /**
      * @private
      * 需要立即刷新屏幕的标志
@@ -361,14 +362,14 @@ import { DEBUG } from "../../Defines.debug";
          * @private
          */
         private callLaterAsyncs(): void {
-            if ($callAsyncFunctionList.length > 0) {
-                let locCallAsyncFunctionList = $callAsyncFunctionList;
-                let locCallAsyncThisList = $callAsyncThisList;
-                let locCallAsyncArgsList = $callAsyncArgsList;
-
-                $callAsyncFunctionList = [];
-                $callAsyncThisList = [];
-                $callAsyncArgsList = [];
+if (callAsyncState.functionList.length > 0) {
+                let locCallAsyncFunctionList = callAsyncState.functionList;
+                let locCallAsyncThisList = callAsyncState.thisList;
+                let locCallAsyncArgsList = callAsyncState.argsList;
+                
+                callAsyncState.functionList = [];
+                callAsyncState.thisList = [];
+                callAsyncState.argsList = [];
 
                 for (let i: number = 0; i < locCallAsyncFunctionList.length; i++) {
                     let func: Function = locCallAsyncFunctionList[i];

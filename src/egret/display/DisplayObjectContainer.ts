@@ -165,7 +165,7 @@ import { DEBUG } from "../../Defines.debug";
                 if (child == self) {
                     $error(1005);
                 }
-                else if ((child instanceof egret.DisplayObjectContainer) && (<DisplayObjectContainer>child).contains(self)) {
+                else if ((child instanceof DisplayObjectContainer) && (<DisplayObjectContainer>child).contains(self)) {
                     $error(1004);
                 }
             }

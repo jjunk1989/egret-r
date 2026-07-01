@@ -110,7 +110,7 @@ import { $warn } from "";
                 && url.indexOf("https:") != 0) {//如果是base64编码或跨域访问的图片，直接使用Image.src解析。
                 let request = this.request;
                 if (!request) {
-                    request = this.request = new egret.web.WebHttpRequest();
+                    request = this.request = new WebHttpRequest();
                     request.addEventListener(Event.COMPLETE, this.onBlobLoaded, this);
                     request.addEventListener(IOErrorEvent.IO_ERROR, this.onBlobError, this);
                     request.responseType = "blob";

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { getContext2d, createCanvas, createTexture, _createTexture } from "../../../player/SystemRenderer";
+import { getContext2d, createCanvas, createTexture } from "../../../player/SystemRenderer";
 import { measureText } from "../../../text/TextMeasurer";
 import { TextFormat } from "../../../player/nodes/TextFormat";
 import { TextNode } from "../../../player/nodes/TextNode";
@@ -235,7 +235,7 @@ import { WebGLRenderContext } from "../../../player/Player";
             }
             if (!__textAtlasRender__) {
                 //创建，后续会转移给WebGLRenderContext
-                const webglcontext = egret.web.WebGLRenderContext.getInstance(0, 0);
+                const webglcontext = WebGLRenderContext.getInstance(0, 0);
                 //初期先512，因为不会大规模batch, 老项目最好不要直接使用这个，少数几个总变内容的TextField可以用，所以先不用$maxTextureSize
                 __textAtlasRender__ = new TextAtlasRender(webglcontext, textAtlasDebug ? 512 : 512/*webglcontext.$maxTextureSize*/, textAtlasDebug ? 12 : 1);
             }
@@ -330,7 +330,7 @@ import { WebGLRenderContext } from "../../../player/Player";
             }
             else {
                 //真的
-                texture = _createTexture(this.webglRenderContext, width, height, null);
+                texture = sys._createTexture(this.webglRenderContext, width, height, null);
             }
             if (texture) {
                 //存起来，未来可以删除，或者查看

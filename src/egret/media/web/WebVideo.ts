@@ -2,7 +2,7 @@
 // Copyright (c) 2014-present, Egret Technology.
 
 import { DisplayObject } from "../../display/DisplayObject";
-import { Video } from "../Video";
+import { Video as VideoInterface, setVideo } from "../Video";
 import { Event } from "../../events/Event";
 import { Capabilities } from "../../system/Capabilities";
 import { stopTick } from "../../utils/stopTick";
@@ -22,7 +22,7 @@ import { DEBUG } from "../../../Defines.debug";
      * @private
      * @inheritDoc
      */
-    export class WebVideo extends DisplayObject implements Video {
+    export class WebVideo extends DisplayObject implements VideoInterface {
 
         /**
          * @inheritDoc
@@ -234,9 +234,9 @@ import { DEBUG } from "../../../Defines.debug";
             let video = this.video;
 
             let fullscreenType: string;
-            fullscreenType = egret.web.getPrefixStyleName('requestFullscreen', video);
+            fullscreenType = getPrefixStyleName('requestFullscreen', video);
             if (!video[fullscreenType]) {
-                fullscreenType = egret.web.getPrefixStyleName('requestFullScreen', video);
+                fullscreenType = getPrefixStyleName('requestFullScreen', video);
                 if (!video[fullscreenType]) {
                     return true;
                 }
@@ -606,4 +606,4 @@ import { DEBUG } from "../../../Defines.debug";
         }
     }
 
-    Video = WebVideo;
+    setVideo(WebVideo);

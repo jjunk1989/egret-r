@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { warn } from "../../../system/Console";
-import { _createTexture } from "../../../player/SystemRenderer";
 import { HashObject } from "../../../utils/HashObject";
 import { DEBUG } from "../../../../Defines.debug";
 
@@ -98,7 +96,7 @@ import { DEBUG } from "../../../../Defines.debug";
         private createTexture(): WebGLTexture {
             //就是创建空的纹理
             const webglrendercontext = WebGLRenderContext.getInstance(0, 0);
-            return _createTexture(webglrendercontext, this.width, this.height, null);
+            return sys._createTexture(webglrendercontext, this.width, this.height, null);
             /*
             const gl = this.gl;
             const texture: WebGLTexture = gl.createTexture();

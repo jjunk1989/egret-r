@@ -27,7 +27,7 @@ import { BitmapNode } from "./nodes/BitmapNode";
          * 创建一个DisplayList对象，若内存不足或无法创建RenderBuffer，将会返回null。
          */
         public static create(target: DisplayObject): DisplayList {
-            let displayList = new egret.sys.DisplayList(target);
+            let displayList = new DisplayList(target);
             try {
                 let buffer = new RenderBuffer();
                 displayList.renderBuffer = buffer;

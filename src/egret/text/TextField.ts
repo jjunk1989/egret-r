@@ -810,13 +810,13 @@ import { TextFieldType } from "./TextFieldType";
         /**
          * Type of the text field.
          * Any one of the following TextFieldType constants: TextFieldType.DYNAMIC (specifies the dynamic text field that users can not edit), or TextFieldType.INPUT (specifies the dynamic text field that users can edit).
-         * @default egret.TextFieldType.DYNAMIC
+         * @default TextFieldType.DYNAMIC
          * @language en_US
          */
         /**
          * 文本字段的类型。
          * 以下 TextFieldType 常量中的任一个：TextFieldType.DYNAMIC（指定用户无法编辑的动态文本字段），或 TextFieldType.INPUT（指定用户可以编辑的输入文本字段）。
-         * @default egret.TextFieldType.DYNAMIC
+         * @default TextFieldType.DYNAMIC
          * @language zh_CN
          */
         public set type(value: string) {
@@ -920,7 +920,7 @@ import { TextFieldType } from "./TextFieldType";
          * @returns
          */
         public $getText(): string {
-            if (this.$TextField[sys.TextKeys.type] == egret.TextFieldType.INPUT) {
+            if (this.$TextField[sys.TextKeys.type] == TextFieldType.INPUT) {
                 return this.inputUtils._getText();
             }
 
@@ -1736,7 +1736,7 @@ import { TextFieldType } from "./TextFieldType";
          * @language zh_CN
          */
         public setFocus(): void {
-            if (this.type == egret.TextFieldType.INPUT && this.$stage) {
+            if (this.type == TextFieldType.INPUT && this.$stage) {
                 this.inputUtils.$onFocus(true);
             }
         }
@@ -2109,7 +2109,7 @@ import { TextFieldType } from "./TextFieldType";
                         lineCharNum = 0;
                     }
 
-                    if (values[sys.TextKeys.type] == egret.TextFieldType.INPUT) {
+                    if (values[sys.TextKeys.type] == TextFieldType.INPUT) {
                         lineH = values[sys.TextKeys.fontSize];
                     }
                     else {
@@ -2358,7 +2358,7 @@ import { TextFieldType } from "./TextFieldType";
                 let h: number = line.height;
                 drawY += h / 2;
                 if (i != startLine) {
-                    if (values[sys.TextKeys.type] == egret.TextFieldType.INPUT && !values[sys.TextKeys.multiline]) {
+                    if (values[sys.TextKeys.type] == TextFieldType.INPUT && !values[sys.TextKeys.multiline]) {
                         break;
                     }
                     if (!isNaN(textFieldHeight) && drawY > textFieldHeight) {
@@ -2402,7 +2402,7 @@ import { TextFieldType } from "./TextFieldType";
 
         //处理富文本中有href的
         private onTapHandler(e: TouchEvent): void {
-            if (this.$TextField[sys.TextKeys.type] == egret.TextFieldType.INPUT) {
+            if (this.$TextField[sys.TextKeys.type] == TextFieldType.INPUT) {
                 return;
             }
             let ele: ITextElement = TextFieldUtils.$getTextElement(this, e.localX, e.localY);

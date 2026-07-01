@@ -1,5 +1,6 @@
 
-import { DeviceOrientation } from "../DeviceOrientation";
+import { setDeviceOrientation } from "../DeviceOrientation";
+import { DeviceOrientation as DeviceOrientationInterface } from "../DeviceOrientation";
 import { EventDispatcher } from "../../events/EventDispatcher";
 import { OrientationEvent } from "../../events/OrientationEvent";
 
@@ -7,7 +8,7 @@ import { OrientationEvent } from "../../events/OrientationEvent";
     /**
      * @private
      */
-    export class WebDeviceOrientation extends EventDispatcher implements DeviceOrientation {
+    export class WebDeviceOrientation extends EventDispatcher implements DeviceOrientationInterface {
 
         /**
          * @private
@@ -37,4 +38,4 @@ import { OrientationEvent } from "../../events/OrientationEvent";
         }
     }
 
-DeviceOrientation = egret.web.WebDeviceOrientation;
+setDeviceOrientation(WebDeviceOrientation);

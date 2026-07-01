@@ -228,3 +228,4 @@ import { BitmapData } from "../display/Bitmap";
     export let Video:{
         new (url?:string,cache?:boolean): Video
     };
+    export function setVideo(cls: { new (url?:string,cache?:boolean): Video }) { Video = cls; }

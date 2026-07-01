@@ -263,8 +263,8 @@ import { $error } from "../../Defines.debug";
     }
     sys.resizeCanvasRenderBuffer = resizeCanvasRenderBuffer;
 
-    Geolocation = egret.web.WebGeolocation;
-    Motion = egret.web.WebMotion;
+    Geolocation = WebGeolocation;
+    Motion = WebMotion;
 
     /**
      * 
@@ -310,7 +310,7 @@ import { $error } from "../../Defines.debug";
     }
 
 
-    egret.web.isIOS14Device = function () {
+    isIOS14Device = function () {
         return Capabilities.runtimeType == RuntimeType.WEB
             && Capabilities.os == "iOS"
             && Capabilities.isMobile

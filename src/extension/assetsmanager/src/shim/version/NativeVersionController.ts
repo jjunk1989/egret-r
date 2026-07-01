@@ -2,6 +2,7 @@
 // Copyright (c) 2014-present, Egret Technology.
 
 import { Capabilities } from "../../../../../egret/system/Capabilities";
+import { RuntimeType } from "../system/Capabilities";
 import { IVersionController } from "./IVersionController";
 
 
@@ -39,6 +40,6 @@ import { IVersionController } from "./IVersionController";
             return null;
         }
     }
-    if (Capabilities.runtimeType == egret.RuntimeType.NATIVE) {
+    if (Capabilities.runtimeType == RuntimeType.NATIVE) {
         VersionController = NativeVersionController;
     }

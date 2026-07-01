@@ -8,7 +8,7 @@ import { OrientationMode } from "./OrientationMode";
 import { Screen } from "../player/Screen";
 import { DisplayObjectContainer } from "./DisplayObjectContainer";
 import { Sprite } from "./Sprite";
-import { $invalidateRenderFlag, ticker } from "../player/SystemTicker";
+import { invalidateRenderFlag, ticker } from "../player/SystemTicker";
 import { DEBUG } from "../../Defines.debug";
 
     /**
@@ -137,7 +137,7 @@ import { DEBUG } from "../../Defines.debug";
          * @language zh_CN
          */
         public invalidate(): void {
-            $invalidateRenderFlag = true;
+            invalidateRenderFlag();
         }
 
         /**

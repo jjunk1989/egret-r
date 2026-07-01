@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { nativeRender, _WebGLRenderContext } from "../../../player/Player";
-import { log, warn } from "../../../system/Console";
+import { nativeRender } from "../../../player/Player";
 import { Capabilities } from "../../../system/Capabilities";
 import { Rectangle } from "../../../geom/Rectangle";
 import { RenderContext, resizeContext, getContextWebGL, createTexture, createCanvas, getContext2d, drawTextureElements } from "../../../player/SystemRenderer";
@@ -19,9 +18,7 @@ import { BlurFilter } from "../../../filters/BlurFilter";
 import { $error } from "../../../../Defines.debug";
 import { DEBUG } from "../../../../Defines.debug";
 
-namespace egret.web {
-
-    ///
+///
     interface SupportedCompressedTextureInfo {
         extensionName: string,
         supportedFormats: Array<[string, number]>,
@@ -1373,5 +1370,3 @@ namespace egret.web {
     WebGLRenderContext.initBlendMode();
 
     _WebGLRenderContext = WebGLRenderContext;
-
-}

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { Bitmap, _BitmapData } from "./Bitmap";
+import { Bitmap } from "./Bitmap";
 import { nativeRender } from "../player/Player";
 import { Base64Util } from "../utils/Base64Util";
 import { WebGLUtils } from "../web/rendering/webgl/WebGLUtils";
@@ -364,7 +364,7 @@ import { Image } from "../../extension/eui/components/Image";
         }
 
 
-        public $setCompressed2dTextureData(levelData: egret.CompressedTextureData[]): void {
+        public $setCompressed2dTextureData(levelData: CompressedTextureData[]): void {
             if (nativeRender && (this.compressedTextureData.length == 0)) {
                 egret_native.NativeDisplayObject.setSourceToNativeBitmapData(this.$nativeBitmapData, levelData[0]);
             }
