@@ -7,7 +7,6 @@ import { RenderNode } from "./nodes/RenderNode";
 import { systemRenderer } from "./SystemRenderer";
 import { HashObject } from "../utils/HashObject";
 import { DisplayObject } from "../display/DisplayObject";
-declare var Stage: any;
 import { RenderBuffer } from "./RenderBuffer";
 import { Matrix } from "../geom/Matrix";
 import { BitmapNode } from "./nodes/BitmapNode";
@@ -48,7 +47,7 @@ import { BitmapNode } from "./nodes/BitmapNode";
         public constructor(root: DisplayObject) {
             super();
             this.root = root;
-            this.isStage = (root instanceof Stage);
+            this.isStage = (root instanceof egret.Stage);
         }
 
         private isStage: boolean = false;
