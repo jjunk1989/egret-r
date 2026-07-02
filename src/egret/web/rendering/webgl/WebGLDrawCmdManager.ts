@@ -9,7 +9,7 @@ import { WebGLRenderBuffer } from "./WebGLRenderBuffer";
      * draw类型，所有的绘图操作都会缓存在drawData中，每个drawData都是一个drawable对象
      * $renderWebGL方法依据drawable对象的类型，调用不同的绘制方法
      */
-    export const enum DRAWABLE_TYPE {
+    export enum DRAWABLE_TYPE {
         TEXTURE,
         RECT,
         PUSH_MASK,

@@ -8,7 +8,7 @@ import { Rectangle } from "../../../geom/Rectangle";
 import { RenderContext, resizeContext, createTexture, createCanvas, getContext2d, drawTextureElements } from "../../../player/SystemRenderer";
 import { DisplayList } from "../../../player/DisplayList";
 import { WebGLVertexArrayObject, isIOS14Device } from "./WebGLVertexArrayObject";
-import { WebGLDrawCmdManager } from "./WebGLDrawCmdManager";
+import { WebGLDrawCmdManager, DRAWABLE_TYPE } from "./WebGLDrawCmdManager";
 import { WebGLRenderBuffer } from "./WebGLRenderBuffer";
 import { BitmapData } from "../../../display/BitmapData";
 import { EgretWebGLProgram } from "./EgretWebGLProgram";
