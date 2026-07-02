@@ -15,6 +15,7 @@ import { WebGLRenderBuffer } from "./rendering/webgl/WebGLRenderBuffer";
 import { DEBUG } from "../../Defines.debug";
 import { $warn } from "../../Defines.debug";
 import { $locale_strings, $language, set$language } from "../i18n/tr";
+import { Html5Capatibility } from "./Html5Capatibility";
 
     /**
      * @private
