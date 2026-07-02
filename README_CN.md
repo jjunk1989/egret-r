@@ -234,7 +234,7 @@ egret-r/
 │   ├── game/          # @egret-r/game
 │   ├── tween/         # @egret-r/tween
 │   └── socket/        # @egret-r/socket
-├── src/               # 原始 namespace 源码（只读参考）
+├── src/               # ESM 源码（namespace→ESM 迁移）
 ├── scripts/           # 构建工具
 └── package.json       # Monorepo 根（npm workspaces）
 ```
@@ -243,25 +243,26 @@ egret-r/
 
 ```bash
 npm install           # 安装依赖
-npm run build         # 构建所有包（index.js + index.min.js + index.d.ts）
+npm run build         # 构建所有 5 个包
 npm run build:core    # 仅构建 @egret-r/core
-npm run watch         # 监控模式 — 源文件变更自动重新构建
+npm run build:v3      # 旧版 namespace-wrap 构建（已弃用，仅供参考）
 npm run clean         # 清理所有 dist/ 目录
-npm run verify        # 检查构建产物
+npm test              # 运行所有测试（67 项，5 套件）
 ```
 
 ### 构建流程
 
 ```
-src/egret/*.ts（namespace 源码）
+src/egret/*.ts src/extension/*.ts（ESM 源码）
     │
-    ├── Defines.debug.ts → preamble（ambient 声明）
-    ├── 按 /// <reference> 依赖关系拓扑排序
+    ├── Defines.debug.ts → 最先注入（调试常量）
+    ├── Kahn 拓扑排序 → 解析循环依赖
+    ├── import type → 打破剩余循环
     │
     └── esbuild
-          ├── bundle + ESM → dist/index.js
-          ├── --minify → dist/index.min.js
-          └── namespace 拼接 → dist/index.d.ts
+          ├── bundle + ESM → dist/index_tmp.js
+          ├── IIFE 包装 → var 提升解决 class extends
+          └── 内联命名空间赋值 → dist/index.js
 ```
 
 ---

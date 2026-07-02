@@ -234,7 +234,7 @@ egret-r/
 │   ├── game/          # @egret-r/game
 │   ├── tween/         # @egret-r/tween
 │   └── socket/        # @egret-r/socket
-├── src/               # Original namespace source (read-only reference)
+├── src/               # ESM source (namespace→ESM migration)
 ├── scripts/           # Build tooling
 └── package.json       # Monorepo root (npm workspaces)
 ```
@@ -243,25 +243,26 @@ egret-r/
 
 ```bash
 npm install           # Install dependencies
-npm run build         # Build all packages (index.js + index.min.js + index.d.ts)
-npm run build:core    # Build only @egret-r/core
-npm run watch         # Watch mode — auto-rebuild on source changes
+npm run build         # Build all 5 packages
+npm run build:core    # Build @egret-r/core only
+npm run build:v3      # Legacy namespace-wrap build (deprecated, reference only)
 npm run clean         # Remove all dist/ directories
-npm run verify        # Check build outputs
+npm test              # Run all tests (67 tests, 5 suites)
 ```
 
 ### Build Pipeline
 
 ```
-src/egret/*.ts (namespace source)
+src/egret/*.ts src/extension/*.ts (ESM source)
     │
-    ├── Defines.debug.ts → preamble (ambient declarations)
-    ├── Topological sort by /// <reference> dependencies
+    ├── Defines.debug.ts → injected first (debug constants)
+    ├── Kahn topological sort → resolve circular dependencies
+    ├── import type → break remaining cycles
     │
     └── esbuild
-          ├── bundle + ESM → dist/index.js
-          ├── --minify → dist/index.min.js
-          └── namespace concatenation → dist/index.d.ts
+          ├── bundle + ESM → dist/index_tmp.js
+          ├── IIFE wrap → var hoisting for class extends
+          └── inline namespace assignments → dist/index.js
 ```
 
 ---
