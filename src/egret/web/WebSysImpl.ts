@@ -58,7 +58,7 @@ import { isIOS14Device, setIsIOS14Device } from "./rendering/webgl/WebGLVertexAr
      */
     function mainCanvas(width?: number, height?: number): HTMLCanvasElement {
         let canvas = createCanvas(width, height);
-        if (egret.pro.egret2dDriveMode) {
+        if (egret.pro && egret.pro.egret2dDriveMode) {
             egret.pro.mainCanvas = canvas;
         }
         return canvas;

@@ -286,7 +286,7 @@ async function buildPkg(pkg) {
 
     // Post-process: wrap in IIFE for hoisting, then re-export
     var bundled = fs.readFileSync(path.join(distDir, 'index_tmp.js'), 'utf8');
-    var header = 'var egret = {sys:{}}, eui = {}, sys = egret.sys;\n';
+    var header = 'var egret = {sys:{}, pro:{}}, eui = {}, sys = egret.sys;\n';
     header += 'var __global = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : {};\n';
     header += 'var global = __global;\n';
     header += 'var DEBUG = true, RELEASE = false;\n';
