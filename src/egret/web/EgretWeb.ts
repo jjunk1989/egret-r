@@ -105,7 +105,7 @@ import { WebGLUtils } from "./rendering/webgl/WebGLUtils";
                     setScreenAdapter(options.screenAdapter);
                 }
                 else if (!screenAdapter) {
-                    setScreenAdapter(new DefaultScreenAdapter)();
+                    setScreenAdapter(new DefaultScreenAdapter);
                 }
 
                 let list = document.querySelectorAll(".egret-player");
@@ -167,7 +167,7 @@ import { WebGLUtils } from "./rendering/webgl/WebGLUtils";
                 setScreenAdapter(options.screenAdapter);
             }
             else if (!screenAdapter) {
-                setScreenAdapter(new DefaultScreenAdapter)();
+                setScreenAdapter(new DefaultScreenAdapter);
             }
 
             let list = document.querySelectorAll(".egret-player");
