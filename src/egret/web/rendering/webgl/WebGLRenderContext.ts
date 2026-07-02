@@ -508,11 +508,11 @@ import { DEBUG } from "../../../../Defines.debug";
                 this.contextLost = true;
                 return;
             }
-            texture[glContext] = gl;
-            texture[is_compressed_texture] = true;
+            texture[sys.glContext] = gl;
+            texture[sys.is_compressed_texture] = true;
             gl.bindTexture(gl.TEXTURE_2D, texture);
             gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, 1);
-            texture[UNPACK_PREMULTIPLY_ALPHA_WEBGL] = true;
+            texture[sys.UNPACK_PREMULTIPLY_ALPHA_WEBGL] = true;
             gl.compressedTexImage2D(gl.TEXTURE_2D, levels, internalFormat, width, height, 0, data);
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
             gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
@@ -540,7 +540,7 @@ import { DEBUG } from "../../../../Defines.debug";
                 context.fillStyle = 'white';
                 context.fillRect(0, 0, size, size);
                 this._defaultEmptyTexture = this.createTexture(canvas);
-                this._defaultEmptyTexture[engine_default_empty_texture] = true;
+                this._defaultEmptyTexture[sys.engine_default_empty_texture] = true;
             }
             return this._defaultEmptyTexture;
         }
@@ -564,7 +564,7 @@ import { DEBUG } from "../../../../Defines.debug";
                     if (etcAlphaMask) {
                         const maskTexture = this.getWebGLTexture(etcAlphaMask);
                         if (maskTexture) {
-                            bitmapData.webGLTexture[etc_alpha_mask] = maskTexture;
+                            bitmapData.webGLTexture[sys.etc_alpha_mask] = maskTexture;
                         }
                     }
                 }
@@ -939,9 +939,9 @@ import { DEBUG } from "../../../../Defines.debug";
                         if (filter.type === "custom") {
                             program = EgretWebGLProgram.getProgram(gl, filter.$vertexSrc, filter.$fragmentSrc, filter.$shaderKey);
                         } else if (filter.type === "colorTransform") {
-                            if (data.texture[etc_alpha_mask]) {
+                            if (data.texture[sys.etc_alpha_mask]) {
                                 gl.activeTexture(gl.TEXTURE1);
-                                gl.bindTexture(gl.TEXTURE_2D, data.texture[etc_alpha_mask]);
+                                gl.bindTexture(gl.TEXTURE_2D, data.texture[sys.etc_alpha_mask]);
                                 program = EgretWebGLProgram.getProgram(gl, EgretShaderLib.default_vert, EgretShaderLib.colorTransform_frag_etc_alphamask_frag, "colorTransform_frag_etc_alphamask_frag");
                             }
                             else {
@@ -955,11 +955,11 @@ import { DEBUG } from "../../../../Defines.debug";
                             program = EgretWebGLProgram.getProgram(gl, EgretShaderLib.default_vert, EgretShaderLib.glow_frag, "glow");
                         }
                     } else {
-                        if (data.texture[etc_alpha_mask]) {
-                            program = EgretWebGLProgram.getProgram(gl, EgretShaderLib.default_vert, EgretShaderLib.texture_etc_alphamask_frag, etc_alpha_mask);
+                        if (data.texture[sys.etc_alpha_mask]) {
+                            program = EgretWebGLProgram.getProgram(gl, EgretShaderLib.default_vert, EgretShaderLib.texture_etc_alphamask_frag, sys.etc_alpha_mask);
                             ///need refactor
                             gl.activeTexture(gl.TEXTURE1);
-                            gl.bindTexture(gl.TEXTURE_2D, data.texture[etc_alpha_mask]);
+                            gl.bindTexture(gl.TEXTURE_2D, data.texture[sys.etc_alpha_mask]);
                         }
                         else {
                             program = EgretWebGLProgram.getProgram(gl, EgretShaderLib.default_vert, EgretShaderLib.texture_frag, "texture");

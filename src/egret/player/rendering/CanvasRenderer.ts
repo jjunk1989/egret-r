@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { RenderBuffer, CanvasRenderBuffer } from "../RenderBuffer";
+import { RenderBuffer } from "../RenderBuffer";
+import { CanvasRenderBuffer } from "../../web/rendering/CanvasRenderBuffer";
 import { RenderNode, RenderNodeType } from "../nodes/RenderNode";
 import { DisplayList } from "../DisplayList";
 import { BitmapNode } from "../nodes/BitmapNode";

@@ -53,7 +53,7 @@ import { $error } from "../../Defines.debug";
 
     }
 
-    export const enum EndianConst {
+    export enum EndianConst {
         LITTLE_ENDIAN = 0,
         BIG_ENDIAN = 1
     }

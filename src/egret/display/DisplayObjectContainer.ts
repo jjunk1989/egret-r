@@ -195,9 +195,11 @@ import { DEBUG } from "../../Defines.debug";
             }
             if (stage) {
                 let list = DisplayObjectContainer.$EVENT_ADD_TO_STAGE_LIST;
+                window['__egret_evt3'] = { action: 'dispatchList', listLen: list.length, child: child.constructor.name, notify: notifyListeners };
                 while (list.length) {
                     let childAddToStage = list.shift();
                     if (childAddToStage.$stage && notifyListeners) {
+                        window['__egret_evt4'] = { action: 'dispatchAddToStage', name: childAddToStage.constructor.name };
                         childAddToStage.dispatchEventWith(Event.ADDED_TO_STAGE);
                     }
                 }

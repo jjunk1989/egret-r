@@ -4,7 +4,8 @@
 import { BlurFilter } from "../../../filters/BlurFilter";
 import { DisplayList } from "../../../player/DisplayList";
 import { SystemRenderer } from "../../../player/SystemRenderer";
-import { RenderBuffer, CanvasRenderBuffer } from "../../../player/RenderBuffer";
+import { RenderBuffer } from "../../../player/RenderBuffer";
+import { CanvasRenderBuffer } from "../CanvasRenderBuffer";
 import { WebGLRenderBuffer, renderBufferPool } from "./WebGLRenderBuffer";
 import { RenderNode, RenderNodeType } from "../../../player/nodes/RenderNode";
 import { BitmapNode } from "../../../player/nodes/BitmapNode";
@@ -96,6 +97,7 @@ import { BitmapData } from "../../../display/BitmapData";
             let drawCalls = 0;
             let node: RenderNode;
             let displayList = displayObject.$displayList;
+            window['__egret_draw'] = { isStage: isStage, hasDL: !!displayList, dirty: displayObject.$renderDirty, hasNode: !!displayObject.$renderNode, name: displayObject.constructor.name, kids: displayObject.$children ? displayObject.$children.length : 0 };
             if (displayList && !isStage) {
                 if (displayObject.$cacheDirty || displayObject.$renderDirty ||
                     displayList.$canvasScaleX != DisplayList.$canvasScaleX ||
@@ -145,6 +147,9 @@ import { BitmapData } from "../../../display/BitmapData";
             }
             let children = displayObject.$children;
             if (children) {
+                if (children.length > 0) {
+                    window['__egret_kids'] = { parent: displayObject.constructor.name, count: children.length, first: children[0].constructor.name, firstHasNode: !!children[0].$renderNode };
+                }
                 if (displayObject.sortableChildren && displayObject.$sortDirty) {
                     //绘制排序
                     displayObject.sortChildren();
@@ -943,7 +948,7 @@ import { BitmapData } from "../../../display/BitmapData";
          * @private
          */
         private renderText(node: TextNode, buffer: WebGLRenderBuffer): void {
-            if (textAtlasRenderEnable) {
+            if (sys.textAtlasRenderEnable) {
                 //新的文字渲染机制
                 this.___renderText____(node, buffer);
                 return;

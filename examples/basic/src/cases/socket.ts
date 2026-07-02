@@ -1,4 +1,5 @@
 import type { TestCaseDefinition } from './types';
+import { eui } from '@egret-r/eui';
 
 export const socketCases: TestCaseDefinition[] = [
   {

@@ -12,7 +12,7 @@ import { Matrix } from "../../geom/Matrix";
 
         public constructor(){
             super();
-            this.type = PathType.GradientFill;
+            this.type = 2 /* PathType.GradientFill */;
         }
 
         public gradientType:string;

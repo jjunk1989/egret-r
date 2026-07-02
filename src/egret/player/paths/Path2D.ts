@@ -6,7 +6,7 @@
      * @private
      * 路径类型
      */
-    export const enum PathType {
+    export enum PathType {
         /**
          * 纯色填充路径
          */
@@ -24,7 +24,7 @@
      * @private
      * 2D路径命令
      */
-    export const enum PathCommand {
+    export enum PathCommand {
         MoveTo = 1,
         LineTo,
         CurveTo,

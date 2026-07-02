@@ -1,6 +1,6 @@
 import type { TestCaseDefinition } from './types';
 import { egret } from '@egret-r/core';
-import '@egret-r/eui';
+import { eui } from '@egret-r/eui';
 
 export const euiCases: TestCaseDefinition[] = [
   {

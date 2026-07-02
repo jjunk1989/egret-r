@@ -111,7 +111,10 @@ import { BitmapNode } from "./nodes/BitmapNode";
                 this.changeSurfaceSize();
             }
             let buffer = this.renderBuffer;
+            window['__egret_buffer'] = buffer ? 'has buffer' : 'NO BUFFER';
+            window['__egret_root'] = this.root ? (this.root.constructor.name + ' children:' + (this.root.$children ? this.root.$children.length : '?')) : 'NO ROOT';
             buffer.clear();
+            window['__egret_sr'] = typeof systemRenderer + ' ' + (systemRenderer && systemRenderer.render ? 'hasRender' : 'noRender');
             drawCalls = systemRenderer.render(this.root, buffer, this.offsetMatrix);
 
             if (!this.isStage) {//对非舞台画布要保存渲染节点。

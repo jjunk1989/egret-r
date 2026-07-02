@@ -21,10 +21,15 @@ import { DisplayObject } from "./DisplayObject";
     }
 
     export const etc_alpha_mask = 'etc_alpha_mask';
+    sys.etc_alpha_mask = etc_alpha_mask;
     export const engine_default_empty_texture = 'engine_default_empty_texture';
+    sys.engine_default_empty_texture = engine_default_empty_texture;
     export const is_compressed_texture = 'is_compressed_texture';
+    sys.is_compressed_texture = is_compressed_texture;
     export const glContext = 'glContext';
+    sys.glContext = glContext;
     export const UNPACK_PREMULTIPLY_ALPHA_WEBGL = 'UNPACK_PREMULTIPLY_ALPHA_WEBGL';
+    sys.UNPACK_PREMULTIPLY_ALPHA_WEBGL = UNPACK_PREMULTIPLY_ALPHA_WEBGL;
 
 
     /**

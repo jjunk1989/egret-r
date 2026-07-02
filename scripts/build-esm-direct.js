@@ -286,11 +286,32 @@ async function buildPkg(pkg) {
 
     // Post-process: wrap in IIFE for hoisting, then re-export
     var bundled = fs.readFileSync(path.join(distDir, 'index_tmp.js'), 'utf8');
+    
+    // Fix: esbuild renames egret's Event class to _Event but doesn't update
+    // references like Event.ADDED, Event.ADDED_TO_STAGE in other files
+    bundled = bundled.replace(/(?<![_a-zA-Z])Event\.([A-Z])/g, '_Event.$1');
+    
+    // Fix: esbuild renames WebGL API calls like gl.clear -> gl.clear2
+    // because 'clear' collides with WebGLRenderTarget.clear(). Restore them.
+    bundled = bundled.replace(/gl\.clear2\b/g, 'gl.clear');
+    
+    // Fix: esbuild renames EgretShaderLib -> EgretShaderLib2 (browser global collision)
+    bundled = bundled.replace(/(?<![_a-zA-Z])EgretShaderLib\./g, 'EgretShaderLib2.');
+    // Fix: esbuild renames WebGLUtils -> WebGLUtils2
+    bundled = bundled.replace(/(?<![_a-zA-Z])WebGLUtils\./g, 'WebGLUtils2.');
+    // Fix: esbuild renames toColorString -> toColorString2
+    bundled = bundled.replace(/(?<![_a-zA-Z])toColorString\(/g, 'toColorString2(');
+    
+    // IMPORTANT: No automatic stub/rename detection here — it's too fragile.
+    // All other esbuild renaming issues are fixed directly in the source code
+    // by using sys.Xxx patterns that are protected from renaming.
+
     var header = 'var egret = {sys:{}, pro:{}}, eui = {}, sys = egret.sys;\n';
     header += 'var __global = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : {};\n';
     header += 'var global = __global;\n';
     header += 'var DEBUG = true, RELEASE = false;\n';
     var wrapped = header + '(function() {\n' + bundled + '\n}).call(window);\n';
+    wrapped += 'if (typeof globalThis !== "undefined") { globalThis.egret = egret; globalThis.eui = eui; }\n';
     wrapped += 'export { egret, eui };\n';
     fs.writeFileSync(path.join(distDir, 'index.js'), wrapped, 'utf8');
     fs.unlinkSync(path.join(distDir, 'index_tmp.js'));

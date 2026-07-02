@@ -12,7 +12,7 @@ import { Path2D } from "./Path2D";
 
         public constructor(){
             super();
-            this.type = PathType.Fill;
+            this.type = 1 /* PathType.Fill */;
         }
 
         /**

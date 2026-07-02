@@ -36,16 +36,18 @@ import { CanvasRenderingContext2D } from "../../player/rendering/CanvasRenderer"
         font += ((typeof fontSize == "number" && fontSize >= 0) ? fontSize : 12) + "px ";
         font += ((typeof fontFamily == "string" && fontFamily != "") ? fontFamily : "Arial");
         context.font = font;
-        return measureTextWith(context, text);
+        return sys.measureTextWith(context, text);
     }
 
     /**
      * @private
      */
     function createContext(): void {
-        context = canvasHitTestBuffer.context;
-        context.textAlign = "left";
-        context.textBaseline = "middle";
+        context = (canvasHitTestBuffer && canvasHitTestBuffer.context) || sys.createCanvas(1, 1).getContext('2d');
+        if (context) {
+            context.textAlign = "left";
+            context.textBaseline = "middle";
+        }
     }
 
     sys.measureText = measureText;

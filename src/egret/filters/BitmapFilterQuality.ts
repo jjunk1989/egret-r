@@ -7,7 +7,7 @@
      * @version Egret 2.4
      * @platform Web
      */
-    export const enum BitmapFilterQuality {
+    export enum BitmapFilterQuality {
         /**
          * 定义低品质滤镜设置
          * @private

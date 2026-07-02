@@ -288,6 +288,7 @@ import { DEBUG } from "../../Defines.debug";
             if (length == 0) {
                 return;
             }
+            window['__egret_frame'] = (window['__egret_frame'] || 0) + 1;
             this.callLaters();
             if ($invalidateRenderFlag) {
                 this.broadcastRender();

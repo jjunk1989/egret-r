@@ -257,6 +257,9 @@ import { DEBUG } from "../../Defines.debug";
             values[Keys.notifyLevel]++;
             for (let i = 0; i < length; i++) {
                 let eventBin = list[i];
+                if (event.type === 'addedToStage') {
+                    window['__egret_dispatch3'] = { listener: !!eventBin.listener, thisObject: !!eventBin.thisObject, type: event.type, targetName: (eventBin.thisObject as any)?.constructor?.name };
+                }
                 eventBin.listener.call(eventBin.thisObject, event);
                 if (eventBin.dispatchOnce) {
                     onceList.push(eventBin);
@@ -295,10 +298,17 @@ import { DEBUG } from "../../Defines.debug";
          * @language zh_CN
          */
         public dispatchEventWith(type:string, bubbles?:boolean, data?:any, cancelable?: boolean):boolean {
-            if (bubbles || this.hasEventListener(type)) {
+            let hasListener = this.hasEventListener(type);
+            if (type === 'addedToStage') {
+                window['__egret_dispatch'] = { type, bubbles, hasListener, target: (this as any).constructor?.name };
+            }
+            if (bubbles || hasListener) {
                 let event:Event = Event.create(Event, type, bubbles, cancelable);
                 event.data = data;
                 let result = this.dispatchEvent(event);
+                if (type === 'addedToStage') {
+                    window['__egret_dispatch2'] = { result, eventDispatched: true };
+                }
                 Event.release(event);
                 return result;
             }

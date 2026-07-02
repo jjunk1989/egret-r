@@ -63,14 +63,14 @@ import { $warn } from "../../../../Defines.debug";
             if (!webglTexture) {
                 return;
             }
-            if (webglTexture[engine_default_empty_texture]) {
+            if (webglTexture[sys.engine_default_empty_texture]) {
                 if (DEBUG) {
                     //引擎默认的空白纹理，不允许删除
-                    console.warn('deleteWebGLTexture:' + engine_default_empty_texture);
+                    console.warn('deleteWebGLTexture:' + sys.engine_default_empty_texture);
                 }
                 return;
             }
-            const gl = webglTexture[glContext] as WebGLRenderingContext;
+            const gl = webglTexture[sys.glContext] as WebGLRenderingContext;
             if (gl) {
                 gl.deleteTexture(webglTexture);
             }

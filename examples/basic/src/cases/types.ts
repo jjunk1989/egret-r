@@ -1,5 +1,5 @@
 import { egret } from '@egret-r/core';
-import '@egret-r/eui';
+import { eui } from '@egret-r/eui';
 
 export type TestCaseContext = {
   root: egret.DisplayObjectContainer;

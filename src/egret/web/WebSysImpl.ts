@@ -17,7 +17,7 @@ import { isIOS14Device, setIsIOS14Device } from "./rendering/webgl/WebGLVertexAr
     /**
      * @private  
      */
-    export const enum WEBGL_ATTRIBUTE_TYPE {
+    export enum WEBGL_ATTRIBUTE_TYPE {
         FLOAT_VEC2 = 0x8B50,
         FLOAT_VEC3 = 0x8B51,
         FLOAT_VEC4 = 0x8B52,
@@ -29,7 +29,7 @@ import { isIOS14Device, setIsIOS14Device } from "./rendering/webgl/WebGLVertexAr
     /**
      * @private  
      */
-    export const enum WEBGL_UNIFORM_TYPE {
+    export enum WEBGL_UNIFORM_TYPE {
         FLOAT_VEC2 = 0x8B50,
         FLOAT_VEC3 = 0x8B51,
         FLOAT_VEC4 = 0x8B52,
@@ -152,10 +152,10 @@ import { isIOS14Device, setIsIOS14Device } from "./rendering/webgl/WebGLVertexAr
             webglrendercontext.contextLost = true;
             return;
         }
-        texture[glContext] = gl;
+        texture[sys.glContext] = gl;
         gl.bindTexture(gl.TEXTURE_2D, texture);
         gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, 1);
-        texture[UNPACK_PREMULTIPLY_ALPHA_WEBGL] = true;
+        texture[sys.UNPACK_PREMULTIPLY_ALPHA_WEBGL] = true;
         gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, bitmapData);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
@@ -178,10 +178,10 @@ import { isIOS14Device, setIsIOS14Device } from "./rendering/webgl/WebGLVertexAr
             return null;
         }
         //
-        texture[glContext] = gl;
+        texture[sys.glContext] = gl;
         gl.bindTexture(gl.TEXTURE_2D, texture);
         gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, 1);
-        texture[UNPACK_PREMULTIPLY_ALPHA_WEBGL] = true;
+        texture[sys.UNPACK_PREMULTIPLY_ALPHA_WEBGL] = true;
         gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, width, height, 0, gl.RGBA, gl.UNSIGNED_BYTE, data);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
         gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);

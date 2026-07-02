@@ -12,6 +12,7 @@ import { WebGLRenderContext } from "../../../player/Player";
 
     //测试开关,打开会截住老的字体渲染
     export const textAtlasRenderEnable: boolean = false;
+    sys.textAtlasRenderEnable = textAtlasRenderEnable;
 
     //测试对象, 先不用singleton的，后续整理代码，就new一个，放在全局的context上做成员变量
     export let __textAtlasRender__: TextAtlasRender = null;
@@ -203,7 +204,7 @@ import { WebGLRenderContext } from "../../../player/Player";
                     return CharImageRender.chineseCharacterMeasureFastMap[styleKey.font];
                 }
             }
-            const measureTextWidth = measureText(text, styleKey.fontFamily, textFlowSize || styleKey.size, styleKey.bold, styleKey.italic);
+            const measureTextWidth = sys.measureText(text, styleKey.fontFamily, textFlowSize || styleKey.size, styleKey.bold, styleKey.italic);
             if (isChinese) {
                 CharImageRender.chineseCharacterMeasureFastMap[styleKey.font] = measureTextWidth;
             }
@@ -310,7 +311,7 @@ import { WebGLRenderContext } from "../../../player/Player";
                 page.webGLTexture[glContext] = gl;
                 gl.bindTexture(gl.TEXTURE_2D, page.webGLTexture);
                 gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true);
-                page.webGLTexture[UNPACK_PREMULTIPLY_ALPHA_WEBGL] = true;
+                page.webGLTexture[sys.UNPACK_PREMULTIPLY_ALPHA_WEBGL] = true;
                 gl.texSubImage2D(gl.TEXTURE_2D, 0, txtBlock.subImageOffsetX, txtBlock.subImageOffsetY, gl.RGBA, gl.UNSIGNED_BYTE, canvas);
                 gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, false);
                 

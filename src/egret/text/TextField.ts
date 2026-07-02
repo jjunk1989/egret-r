@@ -10,8 +10,7 @@ import { VerticalAlign } from "./VerticalAlign";
 import { InputController } from "./InputController";
 import { TouchEvent } from "../events/TouchEvent";
 import { TextEvent } from "../events/TextEvent";
-import { measureText } from "./TextMeasurer";
-import { TextNode } from "../player/nodes/TextNode";
+import { measureText } from "./TextMeasurer";import { TextNode } from "../player/nodes/TextNode";
 import { GraphicsNode } from "../player/nodes/GraphicsNode";
 import { GroupNode } from "../player/nodes/GroupNode";
 import { Path2D } from "../player/paths/Path2D";
@@ -313,7 +312,7 @@ import { TextFieldType } from "./TextFieldType";
         let bold: boolean = style.bold == null ? values[sys.TextKeys.bold] : style.bold;
         let size: number = style.size == null ? values[sys.TextKeys.fontSize] : style.size;
         let fontFamily: string = style.fontFamily || values[sys.TextKeys.fontFamily] || TextField.default_fontFamily;
-        return measureText(text, fontFamily, size, bold, italic);
+        return sys.measureText(text, fontFamily, size, bold, italic);
     }
 
     /**

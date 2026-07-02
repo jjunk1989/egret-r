@@ -4,7 +4,7 @@
  */
 
 import { egret } from '@egret-r/core';
-import '@egret-r/eui';
+import { eui } from '@egret-r/eui';
 import '@egret-r/game';
 import '@egret-r/tween';
 import '@egret-r/socket';
@@ -16,7 +16,7 @@ import { tweenCases } from './cases/tween';
 import { gameCases } from './cases/game';
 import { socketCases } from './cases/socket';
 
-const _E = (globalThis as any).eui;
+const _E = eui;
 
 const TEST_CHANGE_EVENT = 'egret-test-change';
 const QUERY_KEY = 'case';
@@ -119,7 +119,9 @@ class Main extends egret.DisplayObjectContainer {
   }
 
   private onAddedToStage(): void {
+    window['__egret_main_added'] = 'onAddedToStage called!';
     const stage = this.stage;
+    window['__egret_main_stage'] = { sw: stage.stageWidth, sh: stage.stageHeight, hasStage: !!stage };
     stage.frameRate = 60;
 
     this.drawBackground(stage.stageWidth, stage.stageHeight);
@@ -127,9 +129,11 @@ class Main extends egret.DisplayObjectContainer {
 
     this.sceneRoot.y = 0;
     this.addChild(this.sceneRoot);
+    window['__egret_main_kids'] = this.numChildren;
 
     window.addEventListener(TEST_CHANGE_EVENT, this.onCaseChange as EventListener);
     this.applyCase(resolveInitialCaseId());
+    window['__egret_main_kids2'] = this.numChildren;
   }
 
   private drawBackground(w: number, h: number): void {
@@ -233,8 +237,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
   egret.runEgret({
     renderMode: 'webgl',
-    // showFPS: true,
-    // showLog: true,
-    // maxTouches: 0, // Disable unnecessary input handling
+    showFPS: true,
+    showLog: true,
+    maxTouches: 0, // Disable unnecessary input handling
   });
 });

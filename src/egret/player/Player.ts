@@ -151,6 +151,7 @@ import { $warn } from "../../Defines.debug";
          * 渲染屏幕
          */
         $render(triggerByFrame: boolean, costTicker: number): void {
+            window['__egret_stage'] = { w: this.stage.stageWidth, h: this.stage.stageHeight, children: this.stage.numChildren };
             if (nativeRender) {
                 egret_native.updateNativeRender();
                 egret_native.nrRender();
@@ -164,6 +165,7 @@ import { $warn } from "../../Defines.debug";
             let stage = this.stage;
             let t1 = getTimer();
             let drawCalls = stage.$displayList.drawToSurface();
+            window['__egret_drawCalls'] = drawCalls;
             let t2 = getTimer();
             if (triggerByFrame && this.showFPS) {
                 fpsDisplay.update(drawCalls, t2 - t1, costTicker);
