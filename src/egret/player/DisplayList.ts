@@ -7,6 +7,7 @@ import { RenderNode } from "./nodes/RenderNode";
 import { systemRenderer } from "./SystemRenderer";
 import { HashObject } from "../utils/HashObject";
 import { DisplayObject } from "../display/DisplayObject";
+import { Stage } from "../display/Stage";
 import { RenderBuffer } from "./RenderBuffer";
 import { Matrix } from "../geom/Matrix";
 import { BitmapNode } from "./nodes/BitmapNode";
