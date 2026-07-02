@@ -134,7 +134,7 @@ import { WebGLUtils } from "./rendering/webgl/WebGLUtils";
                 // WebGLRenderContext.antialias = (typeof antialias == undefined) ? true : antialias;
             }
 
-            sys.CanvasRenderBuffer = web.CanvasRenderBuffer;
+            sys.CanvasRenderBuffer = CanvasRenderBuffer;
             if (ua.indexOf("egretnative") >= 0 && renderMode != "webgl") {
                 $warn(1051);
                 renderMode = "webgl";
@@ -192,7 +192,7 @@ import { WebGLUtils } from "./rendering/webgl/WebGLUtils";
      */
     function setRenderMode(renderMode: string): void {
         if (renderMode == "webgl" && WebGLUtils.checkCanUseWebGL()) {
-            sys.RenderBuffer = web.WebGLRenderBuffer;
+            sys.RenderBuffer = WebGLRenderBuffer;
             setSystemRenderer(new WebGLRenderer());
             setCanvasRenderer(new CanvasRenderer());
             setCustomHitTestBuffer(new WebGLRenderBuffer(3, 3));
@@ -200,7 +200,7 @@ import { WebGLUtils } from "./rendering/webgl/WebGLUtils";
             Capabilities["renderMode" + ""] = "webgl";
         }
         else {
-            sys.RenderBuffer = web.CanvasRenderBuffer;
+            sys.RenderBuffer = CanvasRenderBuffer;
             setSystemRenderer(new CanvasRenderer());
             setCanvasRenderer(systemRenderer);
             setCustomHitTestBuffer(new CanvasRenderBuffer(3, 3));
