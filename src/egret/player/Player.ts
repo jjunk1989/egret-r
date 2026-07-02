@@ -7,6 +7,7 @@ import { DisplayObject } from "../display/DisplayObject";
 import { getTimer } from "../utils/getTimer";
 import { setLog, setWarn, setError, setAssert } from "../system/Console";
 import { systemRenderer, RenderContext } from "./SystemRenderer";
+import { ticker } from "./SystemTicker";
 import { HashObject } from "../utils/HashObject";
 import { RenderBuffer } from "./RenderBuffer";
 import { DisplayList } from "./DisplayList";
