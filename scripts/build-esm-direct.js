@@ -288,6 +288,7 @@ async function buildPkg(pkg) {
     var bundled = fs.readFileSync(path.join(distDir, 'index_tmp.js'), 'utf8');
     var header = 'var egret = {sys:{}}, eui = {}, sys = egret.sys;\n';
     header += 'var __global = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : {};\n';
+    header += 'var global = __global;\n';
     header += 'var DEBUG = true, RELEASE = false;\n';
     var wrapped = header + '(function() {\n' + bundled + '\n}).call(window);\n';
     wrapped += 'export { egret, eui };\n';
