@@ -5,7 +5,7 @@ import { nativeRender } from "../../../player/Player";
 import { setWebGLRenderContext } from "../../../player/Player";
 import { Capabilities } from "../../../system/Capabilities";
 import { Rectangle } from "../../../geom/Rectangle";
-import { RenderContext, resizeContext, getContextWebGL, createTexture, createCanvas, getContext2d, drawTextureElements } from "../../../player/SystemRenderer";
+import { RenderContext, resizeContext, createTexture, createCanvas, getContext2d, drawTextureElements } from "../../../player/SystemRenderer";
 import { DisplayList } from "../../../player/DisplayList";
 import { WebGLVertexArrayObject, isIOS14Device } from "./WebGLVertexArrayObject";
 import { WebGLDrawCmdManager } from "./WebGLDrawCmdManager";
@@ -327,7 +327,7 @@ import { DEBUG } from "../../../../Defines.debug";
         }
 
         public getSupportedCompressedTexture() {
-            let gl = this.context ? this.context : getContextWebGL(this.surface);
+            let gl = this.context ? this.context : sys.getContextWebGL(this.surface);
             this.pvrtc = gl.getExtension('WEBGL_compressed_texture_pvrtc') || gl.getExtension('WEBKIT_WEBGL_compressed_texture_pvrtc');
             if (this.pvrtc) {
                 this.pvrtc.name = 'WEBGL_compressed_texture_pvrtc';
@@ -384,7 +384,7 @@ import { DEBUG } from "../../../../Defines.debug";
                 $error(1021);
             }
             */
-            const gl = getContextWebGL(this.surface);
+            const gl = sys.getContextWebGL(this.surface);
             this.setContext(gl);
             return gl;
         }
