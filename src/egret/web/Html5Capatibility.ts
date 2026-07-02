@@ -4,6 +4,8 @@
 import { setSound, usingChannel } from "../media/Sound";
 import { HashObject } from "../utils/HashObject";
 import { WebAudioSoundChannel } from "../media/web/WebAudioSoundChannel";
+import { WebAudioSound, WebAudioDecode } from "../media/web/WebAudioSound";
+import { HtmlSound } from "../media/web/HtmlSound";
 
 
     /**
