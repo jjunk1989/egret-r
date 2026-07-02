@@ -210,7 +210,7 @@ import { CustomFilter } from "../filters/CustomFilter";
             self.$stage = stage;
             self.$nestLevel = nestLevel;
             self.$hasAddToStage = true;
-            Sprite.$EVENT_ADD_TO_STAGE_LIST.push(self);
+            egret.Sprite.$EVENT_ADD_TO_STAGE_LIST.push(self);
         }
 
         /**
@@ -220,7 +220,7 @@ import { CustomFilter } from "../filters/CustomFilter";
         $onRemoveFromStage(): void {
             let self = this;
             self.$nestLevel = 0;
-            Sprite.$EVENT_REMOVE_FROM_STAGE_LIST.push(self);
+            egret.Sprite.$EVENT_REMOVE_FROM_STAGE_LIST.push(self);
         }
 
         /**
