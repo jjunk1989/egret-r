@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { createCanvas, createCanvasRenderBufferSurface, resizeCanvasRenderBuffer } from "../../player/SystemRenderer";
 import { RenderBuffer } from "../../player/RenderBuffer";
 import { CanvasRenderingContext2D } from "../../player/rendering/CanvasRenderer";
 
@@ -10,7 +9,7 @@ import { CanvasRenderingContext2D } from "../../player/rendering/CanvasRenderer"
      * 创建一个canvas。
      */
     function __createCanvas__(width?: number, height?: number): HTMLCanvasElement {
-        let canvas = createCanvas(width, height);
+        let canvas = sys.createCanvas(width, height);
         let context = canvas.getContext("2d");
         if (context["imageSmoothingEnabled"] === undefined) {
             let keys = ["webkitImageSmoothingEnabled", "mozImageSmoothingEnabled", "msImageSmoothingEnabled"];
@@ -47,7 +46,7 @@ import { CanvasRenderingContext2D } from "../../player/rendering/CanvasRenderer"
     export class CanvasRenderBuffer implements RenderBuffer {
 
         public constructor(width?: number, height?: number, root?: boolean) {
-            this.surface = createCanvasRenderBufferSurface(__createCanvas__, width, height, root);
+            this.surface = sys.createCanvasRenderBufferSurface(__createCanvas__, width, height, root);
             this.context = this.surface.getContext("2d");
             if (this.context) {
                 this.context.$offsetX = 0;
@@ -88,7 +87,7 @@ import { CanvasRenderingContext2D } from "../../player/rendering/CanvasRenderer"
          * @param useMaxSize 若传入true，则将改变后的尺寸与已有尺寸对比，保留较大的尺寸。
          */
         public resize(width: number, height: number, useMaxSize?: boolean): void {
-            resizeCanvasRenderBuffer(this, width, height, useMaxSize);
+            sys.resizeCanvasRenderBuffer(this, width, height, useMaxSize);
         }
 
         /**
