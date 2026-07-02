@@ -1,8 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import { egret } from '@egret-r/core';
-describe.skip('game module', () => {
+describe('game module', () => {
     it('URLVariables should decode key-value pairs', async () => {
         await import('@egret-r/game');
+        expect(egret.URLVariables).toBeTruthy();
         const vars = new egret.URLVariables('name=egret&mode=debug');
         const parsed = vars.variables;
         expect(parsed.name).toBe('egret');
@@ -10,9 +11,24 @@ describe.skip('game module', () => {
     });
     it('URLVariables should collect duplicated keys into arrays', async () => {
         await import('@egret-r/game');
+        expect(egret.URLVariables).toBeTruthy();
         const vars = new egret.URLVariables('feature=core&feature=eui&feature=tween');
         const parsed = vars.variables;
         expect(Array.isArray(parsed.feature)).toBe(true);
         expect(parsed.feature).toEqual(['core', 'eui', 'tween']);
+    });
+    it('URLVariables decode should convert plus signs to spaces', async () => {
+        await import('@egret-r/game');
+        const vars = new egret.URLVariables();
+        vars.decode('title=hello+egret+world');
+        const parsed = vars.variables;
+        expect(parsed.title).toBe('hello egret world');
+    });
+    it('URLVariables toString should contain encoded key-value pairs', async () => {
+        await import('@egret-r/game');
+        const vars = new egret.URLVariables('name=egret r&mode=unit test');
+        const encoded = vars.toString();
+        expect(encoded).toContain('name=egret%20r');
+        expect(encoded).toContain('mode=unit%20test');
     });
 });
