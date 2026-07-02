@@ -8,7 +8,7 @@ import { WebMotion } from "../sensor/web/WebMotion";
 import { Capabilities, RuntimeType } from "../system/Capabilities";
 import { WebGLRenderContext } from "../player/Player";
 import { CanvasRenderingContext2D } from "../player/rendering/CanvasRenderer";
-import { BitmapData, glContext } from "../display/BitmapData";
+import { BitmapData, glContext, UNPACK_PREMULTIPLY_ALPHA_WEBGL } from "../display/BitmapData";
 import { fontResourceCache } from "../text/Font";
 import { RenderContext } from "../player/SystemRenderer";
 import { $error } from "../../Defines.debug";
