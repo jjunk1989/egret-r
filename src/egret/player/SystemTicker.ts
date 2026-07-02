@@ -2,7 +2,7 @@
 // Copyright (c) 2014-present, Egret Technology.
 
 import { getTimer } from "../utils/getTimer";
-import { callAsyncState } from "../utils/callLater";
+import { callAsyncState, $callLaterFunctionList, $callLaterThisList, $callLaterArgsList } from "../utils/callLater";
 import { Stage } from "../display/Stage";
 import { DisplayObject } from "../display/DisplayObject";
 import { Player } from "./Player";
