@@ -5,7 +5,7 @@ import { nativeRender } from "../../../player/Player";
 import { setWebGLRenderContext } from "../../../player/Player";
 import { Capabilities } from "../../../system/Capabilities";
 import { Rectangle } from "../../../geom/Rectangle";
-import { RenderContext, createTexture, createCanvas, getContext2d } from "../../../player/SystemRenderer";
+import { RenderContext } from "../../../player/SystemRenderer";
 import { DisplayList } from "../../../player/DisplayList";
 import { WebGLVertexArrayObject, isIOS14Device } from "./WebGLVertexArrayObject";
 import { WebGLDrawCmdManager, DRAWABLE_TYPE } from "./WebGLDrawCmdManager";
@@ -447,8 +447,8 @@ import { DEBUG } from "../../../../Defines.debug";
         /**
          * 创建一个WebGLTexture
          */
-        public createTexture(bitmapData: BitmapData | HTMLCanvasElement): WebGLTexture {
-            return createTexture(this, bitmapData);
+        public sys.createTexture(bitmapData: BitmapData | HTMLCanvasElement): WebGLTexture {
+            return sys.createTexture(this, bitmapData);
         }
 
         /*
@@ -503,7 +503,7 @@ import { DEBUG } from "../../../../Defines.debug";
             }
             ///
             const gl: any = this.context;
-            const texture = gl.createTexture() as WebGLTexture;
+            const texture = gl.sys.createTexture() as WebGLTexture;
             if (!texture) {
                 this.contextLost = true;
                 return;
@@ -535,11 +535,11 @@ import { DEBUG } from "../../../../Defines.debug";
         public get defaultEmptyTexture(): WebGLTexture {
             if (!this._defaultEmptyTexture) {
                 const size = 16;
-                const canvas = createCanvas(size, size);
-                const context = getContext2d(canvas);//canvas.getContext('2d');
+                const canvas = sys.createCanvas(size, size);
+                const context = sys.getContext2d(canvas);//canvas.getContext('2d');
                 context.fillStyle = 'white';
                 context.fillRect(0, 0, size, size);
-                this._defaultEmptyTexture = this.createTexture(canvas);
+                this._defaultEmptyTexture = this.sys.createTexture(canvas);
                 this._defaultEmptyTexture[engine_default_empty_texture] = true;
             }
             return this._defaultEmptyTexture;
@@ -548,7 +548,7 @@ import { DEBUG } from "../../../../Defines.debug";
         public getWebGLTexture(bitmapData: BitmapData): WebGLTexture {
             if (!bitmapData.webGLTexture) {
                 if (bitmapData.format == "image" && !bitmapData.hasCompressed2d()) {
-                    bitmapData.webGLTexture = this.createTexture(bitmapData.source);
+                    bitmapData.webGLTexture = this.sys.createTexture(bitmapData.source);
                 }
                 else if (bitmapData.hasCompressed2d()) {
                     const compressedData = bitmapData.getCompressed2dTextureData();
