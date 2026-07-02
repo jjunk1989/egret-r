@@ -19,6 +19,7 @@ import { WebTouchHandler } from "./WebTouchHandler";
 import { HTMLInput, $cacheTextAdapter } from "../text/web/HTML5StageText";
 import { lifecycle } from "../player/SystemTicker";
 import { WebLifeCycleHandler } from "./WebHideHandler";
+import { getPrefixStyleName } from "./Html5Capatibility";
 
     /**
      * @private
