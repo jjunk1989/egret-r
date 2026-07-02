@@ -5,6 +5,7 @@ import { BlurFilter } from "../../../filters/BlurFilter";
 import { DisplayList } from "../../../player/DisplayList";
 import { SystemRenderer } from "../../../player/SystemRenderer";
 import { RenderBuffer, CanvasRenderBuffer } from "../../../player/RenderBuffer";
+import { WebGLRenderBuffer, renderBufferPool } from "./WebGLRenderBuffer";
 import { RenderNode, RenderNodeType } from "../../../player/nodes/RenderNode";
 import { BitmapNode } from "../../../player/nodes/BitmapNode";
 import { TextNode } from "../../../player/nodes/TextNode";
