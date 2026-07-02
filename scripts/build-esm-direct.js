@@ -302,11 +302,62 @@ async function buildPkg(pkg) {
 }
 
 async function main() {
-  console.log('Building ESM packages (direct)...\n');
+  var watchMode = process.argv.includes('--watch');
+
+  if (watchMode) {
+    console.log('Building ESM packages (direct, watch mode)...\n');
+    await buildAll();
+
+    var srcDirs = PACKAGES.reduce(function(arr, p) {
+      return arr.concat(p.srcDirs.map(function(d) { return path.join(ROOT, d); }));
+    }, []);
+    srcDirs.push(path.join(ROOT, 'src/Defines.debug.ts'));
+    srcDirs.push(path.join(ROOT, 'src/Defines.release.ts'));
+
+    console.log('\nWatching ' + srcDirs.length + ' source paths for changes...\n');
+
+    // Simple polling watch with debounce
+    var timer = null;
+    var rebuilding = false;
+    function scheduleRebuild() {
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(async function() {
+        if (rebuilding) return;
+        rebuilding = true;
+        try {
+          console.log('Change detected, rebuilding...\n');
+          await buildAll();
+          console.log('Build complete.\n');
+        } catch (e) {
+          console.error('Build error:', e.message);
+        }
+        rebuilding = false;
+      }, 200);
+    }
+
+    for (var si = 0; si < srcDirs.length; si++) {
+      try {
+        fs.watch(srcDirs[si], { recursive: true }, function(eventType, filename) {
+          if (filename && filename.endsWith('.ts')) scheduleRebuild();
+        });
+      } catch (e) {
+        // fs.watch may not support recursive on all platforms; fallback to polling
+      }
+    }
+
+    // Keep process alive
+    process.stdin.resume();
+  } else {
+    console.log('Building ESM packages (direct)...\n');
+    await buildAll();
+    console.log('\nDone.');
+  }
+}
+
+async function buildAll() {
   for (var i = 0; i < PACKAGES.length; i++) {
     console.log('@egret-r/' + PACKAGES[i].name + ':');
     await buildPkg(PACKAGES[i]);
   }
-  console.log('\nDone.');
 }
 main().catch(function(e) { console.error(e); process.exit(1); });
