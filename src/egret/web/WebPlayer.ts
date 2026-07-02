@@ -40,7 +40,7 @@ import { HTMLInput } from "../text/web/HTML5StageText";
             stage.frameRate = option.frameRate;
             stage.textureScaleFactor = option.textureScaleFactor;
 
-            let buffer = new RenderBuffer(undefined, undefined, true);
+            let buffer = new (sys.RenderBuffer)(undefined, undefined, true);
             let canvas = <HTMLCanvasElement>buffer.surface;
             this.attachCanvas(container, canvas);
 
