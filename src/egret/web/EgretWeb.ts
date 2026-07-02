@@ -13,6 +13,7 @@ import { WebGLRenderer } from "./rendering/webgl/WebGLRenderer";
 import { CanvasRenderer } from "../player/rendering/CanvasRenderer";
 import { WebGLRenderBuffer } from "./rendering/webgl/WebGLRenderBuffer";
 import { WebGLRenderContext } from "./rendering/webgl/WebGLRenderContext";
+import { CanvasRenderBuffer as WebCanvasRenderBuffer } from "./rendering/CanvasRenderBuffer";
 import { DEBUG } from "../../Defines.debug";
 import { $warn } from "../../Defines.debug";
 import { $locale_strings, $language, set$language } from "../i18n/tr";
@@ -82,7 +83,7 @@ import { WebGLUtils } from "./rendering/webgl/WebGLUtils";
                     WebGLRenderContext.antialias = !!antialias;
                 }
 
-                sys.CanvasRenderBuffer = CanvasRenderBuffer;
+                sys.WebCanvasRenderBuffer = WebCanvasRenderBuffer;
                 setRenderMode(options.renderMode);
                 egret_native.nrSetRenderMode(2);
 
@@ -134,7 +135,7 @@ import { WebGLUtils } from "./rendering/webgl/WebGLUtils";
                 // WebGLRenderContext.antialias = (typeof antialias == undefined) ? true : antialias;
             }
 
-            sys.CanvasRenderBuffer = CanvasRenderBuffer;
+            sys.WebCanvasRenderBuffer = WebCanvasRenderBuffer;
             if (ua.indexOf("egretnative") >= 0 && renderMode != "webgl") {
                 $warn(1051);
                 renderMode = "webgl";
@@ -196,14 +197,14 @@ import { WebGLUtils } from "./rendering/webgl/WebGLUtils";
             setSystemRenderer(new WebGLRenderer());
             setCanvasRenderer(new CanvasRenderer());
             setCustomHitTestBuffer(new WebGLRenderBuffer(3, 3));
-            setCanvasHitTestBuffer(new CanvasRenderBuffer(3, 3));
+            setCanvasHitTestBuffer(new WebCanvasRenderBuffer(3, 3));
             Capabilities["renderMode" + ""] = "webgl";
         }
         else {
-            sys.RenderBuffer = CanvasRenderBuffer;
+            sys.RenderBuffer = WebCanvasRenderBuffer;
             setSystemRenderer(new CanvasRenderer());
             setCanvasRenderer(systemRenderer);
-            setCustomHitTestBuffer(new CanvasRenderBuffer(3, 3));
+            setCustomHitTestBuffer(new WebCanvasRenderBuffer(3, 3));
             setCanvasHitTestBuffer(customHitTestBuffer);
             Capabilities["renderMode" + ""] = "canvas";
         }
@@ -261,3 +262,4 @@ if (DEBUG) {
     if (language in $locale_strings)
         set$language(language);
 }
+
