@@ -5,6 +5,9 @@ node_modules/
 packages/*/dist/
 packages/*/*.tsbuildinfo
 
+# Generated entry files
+packages/*/_esm_entry.ts
+
 # Build intermediate temp copies (generated from src/)
 packages/*/src/
 
