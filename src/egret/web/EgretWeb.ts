@@ -17,6 +17,8 @@ import { DEBUG } from "../../Defines.debug";
 import { $warn } from "../../Defines.debug";
 import { $locale_strings, $language, set$language } from "../i18n/tr";
 import { Html5Capatibility } from "./Html5Capatibility";
+import { Capabilities, RuntimeType } from "../system/Capabilities";
+import { WebGLUtils } from "./rendering/webgl/WebGLUtils";
 
     /**
      * @private
