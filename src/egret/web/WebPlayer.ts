@@ -16,7 +16,7 @@ import { DisplayList } from "../player/DisplayList";
 import { runEgretOptions } from "../player/EgretEntry";
 import { PlayerOption } from "../player/PlayerOption";
 import { WebTouchHandler } from "./WebTouchHandler";
-import { HTMLInput } from "../text/web/HTML5StageText";
+import { HTMLInput, $cacheTextAdapter } from "../text/web/HTML5StageText";
 import { lifecycle } from "../player/SystemTicker";
 import { WebLifeCycleHandler } from "./WebHideHandler";
 
@@ -75,7 +75,7 @@ import { WebLifeCycleHandler } from "./WebHideHandler";
                     }, 300);
                 }
             }
-            egret.web.$cacheTextAdapter(webInput, stage, container, canvas);
+            $cacheTextAdapter(webInput, stage, container, canvas);
 
             this.updateScreenSize();
             this.updateMaxTouches();
