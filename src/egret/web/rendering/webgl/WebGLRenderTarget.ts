@@ -3,6 +3,7 @@
 
 import { HashObject } from "../../../utils/HashObject";
 import { DEBUG } from "../../../../Defines.debug";
+import { WebGLRenderContext } from "./WebGLRenderContext";
 
 
     /**
