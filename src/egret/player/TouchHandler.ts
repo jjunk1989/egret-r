@@ -4,6 +4,7 @@
 import { HashObject } from "../utils/HashObject";
 import { Stage } from "../display/Stage";
 import { DisplayObject } from "../display/DisplayObject";
+import { TouchEvent } from "../events/TouchEvent";
 
 
     /**

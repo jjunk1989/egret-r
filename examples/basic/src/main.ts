@@ -232,7 +232,7 @@ window.addEventListener('DOMContentLoaded', () => {
   container.setAttribute('data-show-log', 'false');
 
   egret.runEgret({
-    renderMode: 'webgl',
+    // renderMode: 'webgl',
     // showFPS: true,
     // showLog: true,
     // maxTouches: 0, // Disable unnecessary input handling
