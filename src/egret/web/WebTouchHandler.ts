@@ -5,6 +5,7 @@ import { Stage } from "../display/Stage";
 import { TouchHandler } from "../player/TouchHandler";
 import { HashObject } from "../utils/HashObject";
 import { Point } from "../geom/Point";
+import { Capabilities } from "../system/Capabilities";
 
 
     /**
