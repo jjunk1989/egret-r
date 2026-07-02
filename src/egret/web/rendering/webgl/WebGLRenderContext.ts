@@ -5,7 +5,7 @@ import { nativeRender } from "../../../player/Player";
 import { setWebGLRenderContext } from "../../../player/Player";
 import { Capabilities } from "../../../system/Capabilities";
 import { Rectangle } from "../../../geom/Rectangle";
-import { RenderContext, resizeContext, getContextWebGL, createTexture, createCanvas, getContext2d, drawTextureElements, mainCanvas } from "../../../player/SystemRenderer";
+import { RenderContext, resizeContext, getContextWebGL, createTexture, createCanvas, getContext2d, drawTextureElements } from "../../../player/SystemRenderer";
 import { DisplayList } from "../../../player/DisplayList";
 import { WebGLVertexArrayObject, isIOS14Device } from "./WebGLVertexArrayObject";
 import { WebGLDrawCmdManager } from "./WebGLDrawCmdManager";
@@ -172,7 +172,7 @@ import { DEBUG } from "../../../../Defines.debug";
         //for 3D&2D
         public constructor(width?: number, height?: number, context?: WebGLRenderingContext) {
 
-            this.surface = mainCanvas(width, height);
+            this.surface = sys.mainCanvas(width, height);
 
             if (nativeRender) {
                 return;
