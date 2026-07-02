@@ -1,9 +1,8 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { Html5Capatibility } from "./Html5Capatibility";
-import { AudioType } from "../media/AudioType";
-import { WebAudioDecode } from "../media/web/WebAudioDecode";
+import { Html5Capatibility, AudioType } from "./Html5Capatibility";
+import { WebAudioDecode } from "../media/web/WebAudioSound";
 
     /**
      * @private
