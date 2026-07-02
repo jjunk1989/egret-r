@@ -10,8 +10,8 @@
     "clean": "node scripts/clean-dist.js",
     "check:bare": "node scripts/check-bare-symbols.js",
     "verify": "node scripts/verify-dist.js",
-    "watch": "node scripts/build-esm-v3.js --watch",
-    "watch:core": "node scripts/build-esm-v3.js --only core --watch",
+    "watch": "node scripts/build-esm-direct.js",
+    "watch:core": "node scripts/build-esm-direct.js",
     "lint": "eslint src/ examples/",
     "lint:fix": "eslint src/ examples/ --fix",
     "format": "prettier --write \"src/**/*.ts\" \"examples/**/*.ts\""
