@@ -2,7 +2,7 @@
 // Copyright (c) 2014-present, Egret Technology.
 
 import { getTimer } from "../utils/getTimer";
-import { callAsyncState, $callLaterFunctionList, $callLaterThisList, $callLaterArgsList } from "../utils/callLater";
+import { $callLaterState, callAsyncState } from "../utils/callLater";
 import { Stage } from "../display/Stage";
 import { DisplayObject } from "../display/DisplayObject";
 import { Player } from "./Player";
@@ -338,13 +338,13 @@ import { DEBUG } from "../../Defines.debug";
             let functionList: any[];
             let thisList: any[];
             let argsList: any[];
-            if ($callLaterFunctionList.length > 0) {
-                functionList = $callLaterFunctionList;
-                $callLaterFunctionList = [];
-                thisList = $callLaterThisList;
-                $callLaterThisList = [];
-                argsList = $callLaterArgsList;
-                $callLaterArgsList = [];
+            if ($callLaterState.functionList.length > 0) {
+                functionList = $callLaterState.functionList;
+                $callLaterState.functionList = [];
+                thisList = $callLaterState.thisList;
+                $callLaterState.thisList = [];
+                argsList = $callLaterState.argsList;
+                $callLaterState.argsList = [];
             }
 
             if (functionList) {

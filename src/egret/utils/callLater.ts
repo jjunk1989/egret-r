@@ -6,15 +6,11 @@
     /**
      * @private
      */
-    export let $callLaterFunctionList:any[] = [];
-    /**
-     * @private
-     */
-    export let $callLaterThisList:any[] = [];
-    /**
-     * @private
-     */
-    export let $callLaterArgsList:any[] = [];
+    export const $callLaterState = {
+        functionList: [] as any[],
+        thisList: [] as any[],
+        argsList: [] as any[],
+    };
 
     /**
      * Delay the function to run unless screen is redrawn.
@@ -38,9 +34,9 @@
      */
     export function callLater(method:Function,thisObject:any,...args):void
     {
-        $callLaterFunctionList.push(method);
-        $callLaterThisList.push(thisObject);
-        $callLaterArgsList.push(args);
+        $callLaterState.functionList.push(method);
+        $callLaterState.thisList.push(thisObject);
+        $callLaterState.argsList.push(args);
     }
 
     /**
