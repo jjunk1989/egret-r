@@ -17,6 +17,8 @@ import { runEgretOptions } from "../player/EgretEntry";
 import { PlayerOption } from "../player/PlayerOption";
 import { WebTouchHandler } from "./WebTouchHandler";
 import { HTMLInput } from "../text/web/HTML5StageText";
+import { lifecycle } from "../player/SystemTicker";
+import { WebLifeCycleHandler } from "./WebHideHandler";
 
     /**
      * @private
