@@ -5,7 +5,7 @@ import { nativeRender } from "../../../player/Player";
 import { setWebGLRenderContext } from "../../../player/Player";
 import { Capabilities } from "../../../system/Capabilities";
 import { Rectangle } from "../../../geom/Rectangle";
-import { RenderContext, resizeContext, createTexture, createCanvas, getContext2d, drawTextureElements } from "../../../player/SystemRenderer";
+import { RenderContext, createTexture, createCanvas, getContext2d, drawTextureElements } from "../../../player/SystemRenderer";
 import { DisplayList } from "../../../player/DisplayList";
 import { WebGLVertexArrayObject, isIOS14Device } from "./WebGLVertexArrayObject";
 import { WebGLDrawCmdManager, DRAWABLE_TYPE } from "./WebGLDrawCmdManager";
@@ -222,7 +222,7 @@ import { DEBUG } from "../../../../Defines.debug";
          * @param useMaxSize 若传入true，则将改变后的尺寸与已有尺寸对比，保留较大的尺寸。
          */
         public resize(width: number, height: number, useMaxSize?: boolean): void {
-            resizeContext(this, width, height, useMaxSize);
+            sys.resizeContext(this, width, height, useMaxSize);
             /*
             let surface = this.surface;
             if (useMaxSize) {
