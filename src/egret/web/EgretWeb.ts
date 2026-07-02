@@ -12,6 +12,7 @@ import { WebPlayer } from "./WebPlayer";
 import { WebGLRenderer } from "./rendering/webgl/WebGLRenderer";
 import { CanvasRenderer } from "../player/rendering/CanvasRenderer";
 import { WebGLRenderBuffer } from "./rendering/webgl/WebGLRenderBuffer";
+import { WebGLRenderContext } from "./rendering/webgl/WebGLRenderContext";
 import { DEBUG } from "../../Defines.debug";
 import { $warn } from "../../Defines.debug";
 import { $locale_strings, $language, set$language } from "../i18n/tr";
