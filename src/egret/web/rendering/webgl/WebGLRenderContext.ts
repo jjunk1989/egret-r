@@ -5,7 +5,7 @@ import { nativeRender } from "../../../player/Player";
 import { setWebGLRenderContext } from "../../../player/Player";
 import { Capabilities } from "../../../system/Capabilities";
 import { Rectangle } from "../../../geom/Rectangle";
-import { RenderContext, createTexture, createCanvas, getContext2d, drawTextureElements } from "../../../player/SystemRenderer";
+import { RenderContext, createTexture, createCanvas, getContext2d } from "../../../player/SystemRenderer";
 import { DisplayList } from "../../../player/DisplayList";
 import { WebGLVertexArrayObject, isIOS14Device } from "./WebGLVertexArrayObject";
 import { WebGLDrawCmdManager, DRAWABLE_TYPE } from "./WebGLDrawCmdManager";
@@ -1114,7 +1114,7 @@ import { DEBUG } from "../../../../Defines.debug";
          * 画texture
          **/
         private drawTextureElements(data: any, offset: number): number {
-            return drawTextureElements(this, data, offset);
+            return sys.drawTextureElements(this, data, offset);
             /*
             let gl: any = this.context;
             gl.activeTexture(gl.TEXTURE0); ///refactor
