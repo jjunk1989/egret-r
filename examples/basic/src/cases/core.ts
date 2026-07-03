@@ -463,4 +463,64 @@ export const coreCases: TestCaseDefinition[] = [
       return () => objects.forEach((o) => root.removeChild(o));
     },
   },
+  {
+    id: 'core-http',
+    title: 'Core HttpRequest Load JSON',
+    module: 'core',
+    run: ({ root }) => {
+      const objects: egret.DisplayObject[] = [];
+
+      const title = new eui.Label();
+      title.x = 32; title.y = 102;
+      title.size = 18; title.textColor = 0x0f172a;
+      title.text = 'HttpRequest: Load demo-config.json';
+      root.addChild(title); objects.push(title);
+
+      const status = new eui.Label();
+      status.x = 32; status.y = 134;
+      status.size = 15; status.textColor = 0x2563eb;
+      status.text = 'Status: Loading...';
+      root.addChild(status); objects.push(status);
+
+      const result = new eui.Label();
+      result.x = 32; result.y = 160;
+      result.size = 14; result.textColor = 0x334155;
+      result.lineSpacing = 6;
+      result.text = '';
+      root.addChild(result); objects.push(result);
+
+      const request = new egret.HttpRequest();
+      request.responseType = egret.HttpResponseType.TEXT;
+
+      request.addEventListener(egret.Event.COMPLETE, () => {
+        status.text = 'Status: Loaded OK';
+        status.textColor = 0x059669;
+        try {
+          const data = JSON.parse(request.response);
+          result.text = [
+            'app: ' + data.app.name + ' v' + data.app.version,
+            'display: ' + data.display.width + 'x' + data.display.height,
+            'frameRate: ' + data.display.frameRate,
+            'features: sound=' + data.features.enableSound,
+            'items: ' + data.items.length + ' entries',
+            '  - ' + data.items[0].name + ' (' + data.items[0].type + ')',
+            '  - ' + data.items[1].name + ' (' + data.items[1].type + ')',
+            '  - ' + data.items[2].name + ' (' + data.items[2].type + ')',
+          ].join('\n');
+        } catch (_e) {
+          result.text = 'Parse error: ' + request.response.substring(0, 100);
+        }
+      }, root);
+
+      request.addEventListener(egret.IOErrorEvent.IO_ERROR, () => {
+        status.text = 'Status: Load Failed';
+        status.textColor = 0xdc2626;
+      }, root);
+
+      request.open('/demo-config.json', 'GET');
+      request.send();
+
+      return () => objects.forEach((o) => root.removeChild(o));
+    },
+  },
 ];
