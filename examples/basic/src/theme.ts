@@ -105,7 +105,7 @@ class CheckBoxSkin extends eui.Skin {
     checkMark.width = 18;
     checkMark.height = 20;
     checkMark.name = 'checkMark';
-    checkMark.visible = false;
+    checkMark.alpha = 0;
 
     // Label
     const label = new eui.Label();
@@ -140,7 +140,7 @@ class RadioButtonSkin extends eui.Skin {
     outer.width = 20;
     outer.height = 24;
 
-    // Inner dot (shown when selected)
+    // Inner dot (alpha=0 when unselected, alpha=1 when selected)
     const inner = new egret.Shape();
     inner.graphics.beginFill(0x2563eb);
     inner.graphics.drawCircle(9, 11, 5);
@@ -148,7 +148,7 @@ class RadioButtonSkin extends eui.Skin {
     inner.width = 20;
     inner.height = 24;
     inner.name = 'innerDot';
-    inner.visible = false;
+    inner.alpha = 0;
 
     // Label
     const label = new eui.Label();
@@ -199,12 +199,12 @@ export function createCheckBox(label?: string): eui.CheckBox {
   const cb = new eui.CheckBox();
   cb.skinName = CheckBoxSkin;
   if (label !== undefined) cb.label = label;
-  // Toggle checkmark visibility on state change
+  // Toggle checkmark visibility via alpha
   const toggleCheck = () => {
     const skin = cb.skin as CheckBoxSkin;
     if (skin) {
       for (const el of skin.$elementsContent) {
-        if (el.name === 'checkMark') { el.visible = cb.selected; }
+        if (el.name === 'checkMark') { el.alpha = cb.selected ? 1 : 0; }
       }
     }
   };
@@ -217,12 +217,12 @@ export function createRadioButton(label?: string): eui.RadioButton {
   const rb = new eui.RadioButton();
   rb.skinName = RadioButtonSkin;
   if (label !== undefined) rb.label = label;
-  // Toggle inner dot visibility on state change
+  // Toggle inner dot visibility via alpha
   const toggleDot = () => {
     const skin = rb.skin as RadioButtonSkin;
     if (skin) {
       for (const el of skin.$elementsContent) {
-        if (el.name === 'innerDot') { el.visible = rb.selected; }
+        if (el.name === 'innerDot') { el.alpha = rb.selected ? 1 : 0; }
       }
     }
   };
