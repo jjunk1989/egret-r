@@ -13,6 +13,8 @@ import { NormalBitmapNode } from "../../../egret/player/nodes/NormalBitmapNode";
 import { BitmapNode } from "../../../egret/player/nodes/BitmapNode";
 import { Texture } from "../../../egret/display/Texture";
 import { MovieClipData } from "./MovieClipData";
+import { Bitmap } from "../../../egret/display/Bitmap";
+import { MovieClipEvent } from "./MovieClipEvent";
 import { Rectangle } from "../../../egret/geom/Rectangle";
 import { Stage } from "../../../egret/display/Stage";
 import { $error } from "../../../Defines.debug";

@@ -7,6 +7,7 @@ import { EventDispatcher } from "../../egret/events/EventDispatcher";
 import { props, Event } from "../../egret/events/Event";
 import { paths } from "../../egret/utils/getDefinitionByName";
 import { Tween } from "./Tween";
+import { Ease } from "./Ease";
 
 
     export type EaseType =

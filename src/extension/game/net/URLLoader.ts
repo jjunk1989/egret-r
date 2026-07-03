@@ -13,6 +13,8 @@ import { URLVariables } from "./URLVariables";
 import { HttpResponseType } from "../../../egret/net/HttpResponseType";
 import { ImageLoader } from "../../../egret/net/ImageLoader";
 import { Texture } from "../../../egret/display/Texture";
+import { HttpRequest } from "../../../egret/net/HttpRequest";
+import { HttpMethod } from "../../../egret/net/HttpMethod";
 import { URLRequestMethod } from "./URLRequestMethod";
 
 

@@ -13,6 +13,8 @@ import { ScrollTween, ScrollEase } from "./ScrollTween";
 import { Stage } from "../../../egret/display/Stage";
 import { TouchEvent } from "../../../egret/events/TouchEvent";
 import { $error } from "../../../Defines.debug";
+import { Timer } from "../../../egret/utils/Timer";
+import { TimerEvent } from "../../../egret/events/TimerEvent";
 
 
     /**
