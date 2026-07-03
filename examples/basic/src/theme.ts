@@ -70,7 +70,7 @@ class ToggleButtonSkin extends eui.Skin {
 }
 
 // ---------------------------------------------------------------------------
-// CheckBoxSkin
+// CheckBoxSkin — visible checkbox box + label
 // ---------------------------------------------------------------------------
 
 class CheckBoxSkin extends eui.Skin {
@@ -78,23 +78,50 @@ class CheckBoxSkin extends eui.Skin {
 
   constructor() {
     super();
-    this.minWidth = 24;
+    this.minWidth = 140;
     this.minHeight = 24;
 
+    // Checkbox outer border
+    const boxBorder = new egret.Shape();
+    boxBorder.graphics.lineStyle(2, 0x9ca3af);
+    boxBorder.graphics.drawRoundRect(0, 2, 18, 18, 3, 3);
+    boxBorder.graphics.endFill();
+    boxBorder.width = 20;
+    boxBorder.height = 22;
+
+    // Checkbox fill background (white)
+    const boxBg = new egret.Shape();
+    boxBg.graphics.beginFill(0xffffff);
+    boxBg.graphics.drawRoundRect(1, 3, 16, 16, 2, 2);
+    boxBg.graphics.endFill();
+    boxBg.width = 20;
+    boxBg.height = 22;
+
+    // Check mark (shown when selected)
+    const checkMark = new egret.Shape();
+    checkMark.graphics.beginFill(0x2563eb);
+    checkMark.graphics.drawRoundRect(4, 6, 10, 10, 2, 2);
+    checkMark.graphics.endFill();
+    checkMark.width = 18;
+    checkMark.height = 20;
+    checkMark.name = 'checkMark';
+    checkMark.visible = false;
+
+    // Label
     const label = new eui.Label();
     label.size = 14;
     label.textColor = 0x1f2937;
-    label.x = 4;
+    label.x = 26;
     label.y = 4;
     this.labelDisplay = label;
 
-    this.$elementsContent = [label];
+    this.$elementsContent = [boxBg, boxBorder, checkMark, label];
     this.skinParts = ['labelDisplay'];
   }
 }
 
 // ---------------------------------------------------------------------------
-// RadioButtonSkin
+// RadioButtonSkin — visible radio circle + label
 // ---------------------------------------------------------------------------
 
 class RadioButtonSkin extends eui.Skin {
@@ -102,17 +129,36 @@ class RadioButtonSkin extends eui.Skin {
 
   constructor() {
     super();
-    this.minWidth = 24;
+    this.minWidth = 140;
     this.minHeight = 24;
 
+    // Outer circle border
+    const outer = new egret.Shape();
+    outer.graphics.lineStyle(2, 0x9ca3af);
+    outer.graphics.drawCircle(9, 11, 8);
+    outer.graphics.endFill();
+    outer.width = 20;
+    outer.height = 24;
+
+    // Inner dot (shown when selected)
+    const inner = new egret.Shape();
+    inner.graphics.beginFill(0x2563eb);
+    inner.graphics.drawCircle(9, 11, 5);
+    inner.graphics.endFill();
+    inner.width = 20;
+    inner.height = 24;
+    inner.name = 'innerDot';
+    inner.visible = false;
+
+    // Label
     const label = new eui.Label();
     label.size = 14;
     label.textColor = 0x1f2937;
-    label.x = 4;
+    label.x = 24;
     label.y = 4;
     this.labelDisplay = label;
 
-    this.$elementsContent = [label];
+    this.$elementsContent = [outer, inner, label];
     this.skinParts = ['labelDisplay'];
   }
 }
