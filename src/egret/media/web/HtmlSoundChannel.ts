@@ -2,9 +2,11 @@
 // Copyright (c) 2014-present, Egret Technology.
 
 import { EventDispatcher } from "../../events/EventDispatcher";
+import { $popSoundChannel } from "../Sound";
 import { SoundChannel } from "../SoundChannel";
 import { Event } from "../../events/Event";
 import { $error } from "../../../Defines.debug";
+import { HtmlSound } from "./HtmlSound";
 
 
     /**

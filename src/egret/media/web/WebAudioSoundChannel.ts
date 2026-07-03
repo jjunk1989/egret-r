@@ -5,7 +5,7 @@ import { EventDispatcher } from "../../events/EventDispatcher";
 import { SoundChannel } from "../SoundChannel";
 import { $popSoundChannel } from "../Sound";
 import { Event } from "../../events/Event";
-import { AudioBufferSourceNodeEgret } from "./WebAudioSound";
+import { AudioBufferSourceNodeEgret, WebAudioDecode } from "./WebAudioSound";
 import { $error } from "../../../Defines.debug";
 
 

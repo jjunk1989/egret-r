@@ -2,7 +2,7 @@
 // Copyright (c) 2014-present, Egret Technology.
 
 import { EventDispatcher } from "../../events/EventDispatcher";
-import { $pushSoundChannel } from "../Sound";
+import { $pushSoundChannel, Sound } from "../Sound";
 import { Event } from "../../events/Event";
 import { IOErrorEvent } from "../../events/IOErrorEvent";
 import { SoundChannel } from "../SoundChannel";

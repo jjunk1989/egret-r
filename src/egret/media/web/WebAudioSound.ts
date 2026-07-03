@@ -3,7 +3,7 @@
 
 import { log } from "../../system/Console";
 import { EventDispatcher } from "../../events/EventDispatcher";
-import { $pushSoundChannel } from "../Sound";
+import { $pushSoundChannel, Sound } from "../Sound";
 import { IOErrorEvent } from "../../events/IOErrorEvent";
 import { Event } from "../../events/Event";
 import { SoundChannel } from "../SoundChannel";
