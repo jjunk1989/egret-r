@@ -253,12 +253,16 @@ async function buildPkg(pkg) {
 
   var modIdx = 0;
   var fileKeys = Object.keys(fileExportMap);
+  // Helper to avoid esbuild rename: use _ns(ns, "name", value)
+  // instead of ns.name = value (which makes esbuild see name as both
+  // a function def and a property, triggering rename).
+  entry += 'function _ns(ns, k, v) { ns[k] = v; }\n';
   for (var fi = 0; fi < fileKeys.length; fi++) {
     var fe = fileExportMap[fileKeys[fi]];
     var modName = '$m' + (modIdx++);
     entry += 'import * as ' + modName + ' from "' + fileKeys[fi] + '";\n';
     for (var si = 0; si < fe.syms.length; si++) {
-      entry += fe.ns + '.' + fe.syms[si] + ' = ' + modName + '.' + fe.syms[si] + ';\n';
+      entry += '_ns(' + fe.ns + ', "' + fe.syms[si] + '", ' + modName + '.' + fe.syms[si] + ');\n';
     }
   }
 
@@ -288,51 +292,23 @@ async function buildPkg(pkg) {
     // Post-process: wrap in IIFE for hoisting, then re-export
     var bundled = fs.readFileSync(path.join(distDir, 'index_tmp.js'), 'utf8');
     
-    // Fix: esbuild renames Event -> _Event. Fix references.
+    // Fix: esbuild renames Event -> _Event (browser global collision).
+    // Static references Event.COMPLETE etc. need to use _Event.
     bundled = bundled.replace(/(?<![_a-zA-Z])Event\.([A-Z])/g, '_Event.$1');
     // Fix: esbuild renames EventDispatcher -> _EventDispatcher.
-    // Classes extending it need the renamed class (alias comes later).
     bundled = bundled.replace(/\bextends EventDispatcher\b/g, 'extends _EventDispatcher');
     bundled = bundled.replace(/\binstanceof EventDispatcher\b/g, 'instanceof _EventDispatcher');
-    // Fix namespace assignments where esbuild renamed the class RHS
-    var renamedSyms = ['Tween', 'Ease'];
-    for (var r = 0; r < renamedSyms.length; r++) {
-      var sym = renamedSyms[r];
-      var re = new RegExp('(egret\\.' + sym + '\\s*=\\s*)' + sym + '(\\s*;)', 'g');
-      bundled = bundled.replace(re, '$1_' + sym + '$2');
-    }
-    // NOTE: With platform:'neutral', esbuild may still rename some symbols
-    // that conflict within the bundle. Only fix symbols that are ACTUALLY renamed.
-    // HttpRequest and XML are NOT renamed with platform:'neutral' — do NOT fix them.
     
-    // Fix: esbuild renames toColorString -> toColorString2
+    // Fix: esbuild renames some symbols due to internal collisions (not namespace-related).
     bundled = bundled.replace(/(?<![_a-zA-Z])toColorString\(/g, 'toColorString2(');
-    
-    // Fix: esbuild renames ProgressEvent -> ProgressEvent2. Fix static method calls.
     bundled = bundled.replace(/(?<![_a-zA-Z])ProgressEvent\.([A-Z])/g, 'ProgressEvent2.$1');
-    
-    // Fix: esbuild renames EgretShaderLib -> EgretShaderLib2 (browser global collision)
     bundled = bundled.replace(/(?<![_a-zA-Z])EgretShaderLib\./g, 'EgretShaderLib2.');
-    // Fix: esbuild renames WebGLUtils -> WebGLUtils2
     bundled = bundled.replace(/(?<![_a-zA-Z])WebGLUtils\./g, 'WebGLUtils2.');
-    
-    // Fix: esbuild renames HtmlSound -> HtmlSound2 but leaves stale references
-    // in HtmlSoundChannel (which is bundled before HtmlSound).
     bundled = bundled.replace(/(?<![_a-zA-Z])HtmlSound\./g, 'HtmlSound2.');
-    
-    // Fix: esbuild renames getPrefixStyleName -> getPrefixStyleName2 but leaves
-    // stale references in WebVideo.goFullscreen.
     bundled = bundled.replace(/(?<![_a-zA-Z])getPrefixStyleName\(/g, 'getPrefixStyleName2(');
     
-    // === FIXES ALREADY RESOLVED AT SOURCE LEVEL ===
-    // - sys.$pushSoundChannel / sys.$popSoundChannel: now use bare function calls
-    // - setSound / setVideo: now update egret.Sound / egret.Video in source
-    // - WebGLRenderTarget.clear(): renamed to reset() to avoid gl.clear collision
-    
-    // === FIXES UNFIXABLE AT SOURCE (egret.X = X namespace pattern) ===
-    // The following renames are caused by esbuild seeing the same name used as
-    // both a function definition and a property in egret.X = X assignments.
-    // This is an architectural constraint of the namespace pattern.
+    // NOTE: Tween/Ease workaround removed — _ns() pattern prevents the
+    // egret.X = X namespace collision that caused those renames.
 
     var header = 'var egret = globalThis.egret || {sys:{}, pro:{}}, eui = globalThis.eui || {}, sys = egret.sys;\n';
     header += 'var __global = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : {};\n';
