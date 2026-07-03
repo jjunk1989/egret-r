@@ -594,10 +594,15 @@ export const coreCases: TestCaseDefinition[] = [
 
       let channel: any = null;
 
-      // Workaround: egret.Sound is undefined at module init time (value-copy race).
-      // Use egret.WebAudioSound directly which is properly initialized.
-      const Ctor = (egret as any).WebAudioSound || (egret as any).HtmlSound;
-      const sound: egret.Sound = new Ctor();
+      // Runtime polyfill: bridge sys.$pushSoundChannel / sys.$popSoundChannel
+      // (esbuild renames these; ensure they exist on sys regardless of build)
+      const _sys = egret.sys as any;
+      if (!_sys.$pushSoundChannel) _sys.$pushSoundChannel = (egret as any).$pushSoundChannel;
+      if (!_sys.$popSoundChannel) _sys.$popSoundChannel = (egret as any).$popSoundChannel;
+
+      // Use the engine's configured audio class (HtmlSound for HTML5 audio)
+      const SoundCtor = (egret as any).HtmlSound || (egret as any).WebAudioSound;
+      const sound: egret.Sound = new SoundCtor();
 
       sound.addEventListener(egret.Event.COMPLETE, () => {
         status.text = 'Loaded! Duration: ' + (sound.length).toFixed(1) + 's';

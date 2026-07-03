@@ -320,6 +320,15 @@ async function buildPkg(pkg) {
     // Fix: esbuild renames WebGLUtils -> WebGLUtils2
     bundled = bundled.replace(/(?<![_a-zA-Z])WebGLUtils\./g, 'WebGLUtils2.');
     
+    // Fix: esbuild renames HtmlSound -> HtmlSound2 but leaves stale references
+    // in HtmlSoundChannel (which is bundled before HtmlSound).
+    bundled = bundled.replace(/(?<![_a-zA-Z])HtmlSound\./g, 'HtmlSound2.');
+    
+    // Fix: sys.$pushSoundChannel / sys.$popSoundChannel are bare functions,
+    // not attached to sys. Replace calls with direct function calls.
+    bundled = bundled.replace(/sys\.\$pushSoundChannel\(/g, '$pushSoundChannel(');
+    bundled = bundled.replace(/sys\.\$popSoundChannel\(/g, '$popSoundChannel(');
+    
     // Fix: setSound only updates local Sound var, but egret.Sound is a value copy.
     // When $init runs after module load, setSound updates local var but not egret.Sound.
     // Make setSound also update egret.Sound so it stays in sync.
