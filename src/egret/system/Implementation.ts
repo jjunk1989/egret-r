@@ -4,8 +4,10 @@ import { Theme } from "../../extension/eui/core/Theme";
 
     /**
     * @private
+    * Shared across packages via sys to avoid per-package duplication.
     */
-    let implMap: any = {};
+    if (!sys.$implMap) sys.$implMap = {};
+    let implMap: any = sys.$implMap;
 
     /**
      * Adds an interface-name-to-implementation-class mapping to the registry.

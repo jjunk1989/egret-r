@@ -8,6 +8,7 @@ import { eui } from '@egret-r/eui';
 import '@egret-r/game';
 import '@egret-r/tween';
 import '@egret-r/socket';
+import { setupDefaultTheme } from './theme';
 
 import type { TestCaseDefinition } from './cases/types';
 import { coreCases } from './cases/core';
@@ -117,10 +118,11 @@ class Main extends egret.DisplayObjectContainer {
   }
 
   private onAddedToStage(): void {
-    window['__egret_main_added'] = 'onAddedToStage called!';
     const stage = this.stage;
-    window['__egret_main_stage'] = { sw: stage.stageWidth, sh: stage.stageHeight, hasStage: !!stage };
     stage.frameRate = 60;
+
+    // Setup default EUI theme (skins for Button, CheckBox, etc.)
+    setupDefaultTheme(stage);
 
     this.drawBackground(stage.stageWidth, stage.stageHeight);
     this.createHeader(stage.stageWidth, stage.stageHeight);

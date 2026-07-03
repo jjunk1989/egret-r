@@ -1,6 +1,7 @@
 import type { TestCaseDefinition } from './types';
 import { egret } from '@egret-r/core';
 import { eui } from '@egret-r/eui';
+import { createButton, createToggleButton, createCheckBox, createRadioButton } from '../theme';
 
 export const euiCases: TestCaseDefinition[] = [
   {
@@ -58,8 +59,7 @@ export const euiCases: TestCaseDefinition[] = [
       counter.text = 'Clicks: 0';
       root.addChild(counter); objects.push(counter);
 
-      const btn = new eui.Button();
-      btn.label = 'Click Me';
+      const btn = createButton('Click Me');
       btn.x = 32; btn.y = 170;
       btn.width = 140; btn.height = 44;
       root.addChild(btn); objects.push(btn);
@@ -69,15 +69,13 @@ export const euiCases: TestCaseDefinition[] = [
         counter.text = `Clicks: ${clickCount}`;
       }, root);
 
-      const disabledBtn = new eui.Button();
-      disabledBtn.label = 'Disabled';
+      const disabledBtn = createButton('Disabled');
       disabledBtn.enabled = false;
       disabledBtn.x = 190; disabledBtn.y = 170;
       disabledBtn.width = 120; disabledBtn.height = 44;
       root.addChild(disabledBtn); objects.push(disabledBtn);
 
-      const toggleBtn = new eui.ToggleButton();
-      toggleBtn.label = 'Toggle';
+      const toggleBtn = createToggleButton('Toggle');
       toggleBtn.x = 32; toggleBtn.y = 230;
       toggleBtn.width = 140; toggleBtn.height = 44;
       root.addChild(toggleBtn); objects.push(toggleBtn);
@@ -114,8 +112,7 @@ export const euiCases: TestCaseDefinition[] = [
       status.text = 'Check: unchecked';
       root.addChild(status); objects.push(status);
 
-      const cb = new eui.CheckBox();
-      cb.label = 'Agree to terms';
+      const cb = createCheckBox('Agree to terms');
       cb.x = 32; cb.y = 165;
       root.addChild(cb); objects.push(cb);
 
@@ -132,8 +129,7 @@ export const euiCases: TestCaseDefinition[] = [
       root.addChild(rbLabel); objects.push(rbLabel);
 
       ['Option A', 'Option B', 'Option C'].forEach((opt, i) => {
-        const rb = new eui.RadioButton();
-        rb.label = opt;
+        const rb = createRadioButton(opt);
         rb.value = opt;
         rb.group = group;
         rb.x = 32 + i * 130;
