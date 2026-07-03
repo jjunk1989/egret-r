@@ -308,6 +308,9 @@ async function buildPkg(pkg) {
     // Fix: esbuild renames toColorString -> toColorString2
     bundled = bundled.replace(/(?<![_a-zA-Z])toColorString\(/g, 'toColorString2(');
     
+    // Fix: esbuild renames ProgressEvent -> ProgressEvent2. Fix static method calls.
+    bundled = bundled.replace(/(?<![_a-zA-Z])ProgressEvent\.([A-Z])/g, 'ProgressEvent2.$1');
+    
     // Fix: esbuild renames WebGL API calls like gl.clear -> gl.clear2
     // because 'clear' collides with WebGLRenderTarget.clear(). Restore them.
     bundled = bundled.replace(/gl\.clear2\b/g, 'gl.clear');
@@ -316,6 +319,14 @@ async function buildPkg(pkg) {
     bundled = bundled.replace(/(?<![_a-zA-Z])EgretShaderLib\./g, 'EgretShaderLib2.');
     // Fix: esbuild renames WebGLUtils -> WebGLUtils2
     bundled = bundled.replace(/(?<![_a-zA-Z])WebGLUtils\./g, 'WebGLUtils2.');
+    
+    // Fix: setSound only updates local Sound var, but egret.Sound is a value copy.
+    // When $init runs after module load, setSound updates local var but not egret.Sound.
+    // Make setSound also update egret.Sound so it stays in sync.
+    bundled = bundled.replace(/function setSound\(cls\)\s*\{\s*Sound\s*=\s*cls;\s*\}/, 
+      'function setSound(cls) { Sound = cls; egret.Sound = cls; }');
+    bundled = bundled.replace(/function setVideo\(cls\)\s*\{\s*Video\s*=\s*cls;\s*\}/, 
+      'function setVideo(cls) { Video = cls; egret.Video = cls; }');
     
     // IMPORTANT: No automatic stub/rename detection here — it's too fragile.
     // All other esbuild renaming issues are fixed directly in the source code

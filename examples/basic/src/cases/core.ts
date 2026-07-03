@@ -523,4 +523,130 @@ export const coreCases: TestCaseDefinition[] = [
       return () => objects.forEach((o) => root.removeChild(o));
     },
   },
+  {
+    id: 'core-sound',
+    title: 'Core Sound: Load & Play Audio',
+    module: 'core',
+    run: ({ root, stage }) => {
+      const objects: egret.DisplayObject[] = [];
+
+      const title = new eui.Label();
+      title.x = 32; title.y = 116;
+      title.size = 20; title.textColor = 0x0f172a;
+      title.text = 'Sound: Load & Play Audio';
+      root.addChild(title); objects.push(title);
+
+      const status = new eui.Label();
+      status.x = 32; status.y = 150;
+      status.size = 15; status.textColor = 0x2563eb;
+      status.text = 'Loading test-tone.wav...';
+      root.addChild(status); objects.push(status);
+
+      const info = new eui.Label();
+      info.x = 32; info.y = 176;
+      info.size = 14; info.textColor = 0x334155;
+      info.lineSpacing = 6;
+      info.text = '';
+      root.addChild(info); objects.push(info);
+
+      // Play button (triangle)
+      const playBtn = new egret.Shape();
+      playBtn.x = 32; playBtn.y = 246;
+      const pg = playBtn.graphics;
+      pg.beginFill(0x059669);
+      pg.moveTo(0, 0);
+      pg.lineTo(44, 20);
+      pg.lineTo(0, 40);
+      pg.lineTo(0, 0);
+      pg.endFill();
+      playBtn.alpha = 0.35;
+      playBtn.touchEnabled = true;
+      root.addChild(playBtn); objects.push(playBtn);
+
+      // Stop button (square)
+      const stopBtn = new egret.Shape();
+      stopBtn.x = 96; stopBtn.y = 246;
+      const sg = stopBtn.graphics;
+      sg.beginFill(0xdc2626);
+      sg.drawRect(0, 0, 40, 40);
+      sg.endFill();
+      stopBtn.alpha = 0.35;
+      stopBtn.touchEnabled = true;
+      root.addChild(stopBtn); objects.push(stopBtn);
+
+      const playHint = new eui.Label();
+      playHint.x = 32; playHint.y = 292;
+      playHint.size = 12; playHint.textColor = 0x9ca3af;
+      playHint.text = '\u25B6 Play';
+      root.addChild(playHint); objects.push(playHint);
+
+      const stopHint = new eui.Label();
+      stopHint.x = 96; stopHint.y = 292;
+      stopHint.size = 12; stopHint.textColor = 0x9ca3af;
+      stopHint.text = '\u25A0 Stop';
+      root.addChild(stopHint); objects.push(stopHint);
+
+      const volLabel = new eui.Label();
+      volLabel.x = 32; volLabel.y = 322;
+      volLabel.size = 13; volLabel.textColor = 0x6b7280;
+      volLabel.text = 'Volume: 0.5';
+      root.addChild(volLabel); objects.push(volLabel);
+
+      let channel: any = null;
+
+      // Workaround: egret.Sound is undefined at module init time (value-copy race).
+      // Use egret.WebAudioSound directly which is properly initialized.
+      const Ctor = (egret as any).WebAudioSound || (egret as any).HtmlSound;
+      const sound: egret.Sound = new Ctor();
+
+      sound.addEventListener(egret.Event.COMPLETE, () => {
+        status.text = 'Loaded! Duration: ' + (sound.length).toFixed(1) + 's';
+        status.textColor = 0x059669;
+        playBtn.alpha = 1;
+        stopBtn.alpha = 1;
+        info.text = 'Tap Play to start';
+      }, root);
+
+      sound.addEventListener(egret.IOErrorEvent.IO_ERROR, () => {
+        status.text = 'Load Failed';
+        status.textColor = 0xdc2626;
+      }, root);
+
+      sound.load('/test-tone.wav');
+
+      playBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
+        if (channel) {
+          channel.stop();
+        }
+        channel = sound.play(0, 1);
+        channel.volume = 0.5;
+        info.text = 'Playing...';
+        info.textColor = 0x059669;
+
+        channel.addEventListener(egret.Event.SOUND_COMPLETE, () => {
+          info.text = 'Playback finished';
+          info.textColor = 0x6b7280;
+          channel = null;
+        }, root);
+      }, root);
+
+      stopBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
+        if (channel) {
+          channel.stop();
+          channel = null;
+          info.text = 'Stopped';
+          info.textColor = 0xdc2626;
+        }
+      }, root);
+
+      return () => {
+        if (channel) {
+          channel.stop();
+          channel = null;
+        }
+        sound.close();
+        objects.forEach((o) => root.removeChild(o));
+      };
+    },
+  },
 ];
