@@ -772,6 +772,9 @@ export const coreCases: TestCaseDefinition[] = [
         info.textColor = 0x6b7280;
       }, root);
 
+      // Disable fullscreen: render video inline on the Egret canvas
+      video.fullscreen = false;
+
       video.load('/test-video.mp4');
 
       playBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
