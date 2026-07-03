@@ -166,21 +166,21 @@ export const coreCases: TestCaseDefinition[] = [
       const normal = new egret.TextField();
       normal.x = 32; normal.y = y0 + 34;
       normal.size = 18; normal.textColor = 0x1e293b;
-      normal.text = 'Normal text — 你好世界';
+      normal.text = 'Normal text 你好世界';
       root.addChild(normal); labels.push(normal);
 
       const bold = new egret.TextField();
       bold.x = 32; bold.y = y0 + 64;
       bold.size = 22; bold.textColor = 0x2563eb;
       bold.bold = true;
-      bold.text = 'Bold text — Hello World';
+      bold.text = 'Bold text Hello World';
       root.addChild(bold); labels.push(bold);
 
       const italic = new egret.TextField();
       italic.x = 32; italic.y = y0 + 100;
       italic.size = 18; italic.textColor = 0xdc2626;
       italic.italic = true;
-      italic.text = 'Italic text — Lorem ipsum';
+      italic.text = 'Italic text Lorem ipsum';
       root.addChild(italic); labels.push(italic);
 
       const multiline = new egret.TextField();
@@ -188,7 +188,7 @@ export const coreCases: TestCaseDefinition[] = [
       multiline.size = 16; multiline.textColor = 0x475569;
       multiline.multiline = true;
       multiline.width = Math.min(400, stage.stageWidth - 64);
-      multiline.text = 'Multiline text: Line one\nLine two\nLine three — 多行文本测试';
+      multiline.text = 'Multiline text: Line one\nLine two\nLine three 多行文本测试';
       root.addChild(multiline); labels.push(multiline);
 
       return () => labels.forEach((l) => root.removeChild(l));

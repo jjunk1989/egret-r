@@ -474,9 +474,10 @@ if (callAsyncState.functionList.length > 0) {
     }
 
     /**
-     * 心跳计时器单例
+     * 心跳计时器单例（通过 sys 跨包共享）
      */
-    export let ticker: SystemTicker = new SystemTicker();
+    if (!sys.$ticker) sys.$ticker = new SystemTicker();
+    export let ticker: SystemTicker = sys.$ticker;
 
 /**
  * @private

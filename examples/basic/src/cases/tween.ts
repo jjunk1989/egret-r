@@ -1,7 +1,6 @@
 import { egret } from '@egret-r/core';
 import { eui } from '@egret-r/eui';
 import type { TestCaseDefinition } from './types';
-import { showCaseError } from './types';
 
 export const tweenCases: TestCaseDefinition[] = [
   {
@@ -9,19 +8,6 @@ export const tweenCases: TestCaseDefinition[] = [
     title: 'Tween + Ease',
     module: 'tween',
     run: async ({ root, stage }) => {
-      if (!egret.Tween || !egret.Ease) {
-        try {
-          await (0, eval)("import('@egret-r/tween')");
-        } catch {
-          showCaseError(
-            root,
-            'Tween module unavailable',
-            'Failed to load @egret-r/tween at runtime.',
-          );
-          return;
-        }
-      }
-
       const target = new egret.Shape();
       target.graphics.beginFill(0xdc2626);
       target.graphics.drawRoundRect(0, 0, 72, 72, 12, 12);
@@ -53,10 +39,6 @@ export const tweenCases: TestCaseDefinition[] = [
     title: 'Tween Multiple Parallel',
     module: 'tween',
     run: async ({ root, stage }) => {
-      if (!egret.Tween || !egret.Ease) {
-        try { await (0, eval)("import('@egret-r/tween')"); } catch { return; }
-      }
-
       const objects: egret.DisplayObject[] = [];
       const cx = stage.stageWidth / 2;
       const colors = [0x2563eb, 0xdc2626, 0x7c3aed, 0x059669, 0xf59e0b];

@@ -3,7 +3,6 @@
 
 import { EventDispatcher } from "../../egret/events/EventDispatcher";
 import { getTimer } from "../../egret/utils/getTimer";
-import { ticker } from "../../egret/player/SystemTicker";
 import { Ease } from "./Ease";
 
 
@@ -269,7 +268,7 @@ import { Ease } from "./Ease";
                 tweens.push(tween);
                 if (!Tween._inited) {
                     Tween._lastTime = getTimer();
-                    ticker.$startTick(Tween.tick, null);
+                    sys.$ticker.$startTick(Tween.tick, null);
                     Tween._inited = true;
                 }
             } else {

@@ -16,8 +16,6 @@ import { tweenCases } from './cases/tween';
 import { gameCases } from './cases/game';
 import { socketCases } from './cases/socket';
 
-const _E = eui;
-
 const TEST_CHANGE_EVENT = 'egret-test-change';
 const QUERY_KEY = 'case';
 
@@ -151,24 +149,24 @@ class Main extends egret.DisplayObjectContainer {
   }
 
   private createHeader(w: number, h: number): void {
-    this.headerGroup = new _E.Group();
+    this.headerGroup = new eui.Group();
     this.headerGroup.x = 24;
     this.headerGroup.y = 18;
     this.addChild(this.headerGroup);
 
-    const title = new _E.Label();
+    const title = new eui.Label();
     title.text = 'Egret Basic Testbed';
     title.size = 30;
     title.textColor = 0x0f172a;
     this.headerGroup.addChild(title);
 
-    this.caseTitle = new _E.Label();
+    this.caseTitle = new eui.Label();
     this.caseTitle.y = 40;
     this.caseTitle.size = 20;
     this.caseTitle.textColor = 0x1d4ed8;
     this.headerGroup.addChild(this.caseTitle);
 
-    this.caseMeta = new _E.Label();
+    this.caseMeta = new eui.Label();
     this.caseMeta.y = 66;
     this.caseMeta.size = 15;
     this.caseMeta.textColor = 0x334155;
@@ -239,6 +237,6 @@ window.addEventListener('DOMContentLoaded', () => {
     renderMode: 'webgl',
     showFPS: true,
     showLog: true,
-    maxTouches: 0, // Disable unnecessary input handling
+    maxTouches: 0,
   });
 });

@@ -99,7 +99,6 @@ import { WebGLUtils } from "./rendering/webgl/WebGLUtils";
                 }
                 DisplayList.$canvasScaleFactor = canvasScaleFactor;
 
-                let ticker = ticker;
                 startTicker(ticker);
                 if (options.screenAdapter) {
                     setScreenAdapter(options.screenAdapter);
