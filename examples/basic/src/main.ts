@@ -129,11 +129,9 @@ class Main extends egret.DisplayObjectContainer {
 
     this.sceneRoot.y = 0;
     this.addChild(this.sceneRoot);
-    window['__egret_main_kids'] = this.numChildren;
 
     window.addEventListener(TEST_CHANGE_EVENT, this.onCaseChange as EventListener);
     this.applyCase(resolveInitialCaseId());
-    window['__egret_main_kids2'] = this.numChildren;
   }
 
   private drawBackground(w: number, h: number): void {

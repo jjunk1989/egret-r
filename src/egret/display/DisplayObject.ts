@@ -210,9 +210,7 @@ import { CustomFilter } from "../filters/CustomFilter";
             self.$stage = stage;
             self.$nestLevel = nestLevel;
             self.$hasAddToStage = true;
-            window['__egret_evt'] = { action: 'onAddToStage', name: self.constructor.name, listBefore: egret.Sprite.$EVENT_ADD_TO_STAGE_LIST.length };
             egret.Sprite.$EVENT_ADD_TO_STAGE_LIST.push(self);
-            window['__egret_evt2'] = { action: 'onAddToStage_done', name: self.constructor.name, listAfter: egret.Sprite.$EVENT_ADD_TO_STAGE_LIST.length };
         }
 
         /**
