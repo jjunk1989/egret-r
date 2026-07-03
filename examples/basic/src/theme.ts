@@ -217,17 +217,36 @@ export function createRadioButton(label?: string): eui.RadioButton {
   const rb = new eui.RadioButton();
   rb.skinName = RadioButtonSkin;
   if (label !== undefined) rb.label = label;
-  // Toggle inner dot visibility via alpha
-  const toggleDot = () => {
-    const skin = rb.skin as RadioButtonSkin;
+
+  // Helper: update inner dot alpha for a specific RadioButton
+  const updateDot = (r: eui.RadioButton) => {
+    const skin = r.skin as RadioButtonSkin;
     if (skin) {
       for (const el of skin.$elementsContent) {
-        if (el.name === 'innerDot') { el.alpha = rb.selected ? 1 : 0; }
+        if (el.name === 'innerDot') { el.alpha = r.selected ? 1 : 0; }
       }
     }
   };
-  rb.addEventListener(egret.Event.COMPLETE, () => toggleDot(), rb);
-  rb.addEventListener(egret.Event.CHANGE, () => toggleDot(), rb);
+
+  // When skin is attached, sync initial state
+  rb.addEventListener(egret.Event.COMPLETE, () => updateDot(rb), rb);
+
+  // When group selection changes, update ALL buttons in the group
+  const onGroupChange = () => {
+    const g = rb.group;
+    if (g) {
+      for (let i = 0; i < g.numRadioButtons; i++) {
+        updateDot(g.getRadioButtonAt(i));
+      }
+    }
+  };
+
+  // Listen on group — CHANGE fires on the group when any radio in it changes
+  const group = rb.group;
+  if (group) {
+    group.addEventListener(egret.Event.CHANGE, onGroupChange, rb);
+  }
+
   return rb;
 }
 
