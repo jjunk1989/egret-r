@@ -37,3 +37,13 @@ declare const $getVirtualUrl: (url: string) => string;
 declare function tr(code: number, ...params: any[]): string;
 declare function warn(message?: any, ...optionalParams: any[]): void;
 declare function getQualifiedClassName(o: any): string;
+
+// -- Global aliases (no proper export in source) --
+
+/** Alias for egret.is, set at runtime. */
+declare const _is: (instance: any, typeName: string) => boolean;
+
+// -- EXMLParser private helpers (not exported from EXMLParser.ts) --
+
+declare function toXMLString(node: any): string;
+declare function getPropertyStr(child: any): string;

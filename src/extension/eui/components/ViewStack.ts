@@ -12,6 +12,7 @@ import { LayoutBase } from "../layouts/supportClasses/LayoutBase";
 import { PropertyEvent } from "../events/PropertyEvent";
 import { CollectionEventKind } from "../events/CollectionEventKind";
 import { ListBase } from "./supportClasses/ListBase";
+import { is } from "../../../egret/utils/is";
 
 
     /**

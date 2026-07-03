@@ -7,7 +7,7 @@ import { registerClass } from "../../../egret/utils/registerClass";
 import { log } from "../../../egret/system/Console";
 import { Skin } from "../components/Skin";
 import { AddPosition } from "../states/AddItems";
-import { EXMLConfig } from "./EXMLConfig";
+import { EXMLConfig, NS_S, NS_W } from "./EXMLConfig";
 import { EXClass, EXState, EXBinding, EXCodeBlock, EXFunction, EXVariable, EXSetProperty, EXAddItems, EXSetStateProperty } from "./CodeFactory";
 import { $error } from "../../../Defines.debug";
 import { DEBUG } from "../../../Defines.debug";

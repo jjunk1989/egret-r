@@ -17,6 +17,9 @@ import { UIKeys, UIComponent } from "../core/UIComponent";
 import { VerticalLayout } from "../layouts/VerticalLayout";
 import { $TempRectangle } from "../../../egret/geom/Rectangle";
 import { $warn } from "../../../Defines.debug";
+import { CollectionEventKind } from "../events/CollectionEventKind";
+import { ItemRenderer } from "./ItemRenderer";
+import { JustifyAlign } from "../layouts/JustifyAlign";
 
 
     /**

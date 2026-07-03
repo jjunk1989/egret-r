@@ -18,6 +18,7 @@ import { Group } from "./Group";
 import { Image } from "./Image";
 import { Skin } from "./Skin";
 import { registerProperty } from "../utils/registerProperty";
+import { Timer } from "../../../egret/utils/Timer";
 
 
     let scrollerThrowEvent:ScrollerThrowEvent;

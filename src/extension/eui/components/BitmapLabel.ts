@@ -7,6 +7,8 @@ import { Rectangle } from "../../../egret/geom/Rectangle";
 import { UIComponent, UIComponentImpl, UIKeys, implementUIComponent } from "../core/UIComponent";
 import { registerBindable } from "../utils/registerBindable";
 import { PropertyEvent } from "../events/PropertyEvent";
+import { IDisplayText } from "../core/IDisplayText";
+import { getAssets } from "../core/UIComponent";
 
     let UIImpl = UIComponentImpl;
     /**

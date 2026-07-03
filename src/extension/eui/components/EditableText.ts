@@ -13,6 +13,7 @@ import { Component } from "./Component";
 import { registerBindable } from "../utils/registerBindable";
 import { UIComponentImpl, UIKeys, implementUIComponent, UIComponent } from "../core/UIComponent";
 import { PropertyEvent } from "../events/PropertyEvent";
+import { IDisplayText } from "../core/IDisplayText";
 
     /**
      * @private

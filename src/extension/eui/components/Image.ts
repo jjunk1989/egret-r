@@ -13,6 +13,8 @@ import { UIComponent, UIKeys, UIComponentImpl, implementUIComponent } from "../c
 import { NormalBitmapNode } from "../../../egret/player/nodes/NormalBitmapNode";
 import { BitmapNode } from "../../../egret/player/nodes/BitmapNode";
 import { $warn } from "../../../Defines.debug";
+import { is } from "../../../egret/utils/is";
+import { getAssets } from "../core/UIComponent";
 
 
     /**

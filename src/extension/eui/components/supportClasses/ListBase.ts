@@ -10,6 +10,7 @@ import { IItemRenderer } from "../../core/IItemRenderer";
 import { CollectionEvent } from "../../events/CollectionEvent";
 import { registerBindable } from "../../utils/registerBindable";
 import { PropertyEvent } from "../../events/PropertyEvent";
+import { CollectionEventKind } from "../../events/CollectionEventKind";
 
 
     /**

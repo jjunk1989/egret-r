@@ -6,6 +6,7 @@ import { TouchEvent } from "../../../egret/events/TouchEvent";
 import { ListBaseKeys, ListBase } from "./supportClasses/ListBase";
 import { IItemRenderer } from "../core/IItemRenderer";
 import { PropertyEvent } from "../events/PropertyEvent";
+import { ItemTapEvent } from "../events/ItemTapEvent";
 
 
     /**

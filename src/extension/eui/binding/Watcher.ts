@@ -6,6 +6,7 @@ import { PropertyEvent } from "../events/PropertyEvent";
 import { $error } from "../../../Defines.debug";
 import { DEBUG } from "../../../Defines.debug";
 import { registerBindable } from "../utils/registerBindable";
+import { is } from "../../../egret/utils/is";
 
 
     /**

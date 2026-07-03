@@ -3,6 +3,7 @@
 
 import { Skin } from "../components/Skin";
 import { Watcher } from "./Watcher";
+import { is } from "../../../egret/utils/is";
 
 
     function joinValues(templates: any[]): any {

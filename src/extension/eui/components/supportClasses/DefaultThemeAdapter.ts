@@ -5,6 +5,7 @@ import { Event } from "../../../../egret/events/Event";
 import { IOErrorEvent } from "../../../../egret/events/IOErrorEvent";
 import { HttpResponseType } from "../../../../egret/net/HttpResponseType";
 import { IThemeAdapter } from "../../core/IThemeAdapter";
+import { HttpRequest } from "../../../../egret/net/HttpRequest";
 
 
     /**
