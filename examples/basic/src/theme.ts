@@ -178,6 +178,20 @@ export function createToggleButton(label?: string): eui.ToggleButton {
   const btn = new eui.ToggleButton();
   btn.skinName = ToggleButtonSkin;
   if (label !== undefined) btn.label = label;
+  // Toggle background color on state change
+  const toggleBg = () => {
+    const skin = btn.skin as ToggleButtonSkin;
+    if (skin && skin.$elementsContent && skin.$elementsContent[0]) {
+      const bg = skin.$elementsContent[0] as egret.Shape;
+      bg.graphics.clear();
+      bg.graphics.beginFill(btn.selected ? 0x2563eb : 0x6b7280);
+      bg.graphics.drawRoundRect(0, 0, 200, 50, 8, 8);
+      bg.graphics.endFill();
+      bg.$renderDirty = true;
+    }
+  };
+  btn.addEventListener(egret.Event.COMPLETE, () => toggleBg(), btn);
+  btn.addEventListener(egret.Event.CHANGE, () => toggleBg(), btn);
   return btn;
 }
 
@@ -185,6 +199,17 @@ export function createCheckBox(label?: string): eui.CheckBox {
   const cb = new eui.CheckBox();
   cb.skinName = CheckBoxSkin;
   if (label !== undefined) cb.label = label;
+  // Toggle checkmark visibility on state change
+  const toggleCheck = () => {
+    const skin = cb.skin as CheckBoxSkin;
+    if (skin) {
+      for (const el of skin.$elementsContent) {
+        if (el.name === 'checkMark') { el.visible = cb.selected; }
+      }
+    }
+  };
+  cb.addEventListener(egret.Event.COMPLETE, () => toggleCheck(), cb);
+  cb.addEventListener(egret.Event.CHANGE, () => toggleCheck(), cb);
   return cb;
 }
 
@@ -192,6 +217,17 @@ export function createRadioButton(label?: string): eui.RadioButton {
   const rb = new eui.RadioButton();
   rb.skinName = RadioButtonSkin;
   if (label !== undefined) rb.label = label;
+  // Toggle inner dot visibility on state change
+  const toggleDot = () => {
+    const skin = rb.skin as RadioButtonSkin;
+    if (skin) {
+      for (const el of skin.$elementsContent) {
+        if (el.name === 'innerDot') { el.visible = rb.selected; }
+      }
+    }
+  };
+  rb.addEventListener(egret.Event.COMPLETE, () => toggleDot(), rb);
+  rb.addEventListener(egret.Event.CHANGE, () => toggleDot(), rb);
   return rb;
 }
 
