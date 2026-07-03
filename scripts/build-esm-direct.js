@@ -324,6 +324,10 @@ async function buildPkg(pkg) {
     // in HtmlSoundChannel (which is bundled before HtmlSound).
     bundled = bundled.replace(/(?<![_a-zA-Z])HtmlSound\./g, 'HtmlSound2.');
     
+    // Fix: esbuild renames getPrefixStyleName -> getPrefixStyleName2 but leaves
+    // stale references in WebVideo.goFullscreen.
+    bundled = bundled.replace(/(?<![_a-zA-Z])getPrefixStyleName\(/g, 'getPrefixStyleName2(');
+    
     // Fix: sys.$pushSoundChannel / sys.$popSoundChannel are bare functions,
     // not attached to sys. Replace calls with direct function calls.
     bundled = bundled.replace(/sys\.\$pushSoundChannel\(/g, '$pushSoundChannel(');

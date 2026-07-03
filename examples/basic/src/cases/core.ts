@@ -654,4 +654,148 @@ export const coreCases: TestCaseDefinition[] = [
       };
     },
   },
+  {
+    id: 'core-video',
+    title: 'Core Video: Load & Play Video',
+    module: 'core',
+    run: ({ root, stage }) => {
+      const objects: egret.DisplayObject[] = [];
+
+      const title = new eui.Label();
+      title.x = 32; title.y = 116;
+      title.size = 20; title.textColor = 0x0f172a;
+      title.text = 'Video: Load & Play Video';
+      root.addChild(title); objects.push(title);
+
+      const status = new eui.Label();
+      status.x = 32; status.y = 150;
+      status.size = 15; status.textColor = 0x2563eb;
+      status.text = 'Loading test-video.mp4...';
+      root.addChild(status); objects.push(status);
+
+      const info = new eui.Label();
+      info.x = 32; info.y = 176;
+      info.size = 14; info.textColor = 0x334155;
+      info.lineSpacing = 6;
+      info.text = '';
+      root.addChild(info); objects.push(info);
+
+      // Video display area (blue placeholder)
+      const videoArea = new egret.Shape();
+      videoArea.x = 32; videoArea.y = 210;
+      const vg = videoArea.graphics;
+      vg.beginFill(0x1e293b);
+      vg.drawRect(0, 0, 320, 240);
+      vg.endFill();
+      root.addChild(videoArea); objects.push(videoArea);
+
+      // Use egret.WebVideo directly (egret.Video has same value-copy race as Sound)
+      const VideoCtor = (egret as any).WebVideo;
+      const video: any = new VideoCtor();
+      video.x = 32; video.y = 210;
+      video.width = 320;
+      video.height = 240;
+      root.addChild(video); objects.push(video);
+
+      // Play button
+      const playBtn = new egret.Shape();
+      playBtn.x = 32; playBtn.y = 468;
+      const pg = playBtn.graphics;
+      pg.beginFill(0x059669);
+      pg.moveTo(0, 0);
+      pg.lineTo(44, 20);
+      pg.lineTo(0, 40);
+      pg.lineTo(0, 0);
+      pg.endFill();
+      playBtn.alpha = 0.35;
+      playBtn.touchEnabled = true;
+      root.addChild(playBtn); objects.push(playBtn);
+
+      // Pause button
+      const pauseBtn = new egret.Shape();
+      pauseBtn.x = 96; pauseBtn.y = 468;
+      const psg = pauseBtn.graphics;
+      psg.beginFill(0xd97706);
+      psg.drawRect(0, 0, 14, 40);
+      psg.drawRect(22, 0, 14, 40);
+      psg.endFill();
+      pauseBtn.alpha = 0.35;
+      pauseBtn.touchEnabled = true;
+      root.addChild(pauseBtn); objects.push(pauseBtn);
+
+      // Stop button
+      const stopBtn = new egret.Shape();
+      stopBtn.x = 152; stopBtn.y = 468;
+      const sg = stopBtn.graphics;
+      sg.beginFill(0xdc2626);
+      sg.drawRect(0, 0, 40, 40);
+      sg.endFill();
+      stopBtn.alpha = 0.35;
+      stopBtn.touchEnabled = true;
+      root.addChild(stopBtn); objects.push(stopBtn);
+
+      // Button labels
+      const playHint = new eui.Label();
+      playHint.x = 32; playHint.y = 514;
+      playHint.size = 12; playHint.textColor = 0x9ca3af;
+      playHint.text = '\u25B6 Play';
+      root.addChild(playHint); objects.push(playHint);
+
+      const pauseHint = new eui.Label();
+      pauseHint.x = 96; pauseHint.y = 514;
+      pauseHint.size = 12; pauseHint.textColor = 0x9ca3af;
+      pauseHint.text = '\u23F8 Pause';
+      root.addChild(pauseHint); objects.push(pauseHint);
+
+      const stopHint = new eui.Label();
+      stopHint.x = 152; stopHint.y = 514;
+      stopHint.size = 12; stopHint.textColor = 0x9ca3af;
+      stopHint.text = '\u25A0 Stop';
+      root.addChild(stopHint); objects.push(stopHint);
+
+      video.addEventListener(egret.Event.COMPLETE, () => {
+        status.text = 'Loaded! 320x240, 3s';
+        status.textColor = 0x059669;
+        playBtn.alpha = 1;
+        pauseBtn.alpha = 1;
+        stopBtn.alpha = 1;
+        info.text = 'Tap Play to start';
+      }, root);
+
+      video.addEventListener(egret.IOErrorEvent.IO_ERROR, () => {
+        status.text = 'Load Failed';
+        status.textColor = 0xdc2626;
+      }, root);
+
+      video.addEventListener(egret.Event.ENDED, () => {
+        info.text = 'Playback ended';
+        info.textColor = 0x6b7280;
+      }, root);
+
+      video.load('/test-video.mp4');
+
+      playBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
+        video.play(0, false);
+        info.text = 'Playing...';
+        info.textColor = 0x059669;
+      }, root);
+
+      pauseBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
+        video.pause();
+        info.text = 'Paused';
+        info.textColor = 0xd97706;
+      }, root);
+
+      stopBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
+        video.close();
+        info.text = 'Stopped';
+        info.textColor = 0xdc2626;
+      }, root);
+
+      return () => {
+        video.close();
+        objects.forEach((o) => root.removeChild(o));
+      };
+    },
+  },
 ];
