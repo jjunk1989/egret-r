@@ -311,10 +311,6 @@ async function buildPkg(pkg) {
     // Fix: esbuild renames ProgressEvent -> ProgressEvent2. Fix static method calls.
     bundled = bundled.replace(/(?<![_a-zA-Z])ProgressEvent\.([A-Z])/g, 'ProgressEvent2.$1');
     
-    // Fix: esbuild renames WebGL API calls like gl.clear -> gl.clear2
-    // because 'clear' collides with WebGLRenderTarget.clear(). Restore them.
-    bundled = bundled.replace(/gl\.clear2\b/g, 'gl.clear');
-    
     // Fix: esbuild renames EgretShaderLib -> EgretShaderLib2 (browser global collision)
     bundled = bundled.replace(/(?<![_a-zA-Z])EgretShaderLib\./g, 'EgretShaderLib2.');
     // Fix: esbuild renames WebGLUtils -> WebGLUtils2
@@ -328,22 +324,15 @@ async function buildPkg(pkg) {
     // stale references in WebVideo.goFullscreen.
     bundled = bundled.replace(/(?<![_a-zA-Z])getPrefixStyleName\(/g, 'getPrefixStyleName2(');
     
-    // Fix: sys.$pushSoundChannel / sys.$popSoundChannel are bare functions,
-    // not attached to sys. Replace calls with direct function calls.
-    bundled = bundled.replace(/sys\.\$pushSoundChannel\(/g, '$pushSoundChannel(');
-    bundled = bundled.replace(/sys\.\$popSoundChannel\(/g, '$popSoundChannel(');
+    // === FIXES ALREADY RESOLVED AT SOURCE LEVEL ===
+    // - sys.$pushSoundChannel / sys.$popSoundChannel: now use bare function calls
+    // - setSound / setVideo: now update egret.Sound / egret.Video in source
+    // - WebGLRenderTarget.clear(): renamed to reset() to avoid gl.clear collision
     
-    // Fix: setSound only updates local Sound var, but egret.Sound is a value copy.
-    // When $init runs after module load, setSound updates local var but not egret.Sound.
-    // Make setSound also update egret.Sound so it stays in sync.
-    bundled = bundled.replace(/function setSound\(cls\)\s*\{\s*Sound\s*=\s*cls;\s*\}/, 
-      'function setSound(cls) { Sound = cls; egret.Sound = cls; }');
-    bundled = bundled.replace(/function setVideo\(cls\)\s*\{\s*Video\s*=\s*cls;\s*\}/, 
-      'function setVideo(cls) { Video = cls; egret.Video = cls; }');
-    
-    // IMPORTANT: No automatic stub/rename detection here — it's too fragile.
-    // All other esbuild renaming issues are fixed directly in the source code
-    // by using sys.Xxx patterns that are protected from renaming.
+    // === FIXES UNFIXABLE AT SOURCE (egret.X = X namespace pattern) ===
+    // The following renames are caused by esbuild seeing the same name used as
+    // both a function definition and a property in egret.X = X assignments.
+    // This is an architectural constraint of the namespace pattern.
 
     var header = 'var egret = globalThis.egret || {sys:{}, pro:{}}, eui = globalThis.eui || {}, sys = egret.sys;\n';
     header += 'var __global = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : {};\n';

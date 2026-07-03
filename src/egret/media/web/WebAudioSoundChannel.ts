@@ -3,7 +3,7 @@
 
 import { EventDispatcher } from "../../events/EventDispatcher";
 import { SoundChannel } from "../SoundChannel";
-import { Sound } from "../Sound";
+import { $popSoundChannel } from "../Sound";
 import { Event } from "../../events/Event";
 import { AudioBufferSourceNodeEgret } from "./WebAudioSound";
 import { $error } from "../../../Defines.debug";
@@ -122,7 +122,7 @@ import { $error } from "../../../Defines.debug";
             }
 
             if (!this.isStopped) {
-                sys.$popSoundChannel(this);
+                $popSoundChannel(this);
             }
 
             this.isStopped = true;

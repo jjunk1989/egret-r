@@ -3,7 +3,7 @@
 
 import { log } from "../../system/Console";
 import { EventDispatcher } from "../../events/EventDispatcher";
-import { Sound } from "../Sound";
+import { $pushSoundChannel } from "../Sound";
 import { IOErrorEvent } from "../../events/IOErrorEvent";
 import { Event } from "../../events/Event";
 import { SoundChannel } from "../SoundChannel";
@@ -217,7 +217,7 @@ export interface AudioBufferSourceNodeEgret {
             channel.$startTime = startTime;
             channel.$play();
 
-            sys.$pushSoundChannel(channel);
+            $pushSoundChannel(channel);
 
             return channel;
         }

@@ -1006,7 +1006,7 @@ import { DEBUG } from "../../../../Defines.debug";
                     if (this.activatedBuffer) {
                         let target = this.activatedBuffer.rootRenderTarget;
                         if (target.width != 0 || target.height != 0) {
-                            target.clear(true);
+                            target.reset(true);
                         }
                     }
                     break;

@@ -112,7 +112,7 @@ import { WebGLRenderContext } from "./WebGLRenderContext";
             */
         }
 
-        public clear(bind?: boolean) {
+        public reset(bind?: boolean) {
             let gl = this.gl;
             if (bind) {
                 this.activate();

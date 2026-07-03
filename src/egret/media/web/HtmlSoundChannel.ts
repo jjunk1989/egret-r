@@ -103,7 +103,7 @@ import { $error } from "../../../Defines.debug";
                 return;
 
             if (!this.isStopped) {
-                sys.$popSoundChannel(this);
+                $popSoundChannel(this);
             }
             this.isStopped = true;
 

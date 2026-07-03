@@ -2,7 +2,7 @@
 // Copyright (c) 2014-present, Egret Technology.
 
 import { EventDispatcher } from "../../events/EventDispatcher";
-import { Sound } from "../Sound";
+import { $pushSoundChannel } from "../Sound";
 import { Event } from "../../events/Event";
 import { IOErrorEvent } from "../../events/IOErrorEvent";
 import { SoundChannel } from "../SoundChannel";
@@ -170,7 +170,7 @@ import { DEBUG } from "../../../Defines.debug";
             channel.$startTime = startTime;
             channel.$play();
 
-            sys.$pushSoundChannel(channel);
+            $pushSoundChannel(channel);
 
             return channel;
         }
