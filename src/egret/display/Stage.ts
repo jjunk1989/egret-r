@@ -11,6 +11,8 @@ import { Sprite } from "./Sprite";
 import { invalidateRenderFlag, ticker } from "../player/SystemTicker";
 import { DEBUG } from "../../Defines.debug";
 
+declare const egret_native: any;
+
     /**
      * The Stage class represents the main drawing area.The Stage object is not globally accessible. You need to access
      * it through the stage property of a DisplayObject instance.<br/>

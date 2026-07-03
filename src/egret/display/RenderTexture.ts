@@ -9,6 +9,8 @@ import { nativeRender } from "../player/Player";
 import { RenderBuffer } from "../player/RenderBuffer";
 import { systemRenderer } from "../player/SystemRenderer";
 
+declare const egret_native: any;
+
 
     /**
      * RenderTexture is a dynamic texture

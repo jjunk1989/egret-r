@@ -8,6 +8,10 @@ import { WebGLUtils } from "../web/rendering/webgl/WebGLUtils";
 import { createMap } from "../utils/DataStructure";
 import { HashObject, Nullable } from "../utils/HashObject";
 import { DisplayObject } from "./DisplayObject";
+import { sys } from "../system/SysData";
+import { Capabilities } from "../system/Capabilities";
+
+declare const egret_native: any;
 
 
     //refactor
