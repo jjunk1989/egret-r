@@ -178,8 +178,7 @@ export function createToggleButton(label?: string): eui.ToggleButton {
   const btn = new eui.ToggleButton();
   btn.skinName = ToggleButtonSkin;
   if (label !== undefined) btn.label = label;
-  // Toggle background color on state change
-  const toggleBg = () => {
+  const syncBg = () => {
     const skin = btn.skin as ToggleButtonSkin;
     if (skin && skin.$elementsContent && skin.$elementsContent[0]) {
       const bg = skin.$elementsContent[0] as egret.Shape;
@@ -190,8 +189,10 @@ export function createToggleButton(label?: string): eui.ToggleButton {
       bg.$renderDirty = true;
     }
   };
-  btn.addEventListener(egret.Event.COMPLETE, () => toggleBg(), btn);
-  btn.addEventListener(egret.Event.CHANGE, () => toggleBg(), btn);
+  btn.addEventListener(egret.Event.COMPLETE, syncBg, btn);
+  btn.addEventListener('propertyChange', (e: any) => {
+    if (e.property === 'selected') syncBg();
+  }, btn);
   return btn;
 }
 
@@ -199,8 +200,7 @@ export function createCheckBox(label?: string): eui.CheckBox {
   const cb = new eui.CheckBox();
   cb.skinName = CheckBoxSkin;
   if (label !== undefined) cb.label = label;
-  // Toggle checkmark visibility via alpha
-  const toggleCheck = () => {
+  const syncCheck = () => {
     const skin = cb.skin as CheckBoxSkin;
     if (skin) {
       for (const el of skin.$elementsContent) {
@@ -208,8 +208,10 @@ export function createCheckBox(label?: string): eui.CheckBox {
       }
     }
   };
-  cb.addEventListener(egret.Event.COMPLETE, () => toggleCheck(), cb);
-  cb.addEventListener(egret.Event.CHANGE, () => toggleCheck(), cb);
+  cb.addEventListener(egret.Event.COMPLETE, syncCheck, cb);
+  cb.addEventListener('propertyChange', (e: any) => {
+    if (e.property === 'selected') syncCheck();
+  }, cb);
   return cb;
 }
 
@@ -218,34 +220,23 @@ export function createRadioButton(label?: string): eui.RadioButton {
   rb.skinName = RadioButtonSkin;
   if (label !== undefined) rb.label = label;
 
-  // Helper: update inner dot alpha for a specific RadioButton
-  const updateDot = (r: eui.RadioButton) => {
-    const skin = r.skin as RadioButtonSkin;
+  const syncDot = () => {
+    const skin = rb.skin as RadioButtonSkin;
     if (skin) {
       for (const el of skin.$elementsContent) {
-        if (el.name === 'innerDot') { el.alpha = r.selected ? 1 : 0; }
+        if (el.name === 'innerDot') { el.alpha = rb.selected ? 1 : 0; }
       }
     }
   };
 
-  // When skin is attached, sync initial state
-  rb.addEventListener(egret.Event.COMPLETE, () => updateDot(rb), rb);
+  // COMPLETE: skin attached, sync initial state
+  rb.addEventListener(egret.Event.COMPLETE, syncDot, rb);
 
-  // When group selection changes, update ALL buttons in the group
-  const onGroupChange = () => {
-    const g = rb.group;
-    if (g) {
-      for (let i = 0; i < g.numRadioButtons; i++) {
-        updateDot(g.getRadioButtonAt(i));
-      }
-    }
-  };
-
-  // Listen on group — CHANGE fires on the group when any radio in it changes
-  const group = rb.group;
-  if (group) {
-    group.addEventListener(egret.Event.CHANGE, onGroupChange, rb);
-  }
+  // propertyChange: fires on EACH radio button when selected changes
+  // (including deselection by group, unlike Event.CHANGE)
+  rb.addEventListener('propertyChange', (e: any) => {
+    if (e.property === 'selected') syncDot();
+  }, rb);
 
   return rb;
 }
