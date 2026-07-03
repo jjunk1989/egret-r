@@ -595,13 +595,12 @@ export const coreCases: TestCaseDefinition[] = [
       let channel: any = null;
 
       // Runtime polyfill: bridge sys.$pushSoundChannel / sys.$popSoundChannel
-      // (esbuild renames these; ensure they exist on sys regardless of build)
       const _sys = egret.sys as any;
-      if (!_sys.$pushSoundChannel) _sys.$pushSoundChannel = (egret as any).$pushSoundChannel;
-      if (!_sys.$popSoundChannel) _sys.$popSoundChannel = (egret as any).$popSoundChannel;
+      if (!_sys.$pushSoundChannel) _sys.$pushSoundChannel = egret.$pushSoundChannel;
+      if (!_sys.$popSoundChannel) _sys.$popSoundChannel = egret.$popSoundChannel;
 
       // Use the engine's configured audio class (HtmlSound for HTML5 audio)
-      const SoundCtor = (egret as any).HtmlSound || (egret as any).WebAudioSound;
+      const SoundCtor = egret.HtmlSound || egret.WebAudioSound;
       const sound: egret.Sound = new SoundCtor();
 
       sound.addEventListener(egret.Event.COMPLETE, () => {
@@ -690,8 +689,7 @@ export const coreCases: TestCaseDefinition[] = [
       root.addChild(videoArea); objects.push(videoArea);
 
       // Use egret.WebVideo directly (egret.Video has same value-copy race as Sound)
-      const VideoCtor = (egret as any).WebVideo;
-      const video: any = new VideoCtor();
+      const video = new egret.WebVideo();
       video.x = 32; video.y = 210;
       video.width = 320;
       video.height = 240;
