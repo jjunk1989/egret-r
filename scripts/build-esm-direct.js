@@ -331,6 +331,19 @@ async function buildPkg(pkg) {
     }
     bundled = lines.join('\n');
 
+    // Fix: const enum members accessed via sys.*Keys — esbuild can't inline
+    // These through namespace lookups. Replace with numeric values.
+    // ListBaseKeys (extension/eui/components/supportClasses/ListBase.ts)
+    bundled = bundled.replace(/sys\.ListBaseKeys\.requireSelection\b/g, '0');
+    bundled = bundled.replace(/sys\.ListBaseKeys\.requireSelectionChanged\b/g, '1');
+    bundled = bundled.replace(/sys\.ListBaseKeys\.proposedSelectedIndex\b/g, '2');
+    bundled = bundled.replace(/sys\.ListBaseKeys\.selectedIndex\b/g, '3');
+    bundled = bundled.replace(/sys\.ListBaseKeys\.dispatchChangeAfterSelection\b/g, '4');
+    bundled = bundled.replace(/sys\.ListBaseKeys\.pendingSelectedItem\b/g, '5');
+    bundled = bundled.replace(/sys\.ListBaseKeys\.selectedIndexAdjusted\b/g, '6');
+    bundled = bundled.replace(/sys\.ListBaseKeys\.touchDownItemRenderer\b/g, '7');
+    bundled = bundled.replace(/sys\.ListBaseKeys\.touchCancle\b/g, '8');
+
     var header = 'var egret = globalThis.egret || {sys:{}, pro:{}}, eui = globalThis.eui || {}, sys = egret.sys;\n';
     header += 'var __global = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : {};\n';
     header += 'var global = __global;\n';
