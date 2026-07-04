@@ -2,6 +2,7 @@ import { egret } from '@egret-r/core';
 import { eui } from '@egret-r/eui';
 import '@egret-r/game';
 import '@egret-r/tween';
+import { createStartButton } from './startButton';
 
 class Main extends egret.DisplayObjectContainer {
   private objects: egret.DisplayObject[] = [];
@@ -36,7 +37,11 @@ class Main extends egret.DisplayObjectContainer {
 
     this.addRandom(); this.addRandom(); this.drawGrid();
 
+    // Start button — blocks input until clicked
+    const { onClick } = createStartButton(root, 480, 700, 'Start');
+
     const onKey = (e: KeyboardEvent) => {
+      if (this.gameOver) return;
       if (e.key === 'ArrowLeft') this.move('left');
       else if (e.key === 'ArrowRight') this.move('right');
       else if (e.key === 'ArrowUp') this.move('up');

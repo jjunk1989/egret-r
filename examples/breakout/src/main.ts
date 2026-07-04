@@ -2,6 +2,7 @@ import { egret } from '@egret-r/core';
 import { eui } from '@egret-r/eui';
 import '@egret-r/game';
 import '@egret-r/tween';
+import { createStartButton } from './startButton';
 
 class Main extends egret.DisplayObjectContainer {
   private objects: egret.DisplayObject[] = [];
@@ -56,11 +57,8 @@ class Main extends egret.DisplayObjectContainer {
     };
     drawBricks();
 
-    const tip = new egret.TextField();
-    tip.text = '← → Arrow keys or move mouse\nClick to start';
-    tip.size = 14; tip.textColor = 0x94a3b8; tip.lineSpacing = 4; tip.textAlign = egret.HorizontalAlign.CENTER;
-    tip.x = this.W / 2 - 130; tip.y = this.H / 2 + 40; tip.width = 260;
-    root.addChild(tip); this.objects.push(tip);
+    const { onClick } = createStartButton(root, this.W, this.H, 'Start');
+    onClick.then(() => { this.running = true; });
 
     let mouseActive = false;
     stage.addEventListener(egret.TouchEvent.TOUCH_MOVE, (e) => { mouseActive = true; this.paddleX = e.stageX; }, root);
@@ -68,7 +66,7 @@ class Main extends egret.DisplayObjectContainer {
       if (e.key === 'ArrowLeft') { mouseActive = false; this.paddleX -= 8; }
       if (e.key === 'ArrowRight') { mouseActive = false; this.paddleX += 8; }
     });
-    stage.addEventListener(egret.TouchEvent.TOUCH_TAP, () => { if (!this.running) { this.running = true; if (tip.parent) tip.parent.removeChild(tip); } }, root);
+    stage.addEventListener(egret.TouchEvent.TOUCH_MOVE, (e) => { mouseActive = true; this.paddleX = e.stageX; }, root);
 
     const tick = () => {
       if (!this.running) return false;

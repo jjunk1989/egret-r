@@ -2,6 +2,7 @@ import { egret } from '@egret-r/core';
 import { eui } from '@egret-r/eui';
 import '@egret-r/game';
 import '@egret-r/tween';
+import { createStartButton } from './startButton';
 
 class Main extends egret.DisplayObjectContainer {
   private objects: egret.DisplayObject[] = [];
@@ -9,7 +10,7 @@ class Main extends egret.DisplayObjectContainer {
   private GRAVITY = 0.5; private FLAP = -7;
   private PIPE_W = 60; private PIPE_GAP = 140; private PIPE_SPEED = 2.5;
   private birdY = this.H / 2; private birdVY = 0;
-  private score = 0; private running = true;
+  private score = 0; private running = false;
   private pipes: { x: number; topH: number; scored: boolean }[] = [];
   private pipeTimer = 0;
 
@@ -56,6 +57,12 @@ class Main extends egret.DisplayObjectContainer {
     // Pipes container
     const pipeContainer = new egret.DisplayObjectContainer();
     root.addChild(pipeContainer); this.objects.push(pipeContainer);
+
+    // Start button
+    const { onClick } = createStartButton(root, W, H, 'Start');
+    onClick.then(() => {
+      this.running = true;
+    });
 
     const onTap = () => {
       if (!this.running) return;
