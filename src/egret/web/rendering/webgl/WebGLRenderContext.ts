@@ -961,9 +961,9 @@ import { DEBUG } from "../../../../Defines.debug";
                     }
                     break;
                 case DRAWABLE_TYPE.DISABLE_SCISSOR:
-                    buffer = this.activatedBuffer;
-                    if (buffer) {
-                        buffer.disableScissor();
+                    let buffer2 = this.activatedBuffer;
+                    if (buffer2) {
+                        buffer2.disableScissor();
                     }
                     break;
                 case DRAWABLE_TYPE.SMOOTHING:
