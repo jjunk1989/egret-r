@@ -82,7 +82,7 @@ npm run build
 cd examples/basic && npx vite --host 127.0.0.1 --port 3005 --strictPort
 ```
 
-Open `http://127.0.0.1:3005/` in your browser. Use the top-right dropdown to switch between **23 test cases** covering all packages.
+Open `http://127.0.0.1:3005/` in your browser. Use the top-right dropdown to switch between **26 test cases** covering all packages.
 
 ### Test Cases Included
 
@@ -93,6 +93,7 @@ Open `http://127.0.0.1:3005/` in your browser. Use the top-right dropdown to swi
 | Game | URLVariables, MovieClip |
 | Tween | Easing, Multi-target |
 | Socket | WebSocket |
+| 🎮 Demos | **Flappy Bird**, **Breakout**, **2048** |
 
 ### Recommended Development Workflow
 
