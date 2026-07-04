@@ -53,3 +53,4 @@ import { registerClass } from "./registerClass";
         }
         return (types.indexOf(typeName) !== -1);
     }
+    export const _is = is;
