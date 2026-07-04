@@ -799,4 +799,66 @@ export const coreCases: TestCaseDefinition[] = [
       };
     },
   },
+  {
+    id: 'core-image',
+    title: 'Core ImageLoader: Load & Display Image',
+    module: 'core',
+    run: ({ root }) => {
+      const objects: egret.DisplayObject[] = [];
+
+      const title = new eui.Label();
+      title.x = 32; title.y = 116;
+      title.size = 20; title.textColor = 0x0f172a;
+      title.text = 'ImageLoader: Load test-image.png';
+      root.addChild(title); objects.push(title);
+
+      const status = new eui.Label();
+      status.x = 32; status.y = 150;
+      status.size = 15; status.textColor = 0x2563eb;
+      status.text = 'Status: Loading...';
+      root.addChild(status); objects.push(status);
+
+      const loader = new egret.ImageLoader();
+      loader.crossOrigin = 'anonymous';
+
+      loader.addEventListener(egret.Event.COMPLETE, () => {
+        status.text = 'Status: Loaded OK!';
+        status.textColor = 0x059669;
+
+        const bmd = loader.data;
+        if (bmd) {
+          const texture = new egret.Texture();
+          texture.$bitmapData = bmd;
+          texture.$bitmapWidth = bmd.width;
+          texture.$bitmapHeight = bmd.height;
+          texture.$sourceWidth = bmd.width;
+          texture.$sourceHeight = bmd.height;
+
+          const bitmap = new egret.Bitmap(texture);
+          bitmap.x = 32; bitmap.y = 180;
+          bitmap.width = 64;
+          bitmap.height = 64;
+          root.addChild(bitmap);
+          objects.push(bitmap);
+
+          const info = new eui.Label();
+          info.x = 112; info.y = 200;
+          info.size = 14; info.textColor = 0x334155;
+          info.lineSpacing = 6;
+          info.text = 'Image size: ' + bmd.width + 'x' + bmd.height + '\nDisplayed as 64x64';
+          root.addChild(info);
+          objects.push(info);
+        }
+      }, root);
+
+      loader.addEventListener(egret.IOErrorEvent.IO_ERROR, () => {
+        status.text = 'Status: Load Failed';
+        status.textColor = 0xdc2626;
+      }, root);
+
+      loader.load('/test-image.png');
+
+      return () => objects.forEach((o) => root.removeChild(o));
+    },
+  },
 ];
