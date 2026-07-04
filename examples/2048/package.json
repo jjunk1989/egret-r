@@ -1,0 +1,21 @@
+{
+  "name": "egret-2048",
+  "version": "6.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@egret-r/core": "*",
+    "@egret-r/eui": "*",
+    "@egret-r/game": "*",
+    "@egret-r/tween": "*"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.0",
+    "vite": "^6.4.0"
+  }
+}

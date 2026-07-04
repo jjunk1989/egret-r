@@ -81,7 +81,7 @@ npm run build
 cd examples/basic && npx vite --host 127.0.0.1 --port 3005 --strictPort
 ```
 
-浏览器打开 `http://127.0.0.1:3005/`。使用右上角下拉菜单在 **26 个测试用例** 之间切换。
+浏览器打开 `http://127.0.0.1:3005/`。使用右上角下拉菜单在 **23 个测试用例** 之间切换。
 
 ### 测试用例
 
@@ -92,7 +92,16 @@ cd examples/basic && npx vite --host 127.0.0.1 --port 3005 --strictPort
 | Game | URL 参数/MovieClip |
 | Tween | 缓动/多目标动画 |
 | Socket | WebSocket |
-| 🎮 小游戏 | **Flappy Bird**, **Breakout**, **2048** |
+
+### 小游戏 Demo
+
+独立可玩项目，位于 `examples/`：
+
+| 项目 | 目录 | 启动命令 |
+|------|------|----------|
+| 🎮 **Flappy Bird** | `examples/flappy-bird/` | `npm -w examples/flappy-bird run dev` → http://localhost:3001 |
+| 🎮 **Breakout** | `examples/breakout/` | `npm -w examples/breakout run dev` → http://localhost:3002 |
+| 🎮 **2048** | `examples/2048/` | `npm -w examples/2048 run dev` → http://localhost:3003 |
 
 ### 推荐开发工作流
 
