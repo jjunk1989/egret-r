@@ -292,26 +292,8 @@ async function buildPkg(pkg) {
     // Post-process: wrap in IIFE for hoisting, then re-export
     var bundled = fs.readFileSync(path.join(distDir, 'index_tmp.js'), 'utf8');
     
-    // Fix: esbuild renames Event -> _Event (browser global collision).
-    // Static references Event.COMPLETE etc. need to use _Event.
-    bundled = bundled.replace(/(?<![_a-zA-Z])Event\.([A-Z])/g, '_Event.$1');
-    // Fix: esbuild renames EventDispatcher -> _EventDispatcher.
-    bundled = bundled.replace(/\bextends EventDispatcher\b/g, 'extends _EventDispatcher');
-    bundled = bundled.replace(/\binstanceof EventDispatcher\b/g, 'instanceof _EventDispatcher');
-    
-    // Fix: esbuild renames some symbols due to internal collisions (not namespace-related).
-    bundled = bundled.replace(/(?<![_a-zA-Z])toColorString\(/g, 'toColorString2(');
-    bundled = bundled.replace(/(?<![_a-zA-Z])ProgressEvent\.([a-zA-Z])/g, 'ProgressEvent2.$1');
-    bundled = bundled.replace(/(?<![_a-zA-Z])EgretShaderLib\./g, 'EgretShaderLib2.');
-    bundled = bundled.replace(/(?<![_a-zA-Z])WebGLUtils\./g, 'WebGLUtils2.');
-    bundled = bundled.replace(/(?<![_a-zA-Z])HtmlSound\./g, 'HtmlSound2.');
-    bundled = bundled.replace(/(?<![_a-zA-Z])getPrefixStyleName\(/g, 'getPrefixStyleName2(');
-    
-    // NOTE: Tween/Ease workaround removed — _ns() pattern prevents the
-    // egret.X = X namespace collision that caused those renames.
-
     // Fix: esbuild renames $TextureScaleFactor -> $TextureScaleFactor2.
-    // Replace bare references but skip _ns() lines (where it's a string literal key).
+    // esbuild renames the declaration but NOT all cross-module usages.
     var lines = bundled.split('\n');
     for (var li = 0; li < lines.length; li++) {
       if (lines[li].indexOf('_ns(') >= 0 && lines[li].indexOf('"$TextureScaleFactor"') >= 0) continue;
@@ -327,17 +309,6 @@ async function buildPkg(pkg) {
       if (lines[li3].indexOf('"$TempMatrix"') >= 0) continue;
       if (lines[li3].indexOf('var $TempMatrix2') >= 0) continue;
       lines[li3] = lines[li3].replace(/(?<!\w)\$TempMatrix(?!\w)/g, '$TempMatrix2');
-    }
-    bundled = lines.join('\n');
-
-    // Fix: esbuild renames _is -> _is2 (starts with _, treated as internal).
-    // Replace bare references but skip _ns() string literal lines.
-    lines = bundled.split('\n');
-    for (var li2 = 0; li2 < lines.length; li2++) {
-      if (lines[li2].indexOf('_ns(') >= 0 && lines[li2].indexOf('"_is"') >= 0) continue;
-      if (lines[li2].indexOf('"_is"') >= 0) continue;
-      if (lines[li2].indexOf('var _is =') >= 0) continue;
-      lines[li2] = lines[li2].replace(/(?<!\w)_is(?!\w)/g, '_is2');
     }
     bundled = lines.join('\n');
 
