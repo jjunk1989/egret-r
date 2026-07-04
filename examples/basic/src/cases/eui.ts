@@ -161,12 +161,32 @@ export const euiCases: TestCaseDefinition[] = [
         label: `Item ${i + 1}`,
       }));
 
+      // Create item renderer skin — ItemRenderer needs a skin with labelDisplay part
+      class ItemSkin extends eui.Skin {
+        public labelDisplay: eui.Label;
+        constructor() {
+          super();
+          this.minWidth = 260;
+          this.minHeight = 36;
+          const bg = new egret.Shape();
+          bg.graphics.beginFill(0xf8fafc);
+          bg.graphics.drawRoundRect(0, 0, 260, 34, 6, 6);
+          bg.graphics.endFill();
+          const label = new eui.Label();
+          label.size = 16;
+          label.textColor = 0x1e293b;
+          label.x = 12; label.y = 5;
+          this.labelDisplay = label;
+          this.$elementsContent = [bg, label];
+          this.skinParts = ['labelDisplay'];
+        }
+      }
+
       const list = new eui.List();
       list.x = 32; list.y = 155;
       list.width = 280; list.height = 260;
-
-      // Set itemRenderer before dataProvider to avoid validation during setup
       list.itemRenderer = eui.ItemRenderer;
+      list.itemRendererSkinName = ItemSkin;
       list.dataProvider = new eui.ArrayCollection(dataArr);
       root.addChild(list);
       objects.push(list);
