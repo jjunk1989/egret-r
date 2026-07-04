@@ -310,6 +310,16 @@ async function buildPkg(pkg) {
     // NOTE: Tween/Ease workaround removed — _ns() pattern prevents the
     // egret.X = X namespace collision that caused those renames.
 
+    // Fix: esbuild renames $TextureScaleFactor -> $TextureScaleFactor2.
+    // Replace bare references but skip _ns() lines (where it's a string literal key).
+    var lines = bundled.split('\n');
+    for (var li = 0; li < lines.length; li++) {
+      if (lines[li].indexOf('_ns(') >= 0 && lines[li].indexOf('"$TextureScaleFactor"') >= 0) continue;
+      if (lines[li].indexOf('"$TextureScaleFactor"') >= 0) continue;
+      lines[li] = lines[li].replace(/(?<!\w)\$TextureScaleFactor(?!\w)/g, '$TextureScaleFactor2');
+    }
+    bundled = lines.join('\n');
+
     var header = 'var egret = globalThis.egret || {sys:{}, pro:{}}, eui = globalThis.eui || {}, sys = egret.sys;\n';
     header += 'var __global = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : {};\n';
     header += 'var global = __global;\n';
