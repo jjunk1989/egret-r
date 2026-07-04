@@ -5,6 +5,7 @@ import '@egret-r/game';
 class Main extends egret.DisplayObjectContainer {
   constructor() {
     super();
+    console.log('Main() constructor called, stage:', this.stage);
     this.addEventListener(egret.Event.ADDED_TO_STAGE, () => {
       console.log('Main added to stage');
       const sky = new egret.Shape();
