@@ -30,7 +30,7 @@ import { systemRenderer } from "../player/SystemRenderer";
 
         constructor() {
             super();
-            this.$renderBuffer = new RenderBuffer();
+            this.$renderBuffer = new sys.RenderBuffer();
             let bitmapData = new BitmapData(this.$renderBuffer.surface);
             bitmapData.$deleteSource = false;
             this._setBitmapData(bitmapData);

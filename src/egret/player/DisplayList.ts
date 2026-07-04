@@ -29,7 +29,7 @@ import { BitmapNode } from "./nodes/BitmapNode";
         public static create(target: DisplayObject): DisplayList {
             let displayList = new DisplayList(target);
             try {
-                let buffer = new RenderBuffer();
+                let buffer = new sys.RenderBuffer();
                 displayList.renderBuffer = buffer;
             }
             catch (e) {
