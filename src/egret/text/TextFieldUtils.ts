@@ -4,6 +4,7 @@
 import { TextField, TextKeys } from "./TextField";
 import { ILineElement, ITextElement, IHitTextElement, IWTextElement } from "./ITextElement";
 import { HorizontalAlign } from "./HorizontalAlign";
+import { VerticalAlign } from "./VerticalAlign";
 import { TextFieldType } from "./TextFieldType";
 
 
