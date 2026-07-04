@@ -7,6 +7,7 @@ import { Component } from "./Component";
 import { IItemRenderer } from "../core/IItemRenderer";
 import { registerBindable } from "../utils/registerBindable";
 import { PropertyEvent } from "../events/PropertyEvent";
+import { registerClass } from "../../../egret/utils/registerClass";
 
 
     /**
@@ -252,3 +253,4 @@ import { PropertyEvent } from "../events/PropertyEvent";
     }
 
     registerBindable(ItemRenderer.prototype, "data");
+    registerClass(ItemRenderer, "ItemRenderer", ["IItemRenderer"]);
