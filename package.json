@@ -12,6 +12,7 @@
     "verify": "node scripts/verify-dist.js",
     "watch": "node scripts/build-esm-direct.js --watch",
     "watch:core": "node scripts/build-esm-direct.js --watch",
+    "dev": "node scripts/build-esm-direct.js && npm -w examples/basic run dev",
     "lint": "eslint src/ examples/",
     "lint:fix": "eslint src/ examples/ --fix",
     "format": "prettier --write \"src/**/*.ts\" \"examples/**/*.ts\""
@@ -25,6 +26,7 @@
   ],
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "chokidar": "^5.0.0",
     "esbuild": "^0.28.1",
     "eslint": "^10.5.0",
     "eslint-config-prettier": "^10.1.8",

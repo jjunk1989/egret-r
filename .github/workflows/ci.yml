@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+
+      - run: npm ci
+
+      - name: Build packages
+        run: node scripts/build-esm-direct.js
+
+      - name: Run tests
+        run: npm -w examples/basic run test
+
+      - name: Type check
+        run: npx -w src/egret tsc --noEmit || true

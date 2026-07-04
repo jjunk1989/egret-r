@@ -393,9 +393,34 @@ async function main() {
     srcDirs.push(path.join(ROOT, 'src/Defines.debug.ts'));
     srcDirs.push(path.join(ROOT, 'src/Defines.release.ts'));
 
-    console.log('\nWatching ' + srcDirs.length + ' source paths for changes...\n');
+    console.log('\nWatching ' + watchPaths.length + ' source paths for changes...\n');
 
-    // Simple polling watch with debounce
+    // Use chokidar for reliable cross-platform file watching
+    var chokidar = require('chokidar');
+    var watchPaths = [];
+    for (var si = 0; si < PACKAGES.length; si++) {
+      for (var di = 0; di < PACKAGES[si].srcDirs.length; di++) {
+        watchPaths.push(path.join(ROOT, PACKAGES[si].srcDirs[di]));
+      }
+    }
+    watchPaths.push(path.join(ROOT, 'src/Defines.debug.ts'));
+    watchPaths.push(path.join(ROOT, 'src/Defines.release.ts'));
+
+    var watcher = chokidar.watch(watchPaths, {
+      ignored: /[\\/](node_modules|native|packages\/\*\/dist)[\\/]/,
+      persistent: true,
+      ignoreInitial: true,
+      awaitWriteFinish: { stabilityThreshold: 300, pollInterval: 100 }
+    });
+
+    watcher.on('change', function(filePath) {
+      if (filePath.endsWith('.ts')) {
+        console.log('Changed: ' + path.relative(ROOT, filePath));
+        scheduleRebuild();
+      }
+    });
+
+    // Debounced rebuild
     var timer = null;
     var rebuilding = false;
     function scheduleRebuild() {
@@ -404,28 +429,15 @@ async function main() {
         if (rebuilding) return;
         rebuilding = true;
         try {
-          console.log('Change detected, rebuilding...\n');
+          console.log('Rebuilding...\n');
           await buildAll();
           console.log('Build complete.\n');
         } catch (e) {
           console.error('Build error:', e.message);
         }
         rebuilding = false;
-      }, 200);
+      }, 300);
     }
-
-    for (var si = 0; si < srcDirs.length; si++) {
-      try {
-        fs.watch(srcDirs[si], { recursive: true }, function(eventType, filename) {
-          if (filename && filename.endsWith('.ts')) scheduleRebuild();
-        });
-      } catch (e) {
-        // fs.watch may not support recursive on all platforms; fallback to polling
-      }
-    }
-
-    // Keep process alive
-    process.stdin.resume();
   } else {
     console.log('Building ESM packages (direct)...\n');
     await buildAll();
