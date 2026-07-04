@@ -3,7 +3,7 @@
 
 import { ResourceItem } from "../shim/ResourceItem";
 import { File, FileSystem } from "./FileSystem";
-import { ResourceManagerError } from "./ResourceManager";
+import { ResourceManagerError, config } from "./ResourceManager";
 import { $warn } from "../../../../Defines.debug";
 
 type ResourceRootSelector<T extends string> = () => T;

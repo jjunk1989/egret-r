@@ -13,8 +13,6 @@ import { NumberUtils } from "../utils/NumberUtils";
 import { DisplayList } from "../player/DisplayList";
 import { RenderNode } from "../player/nodes/RenderNode";
 import { customHitTestBuffer } from "../player/RenderBuffer";
-
-declare const egret_native: any;
 import { tr } from "../i18n/tr";
 import { systemRenderer } from "../player/SystemRenderer";
 import { EventDispatcher } from "../events/EventDispatcher";

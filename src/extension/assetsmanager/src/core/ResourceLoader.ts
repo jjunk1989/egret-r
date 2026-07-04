@@ -4,7 +4,7 @@
 import { EventDispatcher } from "../../../../egret/events/EventDispatcher";
 import { Event } from "../../../../egret/events/Event";
 import { ResourceInfo } from "./ResourceConfig";
-import { PromiseTaskReporter, ResourceManagerError } from "./ResourceManager";
+import { PromiseTaskReporter, ResourceManagerError, config } from "./ResourceManager";
 import { ResourceItem } from "../shim/ResourceItem";
 
 

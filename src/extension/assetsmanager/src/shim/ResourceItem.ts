@@ -2,6 +2,7 @@
 // Copyright (c) 2014-present, Egret Technology.
 
 import { ResourceInfo } from "../core/ResourceConfig";
+import { config } from "../core/ResourceManager";
 
 
 	/**

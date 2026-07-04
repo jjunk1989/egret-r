@@ -13,8 +13,6 @@ import { tr } from "../i18n/tr";
 import { HashObject } from "../utils/HashObject";
 import { DisplayObject } from "./DisplayObject";
 import { GradientType } from "./GradientType";
-
-declare const egret_native: any;
 import { Sprite } from "./Sprite";
 import { Rectangle } from "../geom/Rectangle";
 

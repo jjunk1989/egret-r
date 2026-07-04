@@ -5,8 +5,6 @@ import { Graphics } from "./Graphics";
 import { DisplayObject } from "./DisplayObject";
 import { Rectangle } from "../geom/Rectangle";
 
-declare const egret_native: any;
-
 
     /**
      * This class is used to create lightweight shapes using the drawing application program interface (API). The Shape

@@ -16,6 +16,7 @@ import { MovieClipDataFactory } from "../../../game/display/MovieClipDataFactory
 import { Capabilities, RuntimeType } from "../../../../egret/system/Capabilities";
 import { fontResourceCache } from "../../../../egret/text/Font";
 import { ProcessHost, ResourceManagerError } from "../core/ResourceManager";
+import { config } from "../core/ResourceManager";
 import { ResourceInfo } from "../core/ResourceConfig";
 
 

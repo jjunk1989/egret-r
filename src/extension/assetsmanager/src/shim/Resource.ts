@@ -7,6 +7,7 @@ import { EventDispatcher } from "../../../../egret/events/EventDispatcher";
 import { callLater } from "../../../../egret/utils/callLater";
 import { tr } from "../../../../egret/i18n/tr";
 import { PromiseTaskReporter, ResourceManagerError } from "../core/ResourceManager";
+import { config } from "../core/ResourceManager";
 import { Texture } from "../../../../egret/display/Texture";
 import { HtmlSound } from "../../../../egret/media/web/HtmlSound";
 import { VersionController } from "./version/IVersionController";

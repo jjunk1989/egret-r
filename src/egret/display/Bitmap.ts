@@ -8,8 +8,6 @@ import { BitmapFillMode } from "./BitmapFillMode";
 import { NormalBitmapNode } from "../player/nodes/NormalBitmapNode";
 import { BitmapNode } from "../player/nodes/BitmapNode";
 import { BitmapData } from './BitmapData';
-
-declare const egret_native: any;
 import { DisplayObject } from "./DisplayObject";
 import { Stage } from "./Stage";
 

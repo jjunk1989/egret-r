@@ -73,7 +73,7 @@ declare const TextAnalyzer: any;
 declare const VersionController: any;
 declare const XMLAnalyzer: any;
 
-// -- Egret core symbols (used bare in assetsmanager, to be imported properly) --
+// -- Egret core symbols (used bare in some files, to be replaced with imports) --
 
 declare const _Event: any;
 declare const CanvasRenderBuffer: any;

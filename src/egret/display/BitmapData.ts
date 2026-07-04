@@ -11,8 +11,6 @@ import { DisplayObject } from "./DisplayObject";
 import { sys } from "../system/SysData";
 import { Capabilities } from "../system/Capabilities";
 
-declare const egret_native: any;
-
 
     //refactor
     export class CompressedTextureData {

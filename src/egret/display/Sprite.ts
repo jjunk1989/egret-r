@@ -3,8 +3,6 @@
 
 import { DisplayObjectContainer } from "./DisplayObjectContainer";
 import { Graphics } from "./Graphics";
-
-declare const egret_native: any;
 import { DisplayObject } from "./DisplayObject";
 import { Rectangle } from "../geom/Rectangle";
 
