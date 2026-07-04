@@ -828,11 +828,7 @@ export const coreCases: TestCaseDefinition[] = [
         const bmd = loader.data;
         if (bmd) {
           const texture = new egret.Texture();
-          texture.$bitmapData = bmd;
-          texture.$bitmapWidth = bmd.width;
-          texture.$bitmapHeight = bmd.height;
-          texture.$sourceWidth = bmd.width;
-          texture.$sourceHeight = bmd.height;
+          texture._setBitmapData(bmd);
 
           const bitmap = new egret.Bitmap(texture);
           bitmap.x = 32; bitmap.y = 180;
