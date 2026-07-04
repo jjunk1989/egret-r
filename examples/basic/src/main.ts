@@ -16,6 +16,7 @@ import { euiCases } from './cases/eui';
 import { tweenCases } from './cases/tween';
 import { gameCases } from './cases/game';
 import { socketCases } from './cases/socket';
+import { gameDemos } from './cases/games-demo';
 
 const TEST_CHANGE_EVENT = 'egret-test-change';
 const QUERY_KEY = 'case';
@@ -26,6 +27,7 @@ const TEST_CASES: TestCaseDefinition[] = [
   ...tweenCases,
   ...gameCases,
   ...socketCases,
+  ...gameDemos,
 ];
 
 function resolveInitialCaseId(): string {
