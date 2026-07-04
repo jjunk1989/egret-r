@@ -121,7 +121,7 @@ class Main extends egret.DisplayObjectContainer {
   }
 }
 
-window.Main = Main;
+(window as any).Main = Main;
 window.addEventListener('DOMContentLoaded', () => {
   egret.runEgret({ renderMode: 'webgl' });
 });
