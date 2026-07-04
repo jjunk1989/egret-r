@@ -2,6 +2,7 @@
 // Copyright (c) 2014-present, Egret Technology.
 
 import { registerProperty } from "../utils/registerProperty";
+import { registerClass } from "../../../egret/utils/registerClass";
 
 import { getImplementation } from "../../../egret/system/Implementation";
 import { Event } from "../../../egret/events/Event";
@@ -1811,6 +1812,9 @@ import { $TempMatrix } from "../../../egret/geom/Matrix";
         registerProperty(descendant, "bottom", "Percentage");
         registerProperty(descendant, "horizontalCenter", "Percentage");
         registerProperty(descendant, "verticalCenter", "Percentage");
+        // Register as UIComponent for _is() checks in layout code
+        // Layout code uses "UIComponent" (BasicLayout.ts), while UIComponent.ts uses "eui.UIComponent"
+        registerClass(descendant, descendant.name || "UIComponent", ["UIComponent", "eui.UIComponent"]);
         if (isContainer) {
             prototype.$childAdded = function (child: DisplayObject, index: number): void {
                 this.invalidateSize();

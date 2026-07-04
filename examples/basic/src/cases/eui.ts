@@ -197,24 +197,19 @@ export const euiCases: TestCaseDefinition[] = [
         label: `Item ${i + 1}`,
       }));
 
-      // Manually create items — bypass List's broken virtual layout
-      const y0 = 155;
-      const itemH = 36;
-      dataArr.forEach((item, i) => {
-        const renderer = new ListItemRenderer();
-        renderer.skinName = ItemSkin;
-        renderer.x = 32;
-        renderer.y = y0 + i * itemH;
-        renderer.width = 280;
-        renderer.data = item;
-        root.addChild(renderer);
-        objects.push(renderer);
-      });
+      const list = new eui.List();
+      list.x = 32; list.y = 155;
+      list.width = 280; list.height = 260;
+      list.itemRenderer = ListItemRenderer;
+      list.itemRendererSkinName = ItemSkin;
+      list.dataProvider = new eui.ArrayCollection(dataArr);
+      root.addChild(list);
+      objects.push(list);
 
       const info = new eui.Label();
-      info.x = 32; info.y = y0 + dataArr.length * itemH + 10;
+      info.x = 32; info.y = 430;
       info.size = 13; info.textColor = 0x6b7280;
-      info.text = `Manually positioned ${dataArr.length} items`;
+      info.text = `Scroller list with ${dataArr.length} items`;
       root.addChild(info); objects.push(info);
 
       return () => objects.forEach((o) => root.removeChild(o));
