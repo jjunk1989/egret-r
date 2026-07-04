@@ -320,6 +320,17 @@ async function buildPkg(pkg) {
     }
     bundled = lines.join('\n');
 
+    // Fix: esbuild renames _is -> _is2 (starts with _, treated as internal).
+    // Replace bare references but skip _ns() string literal lines.
+    lines = bundled.split('\n');
+    for (var li2 = 0; li2 < lines.length; li2++) {
+      if (lines[li2].indexOf('_ns(') >= 0 && lines[li2].indexOf('"_is"') >= 0) continue;
+      if (lines[li2].indexOf('"_is"') >= 0) continue;
+      if (lines[li2].indexOf('var _is =') >= 0) continue;
+      lines[li2] = lines[li2].replace(/(?<!\w)_is(?!\w)/g, '_is2');
+    }
+    bundled = lines.join('\n');
+
     var header = 'var egret = globalThis.egret || {sys:{}, pro:{}}, eui = globalThis.eui || {}, sys = egret.sys;\n';
     header += 'var __global = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : {};\n';
     header += 'var global = __global;\n';
