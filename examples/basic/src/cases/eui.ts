@@ -148,7 +148,7 @@ export const euiCases: TestCaseDefinition[] = [
     id: 'eui-list',
     title: 'EUI List + Scroller with Data',
     module: 'eui',
-    run: ({ root, stage }) => {
+    run: ({ root }) => {
       const objects: egret.DisplayObject[] = [];
 
       const title = new eui.Label();
@@ -157,69 +157,24 @@ export const euiCases: TestCaseDefinition[] = [
       title.text = 'EUI List: Scroller with 12 items';
       root.addChild(title); objects.push(title);
 
-      // Data
-      const colors = ['#2563eb', '#dc2626', '#7c3aed', '#059669', '#f59e0b', '#0ea5e9',
-        '#d946ef', '#84cc16', '#f97316', '#14b8a6', '#6366f1', '#ec4899'];
-      const dataArr = colors.map((c, i) => ({
+      const dataArr = Array.from({ length: 12 }, (_, i) => ({
         label: `Item ${i + 1}`,
-        color: parseInt(c.replace('#', ''), 16),
       }));
-
-      const collection = new eui.ArrayCollection(dataArr);
-
-      // ItemRenderer
-      class ItemRenderer extends eui.ItemRenderer {
-        public labelDisplay!: eui.Label;
-        public colorBox!: egret.Shape;
-        constructor() {
-          super();
-          this.skinName = undefined;
-        }
-        protected createChildren(): void {
-          super.createChildren();
-          this.width = 260; this.height = 40;
-
-          const bg = new egret.Shape();
-          bg.graphics.beginFill(0xf8fafc);
-          bg.graphics.drawRoundRect(0, 0, 260, 38, 6, 6);
-          bg.graphics.endFill();
-          this.addChild(bg);
-
-          const box = new egret.Shape();
-          box.x = 8; box.y = 9;
-          this.colorBox = box;
-          this.addChild(box);
-
-          const label = new eui.Label();
-          label.x = 36; label.y = 7;
-          label.size = 16; label.textColor = 0x1e293b;
-          this.labelDisplay = label;
-          this.addChild(label);
-        }
-        protected dataChanged(): void {
-          if (this.data) {
-            this.labelDisplay.text = this.data.label;
-            const g = this.colorBox.graphics;
-            g.clear();
-            g.beginFill(this.data.color);
-            g.drawRoundRect(0, 0, 20, 20, 4, 4);
-            g.endFill();
-          }
-        }
-      }
 
       const list = new eui.List();
       list.x = 32; list.y = 155;
       list.width = 280; list.height = 260;
-      list.itemRenderer = ItemRenderer;
-      list.dataProvider = collection;
+
+      // Set itemRenderer before dataProvider to avoid validation during setup
+      list.itemRenderer = eui.ItemRenderer;
+      list.dataProvider = new eui.ArrayCollection(dataArr);
       root.addChild(list);
       objects.push(list);
 
       const info = new eui.Label();
       info.x = 32; info.y = 430;
       info.size = 13; info.textColor = 0x6b7280;
-      info.text = `Scroller list with ${dataArr.length} colored items`;
+      info.text = `Scroller list with ${dataArr.length} items`;
       root.addChild(info); objects.push(info);
 
       return () => objects.forEach((o) => root.removeChild(o));

@@ -286,7 +286,7 @@ async function buildPkg(pkg) {
       keepNames: true,
       logLevel: 'error',
       banner: { js: '' },
-      tsconfigRaw: { compilerOptions: { preserveConstEnums: true, useDefineForClassFields: false } },
+      tsconfigRaw: { compilerOptions: { preserveConstEnums: false, useDefineForClassFields: false } },
     });
 
     // Post-process: wrap in IIFE for hoisting, then re-export
