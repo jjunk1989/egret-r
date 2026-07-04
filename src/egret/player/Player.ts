@@ -336,6 +336,10 @@ import { $warn } from "../../Defines.debug";
         fpsDisplay.updateError(info);
     };
 
+    sys.$logToFPS = $logToFPS;
+    sys.$warnToFPS = $warnToFPS;
+    sys.$errorToFPS = $errorToFPS;
+
 
     class FPSImpl {
 
