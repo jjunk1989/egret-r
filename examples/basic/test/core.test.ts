@@ -359,3 +359,174 @@ describe('Texture and Bitmap', () => {
     expect(bd).toBeTruthy();
   });
 });
+
+describe('HttpRequest API', () => {
+  it('should create HttpRequest instance', () => {
+    const req = new egret.HttpRequest();
+    expect(req).toBeTruthy();
+  });
+
+  it('should set responseType', () => {
+    const req = new egret.HttpRequest();
+    req.responseType = egret.HttpResponseType.TEXT;
+    expect(req.responseType).toBe(egret.HttpResponseType.TEXT);
+    req.responseType = egret.HttpResponseType.ARRAY_BUFFER;
+    expect(req.responseType).toBe(egret.HttpResponseType.ARRAY_BUFFER);
+  });
+
+  it('should register COMPLETE event listener with thisObject context', () => {
+    const req = new egret.HttpRequest();
+    const ctx = new egret.EventDispatcher();
+    let called = false;
+    req.addEventListener(egret.Event.COMPLETE, () => { called = true; }, ctx);
+    expect(called).toBe(false);
+  });
+
+  it('should register IO_ERROR event listener', () => {
+    const req = new egret.HttpRequest();
+    let hasListener = false;
+    const handler = () => { hasListener = true; };
+    req.addEventListener(egret.IOErrorEvent.IO_ERROR, handler, req);
+    expect(req.hasEventListener(egret.IOErrorEvent.IO_ERROR)).toBe(true);
+  });
+});
+
+describe('Sound API surface', () => {
+  it('should create HtmlSound instance', () => {
+    const sound = new egret.HtmlSound();
+    expect(sound).toBeTruthy();
+  });
+
+  it('should create WebAudioSound instance', () => {
+    const sound = new egret.WebAudioSound();
+    expect(sound).toBeTruthy();
+  });
+
+  it('HtmlSound should register COMPLETE event', () => {
+    const sound = new egret.HtmlSound();
+    let complete = false;
+    sound.addEventListener(egret.Event.COMPLETE, () => { complete = true; }, sound);
+    expect(sound.hasEventListener(egret.Event.COMPLETE)).toBe(true);
+  });
+
+  it('WebAudioSound should register IO_ERROR event', () => {
+    const sound = new egret.WebAudioSound();
+    let error = false;
+    sound.addEventListener(egret.IOErrorEvent.IO_ERROR, () => { error = true; }, sound);
+    expect(sound.hasEventListener(egret.IOErrorEvent.IO_ERROR)).toBe(true);
+  });
+});
+
+describe('Video API surface', () => {
+  it('should create WebVideo instance', () => {
+    const video = new egret.WebVideo();
+    expect(video).toBeTruthy();
+    expect(video.fullscreen).toBe(true);
+  });
+
+  it('should set fullscreen to false', () => {
+    const video = new egret.WebVideo();
+    video.fullscreen = false;
+    expect(video.fullscreen).toBe(false);
+  });
+
+  it('should register COMPLETE and ENDED events', () => {
+    const video = new egret.WebVideo();
+    let complete = false;
+    let ended = false;
+    video.addEventListener(egret.Event.COMPLETE, () => { complete = true; }, video);
+    video.addEventListener(egret.Event.ENDED, () => { ended = true; }, video);
+    expect(video.hasEventListener(egret.Event.COMPLETE)).toBe(true);
+    expect(video.hasEventListener(egret.Event.ENDED)).toBe(true);
+  });
+});
+
+describe('Graphics drawing API', () => {
+  it('should construct Shape with graphics context', () => {
+    const shape = new egret.Shape();
+    expect(shape).toBeTruthy();
+    expect(shape.graphics).toBeTruthy();
+  });
+
+  it('should chain fill and rect drawing calls', () => {
+    const shape = new egret.Shape();
+    const g = shape.graphics;
+    g.beginFill(0xff0000);
+    g.drawRect(0, 0, 100, 50);
+    g.endFill();
+    // Graphics operations should not throw
+    expect(true).toBe(true);
+  });
+
+  it('should support line style for stroke drawing', () => {
+    const shape = new egret.Shape();
+    const g = shape.graphics;
+    g.lineStyle(2, 0x00ff00);
+    g.drawCircle(0, 0, 30);
+    g.endFill();
+    expect(true).toBe(true);
+  });
+
+  it('should draw rounded rect', () => {
+    const shape = new egret.Shape();
+    const g = shape.graphics;
+    g.beginFill(0x0000ff);
+    g.drawRoundRect(10, 10, 80, 60, 12, 12);
+    g.endFill();
+    expect(true).toBe(true);
+  });
+
+  it('should draw arc', () => {
+    const shape = new egret.Shape();
+    const g = shape.graphics;
+    g.beginFill(0xffaa00);
+    g.moveTo(0, 0);
+    g.lineTo(40, 0);
+    g.drawArc(0, 0, 40, 0, Math.PI * 0.75);
+    g.lineTo(0, 0);
+    g.endFill();
+    expect(true).toBe(true);
+  });
+
+  it('should clear graphics', () => {
+    const shape = new egret.Shape();
+    const g = shape.graphics;
+    g.beginFill(0xff0000);
+    g.drawRect(0, 0, 100, 100);
+    g.endFill();
+    g.clear();
+    // After clear, redrawing should work
+    g.beginFill(0x00ff00);
+    g.drawRect(0, 0, 50, 50);
+    g.endFill();
+    expect(true).toBe(true);
+  });
+});
+
+describe('Filters', () => {
+  it('should create BlurFilter', () => {
+    const filter = new egret.BlurFilter();
+    expect(filter).toBeTruthy();
+    expect(filter.blurX).toBe(4);
+    expect(filter.blurY).toBe(4);
+  });
+
+  it('should create ColorMatrixFilter', () => {
+    const filter = new egret.ColorMatrixFilter();
+    expect(filter).toBeTruthy();
+    expect(filter.matrix).toBeTruthy();
+    expect(filter.matrix.length).toBe(20);
+  });
+
+  it('should create DropShadowFilter', () => {
+    const filter = new egret.DropShadowFilter();
+    expect(filter).toBeTruthy();
+    expect(filter.distance).toBeGreaterThanOrEqual(0);
+  });
+
+  it('should create GlowFilter', () => {
+    const filter = new egret.GlowFilter();
+    expect(filter).toBeTruthy();
+    expect(filter.color).toBeGreaterThanOrEqual(0);
+  });
+});
