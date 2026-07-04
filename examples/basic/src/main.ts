@@ -142,7 +142,7 @@ class Main extends egret.DisplayObjectContainer {
     this.addChild(bg);
 
     const stripe = new egret.Shape();
-    stripe.graphics.beginFill(0xe2e8f0);
+    stripe.graphics.beginFill(0xcbd5e1);
     stripe.graphics.drawRect(0, 0, w, 108);
     stripe.graphics.endFill();
     this.addChild(stripe);
