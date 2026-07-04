@@ -265,7 +265,7 @@ import { Ease } from "./Ease";
      */
     export class TweenItem extends EventDispatcher {
 
-        private tween: Tween;
+        private tween!: Tween;
 
         constructor() {
             super();
@@ -322,7 +322,7 @@ import { Ease } from "./Ease";
         /**
          * @private
          */
-        private _paths: BasePath[];
+        private _paths: BasePath[] = [];
         /**
          * The Actions in Tween.
          * @version Egret 3.1.8
@@ -409,7 +409,7 @@ import { Ease } from "./Ease";
             this.isStop = true;
         }
 
-        private createTween(position: number): void {
+        private createTween(position?: number): void {
             this.tween = Tween.get(this._target, this._props);
 
             if (this._paths) {
@@ -483,7 +483,7 @@ import { Ease } from "./Ease";
         /**
          * @private
          */
-        private _items: TweenItem[];
+        private _items!: TweenItem[];
         /**
          * The Array that TweenItems in TweenGroup.
          * @version Egret 3.1.8
