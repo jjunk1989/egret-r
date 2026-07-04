@@ -73,38 +73,6 @@ import { $TempMatrix } from "../../../egret/geom/Matrix";
 
     export interface UIComponent extends DisplayObject {
 
-        ///**
-        // * 创建子项,子类覆盖此方法以完成组件子项的初始化操作，
-        // * 请务必调用super.createChildren()以完成父类组件的初始化
-        // */
-        // protected createChildren():void{}
-
-        ///**
-        // * 提交属性，子类在调用完invalidateProperties()方法后，应覆盖此方法以应用属性
-        // */
-        // protected commitProperties():void{}
-
-        ///**
-        // * 测量组件尺寸
-        // */
-        // protected measure():void{}
-
-        ///**
-        // * 更新显示列表
-        // */
-        // protected updateDisplayList(unscaledWidth:number, unscaledHeight:number):void{}
-
-        ///**
-        // * 标记父级容器的尺寸和显示列表为失效
-        // */
-        // protected invalidateParentLayout():void{}
-
-        //$getWidth():number;
-        //$setWidth(value:number):void;
-
-        //$getHeight():number;
-        //$setHeight(value:number):void;
-
         /**
          * @private
          */

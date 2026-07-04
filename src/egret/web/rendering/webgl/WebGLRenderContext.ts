@@ -223,27 +223,6 @@ import { DEBUG } from "../../../../Defines.debug";
          */
         public resize(width: number, height: number, useMaxSize?: boolean): void {
             sys.resizeContext(this, width, height, useMaxSize);
-            /*
-            let surface = this.surface;
-            if (useMaxSize) {
-                if (surface.width < width) {
-                    surface.width = width;
-                }
-                if (surface.height < height) {
-                    surface.height = height;
-                }
-            }
-            else {
-                if (surface.width != width) {
-                    surface.width = width;
-                }
-                if (surface.height != height) {
-                    surface.height = height;
-                }
-            }
-
-            this.onResize();
-            */
         }
 
         public static glContextId: number = 0;
@@ -310,19 +289,6 @@ import { DEBUG } from "../../../../Defines.debug";
 
             //refactor
             // this._caps.astc = this._gl.getExtension('WEBGL_compressed_texture_astc') || this._gl.getExtension('WEBKIT_WEBGL_compressed_texture_astc');
-            // this._caps.s3tc = this._gl.getExtension('WEBGL_compressed_texture_s3tc') || this._gl.getExtension('WEBKIT_WEBGL_compressed_texture_s3tc');
-            // this._caps.pvrtc = this._gl.getExtension('WEBGL_compressed_texture_pvrtc') || this._gl.getExtension('WEBKIT_WEBGL_compressed_texture_pvrtc');
-            // this._caps.etc1 = this._gl.getExtension('WEBGL_compressed_texture_etc1') || this._gl.getExtension('WEBKIT_WEBGL_compressed_texture_etc1');
-            // this._caps.etc2 = this._gl.getExtension('WEBGL_compressed_texture_etc') || this._gl.getExtension('WEBKIT_WEBGL_compressed_texture_etc') ||
-            //     this._gl.getExtension('WEBGL_compressed_texture_es3_0'); // also a requirement of OpenGL ES 3
-            // const compressedTextureExNames = [
-            //     'WEBGL_compressed_texture_pvrtc', 'WEBKIT_WEBGL_compressed_texture_pvrtc',
-            //     'WEBGL_compressed_texture_etc1', 'WEBKIT_WEBGL_compressed_texture_etc1',
-            //     'WEBGL_compressed_texture_etc', 'WEBKIT_WEBGL_compressed_texture_etc',
-            //     'WEBGL_compressed_texture_astc', 'WEBKIT_WEBGL_compressed_texture_astc',
-            //     'WEBGL_compressed_texture_s3tc', 'WEBKIT_WEBGL_compressed_texture_s3tc',
-            //     'WEBGL_compressed_texture_es3_0'];
-            //
 
         }
 
@@ -362,28 +328,6 @@ import { DEBUG } from "../../../../Defines.debug";
         }
 
         private getWebGLContext() {
-            /*
-            let options = {
-                antialias: WebGLRenderContext.antialias,
-                stencil: true//设置可以使用模板（用于不规则遮罩）
-            };
-            let gl: any;
-            //todo 是否使用chrome源码names
-            //let contextNames = ["moz-webgl", "webkit-3d", "experimental-webgl", "webgl", "3d"];
-            let names = ["webgl", "experimental-webgl"];
-            for (let i = 0; i < names.length; i++) {
-                try {
-                    gl = this.surface.getContext(names[i], options);
-                } catch (e) {
-                }
-                if (gl) {
-                    break;
-                }
-            }
-            if (!gl) {
-                $error(1021);
-            }
-            */
             const gl = sys.getContextWebGL(this.surface);
             this.setContext(gl);
             return gl;
@@ -458,12 +402,6 @@ import { DEBUG } from "../../../../Defines.debug";
             //width: number, height: number max ?
             for (let i = 0, length = supportedCompressedTextureInfo.length; i < length; ++i) {
                 const ss = supportedCompressedTextureInfo[i];
-                // const formats = ss._COMPRESSED_TEXTURE_FORMATS_;
-                // for (let j = 0, length = formats.length; j < length; ++j) {
-                //     if (formats[j] === internalFormat) {
-                //         return true;
-                //     }
-                // }
                 const supportedFormats = ss.supportedFormats;
                 for (let j = 0, length = supportedFormats.length; j < length; ++j) {
                     if (supportedFormats[j][1] === internalFormat) {
@@ -1115,14 +1053,6 @@ import { DEBUG } from "../../../../Defines.debug";
          **/
         private drawTextureElements(data: any, offset: number): number {
             return sys.drawTextureElements(this, data, offset);
-            /*
-            let gl: any = this.context;
-            gl.activeTexture(gl.TEXTURE0); ///refactor
-            gl.bindTexture(gl.TEXTURE_2D, data.texture);
-            let size = data.count * 3;
-            gl.drawElements(gl.TRIANGLES, size, gl.UNSIGNED_SHORT, offset * 2);
-            return size;
-            */
         }
 
         /**

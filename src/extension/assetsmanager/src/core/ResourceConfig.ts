@@ -267,37 +267,6 @@ type ResourceMergerSelector = (file: string) => { path: string, alias: string };
 
             this.config.groups[name] = group;
             return true;
-
-            // var groupDic: any = this.groupDic;
-            // var group: Array<any> = [];
-            // var length: number = keys.length;
-            // for (var i: number = 0; i < length; i++) {
-            //     var key: string = keys[i];
-            //     var g: Array<any> = groupDic[key];
-            //     if (g) {
-            //         var len: number = g.length;
-            //         for (var j: number = 0; j < len; j++) {
-            //             var item: any = g[j];
-            //             if (group.indexOf(item) == -1)
-            //                 group.push(item);
-            //         }
-            //     }
-            //     else {
-            //         item = this.keyMap[key];
-            //         if (item) {
-            //             if (group.indexOf(item) == -1)
-            //                 group.push(item);
-            //         }
-            //         else {
-            //             $warn(3200, key);
-            //         }
-            //     }
-
-            // }
-            // if (group.length == 0)
-            //     return false;
-            // this.groupDic[name] = group;
-            // return true;
         }
 
         /**

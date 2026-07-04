@@ -1,18 +1,6 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-
-//function __extends(d, b) {
-//    for (let p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-//    function __() {
-//        this.constructor = d;
-//    }
-//
-//    __.prototype = b.prototype;
-//    d.prototype = new __();
-//}
-
-
     /**
      * Call setter properties of the parent class, instead of the other writing languages, such as super.alpha = 1;
      * @param currentClass The current class class name, non-string

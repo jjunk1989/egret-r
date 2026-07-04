@@ -125,18 +125,6 @@ import { WebGLRenderBuffer } from "./WebGLRenderBuffer";
         }
 
         /**
-         * 默认构成矩形
-         */
-        // private defaultMeshVertices = [0, 0, 1, 0, 1, 1, 0, 1];
-        // private defaultMeshUvs = [
-        //     0, 0,
-        //     1, 0,
-        //     1, 1,
-        //     0, 1
-        // ];
-        // private defaultMeshIndices = [0, 1, 2, 0, 2, 3];
-
-        /**
          * 缓存一组顶点
          */
         public cacheArrays(buffer: WebGLRenderBuffer, sourceX: number, sourceY: number, sourceWidth: number, sourceHeight: number,

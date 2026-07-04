@@ -2,13 +2,6 @@
 // Copyright (c) 2014-present, Egret Technology.
 
 import { Event } from "./Event";
-
-    // export interface TextField{
-    //     addEventListener<Z>(type: "focusIn" |
-    //                               "focusOut"
-    //         , listener: (this: Z, e: FocusEvent) => void, thisObject: Z, useCapture?: boolean, priority?: number);
-    //     addEventListener(type: string, listener: Function, thisObject: any, useCapture?: boolean, priority?: number);
-    // }
     /**
      * When the user changes the focus from one object in the display list to another object, the object dispatches a FocusEvent object. Currently only supports input text.
      * Focus events: FocusEvent.FOCUS_IN FocusEvent.FOCUS_OUT

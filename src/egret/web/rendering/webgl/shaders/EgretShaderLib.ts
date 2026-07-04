@@ -10,21 +10,6 @@
 		public static readonly primitive_frag: string = "precision lowp float;\r\nvarying vec2 vTextureCoord;\r\nvarying vec4 vColor;\r\n\r\nvoid main(void) {\r\n    gl_FragColor = vColor;\r\n}";
 		public static readonly texture_frag: string = "precision lowp float;\r\nvarying vec2 vTextureCoord;\r\nvarying vec4 vColor;\r\nuniform sampler2D uSampler;\r\n\r\nvoid main(void) {\r\n    gl_FragColor = texture2D(uSampler, vTextureCoord) * vColor;\r\n}";
 		
-		/*
-		"precision lowp float;
-		varying vec2 vTextureCoord;
-		varying vec4 vColor;
-		uniform sampler2D uSampler;
-		uniform sampler2D uSamplerAlphaMask;
-		void main(void) {
-			float alpha = texture2D(uSamplerAlphaMask, vTextureCoord).r;
-			if (alpha < 0.0039) { discard; }
-			vec4 v4Color = texture2D(uSampler, vTextureCoord);
-			v4Color.rgb = v4Color.rgb * alpha;
-			v4Color.a = alpha;
-			gl_FragColor = v4Color * vColor;
-		}"
-		*/
 		public static readonly texture_etc_alphamask_frag: string = "precision lowp float;\r\nvarying vec2 vTextureCoord;\r\nvarying vec4 vColor;\r\nuniform sampler2D uSampler;\r\nuniform sampler2D uSamplerAlphaMask;\r\nvoid main(void) {\r\nfloat alpha = texture2D(uSamplerAlphaMask, vTextureCoord).r;\r\nif (alpha < 0.0039) { discard; }\r\nvec4 v4Color = texture2D(uSampler, vTextureCoord);\r\nv4Color.rgb = v4Color.rgb * alpha;\r\nv4Color.a = alpha;\r\ngl_FragColor = v4Color * vColor;\r\n}";
 		/*
 		"precision mediump float;

@@ -30,44 +30,6 @@ import { DEBUG } from "../../../Defines.debug";
             callback.onSuccess(null);
             return;
 
-            /*
-
-            todo
-
-            let self = this;
-
-            let virtualUrl:string = "all.manifest";
-
-            let httpLoader:HttpRequest = new HttpRequest();
-            httpLoader.addEventListener(Event.COMPLETE, onLoadComplete, this);
-            httpLoader.addEventListener(IOErrorEvent.IO_ERROR, onError, this);
-
-            httpLoader.open(virtualUrl + "?r=" + Date.now(), "get");
-            httpLoader.send();
-
-            function onError(event:IOErrorEvent) {
-                removeListeners();
-                self.dispatchEvent(event);
-            }
-
-            function onLoadComplete() {
-                removeListeners();
-
-                self._versionInfo = JSON.parse(httpLoader.response);
-
-                window.setTimeout(function () {
-                    self.dispatchEvent(new Event(Event.COMPLETE));
-                }, 0);
-            }
-
-            function removeListeners():void {
-                httpLoader.removeEventListener(Event.COMPLETE, onLoadComplete, self);
-                httpLoader.removeEventListener(IOErrorEvent.IO_ERROR, onError, self);
-            }
-
-            */
-        }
-
         /**
          * 获取所有有变化的文件
          * @returns {any[]}
@@ -79,22 +41,6 @@ import { DEBUG } from "../../../Defines.debug";
         public getVirtualUrl(url: string): string {
 
             return url;
-
-            /*
-
-            todo
-
-            if (DEBUG) {
-                return url;
-            }
-            if (this._versionInfo && this._versionInfo[url]) {
-                return "resource/" + this._versionInfo[url]["v"].substring(0, 2) + "/" + this._versionInfo[url]["v"] + "_" + this._versionInfo[url]["s"] + "." + url.substring(url.lastIndexOf(".") + 1);
-            }
-            else {
-                return url;
-            }
-
-            */
         }
     }
 

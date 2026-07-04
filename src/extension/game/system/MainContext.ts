@@ -80,40 +80,6 @@ import { $warn } from "../../../Defines.debug";
         public static DEVICE_MOBILE: string = "native";
 
 
-        // /**
-        //  * @private
-        //  */
-        // public static _runtimeType:string;
-
-        // /**
-        //  * @version Egret 2.4
-        //  * @platform Web
-        //  */
-        // public static get runtimeType():string {
-        //     $warn(1041, "egret.MainContext.runtimeType", "Capabilities.runtimeType");
-        //     return MainContext._runtimeType;
-        // }
-        // /**
-        //  * @version Egret 2.4
-        //  * @platform Web
-        //  */
-        // public static RUNTIME_HTML5:string = "runtimeHtml5";
-        // /**
-        //  * @version Egret 2.4
-        //  * @platform Web
-        //  */
-        // public static RUNTIME_NATIVE:string = "runtimeNative";
-
-
-        /**
-         * 游戏启动，开启主循环，参考Flash的滑动跑道模型
-         * @method egret.MainContext#run
-         * @version Egret 2.4
-         * @platform Web
-         */
-        // public run() {
-        // }
-
         /**
          * @private
          */

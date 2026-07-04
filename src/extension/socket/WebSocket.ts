@@ -273,11 +273,6 @@ import { $warn } from "../../Defines.debug";
 
             this.flush();
             // return;
-            // if (this._isReadySend) {
-            //     return;
-            // }
-            // this._isReadySend = true;
-            // callLater(this.flush, this);
         }
 
         /**

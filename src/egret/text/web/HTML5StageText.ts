@@ -596,33 +596,7 @@ import { EventDispatcher } from "../../events/EventDispatcher";
                 self._inputDIV.style[getPrefixStyleName("transformOrigin")] = "0% 0% 0px";
                 stageDelegateDiv.appendChild(self._inputDIV);
 
-                // if (Capabilities.isMobile) {
-                //     let downTime = 0;
-                //     let screenX: number, screenY: number;
-                //     this.canvas.addEventListener("touchstart", (e) => {
-                //         downTime = getTimer();
-                //         for (let touch of e.touches) {
-                //             screenX = touch.screenX;
-                //             screenY = touch.screenY;
-                //         }
-
-                //     });
-                //     this.canvas.addEventListener("touchend", (e) => {
-                //         const upTime = getTimer();
-                //         const timeDelay = upTime - downTime;
-                //         for (let touch of e.changedTouches) {
-                //             const offset = Math.sqrt(Math.pow(touch.screenX - screenX, 2) + Math.pow(touch.screenY - screenY, 2))
-                //             if (timeDelay < 300 && offset < 3) {
-                //                 this.stageTextClickHandler(e);
-                //             }
-                //         }
-                //         downTime = 0;
-                //         screenX = screenY = 0;
-                //     });
-
-                // } else {
-                this.canvas.addEventListener("click", this.stageTextClickHandler);
-                // }
+                this.canvas.addEventListener("click", self.stageTextClickHandler);
                 self.initInputElement(true);
                 self.initInputElement(false);
             }

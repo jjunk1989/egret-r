@@ -717,15 +717,6 @@ export interface CanvasRenderingContext2D {
                 context.globalAlpha *= alpha;
             }
             //暂不考虑滤镜
-            // if (node.filter) {
-            //     buffer.context.$filter = node.filter;
-            //     while (pos < length) {
-            //         buffer.context.drawMesh(image, data[pos++], data[pos++], data[pos++], data[pos++],
-            //             data[pos++], data[pos++], data[pos++], data[pos++], node.imageWidth, node.imageHeight, node.uvs, node.vertices, node.indices, node.bounds, node.rotated, node.smoothing);
-            //     }
-            //     buffer.context.$filter = null;
-            // }
-            // else {
             while (pos < dataLength) {
                 drawCalls += this.drawMesh(image, data[pos++], data[pos++], data[pos++], data[pos++],
                     data[pos++], data[pos++], data[pos++], data[pos++], node.uvs, node.vertices, node.indices, node.bounds, node.rotated, context);
@@ -1227,10 +1218,6 @@ export interface CanvasRenderingContext2D {
             }
         }
     }
-
-    // function glowFilter(buffer, w, h, color, blurX, blurY, strength) {
-    //     dropShadowFilter(buffer, w, h, color, blurX, blurY, 0, 0, strength)
-    // }
 
     function dropShadowFilter(buffer, w, h, color, blurX, blurY, angle, distance, strength) {
         let tmp = alphaFilter(buffer, color);
