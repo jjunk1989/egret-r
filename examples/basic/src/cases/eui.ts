@@ -24,6 +24,20 @@ class ItemSkin extends eui.Skin {
   }
 }
 
+// Custom ItemRenderer that displays data.label
+class ListItemRenderer extends eui.ItemRenderer {
+  public labelDisplay!: eui.Label;
+  constructor() {
+    super();
+    this.skinName = ItemSkin;
+  }
+  protected dataChanged(): void {
+    if (this.labelDisplay && this.data) {
+      this.labelDisplay.text = this.data.label;
+    }
+  }
+}
+
 export const euiCases: TestCaseDefinition[] = [
   {
     id: 'eui-collection',
@@ -185,8 +199,7 @@ export const euiCases: TestCaseDefinition[] = [
       const list = new eui.List();
       list.x = 32; list.y = 155;
       list.width = 280; list.height = 260;
-      list.itemRenderer = eui.ItemRenderer;
-      list.itemRendererSkinName = ItemSkin;
+      list.itemRenderer = ListItemRenderer;
       list.dataProvider = new eui.ArrayCollection(dataArr);
       root.addChild(list);
       objects.push(list);
