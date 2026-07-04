@@ -211,6 +211,17 @@ export const euiCases: TestCaseDefinition[] = [
       root.addChild(list);
       objects.push(list);
 
+      // Debug: verify renderers have children and positions
+      setTimeout(() => {
+        console.log('[eui-list] numChildren:', list.numChildren);
+        for (let i = 0; i < Math.min(3, list.numChildren); i++) {
+          const r = list.getChildAt(i) as any;
+          console.log(`[eui-list] renderer[${i}]: x=${r.x} y=${r.y} w=${r.width} h=${r.height} visible=${r.visible} numKids=${r.numChildren} label=`, r.labelDisplay?.text);
+        }
+        console.log('[eui-list] layout:', list.layout, 'useVirtual=', (list.layout as any)?.$useVirtualLayout);
+        console.log('[eui-list] typicalLayoutRect:', (list as any).$DataGroup[9]);
+      }, 300);
+
       const info = new eui.Label();
       info.x = 32; info.y = 430;
       info.size = 13; info.textColor = 0x6b7280;
