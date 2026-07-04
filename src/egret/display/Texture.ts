@@ -6,6 +6,7 @@ import { KTXContainer } from "./KTXContainer";
 import { BitmapData } from "./BitmapData";
 import { Rectangle } from "../geom/Rectangle";
 import { HashObject } from "../utils/HashObject";
+import { registerClass } from "../utils/registerClass";
 
 
     export let $TextureScaleFactor: number = 1;
@@ -410,5 +411,7 @@ import { HashObject } from "../utils/HashObject";
             }
         }
     }
+
+    registerClass(Texture, "Texture");
 
 

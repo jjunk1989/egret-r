@@ -12,6 +12,7 @@ import { registerBindable } from "../utils/registerBindable";
 import { Watcher } from "../binding/Watcher";
 import { registerProperty } from "../utils/registerProperty";
 import { PropertyEvent } from "../events/PropertyEvent";
+import { registerClass } from "../../../egret/utils/registerClass";
 
 
     /**
@@ -357,4 +358,5 @@ import { PropertyEvent } from "../events/PropertyEvent";
     mixin(Skin, StateClient);
     registerProperty(Skin, "elementsContent", "Array", true);
     registerProperty(Skin, "states", "State[]");
+    registerClass(Skin, "Skin");
     registerBindable(Skin.prototype, "hostComponent");

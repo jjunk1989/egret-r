@@ -9,6 +9,7 @@ import { Event } from "./Event";
 import { EventPhase } from "./EventPhase";
 import { $error } from "../../Defines.debug";
 import { DEBUG } from "../../Defines.debug";
+import { registerClass } from "../utils/registerClass";
 
 
     /**
@@ -338,3 +339,5 @@ import { DEBUG } from "../../Defines.debug";
          */
         dispatchOnce:boolean;
     }
+
+    registerClass(EventDispatcher, "EventDispatcher", ["IEventDispatcher"]);

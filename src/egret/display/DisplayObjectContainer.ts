@@ -8,6 +8,7 @@ import { Stage } from "./Stage";
 import { Rectangle, $TempRectangle } from "../geom/Rectangle";
 import { $error } from "../../Defines.debug";
 import { DEBUG } from "../../Defines.debug";
+import { registerClass } from "../utils/registerClass";
 
     /**
      * The DisplayObjectContainer class is a basic display list building block: a display list node that can contain children.
@@ -870,3 +871,5 @@ import { DEBUG } from "../../Defines.debug";
             }
         }
     }
+
+    registerClass(DisplayObjectContainer, "DisplayObjectContainer");
