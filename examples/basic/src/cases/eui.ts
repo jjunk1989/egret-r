@@ -14,6 +14,8 @@ class ItemSkin extends eui.Skin {
     bg.graphics.beginFill(0xf8fafc);
     bg.graphics.drawRoundRect(0, 0, 260, 34, 6, 6);
     bg.graphics.endFill();
+    bg.width = 260;
+    bg.height = 34;
     const label = new eui.Label();
     label.size = 16;
     label.textColor = 0x1e293b;
@@ -200,7 +202,10 @@ export const euiCases: TestCaseDefinition[] = [
       list.width = 280; list.height = 260;
       list.itemRenderer = ListItemRenderer;
       list.itemRendererSkinName = ItemSkin;
-      list.dataProvider = new eui.ArrayCollection(dataArr);
+
+      const collection = new eui.ArrayCollection(dataArr);
+      // Ensure typicalItem is set for virtual layout measurement
+      list.dataProvider = collection;
       root.addChild(list);
       objects.push(list);
 
