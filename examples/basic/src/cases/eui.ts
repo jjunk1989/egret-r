@@ -18,6 +18,8 @@ class ItemSkin extends eui.Skin {
     label.size = 16;
     label.textColor = 0x1e293b;
     label.x = 12; label.y = 5;
+    label.width = 240;
+    label.height = 24;
     this.labelDisplay = label;
     this.$elementsContent = [bg, label];
     this.skinParts = ['labelDisplay'];
@@ -32,6 +34,7 @@ class ListItemRenderer extends eui.ItemRenderer {
     this.skinName = ItemSkin;
   }
   protected dataChanged(): void {
+    super.dataChanged();
     if (this.labelDisplay && this.data) {
       this.labelDisplay.text = this.data.label;
     }
