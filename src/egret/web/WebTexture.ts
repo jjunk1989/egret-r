@@ -9,6 +9,7 @@ import { createCanvas, systemRenderer } from "../player/SystemRenderer";
 import { CanvasRenderingContext2D } from "../player/rendering/CanvasRenderer";
 import { $error } from "../../Defines.debug";
 import { $warn } from "../../Defines.debug";
+import { Capabilities } from "../system/Capabilities";
 
 
     let sharedCanvas: HTMLCanvasElement;

@@ -1,7 +1,7 @@
 
 import { IOErrorEvent } from "../../events/IOErrorEvent";
 import { BitmapData } from "../../display/BitmapData";
-import { setImageLoader } from "../ImageLoader";
+import { ImageLoader, setImageLoader } from "../ImageLoader";
 import { EventDispatcher } from "../../events/EventDispatcher";
 import { WebHttpRequest } from "./WebHttpRequest";
 import { $error } from "../../../Defines.debug";

@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { setHttpRequest } from "../HttpRequest";
+import { setHttpRequest, HttpRequest } from "../HttpRequest";
 import { EventDispatcher } from "../../events/EventDispatcher";
 import { $error } from "../../../Defines.debug";
 import { DEBUG } from "../../../Defines.debug";
+import { IOErrorEvent } from "../../events/IOErrorEvent";
 
 
     /**

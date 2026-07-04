@@ -1,6 +1,7 @@
 
 import { ImageLoader } from "../../../../egret/net/ImageLoader";
-import { HttpRequest, IOErrorEvent } from "../../../../egret/events/IOErrorEvent";
+import { HttpRequest } from "../../../../egret/net/HttpRequest";
+import { IOErrorEvent } from "../../../../egret/events/IOErrorEvent";
 import { Sound } from "../../../../egret/media/Sound";
 import { Event } from "../../../../egret/events/Event";
 import { Texture } from "../../../../egret/display/Texture";
