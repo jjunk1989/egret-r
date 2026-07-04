@@ -5,8 +5,6 @@ import { IEventDispatcher } from "./IEventDispatcher";
 import { HashObject } from "../utils/HashObject";
 import { target } from "../display/Bitmap";
 import { type } from "../text/TextField";
-import { listener } from "../../extension/eui/binding/Watcher";
-import { priority } from "../../extension/assetsmanager/src/core/ResourceLoader";
 import { Event } from "./Event";
 import { EventPhase } from "./EventPhase";
 import { $error } from "../../Defines.debug";

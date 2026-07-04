@@ -29,6 +29,7 @@ import { DEBUG } from "../../../Defines.debug";
 
             callback.onSuccess(null);
             return;
+        }
 
         /**
          * 获取所有有变化的文件

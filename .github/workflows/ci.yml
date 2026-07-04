@@ -25,5 +25,5 @@ jobs:
       - name: Run tests
         run: npm -w examples/basic run test
 
-      - name: Type check
-        run: npx -w src/egret tsc --noEmit || true
+      - name: Type check (core)
+        run: cd src/egret && npx tsc --noEmit

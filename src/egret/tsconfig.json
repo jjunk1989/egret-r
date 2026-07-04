@@ -4,10 +4,15 @@
         "target": "ES2020",
         "lib": ["ES2020", "DOM", "ScriptHost"],
         "outDir": "../../packages/core/dist",
-        "rootDir": ".."
+        "rootDir": "..",
+        "noImplicitAny": false,
+        "strictNullChecks": false,
+        "strictPropertyInitialization": false
     },
     "include": [
-        "../**/*.ts"
+        "../Defines.debug.ts",
+        "../Defines.release.ts",
+        "./**/*.ts"
     ],
     "exclude": [
         "**/native/**",

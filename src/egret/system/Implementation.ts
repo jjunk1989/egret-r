@@ -1,7 +1,4 @@
 
-import { IAssetAdapter } from "../../extension/eui/core/IAssetAdapter";
-import { Theme } from "../../extension/eui/core/Theme";
-
     /**
     * @private
     * Shared across packages via sys to avoid per-package duplication.

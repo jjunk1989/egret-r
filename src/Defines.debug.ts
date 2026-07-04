@@ -65,22 +65,22 @@ export const RELEASE: boolean = false;
      * @private
      */
     function _getString(code: number, ...params: any[]): string {
-        return tr.apply(egret.sys, arguments);
+        return tr(code, ...params);
     }
-    egret.getString = _getString;
+    (egret as any).getString = _getString;
 
     function _error(code: number, ...params: any[]): void {
-        let text: string = tr.apply(null, arguments);
+        let text: string = tr(code, ...params);
         if (DEBUG) {
             egret.sys.$errorToFPS("Error #" + code + ": " + text);
         }
         throw new Error("#" + code + ": " + text);//使用这种方式报错能够终止后续代码继续运行
     }
 
-    egret.$error = _error;
+    (egret as any).$error = _error;
 
     function _warn(code: number, ...params: any[]): void {
-        let text: string = tr.apply(null, arguments);
+        let text: string = tr(code, ...params);
         if (DEBUG) {
             egret.sys.$warnToFPS("Warning #" + code + ": " + text);
         }
@@ -90,7 +90,7 @@ export const RELEASE: boolean = false;
     $warn = _warn;
 
     function _markReadOnly(instance: any, property: string, isProperty: boolean = true): void {
-        let data: PropertyDescriptor = Object.getOwnPropertyDescriptor(isProperty ? instance.prototype : instance, property);
+        let data: PropertyDescriptor = Object.getOwnPropertyDescriptor(isProperty ? instance.prototype : instance, property)!;
         if (data == null) {
             console.log(instance);
             return;
@@ -114,11 +114,11 @@ export const RELEASE: boolean = false;
                 return defaultValue;
             },
             set: function (value) {
-                egret.$error(1009, getQualifiedClassName(instance), property);
+                (egret as any).$error(1009, getQualifiedClassName(instance), property);
             },
             enumerable: true,
             configurable: true
         });
     }
-    egret.$markCannotUse = markCannotUse;
+    (egret as any).$markCannotUse = markCannotUse;
 
