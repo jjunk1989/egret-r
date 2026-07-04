@@ -40,7 +40,7 @@ import { CustomFilter } from "../filters/CustomFilter";
      * @private
      * 格式化旋转角度的值
      */
-    function clampRotation(value): number {
+    function clampRotation(value: number): number {
         value %= 360;
         if (value > 180) {
             value -= 360;

@@ -320,7 +320,7 @@ import { DEBUG } from "../../Defines.debug";
         /**
          * @private
          */
-        public $resize = function (width, height) {
+        public $resize = function (width: number, height: number) {
             this.$stageWidth = width;
             this.$stageHeight = height;
             this.$displayList.renderBuffer.resize(width, height);

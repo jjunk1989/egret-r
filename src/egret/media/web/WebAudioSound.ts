@@ -58,7 +58,7 @@ export interface AudioBufferSourceNodeEgret {
             WebAudioDecode.isDecoding = true;
             let decodeInfo = WebAudioDecode.decodeArr.shift();
 
-            WebAudioDecode.ctx.decodeAudioData(decodeInfo["buffer"], function (audioBuffer) {
+            WebAudioDecode.ctx.decodeAudioData(decodeInfo["buffer"], function (audioBuffer: AudioBuffer) {
                 decodeInfo["self"].audioBuffer = audioBuffer;
 
                 if (decodeInfo["success"]) {

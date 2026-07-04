@@ -361,7 +361,7 @@ import { HashObject } from "../utils/HashObject";
          * @version Egret 2.4
          * @language zh_CN
          */
-        public toDataURL(type: string, rect?: Rectangle, encoderOptions?): string {
+        public toDataURL(type: string, rect?: Rectangle, encoderOptions?: number): string {
             throw new Error();
         }
 

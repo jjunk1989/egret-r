@@ -210,7 +210,7 @@ import { Stage } from "./Stage";
             return true;
         }
 
-        $setBitmapData(value): void {
+        $setBitmapData(value: Texture): void {
             this.$setTexture(value);
         }
 

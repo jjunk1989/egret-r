@@ -21,7 +21,7 @@ import { Rectangle } from "../geom/Rectangle";
      * @private
      * 格式化弧线角度的值
      */
-    function clampAngle(value): number {
+    function clampAngle(value: number): number {
         value %= Math.PI * 2;
         if (value < 0) {
             value += Math.PI * 2;
