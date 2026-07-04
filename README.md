@@ -3,6 +3,7 @@
 > Modern HTML5 Game Engine — ES Module packages, esbuild powered.
 
 [![License](https://img.shields.io/badge/license-New%20BSD-blue.svg)](./LICENSE.md)
+[![CI](https://github.com/egret-labs/egret-r/actions/workflows/ci.yml/badge.svg)](https://github.com/egret-labs/egret-r/actions/workflows/ci.yml)
 
 Egret Engine R is a modernized version of the Egret HTML5 game engine, repackaged as **ES Module npm packages** with **esbuild** as the build toolchain. It provides 2D rendering (Canvas/WebGL), an EUI component library, audio, networking, resource management, and more.
 
@@ -72,27 +73,41 @@ window.addEventListener('DOMContentLoaded', () => {
 ### Run the Basic Example
 
 ```bash
-# from repository root
+# from repository root — one command
+npm run dev
+
+# or manually:
 npm install
 npm run build
-
-# run the official basic example
-cd examples/basic
-npx vite --host 127.0.0.1 --port 3005 --strictPort
+cd examples/basic && npx vite --host 127.0.0.1 --port 3005 --strictPort
 ```
 
-Open `http://127.0.0.1:3005/` in your browser.
+Open `http://127.0.0.1:3005/` in your browser. Use the top-right dropdown to switch between **23 test cases** covering all packages.
+
+### Test Cases Included
+
+| Module | Cases |
+|--------|-------|
+| Core | Geometry, Event/Touch, Graphics, Text, Transform, RenderTexture, BlendMode, Benchmark×3, HttpRequest, Sound, Video, ImageLoader |
+| EUI | ArrayCollection, Button, CheckBox/RadioButton, List/Scroller |
+| Game | URLVariables, MovieClip |
+| Tween | Easing, Multi-target |
+| Socket | WebSocket |
 
 ### Recommended Development Workflow
 
-Open **two terminals** for the best development experience:
+**Single command (build + dev server):**
+
+```bash
+npm run dev
+```
+
+For fast iteration during development, open **two terminals**:
 
 | Terminal 1 | Terminal 2 |
 |------------|------------|
 | `npm run watch` | `npm -w examples/basic run dev` |
 | Watches `src/` changes → auto-rebuilds packages | Vite dev server → HMR auto-refreshes browser |
-
-> With this setup, editing any source file under `src/egret/` or `src/extension/` triggers automatic rebuild + browser refresh — **zero manual steps**.
 
 ### Using the Vite Template
 
@@ -245,9 +260,9 @@ egret-r/
 npm install           # Install dependencies
 npm run build         # Build all 5 packages
 npm run build:core    # Build @egret-r/core only
-npm run build:v3      # Legacy namespace-wrap build (deprecated, reference only)
+npm run dev           # Build + start example dev server
 npm run clean         # Remove all dist/ directories
-npm test              # Run all tests (67 tests, 5 suites)
+npm test              # Run all tests (88 tests, 5 suites)
 ```
 
 ### Build Pipeline

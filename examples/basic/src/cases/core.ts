@@ -857,4 +857,125 @@ export const coreCases: TestCaseDefinition[] = [
       return () => objects.forEach((o) => root.removeChild(o));
     },
   },
+  {
+    id: 'core-render-texture',
+    title: 'Core RenderTexture: Off-screen Drawing',
+    module: 'core',
+    run: ({ root, stage }) => {
+      const objects: egret.DisplayObject[] = [];
+
+      const title = new eui.Label();
+      title.x = 32; title.y = 112;
+      title.size = 20; title.textColor = 0x0f172a;
+      title.text = 'RenderTexture: Draw shapes → display as Bitmap';
+      root.addChild(title); objects.push(title);
+
+      // Draw to a RenderTexture
+      const rt = new egret.RenderTexture();
+      // Draw a colorful scene
+      const drawObj = new egret.Shape();
+      drawObj.graphics.beginFill(0x2563eb);
+      drawObj.graphics.drawRect(0, 0, 80, 60);
+      drawObj.graphics.endFill();
+      drawObj.graphics.beginFill(0xdc2626);
+      drawObj.graphics.drawCircle(60, 30, 25);
+      drawObj.graphics.endFill();
+      drawObj.graphics.beginFill(0xf59e0b);
+      drawObj.graphics.drawRoundRect(30, 50, 60, 30, 8, 8);
+      drawObj.graphics.endFill();
+      rt.drawToTexture(drawObj, new egret.Rectangle(0, 0, 120, 90), 1);
+
+      // Display the texture at multiple positions with transforms
+      for (let i = 0; i < 3; i++) {
+        const bmp = new egret.Bitmap(rt);
+        bmp.x = 32 + i * 140;
+        bmp.y = 150 + (i % 2) * 30;
+        bmp.scaleX = 1 + i * 0.3;
+        bmp.scaleY = 1 + i * 0.3;
+        bmp.alpha = 1 - i * 0.15;
+        root.addChild(bmp);
+        objects.push(bmp);
+      }
+
+      const info = new eui.Label();
+      info.x = 32; info.y = 280;
+      info.size = 14; info.textColor = 0x475569;
+      info.lineSpacing = 6;
+      info.text = [
+        'Off-screen scene: rect + circle + roundRect',
+        'Rendered to texture, displayed 3× at different scales',
+      ].join('\n');
+      root.addChild(info); objects.push(info);
+
+      return () => {
+        rt.dispose();
+        objects.forEach((o) => root.removeChild(o));
+      };
+    },
+  },
+  {
+    id: 'core-blendmode',
+    title: 'Core BlendMode: Visual Effects',
+    module: 'core',
+    run: ({ root, stage }) => {
+      const objects: egret.DisplayObject[] = [];
+
+      const title = new eui.Label();
+      title.x = 32; title.y = 112;
+      title.size = 20; title.textColor = 0x0f172a;
+      title.text = 'BlendMode: Normal · Add · Erase';
+      root.addChild(title); objects.push(title);
+
+      const modes: { label: string; mode: string }[] = [
+        { label: 'Normal', mode: egret.BlendMode.NORMAL },
+        { label: 'Add', mode: egret.BlendMode.ADD },
+        { label: 'Erase', mode: egret.BlendMode.ERASE },
+      ];
+
+      modes.forEach((item, idx) => {
+        const container = new egret.DisplayObjectContainer();
+        container.x = 32 + idx * 160;
+        container.y = 155;
+        root.addChild(container);
+        objects.push(container);
+
+        // Background: diagonal pattern
+        const bg = new egret.Shape();
+        bg.graphics.beginFill(0xf1f5f9);
+        bg.graphics.drawRect(0, 0, 140, 100);
+        bg.graphics.endFill();
+        for (let i = 0; i < 5; i++) {
+          bg.graphics.lineStyle(1, idx === 2 ? 0x475569 : 0xcbd5e1);
+          bg.graphics.moveTo(0, i * 25);
+          bg.graphics.lineTo(140, i * 25 + 1);
+        }
+        container.addChild(bg);
+
+        // Foreground: colored circle
+        const fg = new egret.Shape();
+        fg.graphics.beginFill([0x2563eb, 0xdc2626, 0xf59e0b][idx], 1);
+        fg.graphics.drawCircle(70, 50, 35);
+        fg.graphics.endFill();
+        fg.blendMode = item.mode as any;
+        container.addChild(fg);
+
+        const label = new eui.Label();
+        label.x = 0; label.y = 108;
+        label.size = 13; label.textColor = 0x475569;
+        label.text = item.label;
+        label.width = 140;
+        label.textAlign = egret.HorizontalAlign.CENTER;
+        container.addChild(label);
+      });
+
+      const info = new eui.Label();
+      info.x = 32; info.y = 285;
+      info.size = 14; info.textColor = 0x475569;
+      info.lineSpacing = 6;
+      info.text = 'Colored circles over striped backgrounds with different blend modes';
+      root.addChild(info); objects.push(info);
+
+      return () => objects.forEach((o) => root.removeChild(o));
+    },
+  },
 ];

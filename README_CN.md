@@ -72,27 +72,41 @@ window.addEventListener('DOMContentLoaded', () => {
 ### 运行 Basic 示例
 
 ```bash
-# 在仓库根目录执行
+# 在仓库根目录执行，一条命令
+npm run dev
+
+# 或手动执行：
 npm install
 npm run build
-
-# 启动官方 basic 示例
-cd examples/basic
-npx vite --host 127.0.0.1 --port 3005 --strictPort
+cd examples/basic && npx vite --host 127.0.0.1 --port 3005 --strictPort
 ```
 
-浏览器打开 `http://127.0.0.1:3005/`。
+浏览器打开 `http://127.0.0.1:3005/`。使用右上角下拉菜单在 **23 个测试用例** 之间切换。
+
+### 测试用例
+
+| 模块 | 用例 |
+|------|------|
+| Core | 几何/事件/图形/文本/变换/离屏渲染/混合模式/性能×3/HTTP/音频/视频/图片 |
+| EUI | 数组集合/按钮/复选框与单选/列表滚动 |
+| Game | URL 参数/MovieClip |
+| Tween | 缓动/多目标动画 |
+| Socket | WebSocket |
 
 ### 推荐开发工作流
 
-打开**两个终端**，获得最佳开发体验：
+**一条命令（构建 + 开发服务器）：**
+
+```bash
+npm run dev
+```
+
+开发过程中如需快速迭代，打开**两个终端**：
 
 | 终端 1 | 终端 2 |
 |--------|--------|
 | `npm run watch` | `npm -w examples/basic run dev` |
 | 监听 `src/` 变更 → 自动重构建包 | Vite 开发服务器 → HMR 自动刷新浏览器 |
-
-> 此模式下，修改 `src/egret/` 或 `src/extension/` 下的任意源码文件，都会触发自动构建 + 浏览器刷新 —— **全程零手动**。
 
 ### 使用 Vite 模板
 
@@ -245,9 +259,9 @@ egret-r/
 npm install           # 安装依赖
 npm run build         # 构建所有 5 个包
 npm run build:core    # 仅构建 @egret-r/core
-npm run build:v3      # 旧版 namespace-wrap 构建（已弃用，仅供参考）
+npm run dev           # 构建 + 启动示例开发服务器
 npm run clean         # 清理所有 dist/ 目录
-npm test              # 运行所有测试（67 项，5 套件）
+npm test              # 运行所有测试（88 项，5 套件）
 ```
 
 ### 构建流程
