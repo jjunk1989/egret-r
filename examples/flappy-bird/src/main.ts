@@ -23,8 +23,11 @@ class Main extends egret.DisplayObjectContainer {
 }
 
 (window as any).Main = Main;
-window.addEventListener('DOMContentLoaded', () => {
-  console.log('DOM loaded, container:', document.querySelector('.egret-player'));
+
+// Call directly — DOMContentLoaded may have already fired with type=module
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => egret.runEgret({ renderMode: 'webgl' }));
+} else {
   egret.runEgret({ renderMode: 'webgl' });
-});
+}
 
