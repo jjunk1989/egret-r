@@ -127,7 +127,7 @@ class Main extends egret.DisplayObjectContainer {
     this.drawBackground(stage.stageWidth, stage.stageHeight);
     this.createHeader(stage.stageWidth, stage.stageHeight);
 
-    this.sceneRoot.y = 0;
+    this.sceneRoot.y = 120;
     this.addChild(this.sceneRoot);
 
     window.addEventListener(TEST_CHANGE_EVENT, this.onCaseChange as EventListener);
@@ -143,7 +143,7 @@ class Main extends egret.DisplayObjectContainer {
 
     const stripe = new egret.Shape();
     stripe.graphics.beginFill(0xe2e8f0);
-    stripe.graphics.drawRect(0, 0, w, 88);
+    stripe.graphics.drawRect(0, 0, w, 108);
     stripe.graphics.endFill();
     this.addChild(stripe);
   }
@@ -151,7 +151,7 @@ class Main extends egret.DisplayObjectContainer {
   private createHeader(w: number, h: number): void {
     this.headerGroup = new eui.Group();
     this.headerGroup.x = 24;
-    this.headerGroup.y = 18;
+    this.headerGroup.y = 120;
     this.addChild(this.headerGroup);
 
     const title = new eui.Label();
@@ -230,8 +230,8 @@ window.addEventListener('DOMContentLoaded', () => {
   container.setAttribute('data-content-width', String(container.clientWidth || window.innerWidth));
   container.setAttribute('data-content-height', String(container.clientHeight || window.innerHeight));
   container.setAttribute('data-multi-fingered', '2');
-  container.setAttribute('data-show-fps', 'false');
-  container.setAttribute('data-show-log', 'false');
+  container.setAttribute('data-show-fps', 'true');
+  container.setAttribute('data-show-log', 'true');
 
   egret.runEgret({
     renderMode: 'webgl',

@@ -301,7 +301,7 @@ async function buildPkg(pkg) {
     
     // Fix: esbuild renames some symbols due to internal collisions (not namespace-related).
     bundled = bundled.replace(/(?<![_a-zA-Z])toColorString\(/g, 'toColorString2(');
-    bundled = bundled.replace(/(?<![_a-zA-Z])ProgressEvent\.([A-Z])/g, 'ProgressEvent2.$1');
+    bundled = bundled.replace(/(?<![_a-zA-Z])ProgressEvent\.([a-zA-Z])/g, 'ProgressEvent2.$1');
     bundled = bundled.replace(/(?<![_a-zA-Z])EgretShaderLib\./g, 'EgretShaderLib2.');
     bundled = bundled.replace(/(?<![_a-zA-Z])WebGLUtils\./g, 'WebGLUtils2.');
     bundled = bundled.replace(/(?<![_a-zA-Z])HtmlSound\./g, 'HtmlSound2.');
