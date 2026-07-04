@@ -26,10 +26,9 @@ class Main extends egret.DisplayObjectContainer {
 
 (window as any).Main = Main;
 console.log('window.Main set:', !!(window as any).Main);
-console.log('readyState:', document.readyState);
-console.log('container:', document.querySelector('.egret-player'));
+console.log('window[\"Main\"]:', (window as any)['Main']);
+console.log('egret.getDefinitionByName:', typeof (egret as any).getDefinitionByName);
 
-// Call directly — DOMContentLoaded may have already fired with type=module
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', () => {
     console.log('DOMContentLoaded fired, calling runEgret');
