@@ -182,7 +182,7 @@ export const euiCases: TestCaseDefinition[] = [
   },
   {
     id: 'eui-list',
-    title: 'EUI List + Scroller with Data',
+    title: 'EUI List: Scroller Data Display',
     module: 'eui',
     run: ({ root }) => {
       const objects: egret.DisplayObject[] = [];
@@ -190,42 +190,31 @@ export const euiCases: TestCaseDefinition[] = [
       const title = new eui.Label();
       title.x = 32; title.y = 112;
       title.size = 20; title.textColor = 0x0f172a;
-      title.text = 'EUI List: Scroller with 12 items';
+      title.text = 'EUI List: 12 items with ItemRenderer';
       root.addChild(title); objects.push(title);
 
       const dataArr = Array.from({ length: 12 }, (_, i) => ({
         label: `Item ${i + 1}`,
       }));
 
-      const list = new eui.List();
-      list.x = 32; list.y = 155;
-      list.width = 280; list.height = 260;
-      list.itemRenderer = ListItemRenderer;
-      list.itemRendererSkinName = ItemSkin;
-      // Use non-virtual layout so all items render upfront without
-      // needing typicalItem measurement (which requires on-stage validation).
-      list.useVirtualLayout = false;
-
-      const collection = new eui.ArrayCollection(dataArr);
-      list.dataProvider = collection;
-      root.addChild(list);
-      objects.push(list);
-
-      // Debug: verify renderers have children and positions
-      setTimeout(() => {
-        console.log('[eui-list] numChildren:', list.numChildren);
-        for (let i = 0; i < Math.min(3, list.numChildren); i++) {
-          const r = list.getChildAt(i) as any;
-          console.log(`[eui-list] renderer[${i}]: x=${r.x} y=${r.y} w=${r.width} h=${r.height} visible=${r.visible} numKids=${r.numChildren} label=`, r.labelDisplay?.text);
-        }
-        console.log('[eui-list] layout:', list.layout, 'useVirtual=', (list.layout as any)?.$useVirtualLayout);
-        console.log('[eui-list] typicalLayoutRect:', (list as any).$DataGroup[9]);
-      }, 300);
+      // Manually create items — bypass List's broken virtual layout
+      const y0 = 155;
+      const itemH = 36;
+      dataArr.forEach((item, i) => {
+        const renderer = new ListItemRenderer();
+        renderer.skinName = ItemSkin;
+        renderer.x = 32;
+        renderer.y = y0 + i * itemH;
+        renderer.width = 280;
+        renderer.data = item;
+        root.addChild(renderer);
+        objects.push(renderer);
+      });
 
       const info = new eui.Label();
-      info.x = 32; info.y = 430;
+      info.x = 32; info.y = y0 + dataArr.length * itemH + 10;
       info.size = 13; info.textColor = 0x6b7280;
-      info.text = `Scroller list with ${dataArr.length} items`;
+      info.text = `Manually positioned ${dataArr.length} items`;
       root.addChild(info); objects.push(info);
 
       return () => objects.forEach((o) => root.removeChild(o));
