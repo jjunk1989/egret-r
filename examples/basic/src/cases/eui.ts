@@ -204,10 +204,37 @@ export const euiCases: TestCaseDefinition[] = [
       list.itemRendererSkinName = ItemSkin;
 
       const collection = new eui.ArrayCollection(dataArr);
-      // Ensure typicalItem is set for virtual layout measurement
       list.dataProvider = collection;
       root.addChild(list);
       objects.push(list);
+
+      // Debug: check list state after validation
+      setTimeout(() => {
+        console.log('[eui-list] list.numChildren:', list.numChildren);
+        console.log('[eui-list] list.$indexToRenderer:', (list as any).$indexToRenderer);
+        const layout = list.layout;
+        console.log('[eui-list] layout:', layout);
+        if (layout) {
+          console.log('[eui-list] useVirtualLayout:', layout.$useVirtualLayout);
+          // Check typicalItem
+          const dg = list as any;
+          console.log('[eui-list] typicalLayoutRect:', dg.$DataGroup[9]);
+          console.log('[eui-list] typicalItem:', dg.$DataGroup[12]);
+        }
+        // Manually create a renderer and measure it
+        const r = new ListItemRenderer();
+        r.skinName = ItemSkin;
+        r.data = { label: 'MeasureTest' };
+        r.validateNow();
+        const bounds = new egret.Rectangle();
+        r.getPreferredBounds(bounds);
+        console.log('[eui-list] renderer preferred bounds:', bounds.x, bounds.y, bounds.width, bounds.height);
+        console.log('[eui-list] renderer numChildren:', r.numChildren);
+        for (let i = 0; i < r.numChildren; i++) {
+          const c = r.getChildAt(i);
+          console.log('[eui-list] child', i, ':', c, 'w=', c.width, 'h=', c.height);
+        }
+      }, 200);
 
       const info = new eui.Label();
       info.x = 32; info.y = 430;
