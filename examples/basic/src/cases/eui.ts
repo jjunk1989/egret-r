@@ -203,6 +203,8 @@ export const euiCases: TestCaseDefinition[] = [
       list.x = 32; list.y = 155;
       list.width = 280; list.height = 260;
       list.itemRenderer = ListItemRenderer;
+      // Disable virtual layout for simplicity
+      list.useVirtualLayout = false;
       list.dataProvider = new eui.ArrayCollection(dataArr);
       root.addChild(list);
       objects.push(list);
