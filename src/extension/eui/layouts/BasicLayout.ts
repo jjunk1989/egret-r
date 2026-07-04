@@ -290,3 +290,4 @@ import { is } from "../../../egret/utils/is";
         return $TempPoint.setTo(maxX, maxY);
     }
     sys.measure = measure;
+    sys.updateDisplayList = updateDisplayList;
