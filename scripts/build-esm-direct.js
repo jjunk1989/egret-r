@@ -320,6 +320,16 @@ async function buildPkg(pkg) {
     }
     bundled = lines.join('\n');
 
+    // Fix: esbuild renames $TempMatrix -> $TempMatrix2.
+    lines = bundled.split('\n');
+    for (var li3 = 0; li3 < lines.length; li3++) {
+      if (lines[li3].indexOf('_ns(') >= 0 && lines[li3].indexOf('"$TempMatrix"') >= 0) continue;
+      if (lines[li3].indexOf('"$TempMatrix"') >= 0) continue;
+      if (lines[li3].indexOf('var $TempMatrix2') >= 0) continue;
+      lines[li3] = lines[li3].replace(/(?<!\w)\$TempMatrix(?!\w)/g, '$TempMatrix2');
+    }
+    bundled = lines.join('\n');
+
     // Fix: esbuild renames _is -> _is2 (starts with _, treated as internal).
     // Replace bare references but skip _ns() string literal lines.
     lines = bundled.split('\n');
