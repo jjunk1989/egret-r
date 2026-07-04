@@ -182,7 +182,7 @@ export const euiCases: TestCaseDefinition[] = [
   },
   {
     id: 'eui-list',
-    title: 'EUI List: Scroller Data Display',
+    title: 'EUI List + Scroller with Data',
     module: 'eui',
     run: ({ root }) => {
       const objects: egret.DisplayObject[] = [];
@@ -190,7 +190,7 @@ export const euiCases: TestCaseDefinition[] = [
       const title = new eui.Label();
       title.x = 32; title.y = 112;
       title.size = 20; title.textColor = 0x0f172a;
-      title.text = 'EUI List: 12 items with ItemRenderer';
+      title.text = 'EUI List + Scroller: 12 items';
       root.addChild(title); objects.push(title);
 
       const dataArr = Array.from({ length: 12 }, (_, i) => ({
@@ -198,18 +198,22 @@ export const euiCases: TestCaseDefinition[] = [
       }));
 
       const list = new eui.List();
-      list.x = 32; list.y = 155;
-      list.width = 280; list.height = 260;
       list.itemRenderer = ListItemRenderer;
       list.itemRendererSkinName = ItemSkin;
       list.dataProvider = new eui.ArrayCollection(dataArr);
-      root.addChild(list);
-      objects.push(list);
+
+      // Wrap in Scroller for scroll support
+      const scroller = new eui.Scroller();
+      scroller.x = 32; scroller.y = 155;
+      scroller.width = 280; scroller.height = 260;
+      scroller.viewport = list;
+      root.addChild(scroller);
+      objects.push(scroller);
 
       const info = new eui.Label();
       info.x = 32; info.y = 430;
       info.size = 13; info.textColor = 0x6b7280;
-      info.text = `Scroller list with ${dataArr.length} items`;
+      info.text = `Scrollable list with ${dataArr.length} items`;
       root.addChild(info); objects.push(info);
 
       return () => objects.forEach((o) => root.removeChild(o));
