@@ -179,6 +179,7 @@ class Main extends egret.DisplayObjectContainer {
     hint.width = GAME_W;
     hint.y = GAME_H * 0.52;
     this.uiLayer.addChild(hint);
+    setTimeout(() => { hint.visible = false; }, 3000);
   }
 
   private createScore(): void {
