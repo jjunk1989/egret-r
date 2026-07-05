@@ -370,15 +370,22 @@ async function buildPkg(pkg) {
     lines = bundled.split('\n');
     for (var li5 = 0; li5 < lines.length; li5++) {
       var l = lines[li5];
-      if (l.indexOf('_ns(') >= 0) continue;
+      var isNsLine = l.indexOf('_ns(') >= 0;
       if (l.indexOf('__name(') >= 0) continue;
       for (var ri = 0; ri < renames.length; ri++) {
         var rn = renames[ri];
         // Skip lines that define the renamed variable
         if (l.indexOf('var ' + rn.renamed + ' ') >= 0 || l.indexOf('= ' + rn.renamed) >= 0) continue;
         if (l.indexOf('function ' + rn.renamed + '(') >= 0) continue;
-        var re = new RegExp('\\b' + rn.orig.replace(/\$/g, '\\$') + '\\b(?!2)', 'g');
-        l = l.replace(re, rn.renamed);
+        if (isNsLine) {
+          // On _ns lines, only fix the value argument: _ns(egret, "X", X) -> _ns(egret, "X", X2)
+          // Match: , X)  or  , X,  at end of _ns call
+          var nsValRe = new RegExp('(_ns\\(egret,\\s*"' + rn.orig.replace(/\$/g, '\\$') + '",\\s*)' + rn.orig.replace(/\$/g, '\\$') + '(\\s*[,)])', 'g');
+          l = l.replace(nsValRe, '$1' + rn.renamed + '$2');
+        } else {
+          var re = new RegExp('\\b' + rn.orig.replace(/\$/g, '\\$') + '\\b(?!2)', 'g');
+          l = l.replace(re, rn.renamed);
+        }
       }
       lines[li5] = l;
     }
