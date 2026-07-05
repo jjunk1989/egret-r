@@ -336,28 +336,51 @@ async function buildPkg(pkg) {
     }
     bundled = lines.join('\n');
 
-    // Fix: esbuild renames functions with a 2-suffix when there are naming
-    // conflicts in the IIFE scope. The original unqualified name is still
-    // used as a bare global in other modules.
+    // Fix: esbuild renames symbols with a 2-suffix when there are naming
+    // conflicts in the IIFE scope (e.g. _ns(egret, "X", X2)). The original
+    // unqualified name X is still used as a bare global in other modules.
+    // Auto-detect all X->X2 mappings from _ns calls and fix bare references.
+    var renames = [];
+    // Also add hardcoded ones that don't follow X->X2 pattern exactly
+    var extraRenames = [
+      { orig: '_is', renamed: '_is2' },
+    ];
+    var nsRe = /_ns\(egret,\s*"(\w+)",\s*(\w+2)\)/g;
+    var nsMatch;
+    while ((nsMatch = nsRe.exec(bundled)) !== null) {
+      var origName = nsMatch[1];
+      var renamed = nsMatch[2];
+      if (origName + '2' !== renamed) continue;
+      // Skip names too short or very common (risk of false positives)
+      if (/^(tr|is|do|if|in|or|on|to|be|no)$/.test(origName)) continue;
+      renames.push({ orig: origName, renamed: renamed });
+    }
+    // Add extra renames
+    for (var ei = 0; ei < extraRenames.length; ei++) {
+      renames.push(extraRenames[ei]);
+    }
+    // Deduplicate
+    var seenRenames = {};
+    renames = renames.filter(function(r) {
+      if (seenRenames[r.orig]) return false;
+      seenRenames[r.orig] = true;
+      return true;
+    });
+
     lines = bundled.split('\n');
     for (var li5 = 0; li5 < lines.length; li5++) {
-      if (lines[li5].indexOf('_ns(') >= 0) continue;
-      if (lines[li5].indexOf('__name(') >= 0) continue;
-      if (lines[li5].indexOf('var toColorString2') >= 0) continue;
-      if (lines[li5].indexOf('var EgretShaderLib2') >= 0) continue;
-      if (lines[li5].indexOf('function tr2') >= 0) continue;
-      if (lines[li5].indexOf('function toColorString2') >= 0) continue;
-      if (lines[li5].indexOf('function getFontString2') >= 0) continue;
-      if (lines[li5].indexOf('function getPrefixStyleName2') >= 0) continue;
-      if (lines[li5].indexOf('function getDefinitionByName2') >= 0) continue;
-      if (lines[li5].indexOf('function getQualifiedClassName2') >= 0) continue;
-      lines[li5] = lines[li5].replace(/\btoColorString\b/g, 'toColorString2');
-      lines[li5] = lines[li5].replace(/\bgetFontString\b/g, 'getFontString2');
-      lines[li5] = lines[li5].replace(/\bgetPrefixStyleName\b/g, 'getPrefixStyleName2');
-      lines[li5] = lines[li5].replace(/\bgetDefinitionByName\b(?!2)/g, 'getDefinitionByName2');
-      lines[li5] = lines[li5].replace(/\bgetQualifiedClassName\b(?!2)/g, 'getQualifiedClassName2');
-      lines[li5] = lines[li5].replace(/\btr(?=\()/g, 'tr2');
-      lines[li5] = lines[li5].replace(/\bEgretShaderLib\b(?!2)/g, 'EgretShaderLib2');
+      var l = lines[li5];
+      if (l.indexOf('_ns(') >= 0) continue;
+      if (l.indexOf('__name(') >= 0) continue;
+      for (var ri = 0; ri < renames.length; ri++) {
+        var rn = renames[ri];
+        // Skip lines that define the renamed variable
+        if (l.indexOf('var ' + rn.renamed + ' ') >= 0 || l.indexOf('= ' + rn.renamed) >= 0) continue;
+        if (l.indexOf('function ' + rn.renamed + '(') >= 0) continue;
+        var re = new RegExp('\\b' + rn.orig.replace(/\$/g, '\\$') + '\\b(?!2)', 'g');
+        l = l.replace(re, rn.renamed);
+      }
+      lines[li5] = l;
     }
     bundled = lines.join('\n');
 
