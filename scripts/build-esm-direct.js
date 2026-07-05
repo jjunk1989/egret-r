@@ -352,7 +352,7 @@ async function buildPkg(pkg) {
       var renamed = nsMatch[2];
       if (origName + '2' !== renamed) continue;
       // Skip names too short or very common (risk of false positives)
-      if (/^(tr|is|do|if|in|or|on|to|be|no)$/.test(origName)) continue;
+      if (/^(tr|is|do|if|in|or|on|to|be|no|sys|log|warn)$/.test(origName)) continue;
       renames.push({ orig: origName, renamed: renamed });
     }
     // Add extra renames
