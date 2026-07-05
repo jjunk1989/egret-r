@@ -1,11 +1,9 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { ticker } from "../../../egret/player/SystemTicker";
-import { getTimer } from "../../../egret/utils/getTimer";
-import { args } from "../../../egret/player/Player";
 
-
+import { egret } from '@egret-r/core';
+const { ticker, getTimer, args } = egret;
     let setTimeoutCache: any = {};
     let setTimeoutIndex: number = 0;
 

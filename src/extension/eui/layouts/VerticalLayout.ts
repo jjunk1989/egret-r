@@ -1,14 +1,13 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { HorizontalAlign } from "../../../egret/text/HorizontalAlign";
-import { VerticalAlign } from "../../../egret/text/VerticalAlign";
+
+import { egret } from '@egret-r/core';
+const { HorizontalAlign, VerticalAlign, $TempRectangle, is } = egret;
 import { UIComponent, UIKeys } from "../core/UIComponent";
 import { ChildInfo, LinearLayoutBase } from "./supportClasses/LinearLayoutBase";
-import { $TempRectangle } from "../../../egret/geom/Rectangle";
-import { is } from "../../../egret/utils/is";
-import { JustifyAlign } from "./JustifyAlign";
 
+import { JustifyAlign } from "./JustifyAlign";
 
     let UIComponentClass = "UIComponent";
     /**
@@ -418,7 +417,6 @@ import { JustifyAlign } from "./JustifyAlign";
             }
             return startPos;
         }
-
 
         /**
          * @inheritDoc

@@ -1,12 +1,10 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { Event } from "../../../../egret/events/Event";
-import { IOErrorEvent } from "../../../../egret/events/IOErrorEvent";
-import { HttpResponseType } from "../../../../egret/net/HttpResponseType";
-import { IThemeAdapter } from "../../core/IThemeAdapter";
-import { HttpRequest } from "../../../../egret/net/HttpRequest";
 
+import { egret } from '@egret-r/core';
+const { Event, IOErrorEvent, HttpResponseType, HttpRequest } = egret;
+import { IThemeAdapter } from "../../core/IThemeAdapter";
 
     /**
      * Default instance of interface <code>IThemeAdapter</code>.

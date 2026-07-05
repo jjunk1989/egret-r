@@ -1,15 +1,12 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { ImageLoader } from "../../../egret/net/ImageLoader";
-import { Event } from "../../../egret/events/Event";
-import { IOErrorEvent } from "../../../egret/events/IOErrorEvent";
-import { Texture } from "../../../egret/display/Texture";
-import { Rectangle } from "../../../egret/geom/Rectangle";
+
+import { egret } from '@egret-r/core';
+const { ImageLoader, Event, IOErrorEvent, Texture, Rectangle } = egret;
 import { AnalyzerBase } from "./AnalyzerBase";
 import { ResourceItem } from "../../assetsmanager/src/shim/ResourceItem";
 import { $getVirtualUrl } from "../Resource";
-
 
     /**
      * @private

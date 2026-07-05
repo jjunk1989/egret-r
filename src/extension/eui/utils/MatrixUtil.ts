@@ -1,12 +1,10 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { Matrix } from "../../../egret/geom/Matrix";
-import { Point } from "../../../egret/geom/Point";
-import { Rectangle } from "../../../egret/geom/Rectangle";
-import { minWidth, minHeight } from "../core/UIComponent";
-import { $TempRectangle } from "../../../egret/geom/Rectangle";
 
+import { egret } from '@egret-r/core';
+const { Matrix, Point, Rectangle, $TempRectangle } = egret;
+import { minWidth, minHeight } from "../core/UIComponent";
 
     let SOLUTION_TOLERANCE = 0.1;
     let MIN_MAX_TOLERANCE = 0.1;
@@ -174,7 +172,6 @@ import { $TempRectangle } from "../../../egret/geom/Rectangle";
 
         return actualSize;
     }
-
 
     /**
      * @private

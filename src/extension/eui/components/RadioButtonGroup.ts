@@ -1,13 +1,12 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { DisplayObject } from "../../../egret/display/DisplayObject";
-import { Event } from "../../../egret/events/Event";
-import { EventDispatcher } from "../../../egret/events/EventDispatcher";
+
+import { egret } from '@egret-r/core';
+const { DisplayObject, Event, EventDispatcher } = egret;
 import { RadioButton } from "./RadioButton";
 import { registerBindable } from "../utils/registerBindable";
 import { PropertyEvent } from "../events/PropertyEvent";
-
 
     let groupCount:number = 0;
 
@@ -41,7 +40,6 @@ import { PropertyEvent } from "../events/PropertyEvent";
             return 0;
         return breadthOrderCompare(aParent, bParent);
     }
-
 
     /**
      * The RadioButtonGroup component defines a group of RadioButton components
@@ -403,7 +401,6 @@ import { PropertyEvent } from "../events/PropertyEvent";
                     this.dispatchEventWith(Event.CHANGE);
             }
         }
-
 
         /**
          * @private

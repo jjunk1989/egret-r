@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { Event } from "../../../egret/events/Event";
+
+import { egret } from '@egret-r/core';
+const { Event } = egret;
 import { Button } from "./Button";
 import { registerBindable } from "../utils/registerBindable";
 import { PropertyEvent } from "../events/PropertyEvent";
-
 
 	/**
 	 * The ToggleButton component defines a toggle button.

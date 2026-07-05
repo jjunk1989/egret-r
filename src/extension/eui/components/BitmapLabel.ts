@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { BitmapText } from "../../../egret/text/BitmapText";
-import { BitmapFont } from "../../../egret/text/BitmapFont";
-import { Rectangle } from "../../../egret/geom/Rectangle";
+
+import { egret } from '@egret-r/core';
+const { BitmapText, BitmapFont, Rectangle } = egret;
 import { UIComponent, UIComponentImpl, UIKeys, implementUIComponent } from "../core/UIComponent";
 import { registerBindable } from "../utils/registerBindable";
 import { PropertyEvent } from "../events/PropertyEvent";
@@ -328,7 +328,6 @@ import { getAssets } from "../core/UIComponent";
          * @platform Web
          */
         public explicitHeight: number;
-
 
         /**
          * @copy UIComponent#minWidth

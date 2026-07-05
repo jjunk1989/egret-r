@@ -1,11 +1,6 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { Event } from "../../../egret/events/Event";
-import { IEventDispatcher } from "../../../egret/events/IEventDispatcher";
-
-
-    
     /**
      * When the movieClip's current frame have a frameLabel, dispatches MovieClipEvent object. FrameLabel Event type: MovieClipEvent.FRAME_LABEL
      * @version Egret 2.4
@@ -18,6 +13,9 @@ import { IEventDispatcher } from "../../../egret/events/IEventDispatcher";
      * @platform Web
      * @language zh_CN
   	 */
+
+import { egret } from '@egret-r/core';
+const { Event, IEventDispatcher } = egret;
     export class MovieClipEvent extends Event {
 
         /**

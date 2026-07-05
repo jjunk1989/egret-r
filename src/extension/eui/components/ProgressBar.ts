@@ -1,14 +1,14 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { Event } from "../../../egret/events/Event";
+
+import { egret } from '@egret-r/core';
+const { Event, $TempRectangle } = egret;
 import { UIComponent } from "../core/UIComponent";
 import { Direction } from "../core/Direction";
 import { Animation } from "./supportClasses/Animation";
 import { RangeKeys, Range } from "./supportClasses/Range";
 import { Label } from "./Label";
-import { $TempRectangle } from "../../../egret/geom/Rectangle";
-
 
     /**
      * The ProgressBar control provides a visual representation of the progress of a task over time.

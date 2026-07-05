@@ -1,10 +1,9 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { Rectangle } from "../../../egret/geom/Rectangle";
-import { XML, XMLText } from "../../../egret/utils/XML";
-import { registerClass } from "../../../egret/utils/registerClass";
-import { log } from "../../../egret/system/Console";
+
+import { egret } from '@egret-r/core';
+const { Rectangle, XML, XMLText, registerClass, log } = egret;
 import { Skin } from "../components/Skin";
 import { AddPosition } from "../states/AddItems";
 import { EXMLConfig, NS_S, NS_W } from "./EXMLConfig";
@@ -12,7 +11,6 @@ import { EXClass, EXState, EXBinding, EXCodeBlock, EXFunction, EXVariable, EXSet
 import { $error } from "../../../Defines.debug";
 import { DEBUG } from "../../../Defines.debug";
 import { $warn } from "../../../Defines.debug";
-
 
     /**
      * @private
@@ -414,7 +412,6 @@ import { $warn } from "../../../Defines.debug";
                     $error(2020, this.currentClassName, list.join("\n"));
                 }
             }
-
 
             if (!this.currentXML.namespace) {
                 if (DEBUG) {
@@ -944,7 +941,6 @@ import { $warn } from "../../../Defines.debug";
             return result;
         }
 
-
         /**
          * @private
          * 是否是普通赋值的key
@@ -1223,7 +1219,6 @@ import { $warn } from "../../../Defines.debug";
             skinPartCB.addReturn(skinPartStr);
             skinPartFunc.codeBlock = skinPartCB;
             this.currentClass.addFunction(skinPartFunc);
-
 
             this.currentXML.attributes.id = "";
             //生成视图状态代码
@@ -1660,7 +1655,6 @@ import { $warn } from "../../../Defines.debug";
             }
             return {position: AddPosition.LAST, relativeTo: targetId};
         }
-
 
         /**
          * @private

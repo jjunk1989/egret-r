@@ -1,15 +1,15 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { HttpRequest } from "../../../egret/events/IOErrorEvent";
-import { getDefinitionByName } from "../../../egret/utils/getDefinitionByName";
+
+import { egret } from '@egret-r/core';
+const { HttpRequest, getDefinitionByName } = egret;
 import { getTheme } from "../core/UIComponent";
 import { EXMLParser } from "./EXMLParser";
 import { $error } from "../../../Defines.debug";
 import { DEBUG } from "../../../Defines.debug";
 
 export let EXML: any = {};
-
 
     let parser = new EXMLParser();
 
@@ -123,7 +123,6 @@ export let EXML: any = {};
         request(url, $parseURLContent);
     }
 
-
     /**
      * @private
      */
@@ -185,7 +184,6 @@ export let EXML: any = {};
                 arr[0].call(arr[1], clazz, url);
         }
     }
-
 
     /**
      * @private

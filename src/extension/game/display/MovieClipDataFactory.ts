@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { EventDispatcher } from "../../../egret/events/EventDispatcher";
-import { SpriteSheet } from "../../../egret/display/SpriteSheet";
-import { Texture } from "../../../egret/display/Texture";
+
+import { egret } from '@egret-r/core';
+const { EventDispatcher, SpriteSheet, Texture } = egret;
 import { MovieClipData } from "./MovieClipData";
 
     /**

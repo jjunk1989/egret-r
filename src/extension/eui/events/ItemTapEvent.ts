@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { Event } from "../../../egret/events/Event";
-import { IEventDispatcher } from "../../../egret/events/IEventDispatcher";
-import { IItemRenderer } from "../core/IItemRenderer";
 
+import { egret } from '@egret-r/core';
+const { Event, IEventDispatcher } = egret;
+import { IItemRenderer } from "../core/IItemRenderer";
 
     /**
      * Represents events that are dispatched when a item has been touched.

@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { Graphics } from "../../../egret/display/Graphics";
-import { Rectangle } from "../../../egret/geom/Rectangle";
+
+import { egret } from '@egret-r/core';
+const { Graphics, Rectangle } = egret;
 import { Component } from "./Component";
 
     /**
@@ -33,7 +34,6 @@ import { Component } from "./Component";
         protected createNativeDisplayObject(): void {
             this.$nativeDisplayObject = new egret_native.NativeDisplayObject(egret_native.NativeObjectType.GRAPHICS);
         }
-
 
         /**
          * @private

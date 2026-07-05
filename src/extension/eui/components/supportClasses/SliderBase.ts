@@ -1,18 +1,13 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { Event } from "../../../../egret/events/Event";
-import { _is } from "../../../../egret/utils/is";
-import { TouchEvent } from "../../../../egret/events/TouchEvent";
-import { DisplayObject } from "../../../../egret/display/DisplayObject";
-import { DisplayObjectContainer } from "../../../../egret/display/DisplayObjectContainer";
-import { Stage } from "../../../../egret/display/Stage";
+
+import { egret } from '@egret-r/core';
+const { Event, _is, TouchEvent, DisplayObject, DisplayObjectContainer, Stage, $TempPoint } = egret;
 import { UIEvent } from "../../events/UIEvent";
 import { UIComponent } from "../../core/UIComponent";
 import { Animation } from "./Animation";
 import { RangeKeys, Range } from "./Range";
-import { $TempPoint } from "../../../../egret/geom/Point";
-
 
     /**
      * @private
@@ -245,7 +240,6 @@ import { $TempPoint } from "../../../../egret/geom/Point";
             this.$SliderBase[Keys.liveDragging] = !!value;
         }
 
-
         /**
          * The value the slider will have when the touch is end.
          * This property is updated when the slider thumb moves, even if <code>liveDragging</code> is false.<p/>
@@ -295,7 +289,6 @@ import { $TempPoint } from "../../../../egret/geom/Point";
             this.$SliderBase[Keys.pendingValue] = value;
             super.setValue(value);
         }
-
 
         /**
          * @inheritDoc
@@ -350,7 +343,6 @@ import { $TempPoint } from "../../../../egret/geom/Point";
         private onTrackOrThumbResize(event:Event):void {
             this.updateSkinDisplayList();
         }
-
 
         /**
          * Handle touch-begin events on the scroll thumb. Records the touch begin point in clickOffset.
@@ -489,7 +481,6 @@ import { $TempPoint } from "../../../../egret/geom/Point";
             }
             values[Keys.touchDownTarget] = null;
         }
-
 
         /**
          * @private

@@ -1,10 +1,11 @@
 
-import { Event } from "../../../egret/events/Event";
-
 
     /**
      * @private
      */
+
+import { egret } from '@egret-r/core';
+const { Event } = egret;
     export class ScrollerThrowEvent extends Event {
 
         public static THROW:string = "throw";
@@ -24,7 +25,6 @@ import { Event } from "../../../egret/events/Event";
          * 动画信息，可调节或修改
          */
         //public tween;
-
 
         public constructor(type:string, bubbles?:boolean, cancelable?:boolean,currentPos?:number,toPos?:number) {
             super(type, bubbles, cancelable);

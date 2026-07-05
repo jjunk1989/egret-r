@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { Event } from "../../../../egret/events/Event";
-import { IEventDispatcher } from "../../../../egret/events/IEventDispatcher";
+
+import { egret } from '@egret-r/core';
+const { Event, IEventDispatcher } = egret;
 import { ResourceItem } from "./ResourceItem";
 import { ResourceInfo } from "../core/ResourceConfig";
-
 
 	/**
 	 * The events of resource loading.

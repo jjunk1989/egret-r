@@ -1,19 +1,15 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { BitmapData } from "../../../../egret/display/BitmapData";
-import { warn } from "../../../../egret/system/Console";
-import { EventDispatcher } from "../../../../egret/events/EventDispatcher";
-import { callLater } from "../../../../egret/utils/callLater";
-import { tr } from "../../../../egret/i18n/tr";
+
+import { egret } from '@egret-r/core';
+const { BitmapData, warn, EventDispatcher, callLater, tr, Texture, HtmlSound } = egret;
 import { PromiseTaskReporter, ResourceManagerError } from "../core/ResourceManager";
 import { config } from "../core/ResourceManager";
-import { Texture } from "../../../../egret/display/Texture";
-import { HtmlSound } from "../../../../egret/media/web/HtmlSound";
+
 import { VersionController } from "./version/IVersionController";
 import { ResourceInfo } from "../core/ResourceConfig";
 import { ResourceItem } from "./ResourceItem";
-
 
     export type GetResAsyncCallback = (value?: any, key?: string) => any;
     /**
@@ -577,7 +573,6 @@ import { ResourceItem } from "./ResourceItem";
         instance.removeEventListener(type, listener, thisObject, useCapture);
     }
 
-
     /**
      * Adding a custom resource configuration.
      * @param data To add configuration.
@@ -998,5 +993,4 @@ import { ResourceItem } from "./ResourceItem";
      * Resource单例
      */
     var instance: Resource;
-
 

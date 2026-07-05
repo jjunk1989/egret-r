@@ -1,21 +1,18 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+
+import { egret } from '@egret-r/core';
+const { Event, DisplayObjectContainer, getImplementation, getDefinitionByName, Rectangle } = egret;
 import { registerProperty } from "../utils/registerProperty";
 import { EXML } from "../exml/EXML";
 
-import { Event } from "../../../egret/events/Event";
-import { DisplayObjectContainer } from "../../../egret/display/DisplayObjectContainer";
-import { getImplementation } from "../../../egret/system/Implementation";
-import { getDefinitionByName } from "../../../egret/utils/getDefinitionByName";
-import { Rectangle } from "../../../egret/geom/Rectangle";
 import { Theme } from "../core/Theme";
 import { Skin } from "./Skin";
 import { UIComponentImpl, UIKeys, implementUIComponent, UIComponent } from "../core/UIComponent";
 import { measure, updateDisplayList } from "../layouts/BasicLayout";
 import { $error } from "../../../Defines.debug";
 import { DEBUG } from "../../../Defines.debug";
-
 
     /**
      * @private
@@ -33,7 +30,6 @@ import { DEBUG } from "../../../Defines.debug";
     }
 
     sys.ComponentKeys = ComponentKeys;
-
 
     /**
      * The Component class defines the base class for skinnable components.
@@ -296,7 +292,6 @@ import { DEBUG } from "../../../Defines.debug";
             this.invalidateDisplayList();
             this.dispatchEventWith(Event.COMPLETE);
         }
-
 
         /**
          * Find the skin parts in the skin class and assign them to the properties of the component.
@@ -565,7 +560,6 @@ import { DEBUG } from "../../../Defines.debug";
         }
 
         //========================皮肤视图状态===================end========================
-
 
         //=======================UIComponent接口实现===========================
         /**
@@ -996,7 +990,6 @@ import { DEBUG } from "../../../Defines.debug";
          */
         public getPreferredBounds(bounds: Rectangle): void {
         }
-
 
         public unwatchAll() {
             if (this.skin && this.skin.unwatchAll) {

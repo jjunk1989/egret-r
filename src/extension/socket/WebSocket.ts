@@ -1,13 +1,11 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { Event } from "../../egret/events/Event";
-import { ProgressEvent } from "../../egret/events/ProgressEvent";
-import { IOErrorEvent } from "../../egret/events/IOErrorEvent";
-import { EventDispatcher } from "../../egret/events/EventDispatcher";
+
+import { egret } from '@egret-r/core';
+const { Event, ProgressEvent, IOErrorEvent, EventDispatcher, callLater, ByteArray } = egret;
 import { ISocket } from "./ISocket";
-import { callLater } from "../../egret/utils/callLater";
-import { ByteArray } from "../../egret/utils/ByteArray";
+
 import { $warn } from "../../Defines.debug";
 
     /**
@@ -424,7 +422,6 @@ import { $warn } from "../../Defines.debug";
                 this._writeByte = new ByteArray();
             }
         }
-
 
         public static URI: "ws://" | "wss://" = "ws://";
     }

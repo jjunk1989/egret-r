@@ -1,13 +1,12 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { TouchEvent } from "../../../egret/events/TouchEvent";
-import { Texture } from "../../../egret/display/Texture";
-import { Event } from "../../../egret/events/Event";
+
+import { egret } from '@egret-r/core';
+const { TouchEvent, Texture, Event } = egret;
 import { Component } from "./Component";
 import { IDisplayText } from "../core/IDisplayText";
 import { Image } from "./Image";
-
 
     /**
      * The Button component is a commonly used rectangular button.

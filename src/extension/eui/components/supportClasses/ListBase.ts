@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { Event } from "../../../../egret/events/Event";
-import { TouchEvent } from "../../../../egret/events/TouchEvent";
-import { Stage } from "../../../../egret/display/Stage";
+
+import { egret } from '@egret-r/core';
+const { Event, TouchEvent, Stage } = egret;
 import { ItemTapEvent } from "../../events/ItemTapEvent";
 import { DataGroup } from "../DataGroup";
 import { IItemRenderer } from "../../core/IItemRenderer";
@@ -11,7 +11,6 @@ import { CollectionEvent } from "../../events/CollectionEvent";
 import { registerBindable } from "../../utils/registerBindable";
 import { PropertyEvent } from "../../events/PropertyEvent";
 import { CollectionEventKind } from "../../events/CollectionEventKind";
-
 
     /**
      * @private
@@ -54,7 +53,6 @@ import { CollectionEventKind } from "../../events/CollectionEventKind";
          */
         touchCancle
     }
-
 
     /**
      * The ListBase class is the base class for list component.
@@ -291,7 +289,6 @@ import { CollectionEventKind } from "../../events/CollectionEventKind";
             values[sys.ListBaseKeys.proposedSelectedIndex] = value;
             this.invalidateProperties();
         }
-
 
         /**
          * The item that is currently selected.
@@ -550,7 +547,6 @@ import { CollectionEventKind } from "../../events/CollectionEventKind";
                 return false;
             }
 
-
             if (values[sys.ListBaseKeys.dispatchChangeAfterSelection]) {
                 let result = this.dispatchEventWith(Event.CHANGING, false, true, true);
                 if (!result) {
@@ -692,7 +688,6 @@ import { CollectionEventKind } from "../../events/CollectionEventKind";
                 this.adjustSelection(selectedIndex - 1, false);
             }
         }
-
 
         /**
          * Event Listener of source data changed.

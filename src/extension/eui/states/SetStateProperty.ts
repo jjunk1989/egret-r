@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { DisplayObjectContainer } from "../../../egret/display/DisplayObjectContainer";
+
+import { egret } from '@egret-r/core';
+const { DisplayObjectContainer } = egret;
 import { Binding } from "../binding/Binding";
 import { IOverride } from "./IOverride";
 import { Skin } from "../components/Skin";
-
 
     /**
      * The SetProperty class specifies a property value that is in effect only

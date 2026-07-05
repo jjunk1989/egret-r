@@ -1,8 +1,9 @@
 
-import { getTimer } from "../../../egret/utils/getTimer";
-import { ticker } from "../../../egret/player/SystemTicker";
+
+
+import { egret } from '@egret-r/core';
+const { getTimer, ticker, args } = egret;
 import { listener } from "../../eui/binding/Watcher";
-import { args } from "../../../egret/player/Player";
 
     let setIntervalCache: any = {};
     let setIntervalIndex: number = 0;

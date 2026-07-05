@@ -1,14 +1,15 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { EventDispatcher } from "../../../egret/events/EventDispatcher";
+
+import { egret } from '@egret-r/core';
+const { EventDispatcher } = egret;
 import { CollectionEvent } from "../events/CollectionEvent";
 import { ICollection } from "./ICollection";
 import { $error } from "../../../Defines.debug";
 import { DEBUG } from "../../../Defines.debug";
 import { CollectionEventKind } from "../events/CollectionEventKind";
 import { registerProperty } from "../utils/registerProperty";
-
 
     /**
      * The ArrayCollection class is a wrapper class that exposes an <code>any[]</code> as a collection that can be

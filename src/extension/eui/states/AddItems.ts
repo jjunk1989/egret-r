@@ -1,13 +1,12 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { DisplayObjectContainer } from "../../../egret/display/DisplayObjectContainer";
-import { DisplayObject } from "../../../egret/display/DisplayObject";
+
+import { egret } from '@egret-r/core';
+const { DisplayObjectContainer, DisplayObject, is } = egret;
 import { Component, ComponentKeys } from "../components/Component";
 import { IOverride } from "./IOverride";
 import { Skin } from "../components/Skin";
-import { is } from "../../../egret/utils/is";
-
 
     /**
      * @private
@@ -20,7 +19,6 @@ import { is } from "../../../egret/utils/is";
     }
 
     sys.AddPosition = AddPosition;
-
 
     /**
      * The operation of adding a state to view.
@@ -183,5 +181,4 @@ import { is } from "../../../egret/utils/is";
             }
         }
     }
-
 

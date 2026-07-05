@@ -1,21 +1,16 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+
+import { egret } from '@egret-r/core';
+const { Event, Bitmap, Texture, Rectangle, BitmapFillMode, NormalBitmapNode, BitmapNode, is } = egret;
 import { registerProperty } from "../utils/registerProperty";
 
-import { Event } from "../../../egret/events/Event";
-import { Bitmap } from "../../../egret/display/Bitmap";
-import { Texture } from "../../../egret/display/Texture";
-import { Rectangle } from "../../../egret/geom/Rectangle";
-
-import { BitmapFillMode } from "../../../egret/display/BitmapFillMode";
 import { UIComponent, UIKeys, UIComponentImpl, implementUIComponent } from "../core/UIComponent";
-import { NormalBitmapNode } from "../../../egret/player/nodes/NormalBitmapNode";
-import { BitmapNode } from "../../../egret/player/nodes/BitmapNode";
-import { $warn } from "../../../Defines.debug";
-import { is } from "../../../egret/utils/is";
-import { getAssets } from "../core/UIComponent";
 
+import { $warn } from "../../../Defines.debug";
+
+import { getAssets } from "../core/UIComponent";
 
     /**
      * The Image control lets you show JPEG, PNG, and GIF files
@@ -296,7 +291,6 @@ import { getAssets } from "../core/UIComponent";
             super.$setHeight(h);
         }
 
-
         /**
          * @copy UIComponent#childrenCreated
          *
@@ -468,7 +462,6 @@ import { getAssets } from "../core/UIComponent";
          */
         public explicitHeight: number;
 
-
         /**
          * @copy UIComponent#minWidth
          *
@@ -502,7 +495,6 @@ import { getAssets } from "../core/UIComponent";
          * @platform Web
          */
         public maxHeight: number;
-
 
         /**
          * @inheritDoc

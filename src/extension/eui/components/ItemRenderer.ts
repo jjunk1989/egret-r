@@ -1,14 +1,13 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { TouchEvent } from "../../../egret/events/TouchEvent";
-import { Event } from "../../../egret/events/Event";
+
+import { egret } from '@egret-r/core';
+const { TouchEvent, Event, registerClass } = egret;
 import { Component } from "./Component";
 import { IItemRenderer } from "../core/IItemRenderer";
 import { registerBindable } from "../utils/registerBindable";
 import { PropertyEvent } from "../events/PropertyEvent";
-import { registerClass } from "../../../egret/utils/registerClass";
-
 
     /**
      * The ItemRenderer class is the base class for item renderers.

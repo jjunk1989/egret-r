@@ -1,24 +1,16 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { DisplayObject } from "../../../egret/display/DisplayObject";
-import { Event } from "../../../egret/events/Event";
-import { Point } from "../../../egret/geom/Point";
-import { nativeRender } from "../../../egret/player/Player";
-import { BitmapFillMode } from "../../../egret/display/BitmapFillMode";
-import { FrameLabel } from "./FrameLabel";
-import { getTimer } from "../../../egret/utils/getTimer";
-import { ticker } from "../../../egret/player/SystemTicker";
-import { NormalBitmapNode } from "../../../egret/player/nodes/NormalBitmapNode";
-import { BitmapNode } from "../../../egret/player/nodes/BitmapNode";
-import { Texture } from "../../../egret/display/Texture";
-import { MovieClipData } from "./MovieClipData";
-import { Bitmap } from "../../../egret/display/Bitmap";
-import { MovieClipEvent } from "./MovieClipEvent";
-import { Rectangle } from "../../../egret/geom/Rectangle";
-import { Stage } from "../../../egret/display/Stage";
-import { $error } from "../../../Defines.debug";
 
+import { egret } from '@egret-r/core';
+const { DisplayObject, Event, Point, nativeRender, BitmapFillMode, getTimer, ticker, NormalBitmapNode, BitmapNode, Texture, Bitmap, Rectangle, Stage } = egret;
+import { FrameLabel } from "./FrameLabel";
+
+import { MovieClipData } from "./MovieClipData";
+
+import { MovieClipEvent } from "./MovieClipEvent";
+
+import { $error } from "../../../Defines.debug";
 
     /**
     * @version Egret 2.4
@@ -217,7 +209,6 @@ import { $error } from "../../../Defines.debug";
                 this.constructFrame();
             }
         }
-
 
         /**
          * @private

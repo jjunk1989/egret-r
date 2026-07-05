@@ -1,7 +1,8 @@
 
-import { FocusEvent } from "../../../egret/events/FocusEvent";
-import { TextField } from "../../../egret/text/TextField";
-import { TextFieldInputType } from "../../../egret/text/TextFieldInputType";
+
+
+import { egret } from '@egret-r/core';
+const { FocusEvent, TextField, TextFieldInputType } = egret;
 import { EditableText } from "./EditableText";
 import { Component } from "./Component";
 import { Label } from "./Label";
@@ -185,7 +186,6 @@ import { Label } from "./Label";
             }
             return this.$TextInput[sys.TextInputKeys.inputType];
         }
-
 
         /**
          * @copy TextField#textColor

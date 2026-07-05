@@ -1,9 +1,6 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { HashObject } from "../../../egret/utils/HashObject";
-
-
     /**
      * The URLVariables class allows you to transfer variables between an application and a server.
      * Use URLVariables objects with methods of the URLLoader class and the data property of the URLRequest class.
@@ -22,6 +19,9 @@ import { HashObject } from "../../../egret/utils/HashObject";
      * @includeExample extension/game/net/URLVariables.ts
      * @language zh_CN
      */
+
+import { egret } from '@egret-r/core';
+const { HashObject } = egret;
     export class URLVariables extends HashObject {
 
         /**

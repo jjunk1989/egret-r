@@ -1,18 +1,17 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { HorizontalAlign } from "../../../egret/text/HorizontalAlign";
-import { VerticalAlign } from "../../../egret/text/VerticalAlign";
+
+import { egret } from '@egret-r/core';
+const { HorizontalAlign, VerticalAlign, $TempRectangle, is } = egret;
 import { UIComponent, UIKeys } from "../core/UIComponent";
 import { LinearLayoutBase } from "./supportClasses/LinearLayoutBase";
 import { JustifyAlign } from "./JustifyAlign";
 import { LayoutBase } from "./supportClasses/LayoutBase";
 import { TileOrientation } from "./TileOrientation";
-import { $TempRectangle } from "../../../egret/geom/Rectangle";
+
 import { RowAlign } from "./RowAlign";
 import { ColumnAlign } from "./ColumnAlign";
-import { is } from "../../../egret/utils/is";
-
 
     let UIComponentClass = "UIComponent";
 
@@ -147,7 +146,6 @@ import { is } from "../../../egret/utils/is";
             this.invalidateTargetLayout();
         }
 
-
         /**
          * @private
          */
@@ -222,7 +220,6 @@ import { is } from "../../../egret/utils/is";
             this.invalidateTargetLayout();
         }
 
-
         /**
          * @private
          */
@@ -292,7 +289,6 @@ import { is } from "../../../egret/utils/is";
             this._rowCount = value;
             this.invalidateTargetLayout();
         }
-
 
         /**
          * @private
@@ -385,7 +381,6 @@ import { is } from "../../../egret/utils/is";
             this._rowHeight = value;
             this.invalidateTargetLayout();
         }
-
 
         /**
          * @private
@@ -480,7 +475,6 @@ import { is } from "../../../egret/utils/is";
             this._paddingBottom = value;
             this.invalidateTargetLayout();
         }
-
 
         /**
          * @private
@@ -1189,7 +1183,6 @@ import { is } from "../../../egret/utils/is";
             else if (!isNaN(values[UIKeys.percentHeight]))
                 elementHeight = cellHeight * values[UIKeys.percentHeight] * 0.01;
 
-
             element.setLayoutBoundsSize(Math.round(elementWidth), Math.round(elementHeight));
 
             let x = cellX;
@@ -1215,7 +1208,6 @@ import { is } from "../../../egret/utils/is";
             }
             element.setLayoutBoundsPosition(Math.round(x), Math.round(y));
         }
-
 
         /**
          * @private

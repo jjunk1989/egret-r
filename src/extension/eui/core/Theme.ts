@@ -1,17 +1,15 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { Event } from "../../../egret/events/Event";
-import { EventDispatcher } from "../../../egret/events/EventDispatcher";
-import { registerImplementation } from "../../../egret/system/Implementation";
-import { Stage } from "../../../egret/display/Stage";
+
+import { egret } from '@egret-r/core';
+const { Event, EventDispatcher, registerImplementation, Stage } = egret;
 import { getTheme } from "./UIComponent";
 import { Component, ComponentKeys } from "../components/Component";
 import { Button } from "../components/Button";
 import { EXML } from "../exml/EXML";
 import { $error } from "../../../Defines.debug";
 import { DEBUG } from "../../../Defines.debug";
-
 
     interface ThemeData {
         /**
@@ -273,7 +271,6 @@ import { DEBUG } from "../../../Defines.debug";
          * @private
          */
         private skinMap: { [key: string]: string } = {};
-
 
         /**
          * According to the host component to get the default skin name.

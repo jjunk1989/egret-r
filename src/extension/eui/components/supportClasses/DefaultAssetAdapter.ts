@@ -1,12 +1,10 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { ImageLoader } from "../../../../egret/net/ImageLoader";
-import { Event } from "../../../../egret/events/Event";
-import { IOErrorEvent } from "../../../../egret/events/IOErrorEvent";
-import { Texture } from "../../../../egret/display/Texture";
-import { IAssetAdapter } from "../../core/IAssetAdapter";
 
+import { egret } from '@egret-r/core';
+const { ImageLoader, Event, IOErrorEvent, Texture } = egret;
+import { IAssetAdapter } from "../../core/IAssetAdapter";
 
     let loaderPool:ImageLoader[] = [];
     let callBackMap:any = {};

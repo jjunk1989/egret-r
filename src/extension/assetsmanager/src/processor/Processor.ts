@@ -1,24 +1,13 @@
 
-import { ImageLoader } from "../../../../egret/net/ImageLoader";
-import { HttpRequest } from "../../../../egret/net/HttpRequest";
-import { IOErrorEvent } from "../../../../egret/events/IOErrorEvent";
-import { Sound } from "../../../../egret/media/Sound";
-import { Event } from "../../../../egret/events/Event";
-import { Texture } from "../../../../egret/display/Texture";
-import { Rectangle } from "../../../../egret/geom/Rectangle";
-import { KTXContainer } from "../../../../egret/display/KTXContainer";
-import { BitmapData } from "../../../../egret/display/BitmapData";
-import { HttpResponseType } from "../../../../egret/net/HttpResponseType";
-import { XML } from "../../../../egret/utils/XML";
-import { SpriteSheet } from "../../../../egret/display/SpriteSheet";
-import { BitmapFont } from "../../../../egret/text/BitmapFont";
+
+
+import { egret } from '@egret-r/core';
+const { ImageLoader, HttpRequest, IOErrorEvent, Sound, Event, Texture, Rectangle, KTXContainer, BitmapData, HttpResponseType, XML, SpriteSheet, BitmapFont, Capabilities, RuntimeType, fontResourceCache } = egret;
 import { MovieClipDataFactory } from "../../../game/display/MovieClipDataFactory";
-import { Capabilities, RuntimeType } from "../../../../egret/system/Capabilities";
-import { fontResourceCache } from "../../../../egret/text/Font";
+
 import { ProcessHost, ResourceManagerError } from "../core/ResourceManager";
 import { config } from "../core/ResourceManager";
 import { ResourceInfo } from "../core/ResourceConfig";
-
 
     export interface Processor {
         /**
@@ -77,7 +66,6 @@ import { ResourceInfo } from "../core/ResourceConfig";
          * @language zh_CN
          */
         getData?(host: ProcessHost, resource: ResourceInfo, key: string, subkey: string): any;
-
 
     }
     /**
@@ -398,7 +386,6 @@ import { ResourceInfo } from "../core/ResourceConfig";
             })
         },
 
-
         getData(host, resource, key, subkey) {
             let data: SpriteSheet = host.get(resource);
             if (data) {
@@ -408,7 +395,6 @@ import { ResourceInfo } from "../core/ResourceConfig";
                 return null;
             }
         },
-
 
         onRemoveStart(host, resource) {
             const sheet: SpriteSheet = host.get(resource);
@@ -558,7 +544,6 @@ import { ResourceInfo } from "../core/ResourceConfig";
             })
         },
 
-
         getData(host, resource, key, subkey) {
             let data = host.get(resource);
             if (data) {
@@ -570,11 +555,9 @@ import { ResourceInfo } from "../core/ResourceConfig";
             }
         },
 
-
         onRemoveStart(host, resource) {
         }
     }
-
 
     /**
      * @internal
@@ -623,9 +606,7 @@ import { ResourceInfo } from "../core/ResourceConfig";
     */
     export const LegacyResourceConfigProcessor: Processor = {
 
-
         onLoadStart(host, resource) {
-
 
             return host.load(resource, 'json').then((data: LegacyResourceConfig) => {
                 const resConfigData = RES.config.config;
@@ -657,7 +638,6 @@ import { ResourceInfo } from "../core/ResourceConfig";
                     } as FileSystem;
                     resConfigData.fileSystem = fileSystem;
                 }
-
 
                 let groups = resConfigData.groups;
                 for (let g of data.groups) {
@@ -713,5 +693,4 @@ import { ResourceInfo } from "../core/ResourceConfig";
         "ttf": TTFProcessor
         // "zip": ZipProcessor
     }
-
 

@@ -1,14 +1,13 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { BitmapData } from "../../egret/display/BitmapData";
-import { EventDispatcher } from "../../egret/events/EventDispatcher";
-import { callLater } from "../../egret/utils/callLater";
+
+import { egret } from '@egret-r/core';
+const { BitmapData, EventDispatcher, callLater, Texture, HtmlSound } = egret;
 import { ResourceItem } from "../assetsmanager/src/shim/ResourceItem";
 import { AnalyzerBase } from "./analyzer/AnalyzerBase";
 import { VersionController } from "../assetsmanager/src/shim/version/IVersionController";
-import { Texture } from "../../egret/display/Texture";
-import { HtmlSound } from "../../egret/media/web/HtmlSound";
+
 import { ResourceLoader } from "../assetsmanager/src/core/ResourceLoader";
 import { ResourceConfig } from "../assetsmanager/src/core/ResourceConfig";
 import { ResourceEvent } from "../assetsmanager/src/shim/ResourceEvent";
@@ -493,7 +492,6 @@ import { $warn } from "../../Defines.debug";
          * 解析器字典
          */
         private analyzerDic:any = {};
-
 
         private analyzerClassMap:any = {};
 

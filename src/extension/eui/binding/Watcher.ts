@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { IEventDispatcher } from "../../../egret/events/IEventDispatcher";
+
+import { egret } from '@egret-r/core';
+const { IEventDispatcher, is } = egret;
 import { PropertyEvent } from "../events/PropertyEvent";
 import { $error } from "../../../Defines.debug";
 import { DEBUG } from "../../../Defines.debug";
 import { registerBindable } from "../utils/registerBindable";
-import { is } from "../../../egret/utils/is";
-
 
     /**
      * @private
@@ -352,11 +352,9 @@ import { is } from "../../../egret/utils/is";
                 }
             }
 
-
             if (this.next)
                 this.next.reset(this.getHostPropertyValue());
         }
-
 
         /**
          * @private

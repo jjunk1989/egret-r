@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { HorizontalAlign } from "../../../../egret/text/HorizontalAlign";
-import { VerticalAlign } from "../../../../egret/text/VerticalAlign";
+
+import { egret } from '@egret-r/core';
+const { HorizontalAlign, VerticalAlign } = egret;
 import { JustifyAlign } from "../JustifyAlign";
 import { UIComponent } from "../../core/UIComponent";
 import { LayoutBase } from "./LayoutBase";
@@ -411,7 +412,6 @@ import { LayoutBase } from "./LayoutBase";
             }
         }
 
-
         /**
          * An Array of the virtual layout elements size cache.
          *
@@ -518,7 +518,6 @@ import { LayoutBase } from "./LayoutBase";
             this.elementSizeTable = [];
             this.maxElementSize = 0;
         }
-
 
         /**
          * The binary search to find the specified index position of the display object
@@ -685,7 +684,6 @@ import { LayoutBase } from "./LayoutBase";
 
         }
 
-
         /**
          * Update the layout of the reality elements
          *
@@ -790,36 +788,30 @@ import { LayoutBase } from "./LayoutBase";
         }
     }
 
-
     /**
      * @private
      */
     export class ChildInfo {
-
 
         /**
          * @private
          */
         public layoutElement:UIComponent = null;
 
-
         /**
          * @private
          */
         public size:number = 0;
-
 
         /**
          * @private
          */
         public percent:number = NaN;
 
-
         /**
          * @private
          */
         public min:number = NaN;
-
 
         /**
          * @private

@@ -1,12 +1,11 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { HttpRequest, IOErrorEvent } from "../../../egret/events/IOErrorEvent";
-import { HttpResponseType } from "../../../egret/net/HttpResponseType";
-import { Event } from "../../../egret/events/Event";
+
+import { egret } from '@egret-r/core';
+const { HttpRequest, IOErrorEvent, HttpResponseType, Event } = egret;
 import { AnalyzerBase } from "./AnalyzerBase";
 import { ResourceItem } from "../../assetsmanager/src/shim/ResourceItem";
-
 
     /**
      * @private
@@ -38,7 +37,6 @@ import { ResourceItem } from "../../assetsmanager/src/shim/ResourceItem";
             }
             let request:HttpRequest = this.getRequest();
             this.resItemDic[request.hashCode] = {item: resItem, func: compFunc, thisObject: thisObject};
-
 
             request.open($getVirtualUrl(resItem.url));
             request.send();

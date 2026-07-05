@@ -1,16 +1,15 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { Point, $TempPoint } from "../../../egret/geom/Point";
-import { Rectangle, $TempRectangle } from "../../../egret/geom/Rectangle";
+
+import { egret } from '@egret-r/core';
+const { Point, $TempPoint, Rectangle, $TempRectangle, is } = egret;
 import { UIComponent, UIKeys } from "../core/UIComponent";
 import { Group } from "../components/Group";
 import { Component } from "../components/Component";
 import { LayoutBase } from "./supportClasses/LayoutBase";
 import { $error } from "../../../Defines.debug";
 import { DEBUG } from "../../../Defines.debug";
-import { is } from "../../../egret/utils/is";
-
 
     /**
      * The BasicLayout class arranges the layout elements according to their individual settings,
@@ -56,7 +55,6 @@ import { is } from "../../../egret/utils/is";
             super();
         }
 
-
         /**
          * BasicLayout does not support virtual layout, setting this property is invalid.
          *
@@ -86,7 +84,6 @@ import { is } from "../../../egret/utils/is";
             super.measure();
             sys.measure(this.$target);
         }
-
 
         /**
          * @inheritDoc
@@ -118,7 +115,6 @@ import { is } from "../../../egret/utils/is";
             configurable: true
         });
     }
-
 
     let UIComponentClass = "UIComponent";
 
@@ -259,7 +255,6 @@ import { is } from "../../../egret/utils/is";
             layoutElement.getLayoutBounds(bounds);
             let elementWidth = bounds.width;
             let elementHeight = bounds.height;
-
 
             let childX = NaN;
             let childY = NaN;

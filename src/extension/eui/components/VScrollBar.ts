@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+
+import { egret } from '@egret-r/core';
+const { $TempRectangle } = egret;
 import { PropertyEvent } from "../events/PropertyEvent";
 import { ScrollBarBase } from "./supportClasses/ScrollBarBase";
-import { $TempRectangle } from "../../../egret/geom/Rectangle";
-
 
     /**
      * The VScrollBar (vertical scrollbar) control lets you control
@@ -72,7 +73,6 @@ import { $TempRectangle } from "../../../egret/geom/Rectangle";
                 thumb.setLayoutBoundsPosition(thumbX, thumbY);
             }
         }
-
 
         /**
          * @inheritDoc

@@ -1,12 +1,13 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { EventDispatcher } from "../../../egret/events/EventDispatcher";
+
+import { egret } from '@egret-r/core';
+const { EventDispatcher } = egret;
 import { ResourceItem } from "../../assetsmanager/src/shim/ResourceItem";
 import { ResourceEvent } from "../../assetsmanager/src/shim/ResourceEvent";
 import { AnalyzerBase } from "../analyzer/AnalyzerBase";
 import { $warn } from "../../../Defines.debug";
-
 
 	/**
 	 * @class RES.ResourceLoader

@@ -1,9 +1,6 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { Event } from "../../../egret/events/Event";
-import { IOErrorEvent } from "../../../egret/events/IOErrorEvent";
-
     /**
      * Version control loading interface
      * @version Egret 2.4
@@ -18,6 +15,9 @@ import { IOErrorEvent } from "../../../egret/events/IOErrorEvent";
      * @includeExample extension/version/VersionControl.ts
      * @language zh_CN
      */
+
+import { egret } from '@egret-r/core';
+const { Event, IOErrorEvent } = egret;
     export interface IVersionController {
         /**
          * Get the version information data.<br/>

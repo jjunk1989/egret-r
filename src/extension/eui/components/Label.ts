@@ -1,16 +1,15 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { TextField } from "../../../egret/text/TextField";
-import { getImplementation } from "../../../egret/system/Implementation";
-import { Rectangle } from "../../../egret/geom/Rectangle";
+
+import { egret } from '@egret-r/core';
+const { TextField, getImplementation, Rectangle, TextKeys } = egret;
 import { Theme } from "../core/Theme";
 import { UIComponent, UIComponentImpl, UIKeys, implementUIComponent } from "../core/UIComponent";
-import { TextKeys } from "../../../egret/text/TextField";
+
 import { registerBindable } from "../utils/registerBindable";
 import { IDisplayText } from "../core/IDisplayText";
 import { PropertyEvent } from "../events/PropertyEvent";
-
 
     let UIImpl = UIComponentImpl;
     /**
@@ -355,7 +354,6 @@ import { PropertyEvent } from "../events/PropertyEvent";
          */
         private _widthConstraint:number = NaN;
 
-
         //=======================UIComponent接口实现===========================
         /**
          * @private
@@ -552,7 +550,6 @@ import { PropertyEvent } from "../events/PropertyEvent";
          * @platform Web
          */
         public explicitHeight:number;
-
 
         /**
          * @copy UIComponent#minWidth

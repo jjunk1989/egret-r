@@ -1,12 +1,11 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { EventDispatcher } from "../../../egret/events/EventDispatcher";
-import { HttpRequest, IOErrorEvent } from "../../../egret/events/IOErrorEvent";
-import { Event } from "../../../egret/events/Event";
+
+import { egret } from '@egret-r/core';
+const { EventDispatcher, HttpRequest, IOErrorEvent, Event } = egret;
 import { VersionController } from "../../assetsmanager/src/shim/version/IVersionController";
 import { DEBUG } from "../../../Defines.debug";
-
 
     /**
      * @private

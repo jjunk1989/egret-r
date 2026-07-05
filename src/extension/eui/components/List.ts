@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { Event } from "../../../egret/events/Event";
-import { TouchEvent } from "../../../egret/events/TouchEvent";
+
+import { egret } from '@egret-r/core';
+const { Event, TouchEvent } = egret;
 import { ListBaseKeys, ListBase } from "./supportClasses/ListBase";
 import { IItemRenderer } from "../core/IItemRenderer";
 import { PropertyEvent } from "../events/PropertyEvent";
 import { ItemTapEvent } from "../events/ItemTapEvent";
-
 
     /**
      * The List control displays a vertical or horizontal list of items.
@@ -30,7 +30,6 @@ import { ItemTapEvent } from "../events/ItemTapEvent";
      * @language zh_CN
      */
     export class List extends ListBase {
-
 
         /**
          * whether are allowed to multiple selection.

@@ -1,21 +1,14 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { DisplayObjectContainer } from "../../../egret/display/DisplayObjectContainer";
-import { DisplayObject } from "../../../egret/display/DisplayObject";
+
+import { egret } from '@egret-r/core';
+const { DisplayObjectContainer, DisplayObject, Rectangle, callLater, Event, getTimer, Stage, TouchEvent, Timer, TimerEvent } = egret;
 import { ScrollViewProperties } from "./ScrollViewProperties";
-import { Rectangle } from "../../../egret/geom/Rectangle";
 
-import { callLater } from "../../../egret/utils/callLater";
-import { Event } from "../../../egret/events/Event";
-import { getTimer } from "../../../egret/utils/getTimer";
 import { ScrollTween, ScrollEase } from "./ScrollTween";
-import { Stage } from "../../../egret/display/Stage";
-import { TouchEvent } from "../../../egret/events/TouchEvent";
-import { $error } from "../../../Defines.debug";
-import { Timer } from "../../../egret/utils/Timer";
-import { TimerEvent } from "../../../egret/events/TimerEvent";
 
+import { $error } from "../../../Defines.debug";
 
     /**
      * ScrollView auxiliary classes for slides, you will pass a display object constructor. It can display more than the range display object within the specified size range. And can easily drag in this range.
@@ -52,7 +45,6 @@ import { TimerEvent } from "../../../egret/events/TimerEvent";
          */
         public scrollBeginThreshold: number = 10;
 
-
         /**
          * Scrolling speed, the speed is required and the default speed ratio.
          * The range of scrollSpeed> 0 assigned to 2:00, the speed is 2 times the default speed
@@ -68,7 +60,6 @@ import { TimerEvent } from "../../../egret/events/TimerEvent";
          * @language zh_CN
          */
         public scrollSpeed: number = 1;
-
 
         /**
          * Whether to enable rebound, rebound When enabled, ScrollView contents allowed to continue to drag the border after arriving at the end user drag operation, and then bounce back boundary position
@@ -184,7 +175,6 @@ import { TimerEvent } from "../../../egret/events/TimerEvent";
                 return;
             this._ScrV_Props_._verticalScrollPolicy = value;
         }
-
 
         /**
          * The horizontal scroll bar display policy, on / off / auto.
@@ -405,7 +395,6 @@ import { TimerEvent } from "../../../egret/events/TimerEvent";
             return contentLength > viewLength;
         }
 
-
         /**
          * @private
          *
@@ -601,7 +590,6 @@ import { TimerEvent } from "../../../egret/events/TimerEvent";
 
             this._moveAfterTouchEnd();
         }
-
 
         /**
          * @private

@@ -1,16 +1,12 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { HttpResponseType } from "../../../egret/net/HttpResponseType";
-import { Event } from "../../../egret/events/Event";
-import { HttpRequest, IOErrorEvent } from "../../../egret/events/IOErrorEvent";
-import { ImageLoader } from "../../../egret/net/ImageLoader";
-import { BitmapData } from "../../../egret/display/BitmapData";
-import { Texture } from "../../../egret/display/Texture";
+
+import { egret } from '@egret-r/core';
+const { HttpResponseType, Event, HttpRequest, IOErrorEvent, ImageLoader, BitmapData, Texture } = egret;
 import { BinAnalyzer } from "./BinAnalyzer";
 import { ResourceItem } from "../../assetsmanager/src/shim/ResourceItem";
 import { $warn } from "../../../Defines.debug";
-
 
     /**
      * SpriteSheet解析器

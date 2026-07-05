@@ -1,12 +1,11 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+
+import { egret } from '@egret-r/core';
+const { Event, _is, DisplayObject, Rectangle, $TempRectangle } = egret;
 import { registerProperty } from "../utils/registerProperty";
 
-import { Event } from "../../../egret/events/Event";
-import { _is } from "../../../egret/utils/is";
-import { DisplayObject } from "../../../egret/display/DisplayObject";
-import { Rectangle } from "../../../egret/geom/Rectangle";
 import { Group } from "./Group";
 import { LayoutBase } from "../layouts/supportClasses/LayoutBase";
 import { IItemRenderer } from "../core/IItemRenderer";
@@ -16,12 +15,11 @@ import { CollectionEvent } from "../events/CollectionEvent";
 import { ComponentKeys, Component } from "./Component";
 import { UIKeys, UIComponent } from "../core/UIComponent";
 import { VerticalLayout } from "../layouts/VerticalLayout";
-import { $TempRectangle } from "../../../egret/geom/Rectangle";
+
 import { $warn } from "../../../Defines.debug";
 import { CollectionEventKind } from "../events/CollectionEventKind";
 import { ItemRenderer } from "./ItemRenderer";
 import { JustifyAlign } from "../layouts/JustifyAlign";
-
 
     /**
      * @private
@@ -626,7 +624,6 @@ import { JustifyAlign } from "../layouts/JustifyAlign";
                 renderer.itemIndex = index;
         }
 
-
         /**
          * The item renderer to use for data items.
          * The class must implement the IItemRenderer interface.
@@ -769,7 +766,6 @@ import { JustifyAlign } from "../layouts/JustifyAlign";
             super.createChildren();
         }
 
-
         /**
          * @inheritDoc
          *
@@ -848,7 +844,6 @@ import { JustifyAlign } from "../layouts/JustifyAlign";
             }
             super.measure();
         }
-
 
         /**
          * @inheritDoc
@@ -942,7 +937,6 @@ import { JustifyAlign } from "../layouts/JustifyAlign";
                 }
             }
         }
-
 
         /**
          * @private
@@ -1066,7 +1060,6 @@ import { JustifyAlign } from "../layouts/JustifyAlign";
                 return 0;
             return this.$dataProvider.length;
         }
-
 
         /**
          * Adds the itemRenderer for the specified dataProvider item to this DataGroup.

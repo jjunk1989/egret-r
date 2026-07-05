@@ -1,14 +1,12 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { HashObject } from "../../../egret/utils/HashObject";
-import { Stage } from "../../../egret/display/Stage";
-import { DisplayObject } from "../../../egret/display/DisplayObject";
-import { DisplayObjectContainer } from "../../../egret/display/DisplayObjectContainer";
+
+import { egret } from '@egret-r/core';
+const { HashObject, Stage, DisplayObject, DisplayObjectContainer } = egret;
 import { AddItems } from "./AddItems";
 import { Image } from "../components/Image";
 import { IOverride } from "./IOverride";
-
 
     /**
      * The State class defines a view state, a particular view of a component.
@@ -150,7 +148,6 @@ import { IOverride } from "./IOverride";
             }
         }
     }
-
 
     /**
      * @private

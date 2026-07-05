@@ -1,6 +1,8 @@
 
-import { $locale_strings } from "../../../egret/i18n/tr";
 
+
+import { egret } from '@egret-r/core';
+const { $locale_strings } = egret;
     $locale_strings["en_US"] = $locale_strings["en_US"] || {};
     let locale_strings = $locale_strings["en_US"];
 

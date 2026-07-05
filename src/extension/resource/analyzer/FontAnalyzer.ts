@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { Texture } from "../../../egret/display/Texture";
-import { BitmapFont } from "../../../egret/text/BitmapFont";
+
+import { egret } from '@egret-r/core';
+const { Texture, BitmapFont } = egret;
 import { SheetAnalyzer } from "./SheetAnalyzer";
 import { ResourceItem } from "../../assetsmanager/src/shim/ResourceItem";
-
 
     /**
      * @private

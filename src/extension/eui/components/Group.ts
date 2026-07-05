@@ -1,12 +1,11 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+
+import { egret } from '@egret-r/core';
+const { DisplayObjectContainer, DisplayObject, Stage, Rectangle, $TempRectangle, $TempPoint } = egret;
 import { registerProperty } from "../utils/registerProperty";
 
-import { DisplayObjectContainer } from "../../../egret/display/DisplayObjectContainer";
-import { DisplayObject } from "../../../egret/display/DisplayObject";
-import { Stage } from "../../../egret/display/Stage";
-import { Rectangle } from "../../../egret/geom/Rectangle";
 import { BasicLayout } from "../layouts/BasicLayout";
 import { IViewport } from "../core/IViewport";
 import { Component } from "./Component";
@@ -14,10 +13,8 @@ import { Skin } from "./Skin";
 import { UIKeys, UIComponentImpl, implementUIComponent, mixin } from "../core/UIComponent";
 import { StateValues, StateClient, State } from "../states/State";
 import { LayoutBase } from "../layouts/supportClasses/LayoutBase";
-import { $TempRectangle } from "../../../egret/geom/Rectangle";
-import { $TempPoint } from "../../../egret/geom/Point";
-import { PropertyEvent } from "../events/PropertyEvent";
 
+import { PropertyEvent } from "../events/PropertyEvent";
 
     /**
      * @private
@@ -451,7 +448,6 @@ import { PropertyEvent } from "../events/PropertyEvent";
             return null;
         }
 
-
         /**
          * @private
          */
@@ -529,7 +525,6 @@ import { PropertyEvent } from "../events/PropertyEvent";
         protected getCurrentState():string {
             return "";
         }
-
 
         //=======================UIComponent接口实现===========================
         /**
@@ -610,7 +605,6 @@ import { PropertyEvent } from "../events/PropertyEvent";
             }
             this.updateScrollRect();
         }
-
 
         /**
          * @copy Component#invalidateParentLayout()
@@ -730,7 +724,6 @@ import { PropertyEvent } from "../events/PropertyEvent";
          * @platform Web
          */
         public explicitHeight:number;
-
 
         /**
          * @inheritDoc

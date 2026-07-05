@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { HttpResponseType } from "../../../egret/net/HttpResponseType";
-import { XML } from "../../../egret/utils/XML";
+
+import { egret } from '@egret-r/core';
+const { HttpResponseType, XML } = egret;
 import { BinAnalyzer } from "./BinAnalyzer";
 import { ResourceItem } from "../../assetsmanager/src/shim/ResourceItem";
-
 
     /**
      * @private

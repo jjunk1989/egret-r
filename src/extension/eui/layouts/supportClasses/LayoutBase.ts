@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { EventDispatcher } from "../../../../egret/events/EventDispatcher";
-import { Group } from "../../components/Group";
 
+import { egret } from '@egret-r/core';
+const { EventDispatcher } = egret;
+import { Group } from "../../components/Group";
 
     /**
      * The LayoutBase class defines the base class for all Spark layouts.
@@ -84,7 +85,6 @@ import { Group } from "../../components/Group";
             this.$target = value;
             this.clearVirtualLayoutCache();
         }
-
 
         /**
          * @private

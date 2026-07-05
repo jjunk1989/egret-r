@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { Capabilities } from "../../../../../egret/system/Capabilities";
+
+import { egret } from '@egret-r/core';
+const { Capabilities } = egret;
 import { RuntimeType } from "../system/Capabilities";
 import { IVersionController } from "./IVersionController";
-
 
     interface R {
         v: string,

@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+
+import { egret } from '@egret-r/core';
+const { is } = egret;
 import { Skin } from "../components/Skin";
 import { Watcher } from "./Watcher";
-import { is } from "../../../egret/utils/is";
-
 
     function joinValues(templates: any[]): any {
         let first = templates[0];
@@ -119,7 +120,6 @@ import { is } from "../../../egret/utils/is";
             }
             return watcher;
         }
-
 
         static $bindProperties(host: any, templates: any[], chainIndex: number[], target: any, prop: string): Watcher {
             if (templates.length == 1 && chainIndex.length == 1) {

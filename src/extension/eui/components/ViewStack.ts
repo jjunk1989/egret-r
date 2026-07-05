@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { DisplayObject } from "../../../egret/display/DisplayObject";
+
+import { egret } from '@egret-r/core';
+const { DisplayObject, is } = egret;
 import { CollectionEvent } from "../events/CollectionEvent";
 import { BasicLayout } from "../layouts/BasicLayout";
 import { UIComponent } from "../core/UIComponent";
@@ -12,8 +14,6 @@ import { LayoutBase } from "../layouts/supportClasses/LayoutBase";
 import { PropertyEvent } from "../events/PropertyEvent";
 import { CollectionEventKind } from "../events/CollectionEventKind";
 import { ListBase } from "./supportClasses/ListBase";
-import { is } from "../../../egret/utils/is";
-
 
     /**
      * An ViewStack navigator container consists of a collection of child

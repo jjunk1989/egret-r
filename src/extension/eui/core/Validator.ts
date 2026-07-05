@@ -1,13 +1,10 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { EventDispatcher } from "../../../egret/events/EventDispatcher";
-import { Bitmap } from "../../../egret/display/Bitmap";
-import { Event } from "../../../egret/events/Event";
-import { DisplayObjectContainer } from "../../../egret/display/DisplayObjectContainer";
-import { UIComponent } from "./UIComponent";
-import { is } from "../../../egret/utils/is";
 
+import { egret } from '@egret-r/core';
+const { EventDispatcher, Bitmap, Event, DisplayObjectContainer, is } = egret;
+import { UIComponent } from "./UIComponent";
 
     /**
      * @private
@@ -120,7 +117,6 @@ import { is } from "../../../egret/utils/is";
             if (queue.isEmpty())
                 this.invalidateSizeFlag = false;
         }
-
 
         /**
          * @private
@@ -301,7 +297,6 @@ import { is } from "../../../egret/utils/is";
                     obj = displayListQueue.removeSmallestChild(target);
                 }
 
-
                 if (displayListQueue.isEmpty()) {
                     this.invalidateDisplayListFlag = false;
                 }
@@ -313,7 +308,6 @@ import { is } from "../../../egret/utils/is";
         }
 
     }
-
 
     /**
      * @private

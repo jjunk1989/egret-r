@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { getDefinitionByName } from "../../../egret/utils/getDefinitionByName";
-import { error } from "../../../egret/system/Console";
+
+import { egret } from '@egret-r/core';
+const { getDefinitionByName, error } = egret;
 import { DEBUG } from "../../../Defines.debug";
 import { $warn } from "../../../Defines.debug";
-
 
     /**
      * @private

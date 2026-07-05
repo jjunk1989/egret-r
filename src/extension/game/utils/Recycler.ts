@@ -1,10 +1,6 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { HashObject } from "../../../egret/utils/HashObject";
-import { ticker } from "../../../egret/player/SystemTicker";
-
-
     /**
      * Tool class for object cache repeat use, which can be used to construct an object pool. Objects are automatically recycled after a certain duration.
      * @version Egret 2.4
@@ -21,6 +17,9 @@ import { ticker } from "../../../egret/player/SystemTicker";
      * @private
      * @language zh_CN
      */
+
+import { egret } from '@egret-r/core';
+const { HashObject, ticker } = egret;
     export class Recycler extends HashObject{
 
 		/**

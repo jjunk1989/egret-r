@@ -1,11 +1,9 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { Event } from "../../../egret/events/Event";
-import { TouchEvent } from "../../../egret/events/TouchEvent";
-import { DisplayObject } from "../../../egret/display/DisplayObject";
-import { Stage } from "../../../egret/display/Stage";
-import { TimerEvent } from "../../../egret/events/TimerEvent";
+
+import { egret } from '@egret-r/core';
+const { Event, TouchEvent, DisplayObject, Stage, TimerEvent, Timer } = egret;
 import { UIEvent } from "../events/UIEvent";
 import { ScrollerThrowEvent } from "../events/ScrollerThrowEvent";
 import { HScrollBar } from "./HScrollBar";
@@ -18,8 +16,6 @@ import { Group } from "./Group";
 import { Image } from "./Image";
 import { Skin } from "./Skin";
 import { registerProperty } from "../utils/registerProperty";
-import { Timer } from "../../../egret/utils/Timer";
-
 
     let scrollerThrowEvent:ScrollerThrowEvent;
 
@@ -213,7 +209,6 @@ import { Timer } from "../../../egret/utils/Timer";
         public get throwSpeed():number {
             return this.$Scroller[Keys.touchScrollH].$scrollFactor;
         }
-
 
         /**
          * @private
@@ -732,7 +727,6 @@ import { Timer } from "../../../egret/utils/Timer";
             Event.release(cancelEvent);
         }
 
-
         /**
          * @private
          * @param event
@@ -765,7 +759,6 @@ import { Timer } from "../../../egret/utils/Timer";
             Event.release(cancelEvent);
         }
 
-
         /**
          * @private
          * @param event
@@ -797,7 +790,6 @@ import { Timer } from "../../../egret/utils/Timer";
             this.removeEventListener(TouchEvent.TOUCH_CANCEL, this.onTouchCancel, this);
             this.removeEventListener(Event.REMOVED_FROM_STAGE, this.onRemoveListeners, this);
 
-            
             let values = this.$Scroller;
             let viewport:IViewport = values[Keys.viewport];
             let uiValues = viewport.$UIComponent;

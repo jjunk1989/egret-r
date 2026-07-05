@@ -1,13 +1,14 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { Rectangle } from "../../../egret/geom/Rectangle";
+
+import { egret } from '@egret-r/core';
+const { Rectangle } = egret;
 import { Scroller } from "../components/Scroller";
 import { viewport } from "../components/HScrollBar";
 import { Group } from "../components/Group";
 import { $error } from "../../../Defines.debug";
 import { DEBUG } from "../../../Defines.debug";
-
 
     /**
      * Register a property for a class definition in running,

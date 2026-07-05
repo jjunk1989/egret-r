@@ -1,8 +1,10 @@
 
-import { Texture } from "../../../../egret/display/Texture";
+
+
+import { egret } from '@egret-r/core';
+const { Texture } = egret;
 import { ResourceInfo, ResourceConfig } from "./ResourceConfig";
 import { ResourceLoader } from "./ResourceLoader";
-
 
     const __tempCache = {};
     /**
@@ -54,7 +56,6 @@ import { ResourceLoader } from "./ResourceLoader";
             __tempCache[resource.root + resource.name] = data;
         },
 
-
         get(resource: ResourceInfo) {
             return __tempCache[resource.root + resource.name];
         },
@@ -92,13 +93,11 @@ import { ResourceLoader } from "./ResourceLoader";
 
         remove: (resource: ResourceInfo) => void;
 
-
     }
     /**
     * @private
     */
     export class ResourceManagerError extends Error {
-
 
         static errorMessage = {
             1001: '文件加载失败:{0}',
@@ -123,7 +122,6 @@ import { ResourceLoader } from "./ResourceLoader";
             this.message = ResourceManagerError.errorMessage[code].replace("{0}", replacer).replace("{1}", replacer2);
         }
     }
-
 
     /**
      * Resource group loading progress prompt
@@ -165,5 +163,4 @@ import { ResourceLoader } from "./ResourceLoader";
         // onCancel?: () => void;
 
     }
-
 

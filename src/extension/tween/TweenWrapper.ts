@@ -1,14 +1,13 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+
+import { egret } from '@egret-r/core';
+const { EventDispatcher, props, Event, paths } = egret;
 import { registerProperty } from "../../extension/eui/utils/registerProperty";
 
-import { EventDispatcher } from "../../egret/events/EventDispatcher";
-import { props, Event } from "../../egret/events/Event";
-import { paths } from "../../egret/utils/getDefinitionByName";
 import { Tween } from "./Tween";
 import { Ease } from "./Ease";
-
 
     export type EaseType =
         'quadIn' | 'quadOut' | 'quadOut' | 'quadInOut' |

@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { HashObject } from "../../../egret/utils/HashObject";
+
+import { egret } from '@egret-r/core';
+const { HashObject } = egret;
 import { ResourceConfig } from "../../assetsmanager/src/core/ResourceConfig";
 import { compFunc } from "./AnimationAnalyzer";
 import { ResourceItem } from "../../assetsmanager/src/shim/ResourceItem";
-
 
     /**
      * @classic

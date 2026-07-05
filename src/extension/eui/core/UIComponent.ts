@@ -1,17 +1,11 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { registerProperty } from "../utils/registerProperty";
-import { registerClass } from "../../../egret/utils/registerClass";
-import { _is } from "../../../egret/utils/is";
 
-import { getImplementation } from "../../../egret/system/Implementation";
-import { Event } from "../../../egret/events/Event";
-import { DisplayObject } from "../../../egret/display/DisplayObject";
-import { Rectangle } from "../../../egret/geom/Rectangle";
-import { Matrix } from "../../../egret/geom/Matrix";
-import { Stage } from "../../../egret/display/Stage";
-import { Point } from "../../../egret/geom/Point";
+import { egret } from '@egret-r/core';
+const { registerClass, _is, getImplementation, Event, DisplayObject, Rectangle, Matrix, Stage, Point, $TempRectangle, $TempMatrix } = egret;
+import { registerProperty } from "../utils/registerProperty";
+
 import { IAssetAdapter } from "./IAssetAdapter";
 import { IThemeAdapter } from "./IThemeAdapter";
 import { UIEvent } from "../events/UIEvent";
@@ -20,9 +14,6 @@ import { MatrixUtil } from "../utils/MatrixUtil";
 import { DefaultAssetAdapter } from "../components/supportClasses/DefaultAssetAdapter";
 import { DefaultThemeAdapter } from "../components/supportClasses/DefaultThemeAdapter";
 import { DEBUG } from "../../../Defines.debug";
-import { $TempRectangle } from "../../../egret/geom/Rectangle";
-import { $TempMatrix } from "../../../egret/geom/Matrix";
-
 
     export function getAssets(source: string, callback: (content: any) => void, thisObject: any) {
         let adapter: IAssetAdapter = getImplementation("IAssetAdapter");
@@ -762,7 +753,6 @@ import { $TempMatrix } from "../../../egret/geom/Matrix";
         getPreferredBounds(bounds: Rectangle): void;
     }
 
-
     /**
      * @private
      */
@@ -866,7 +856,6 @@ import { $TempMatrix } from "../../../egret/geom/Matrix";
             this.$touchEnabled = true;
             //endif*/
         }
-
 
         /**
          * @private
@@ -1066,7 +1055,6 @@ import { $TempMatrix } from "../../../egret/geom/Matrix";
             this.invalidateParentLayout();
         }
 
-
         /**
          * @private
          * 在父级容器中距水平中心位置的距离
@@ -1110,7 +1098,6 @@ import { $TempMatrix } from "../../../egret/geom/Matrix";
             values[UIKeys.verticalCenter] = value;
             this.invalidateParentLayout();
         }
-
 
         /**
          * @private
@@ -1286,7 +1273,6 @@ import { $TempMatrix } from "../../../egret/geom/Matrix";
             this.invalidateParentLayout();
         }
 
-
         /**
          * @private
          * 组件的最大高度,同时影响测量和自动布局的尺寸。
@@ -1317,7 +1303,6 @@ import { $TempMatrix } from "../../../egret/geom/Matrix";
             values[UIKeys.measuredWidth] = Math.ceil(+width || 0);
             values[UIKeys.measuredHeight] = Math.ceil(+height || 0);
         }
-
 
         /**
          * @private
@@ -1402,7 +1387,6 @@ import { $TempMatrix } from "../../../egret/geom/Matrix";
             }
             return change;
         }
-
 
         /**
          * @private
@@ -1681,7 +1665,6 @@ import { $TempMatrix } from "../../../egret/geom/Matrix";
             this.applyMatrix(bounds, w, h);
         }
 
-
         /**
          * @private
          *
@@ -1716,7 +1699,6 @@ import { $TempMatrix } from "../../../egret/geom/Matrix";
             this.applyMatrix(bounds, w, h);
         }
 
-
         /**
          * @private
          */
@@ -1732,7 +1714,6 @@ import { $TempMatrix } from "../../../egret/geom/Matrix";
                 matrix.$transformBounds(bounds);
             }
         }
-
 
         /**
          * @private

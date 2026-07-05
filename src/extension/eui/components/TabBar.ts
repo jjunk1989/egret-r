@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { Event } from "../../../egret/events/Event";
+
+import { egret } from '@egret-r/core';
+const { Event } = egret;
 import { ViewStack } from "./ViewStack";
 import { ListBase } from "./supportClasses/ListBase";
 import { Group } from "./Group";
@@ -9,7 +11,6 @@ import { ICollection } from "../collections/ICollection";
 import { PropertyEvent } from "../events/PropertyEvent";
 import { HorizontalLayout } from "../layouts/HorizontalLayout";
 import { JustifyAlign } from "../layouts/JustifyAlign";
-
 
     /**
      * The TabBar class displays a set of identical tabs.

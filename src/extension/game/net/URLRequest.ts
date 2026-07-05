@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { HashObject } from "../../../egret/utils/HashObject";
+
+import { egret } from '@egret-r/core';
+const { HashObject } = egret;
 import { URLRequestHeader } from "./URLRequestHeader";
 import { URLRequestMethod } from "./URLRequestMethod";
-
 
     /**
      * The URLRequest class captures all of the information in a single HTTP request.

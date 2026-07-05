@@ -1,14 +1,9 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { TextField } from "../../../egret/text/TextField";
-import { FocusEvent } from "../../../egret/events/FocusEvent";
-import { TextKeys } from "../../../egret/text/TextField";
-import { TextFieldType } from "../../../egret/text/TextFieldType";
-import { Stage } from "../../../egret/display/Stage";
-import { TouchEvent } from "../../../egret/events/TouchEvent";
-import { Capabilities } from "../../../egret/system/Capabilities";
-import { Rectangle } from "../../../egret/geom/Rectangle";
+
+import { egret } from '@egret-r/core';
+const { TextField, FocusEvent, TextKeys, TextFieldType, Stage, TouchEvent, Capabilities, Rectangle } = egret;
 import { Component } from "./Component";
 import { registerBindable } from "../utils/registerBindable";
 import { UIComponentImpl, UIKeys, implementUIComponent, UIComponent } from "../core/UIComponent";

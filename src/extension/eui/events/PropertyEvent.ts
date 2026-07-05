@@ -1,10 +1,6 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { Event } from "../../../egret/events/Event";
-import { IEventDispatcher } from "../../../egret/events/IEventDispatcher";
-
-
     /**
      * The PropertyChangeEvent class represents the event object
      * passed to the event listener when one of the properties of
@@ -25,6 +21,9 @@ import { IEventDispatcher } from "../../../egret/events/IEventDispatcher";
      * @includeExample  extension/eui/events/PropertyEventExample.ts
      * @language zh_CN
      */
+
+import { egret } from '@egret-r/core';
+const { Event, IEventDispatcher } = egret;
     export class PropertyEvent extends Event {
         /**
          * Dispatch when a property changed.

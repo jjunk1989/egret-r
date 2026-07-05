@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { Event } from "../../../egret/events/Event";
+
+import { egret } from '@egret-r/core';
+const { Event } = egret;
 import { Group } from "./Group";
 
     /**

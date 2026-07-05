@@ -1,13 +1,12 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { EventDispatcher } from "../../../egret/events/EventDispatcher";
-import { $TempStage } from "../../../egret/player/Player";
-import { Capabilities } from "../../../egret/system/Capabilities";
-import { Ticker } from "../player/Ticker";
-import { Stage } from "../../../egret/display/Stage";
-import { $warn } from "../../../Defines.debug";
 
+import { egret } from '@egret-r/core';
+const { EventDispatcher, $TempStage, Capabilities, Stage } = egret;
+import { Ticker } from "../player/Ticker";
+
+import { $warn } from "../../../Defines.debug";
 
     /**
      * @class egret.MainContext
@@ -78,7 +77,6 @@ import { $warn } from "../../../Defines.debug";
          * @platform Web
          */
         public static DEVICE_MOBILE: string = "native";
-
 
         /**
          * @private

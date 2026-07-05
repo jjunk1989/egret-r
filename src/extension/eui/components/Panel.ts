@@ -1,15 +1,15 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+
+import { egret } from '@egret-r/core';
+const { TouchEvent, DisplayObject } = egret;
 import { registerProperty } from "../utils/registerProperty";
 
-import { TouchEvent } from "../../../egret/events/TouchEvent";
-import { DisplayObject } from "../../../egret/display/DisplayObject";
 import { UIEvent } from "../events/UIEvent";
 import { Component } from "./Component";
 import { Button } from "./Button";
 import { IDisplayText } from "../core/IDisplayText";
-
 
     /**
      * The Panel class defines a container that includes a title bar,
@@ -68,7 +68,6 @@ import { IDisplayText } from "../core/IDisplayText";
         private onWindowTouchBegin(event:TouchEvent):void {
             this.$parent.addChild(this);
         }
-
 
         /**
          * write-only property,This property is Usually invoked in resolving an EXML for adding multiple children quickly.

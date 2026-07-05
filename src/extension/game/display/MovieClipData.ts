@@ -1,10 +1,9 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { HashObject } from "../../../egret/utils/HashObject";
-import { Texture } from "../../../egret/display/Texture";
-import { SpriteSheet } from "../../../egret/display/SpriteSheet";
-import { Point } from "../../../egret/geom/Point";
+
+import { egret } from '@egret-r/core';
+const { HashObject, Texture, SpriteSheet, Point } = egret;
 import { FrameLabel } from "./FrameLabel";
 
     /**

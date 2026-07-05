@@ -1,9 +1,6 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { DisplayObjectContainer } from "../../../egret/display/DisplayObjectContainer";
-
-
 	/**
 	 * The IOverride interface is used for view state overrides.
 	 * All entries in the State class <code>overrides</code>
@@ -21,6 +18,9 @@ import { DisplayObjectContainer } from "../../../egret/display/DisplayObjectCont
 	 * @platform Web
 	 * @language zh_CN
 	 */
+
+import { egret } from '@egret-r/core';
+const { DisplayObjectContainer } = egret;
 	export interface IOverride{
 		/**
 		 * Applies the override. Retains the original value, so that it can

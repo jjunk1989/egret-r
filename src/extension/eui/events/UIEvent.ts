@@ -1,10 +1,6 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { Event } from "../../../egret/events/Event";
-import { IEventDispatcher } from "../../../egret/events/IEventDispatcher";
-
-
     /**
      * The UIEvent class represents the event object passed to
      * the event listener for many UI events.
@@ -22,6 +18,9 @@ import { IEventDispatcher } from "../../../egret/events/IEventDispatcher";
      * @includeExample  extension/eui/events/UIEventExample.ts
      * @language zh_CN
      */
+
+import { egret } from '@egret-r/core';
+const { Event, IEventDispatcher } = egret;
     export class UIEvent extends Event{
 
         /**

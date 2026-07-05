@@ -1,22 +1,16 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { Event } from "../../../egret/events/Event";
-import { IOErrorEvent } from "../../../egret/events/IOErrorEvent";
-import { EventDispatcher } from "../../../egret/events/EventDispatcher";
+
+import { egret } from '@egret-r/core';
+const { Event, IOErrorEvent, EventDispatcher, Sound, ProgressEvent, HttpResponseType, ImageLoader, Texture, HttpRequest, HttpMethod } = egret;
 import { URLLoaderDataFormat } from "./URLLoaderDataFormat";
 import { URLRequestHeader } from "./URLRequestHeader";
-import { Sound } from "../../../egret/media/Sound";
-import { ProgressEvent } from "../../../egret/events/ProgressEvent";
+
 import { URLRequest } from "./URLRequest";
 import { URLVariables } from "./URLVariables";
-import { HttpResponseType } from "../../../egret/net/HttpResponseType";
-import { ImageLoader } from "../../../egret/net/ImageLoader";
-import { Texture } from "../../../egret/display/Texture";
-import { HttpRequest } from "../../../egret/net/HttpRequest";
-import { HttpMethod } from "../../../egret/net/HttpMethod";
-import { URLRequestMethod } from "./URLRequestMethod";
 
+import { URLRequestMethod } from "./URLRequestMethod";
 
     function $getUrl(request: URLRequest): string {
         let url: string = request.url;
@@ -289,7 +283,6 @@ import { URLRequestMethod } from "./URLRequestMethod";
          * @private
          */
         public _status: number = -1;
-
 
         /**
          * @private

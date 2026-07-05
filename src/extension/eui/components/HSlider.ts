@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+
+import { egret } from '@egret-r/core';
+const { $TempRectangle, $TempPoint } = egret;
 import { RangeKeys } from "./supportClasses/Range";
 import { SliderBase } from "./supportClasses/SliderBase";
-import { $TempRectangle } from "../../../egret/geom/Rectangle";
-import { $TempPoint } from "../../../egret/geom/Point";
-
 
     /**
      * The HSlider (horizontal slider) control lets users select a value

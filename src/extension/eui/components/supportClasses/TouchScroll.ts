@@ -1,10 +1,9 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { IEventDispatcher } from "../../../../egret/events/IEventDispatcher";
-import { stopTick } from "../../../../egret/utils/stopTick";
-import { getTimer } from "../../../../egret/utils/getTimer";
-import { startTick } from "../../../../egret/utils/startTick";
+
+import { egret } from '@egret-r/core';
+const { IEventDispatcher, stopTick, getTimer, startTick } = egret;
 import { ScrollerThrowEvent } from "../../events/ScrollerThrowEvent";
 import { Animation } from "./Animation";
 import { $error } from "../../../../Defines.debug";

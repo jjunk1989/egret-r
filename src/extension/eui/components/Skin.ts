@@ -1,10 +1,9 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { EventDispatcher } from "../../../egret/events/EventDispatcher";
-import { DisplayObject } from "../../../egret/display/DisplayObject";
-import { Event } from "../../../egret/events/Event";
-import { Stage } from "../../../egret/display/Stage";
+
+import { egret } from '@egret-r/core';
+const { EventDispatcher, DisplayObject, Event, Stage, registerClass } = egret;
 import { StateValues, StateClient, State } from "../states/State";
 import { mixin } from "../core/UIComponent";
 import { Component } from "./Component";
@@ -12,8 +11,6 @@ import { registerBindable } from "../utils/registerBindable";
 import { Watcher } from "../binding/Watcher";
 import { registerProperty } from "../utils/registerProperty";
 import { PropertyEvent } from "../events/PropertyEvent";
-import { registerClass } from "../../../egret/utils/registerClass";
-
 
     /**
      * The Skin class defines the base class for all skins.
@@ -218,7 +215,6 @@ import { registerClass } from "../../../egret/utils/registerClass";
             this.$elementsContent = value;
         }
 
-
         /**
          * @private
          */
@@ -272,7 +268,6 @@ import { registerClass } from "../../../egret/utils/registerClass";
         private onAddedToStage(event?: Event): void {
             this.initializeStates(this._hostComponent.$stage);
         }
-
 
         /**
          * @private
@@ -341,7 +336,6 @@ import { registerClass } from "../../../egret/utils/registerClass";
          * 应用当前的视图状态。子类覆盖此方法在视图状态发生改变时执行相应更新操作。
          */
         private commitCurrentState: () => void;
-
 
         public $watchers: Watcher[] = [];
 

@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { Point } from "../../../egret/geom/Point";
-import { TouchEvent } from "../../../egret/events/TouchEvent";
-import { ScrollTween } from "./ScrollTween";
 
+import { egret } from '@egret-r/core';
+const { Point, TouchEvent } = egret;
+import { ScrollTween } from "./ScrollTween";
 
     /**
      * @private

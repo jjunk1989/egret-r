@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { Sound } from "../../../egret/media/Sound";
-import { Event } from "../../../egret/events/Event";
-import { IOErrorEvent } from "../../../egret/events/IOErrorEvent";
+
+import { egret } from '@egret-r/core';
+const { Sound, Event, IOErrorEvent } = egret;
 import { AnalyzerBase } from "./AnalyzerBase";
 import { ResourceItem } from "../../assetsmanager/src/shim/ResourceItem";
 import { $getVirtualUrl } from "../Resource";

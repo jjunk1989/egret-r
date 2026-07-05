@@ -1,17 +1,15 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { getTimer } from "../../../../egret/utils/getTimer";
-import { startTick } from "../../../../egret/utils/startTick";
-import { stopTick } from "../../../../egret/utils/stopTick";
-
-
     /**
      * @private
      * 
      * @param fraction 
      * @returns 
      */
+
+import { egret } from '@egret-r/core';
+const { getTimer, startTick, stopTick } = egret;
     function sineInOut(fraction:number):number {
         return -0.5 * (Math.cos(Math.PI * fraction) - 1)
     }

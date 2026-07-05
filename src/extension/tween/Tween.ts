@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { EventDispatcher } from "../../egret/events/EventDispatcher";
-import { getTimer } from "../../egret/utils/getTimer";
-import { Ease } from "./Ease";
 
+import { egret } from '@egret-r/core';
+const { EventDispatcher, getTimer } = egret;
+import { Ease } from "./Ease";
 
 	/**
      * Tween is the animation easing class of Egret
