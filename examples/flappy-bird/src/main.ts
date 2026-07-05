@@ -10,9 +10,9 @@ const BIRD_H = 26;
 const GRAVITY = 0.35;
 const FLAP_VEL = -6.5;
 const PIPE_W = 60;
-const PIPE_GAP = 150;
+const PIPE_GAP = 180;
 const PIPE_SPEED = 3;
-const PIPE_SPAWN_INTERVAL = 100; // frames
+const PIPE_SPAWN_INTERVAL = 120; // frames (later first pipe)
 const GROUND_H = 80;
 
 // ── Main Game Class ─────────────────────────────────
@@ -275,9 +275,11 @@ class Main extends egret.DisplayObjectContainer {
 
   // ── Pipes ─────────────────────────────────────────
   private spawnPipe(): void {
-    const minTop = 40;
-    const maxTop = GAME_H - GROUND_H - PIPE_GAP - 40;
-    const topH = minTop + Math.random() * (maxTop - minTop);
+    // Center gap around screen middle, with some randomness
+    const screenMid = (GAME_H - GROUND_H) / 2; // 310
+    const range = 100;
+    const gapCenter = screenMid + (Math.random() - 0.5) * range * 2; // 210-410
+    const topH = Math.max(30, Math.min(GAME_H - GROUND_H - PIPE_GAP - 30, gapCenter - PIPE_GAP / 2));
 
     const topPipe = new egret.Shape();
     // Pipe body (dark green-yellow, visible against sky)
