@@ -22,6 +22,9 @@ jobs:
       - name: Build packages
         run: node scripts/build-esm-direct.js
 
+      - name: Verify bundles (no bare globals)
+        run: node scripts/verify-bundle.js
+
       - name: Run tests
         run: npm -w examples/basic run test
 

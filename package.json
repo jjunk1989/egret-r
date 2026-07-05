@@ -9,6 +9,7 @@
     "build:core": "node scripts/build-esm-direct.js",
     "clean": "node scripts/clean-dist.js",
     "check:bare": "node scripts/check-bare-symbols.js",
+    "check:bundle": "node scripts/verify-bundle.js",
     "verify": "node scripts/verify-dist.js",
     "watch": "node scripts/build-esm-direct.js --watch",
     "watch:core": "node scripts/build-esm-direct.js --watch",

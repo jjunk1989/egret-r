@@ -4,6 +4,10 @@
 // undefined bare global references that would cause runtime errors.
 //
 // Run: node scripts/verify-bundle.js
+//
+// This script focuses on the symbols known to cause issues:
+// symbols from global.d.ts that are used bare (without import)
+// and are renamed by esbuild (X -> X2, _X conflicts).
 
 var fs = require("fs");
 var path = require("path");
@@ -11,73 +15,66 @@ var path = require("path");
 var ROOT = path.join(__dirname, "..");
 var PACKAGES = ["core", "eui", "game", "tween", "socket"];
 
-// Symbols that are defined in the header (before the IIFE) or
-// in the global scope — these are OK to reference bare.
-var SAFE_HEADER_SYMBOLS = {
+// Known risky symbols from global.d.ts that often appear bare in engine code.
+// These should either have explicit ESM imports or be handled by the build script.
+var RISKY_SYMBOLS = [
+  // Event-related
+  "Event",
+  // Utility functions  
+  "toColorString", "getFontString", "getPrefixStyleName",
+  "getDefinitionByName", "getQualifiedClassName",
+  "tr",
+  // Engine internals
+  "_is", "EgretShaderLib", "WebGLUtils", "glContext",
+  "CapsStyle", "GlowFilter", "NumberUtils",
+  "TextField", "TextAtlasRender", "property_drawLabel",
+  "renderBufferPool",
+];
+
+// Symbols defined in the bundle header (before IIFE) — OK to reference
+var HEADER_SYMBOLS = {
   egret: true, eui: true, sys: true, global: true, __global: true,
   DEBUG: true, RELEASE: true, window: true, globalThis: true,
 };
 
-// Collect all variable/function declarations inside the IIFE
+// Collect all variable/function/class declarations inside the IIFE
 function collectDefs(src) {
   var defs = {};
-  // var X = / let X = / const X =
-  var re = /\b(?:var|let|const)\s+(\w+)\b/g;
-  var m;
+  var re = /\b(?:var|let|const)\s+(\w+)\b/g, m;
   while ((m = re.exec(src)) !== null) defs[m[1]] = true;
-  // function X(
   re = /\bfunction\s+(\w+)\s*\(/g;
   while ((m = re.exec(src)) !== null) defs[m[1]] = true;
-  // class X /
   re = /\bclass\s+(\w+)\b/g;
+  while ((m = re.exec(src)) !== null) defs[m[1]] = true;
+  // Also count renamed symbols: var X2 = ...
+  re = /\bvar\s+(\w+2)\s*=/g;
   while ((m = re.exec(src)) !== null) defs[m[1]] = true;
   return defs;
 }
 
-// Find bare symbol references that are NOT in the defs set and
-// NOT in the safe header symbols. Look for symbols used as:
-//   X(  - function call
-//   X.  - property access on a bare symbol
-//   new X( - constructor call
-//   X extends Y - but only check Y (the base class)
-function findBareRefs(bundleSrc, iiFeBody, defs) {
-  var bare = {};
-  
-  // Pattern: bare identifier used as a value (in expressions)
-  // Match: ; X( or = X( or ( X( or , X( or : X( or [ X( or new X(
-  // Also: X.Y (like Event.ADDED) — but Event. was already handled
-  var re = /(?:^|[^\w$])(\w+)(?=\()/gm;
-  var m;
-  while ((m = re.exec(iiFeBody)) !== null) {
-    var sym = m[1];
-    if (SAFE_HEADER_SYMBOLS[sym]) continue;
-    if (defs[sym]) continue;
-    // Skip JS builtins
-    if (["if","else","for","while","do","switch","case","return",
-         "throw","typeof","instanceof","new","delete","void","in",
-         "catch","finally","try","break","continue","function",
-         "var","let","const","class","import","export","default",
-         "extends","super","this","true","false","null","undefined"].indexOf(sym) >= 0) continue;
-    // Skip common browser APIs
-    if (["console","document","navigator","location","history",
-         "setTimeout","setInterval","clearTimeout","clearInterval",
-         "requestAnimationFrame","cancelAnimationFrame",
-         "JSON","Math","Date","RegExp","Array","Object","String",
-         "Number","Boolean","Error","Promise","Map","Set",
-         "parseInt","parseFloat","isNaN","isFinite",
-         "alert","confirm","prompt","fetch","Image","Audio",
-         "WebSocket","XMLHttpRequest","FormData","Blob","File",
-         "Worker","URL","encodeURIComponent","decodeURIComponent",
-         "Float32Array","Uint8Array","Uint16Array","Int32Array",
-         "ArrayBuffer","DataView","TextDecoder","TextEncoder",
-         "WebGLRenderingContext","HTMLCanvasElement","CanvasRenderingContext2D",
-         "OffscreenCanvas","performance"].indexOf(sym) >= 0) continue;
-    // Skip symbols that start with $ (engine internal)
-    if (sym[0] === "$") continue;
-    bare[sym] = (bare[sym] || 0) + 1;
-  }
+// Check if a risky symbol appears bare in the IIFE body (not as .method, not as definition)
+function findBareRisky(iiFeBody, defs) {
+  var findings = {};
+  for (var si = 0; si < RISKY_SYMBOLS.length; si++) {
+    var sym = RISKY_SYMBOLS[si];
+    if (defs[sym]) continue; // Defined locally — OK
+    if (HEADER_SYMBOLS[sym]) continue;
 
-  return bare;
+    // Match bare usage of the symbol (not as property access .sym, not in strings)
+    // Look for: (sym(, = sym, sym., new sym(, ;sym, etc.)
+    var re = new RegExp('(?:^|[^\\w$.])(' + sym.replace(/\$/g, '\\$') + ')(?=\\s*[(\\.\\[;,\\)])', 'gm');
+    var count = 0, m;
+    while ((m = re.exec(iiFeBody)) !== null) {
+      // Skip if it's part of a larger identifier
+      var before = iiFeBody[m.index - 1] || '';
+      if (/[\w$]/.test(before)) continue;
+      count++;
+    }
+    if (count > 0) {
+      findings[sym] = count;
+    }
+  }
+  return findings;
 }
 
 var allOk = true;
@@ -92,7 +89,7 @@ for (var pi = 0; pi < PACKAGES.length; pi++) {
 
   var src = fs.readFileSync(indexPath, "utf8");
   
-  // Extract IIFE body (everything inside (function() { ... }))
+  // Extract IIFE body
   var iifeMatch = src.match(/\(function\s*\(\)\s*\{([\s\S]*)\}\s*\)\.call\(window\)/);
   if (!iifeMatch) {
     console.log("  " + pkg + ": WARN (no IIFE found)");
@@ -101,16 +98,16 @@ for (var pi = 0; pi < PACKAGES.length; pi++) {
   var body = iifeMatch[1];
   
   var defs = collectDefs(body);
-  var bare = findBareRefs(src, body, defs);
+  var findings = findBareRisky(body, defs);
   
-  var keys = Object.keys(bare);
+  var keys = Object.keys(findings);
   if (keys.length === 0) {
     console.log("  " + pkg + ": OK");
   } else {
     allOk = false;
-    console.log("  " + pkg + ": " + keys.length + " potential bare refs:");
+    console.log("  " + pkg + ": " + keys.length + " risky bare ref(s):");
     for (var ki = 0; ki < keys.length; ki++) {
-      console.log("    " + keys[ki] + " (" + bare[keys[ki]] + " uses)");
+      console.log("    " + keys[ki] + " (" + findings[keys[ki]] + " uses)");
     }
   }
 }
@@ -118,7 +115,8 @@ for (var pi = 0; pi < PACKAGES.length; pi++) {
 if (allOk) {
   console.log("\nAll bundles clean.");
 } else {
-  console.log("\nWARNING: Potential undefined references found.");
-  console.log("Check the build script post-processing for missing fixes.");
+  console.log("\nERROR: Undefined bare references found in bundles.");
+  console.log("Fix: add explicit imports to source files, or");
+  console.log("add the symbol to build-esm-direct.js auto-rename list.");
   process.exit(1);
 }

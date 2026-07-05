@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
+import { tr } from "./egret/i18n/tr";
 
 //此文件仅在调试版本中加载，发行版中会自动排除这个js文件，并移除代码中的所有DEBUG和RELEASE常量。
 //代码中若需要编写只在调试版运行或只在发行版运行的代码，可以参考如下代码块写法：
