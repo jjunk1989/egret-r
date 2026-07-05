@@ -2,6 +2,7 @@
 // Copyright (c) 2014-present, Egret Technology.
 
 import { Event } from "../../../../egret/events/Event";
+import { _is } from "../../../../egret/utils/is";
 import { TouchEvent } from "../../../../egret/events/TouchEvent";
 import { DisplayObject } from "../../../../egret/display/DisplayObject";
 import { DisplayObjectContainer } from "../../../../egret/display/DisplayObjectContainer";

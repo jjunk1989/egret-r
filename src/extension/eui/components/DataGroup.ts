@@ -4,6 +4,7 @@
 import { registerProperty } from "../utils/registerProperty";
 
 import { Event } from "../../../egret/events/Event";
+import { _is } from "../../../egret/utils/is";
 import { DisplayObject } from "../../../egret/display/DisplayObject";
 import { Rectangle } from "../../../egret/geom/Rectangle";
 import { Group } from "./Group";

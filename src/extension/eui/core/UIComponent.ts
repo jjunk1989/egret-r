@@ -3,6 +3,7 @@
 
 import { registerProperty } from "../utils/registerProperty";
 import { registerClass } from "../../../egret/utils/registerClass";
+import { _is } from "../../../egret/utils/is";
 
 import { getImplementation } from "../../../egret/system/Implementation";
 import { Event } from "../../../egret/events/Event";
