@@ -280,12 +280,21 @@ class Main extends egret.DisplayObjectContainer {
     const topH = minTop + Math.random() * (maxTop - minTop);
 
     const topPipe = new egret.Shape();
-    topPipe.graphics.beginFill(0x73bf2e);
+    // Green pipe body
+    topPipe.graphics.beginFill(0x2ecc71);
     topPipe.graphics.drawRect(0, 0, PIPE_W, topH);
     topPipe.graphics.endFill();
-    // Pipe cap
-    topPipe.graphics.beginFill(0x5a9a1e);
-    topPipe.graphics.drawRect(-3, topH - 20, PIPE_W + 6, 20);
+    // Darker border left
+    topPipe.graphics.beginFill(0x27ae60);
+    topPipe.graphics.drawRect(0, 0, 3, topH);
+    topPipe.graphics.endFill();
+    // Pipe cap (wider)
+    topPipe.graphics.beginFill(0x27ae60);
+    topPipe.graphics.drawRect(-4, topH - 22, PIPE_W + 8, 22);
+    topPipe.graphics.endFill();
+    // Cap highlight
+    topPipe.graphics.beginFill(0x2ecc71);
+    topPipe.graphics.drawRect(-4, topH - 22, PIPE_W + 8, 4);
     topPipe.graphics.endFill();
     topPipe.x = GAME_W;
     topPipe.y = 0;
@@ -294,12 +303,21 @@ class Main extends egret.DisplayObjectContainer {
     const bottomY = topH + PIPE_GAP;
     const bottomH = GAME_H - GROUND_H - bottomY;
     const bottomPipe = new egret.Shape();
-    bottomPipe.graphics.beginFill(0x73bf2e);
+    // Green pipe body
+    bottomPipe.graphics.beginFill(0x2ecc71);
     bottomPipe.graphics.drawRect(0, 0, PIPE_W, bottomH);
     bottomPipe.graphics.endFill();
+    // Darker border left
+    bottomPipe.graphics.beginFill(0x27ae60);
+    bottomPipe.graphics.drawRect(0, 0, 3, bottomH);
+    bottomPipe.graphics.endFill();
     // Pipe cap
-    bottomPipe.graphics.beginFill(0x5a9a1e);
-    bottomPipe.graphics.drawRect(-3, 0, PIPE_W + 6, 20);
+    bottomPipe.graphics.beginFill(0x27ae60);
+    bottomPipe.graphics.drawRect(-4, 0, PIPE_W + 8, 22);
+    bottomPipe.graphics.endFill();
+    // Cap highlight
+    bottomPipe.graphics.beginFill(0x2ecc71);
+    bottomPipe.graphics.drawRect(-4, 18, PIPE_W + 8, 4);
     bottomPipe.graphics.endFill();
     bottomPipe.x = GAME_W;
     bottomPipe.y = bottomY;
