@@ -69,7 +69,7 @@ async function buildPkg(pkg) {
 
   // For non-core packages, also include core egret files for proper ordering
   var hasEgret = pkg.srcDirs.some(function(d) { return d === 'src/egret'; });
-  if (!hasEgret) {
+  if (false && !hasEgret) {
     var coreDir = path.join(ROOT, 'src/egret');
     if (fs.existsSync(coreDir)) {
       var coreFiles = walkTs(coreDir).filter(function(f) {
