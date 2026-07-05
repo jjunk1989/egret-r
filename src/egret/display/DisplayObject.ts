@@ -2178,12 +2178,26 @@ import { CustomFilter } from "../filters/CustomFilter";
 
         /**
          * @private
+         * Shared across all bundle IIFEs — avoids duplication when
+         * extension packages re-bundle core files.
+         */
+        private static get $sharedEnterFrameList(): DisplayObject[] {
+            let list = (egret as any).__enterFrameCallBackList;
+            if (!list) {
+                list = [];
+                (egret as any).__enterFrameCallBackList = list;
+            }
+            return list;
+        }
+
+        /**
+         * @private
          */
         $addListener(type: string, listener: Function, thisObject: any, useCapture?: boolean, priority?: number, dispatchOnce?: boolean): void {
             super.$addListener(type, listener, thisObject, useCapture, priority, dispatchOnce);
             let isEnterFrame = (type == Event.ENTER_FRAME);
             if (isEnterFrame || type == Event.RENDER) {
-                let list = isEnterFrame ? DisplayObject.$enterFrameCallBackList : DisplayObject.$renderCallBackList;
+                let list = isEnterFrame ? DisplayObject.$sharedEnterFrameList : DisplayObject.$renderCallBackList;
                 if (list.indexOf(this) == -1) {
                     list.push(this);
                 }
@@ -2199,7 +2213,7 @@ import { CustomFilter } from "../filters/CustomFilter";
             super.removeEventListener(type, listener, thisObject, useCapture);
             let isEnterFrame: boolean = (type == Event.ENTER_FRAME);
             if ((isEnterFrame || type == Event.RENDER) && !this.hasEventListener(type)) {
-                let list = isEnterFrame ? DisplayObject.$enterFrameCallBackList : DisplayObject.$renderCallBackList;
+                let list = isEnterFrame ? DisplayObject.$sharedEnterFrameList : DisplayObject.$renderCallBackList;
                 let index = list.indexOf(this);
                 if (index !== -1) {
                     list.splice(index, 1);
