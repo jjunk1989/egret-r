@@ -3,6 +3,7 @@ import { tr } from "../../i18n/tr";
 import { Geolocation } from "../Geolocation";
 import { IOErrorEvent } from "../../events/IOErrorEvent";
 import { GeolocationEvent } from "../../events/GeolocationEvent";
+import { Event } from "../../events/Event";
 import { EventDispatcher } from "../../events/EventDispatcher";
 
 /**

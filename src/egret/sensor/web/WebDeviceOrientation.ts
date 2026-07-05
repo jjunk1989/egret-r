@@ -2,6 +2,7 @@
 import { setDeviceOrientation } from "../DeviceOrientation";
 import { DeviceOrientation as DeviceOrientationInterface } from "../DeviceOrientation";
 import { EventDispatcher } from "../../events/EventDispatcher";
+import { Event } from "../../events/Event";
 import { OrientationEvent } from "../../events/OrientationEvent";
 
 

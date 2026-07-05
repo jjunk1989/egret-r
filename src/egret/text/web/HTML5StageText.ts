@@ -8,6 +8,7 @@ import { TextFieldUtils } from "../TextFieldUtils";
 import { Capabilities } from "../../system/Capabilities";
 import { getTimer } from "../../utils/getTimer";
 import { DisplayList } from "../../player/DisplayList";
+import { toColorString } from "../../utils/toColorString";
 import { getPrefixStyleName } from "../../web/Html5Capatibility";
 import { $callAsync } from "../../utils/callLater";
 import { EventDispatcher } from "../../events/EventDispatcher";

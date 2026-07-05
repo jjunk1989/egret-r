@@ -6,6 +6,7 @@ import { nativeRender } from "../player/Player";
 import { DisplayObject } from "./DisplayObject";
 import { Stage } from "./Stage";
 import { Rectangle, $TempRectangle } from "../geom/Rectangle";
+import { Event } from "../events/Event";
 import { $error } from "../../Defines.debug";
 import { DEBUG } from "../../Defines.debug";
 import { registerClass } from "../utils/registerClass";

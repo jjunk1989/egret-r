@@ -8,6 +8,7 @@ import { TextNode } from "../../../player/nodes/TextNode";
 import { HashObject } from "../../../utils/HashObject";
 import { TextBlock, Book } from "./TextAtlasStrategy";
 import { Rectangle } from "../../../geom/Rectangle";
+import { toColorString } from "../../../utils/toColorString";
 import { WebGLRenderContext } from "../../../player/Player";
 
     //测试开关,打开会截住老的字体渲染

@@ -15,6 +15,7 @@ import { FPSDisplay } from "./FPSDisplay";
 import { $error } from "../../Defines.debug";
 import { DEBUG } from "../../Defines.debug";
 import { $warn } from "../../Defines.debug";
+import { Event } from "../events/Event";
 
 
     export let $TempStage: Stage;

@@ -1,6 +1,7 @@
 
 import { DeviceAcceleration, DeviceRotationRate, Motion } from "../Motion";
 import { EventDispatcher } from "../../events/EventDispatcher";
+import { Event } from "../../events/Event";
 import { MotionEvent } from "../../events/MotionEvent";
 
 

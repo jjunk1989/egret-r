@@ -4,6 +4,7 @@
 import { RenderBuffer } from "../RenderBuffer";
 import { CanvasRenderBuffer } from "../../web/rendering/CanvasRenderBuffer";
 import { RenderNode, RenderNodeType } from "../nodes/RenderNode";
+import { toColorString } from "../../utils/toColorString";
 import { DisplayList } from "../DisplayList";
 import { BitmapNode } from "../nodes/BitmapNode";
 import { TextNode } from "../nodes/TextNode";

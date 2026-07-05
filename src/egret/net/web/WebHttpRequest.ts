@@ -2,6 +2,7 @@
 // Copyright (c) 2014-present, Egret Technology.
 
 import { setHttpRequest, HttpRequest } from "../HttpRequest";
+import { Event } from "../../events/Event";
 import { EventDispatcher } from "../../events/EventDispatcher";
 import { $error } from "../../../Defines.debug";
 import { DEBUG } from "../../../Defines.debug";
