@@ -36,6 +36,9 @@ class Main extends egret.DisplayObjectContainer {
   private gameLayer: egret.DisplayObjectContainer;
   private uiLayer: egret.DisplayObjectContainer;
   private startBtn: egret.TextField;
+  private groundStrip: egret.Shape;
+  private clouds: egret.Shape[] = [];
+  private frameCount = 0;
 
   // ── Init ──────────────────────────────────────────
   constructor() {
@@ -52,12 +55,15 @@ class Main extends egret.DisplayObjectContainer {
 
   // ── Scene ─────────────────────────────────────────
   private createScene(): void {
-    // Sky gradient (top dark blue → bottom light blue)
+    // Sky
     const sky = new egret.Shape();
     sky.graphics.beginFill(0x4ec0ca);
     sky.graphics.drawRect(0, 0, GAME_W, GAME_H);
     sky.graphics.endFill();
     this.addChild(sky);
+
+    // Clouds (background layer)
+    this.createClouds();
 
     this.gameLayer = new egret.DisplayObjectContainer();
     this.addChild(this.gameLayer);
@@ -70,11 +76,46 @@ class Main extends egret.DisplayObjectContainer {
     ground.graphics.beginFill(0xded895);
     ground.graphics.drawRect(0, GAME_H - GROUND_H, GAME_W, GROUND_H);
     ground.graphics.endFill();
-    // Grass strip
-    ground.graphics.beginFill(0x7ec850);
-    ground.graphics.drawRect(0, GAME_H - GROUND_H, GAME_W, 3);
-    ground.graphics.endFill();
     this.gameLayer.addChild(ground);
+
+    // Scrolling grass strip
+    this.groundStrip = new egret.Shape();
+    this.drawGroundStrip(0);
+    this.gameLayer.addChild(this.groundStrip);
+  }
+
+  private createClouds(): void {
+    for (let i = 0; i < 3; i++) {
+      const cloud = new egret.Shape();
+      const cx = Math.random() * GAME_W;
+      const cy = 30 + Math.random() * 120;
+      const cw = 50 + Math.random() * 50;
+      cloud.graphics.beginFill(0xffffff, 0.6);
+      cloud.graphics.drawEllipse(0, 0, cw, 25);
+      cloud.graphics.endFill();
+      cloud.graphics.beginFill(0xffffff, 0.5);
+      cloud.graphics.drawEllipse(cw * 0.3, -10, cw * 0.5, 20);
+      cloud.graphics.endFill();
+      cloud.x = cx;
+      cloud.y = cy;
+      this.addChild(cloud);
+      this.clouds.push(cloud);
+    }
+  }
+
+  private drawGroundStrip(offset: number): void {
+    const g = this.groundStrip.graphics;
+    g.clear();
+    const y = GAME_H - GROUND_H;
+    g.beginFill(0x7ec850);
+    for (let x = -offset % 24; x < GAME_W + 24; x += 24) {
+      g.drawRect(x, y, 12, 3);
+    }
+    g.endFill();
+    // Darker line
+    g.beginFill(0x5a8f30);
+    g.drawRect(0, y + 3, GAME_W, 2);
+    g.endFill();
   }
 
   // ── Bird ──────────────────────────────────────────
@@ -152,12 +193,29 @@ class Main extends egret.DisplayObjectContainer {
 
   // ── Game Loop ─────────────────────────────────────
   private update(): void {
+    this.frameCount++;
+
+    // Scroll clouds slowly (background parallax)
+    for (const cloud of this.clouds) {
+      cloud.x -= 0.4;
+      if (cloud.x < -120) {
+        cloud.x = GAME_W + 20;
+        cloud.y = 30 + Math.random() * 120;
+      }
+    }
+
     if (this.gameState !== 'playing') return;
+
+    // Scrolling ground strip
+    this.drawGroundStrip((this.frameCount * PIPE_SPEED) % 24);
 
     // Bird physics
     this.birdVy += GRAVITY;
     this.birdY += this.birdVy;
     this.bird.y = this.birdY;
+    // Horizontal bob when flying
+    const bobX = Math.sin(this.frameCount * 0.12) * 3;
+    this.bird.x = 80 + bobX;
     const rot = Math.max(-30, Math.min(60, this.birdVy * 6));
     this.bird.rotation = rot;
 
@@ -356,9 +414,10 @@ class Main extends egret.DisplayObjectContainer {
     this.score = 0;
     this.birdY = 250;
     this.bird.y = this.birdY;
+    this.bird.x = 80;
     this.birdVy = 0;
     this.bird.rotation = 0;
-    this.drawBird(0);
+    this.frameCount = 0;
     this.pipes = [];
     this.pipeTimer = 0;
     this.startGame();
