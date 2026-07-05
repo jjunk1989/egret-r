@@ -2,29 +2,381 @@ import { egret } from '@egret-r/core';
 import '@egret-r/eui';
 import '@egret-r/game';
 
+// ── Game Constants ──────────────────────────────────
+const GAME_W = 480;
+const GAME_H = 700;
+const BIRD_W = 34;
+const BIRD_H = 26;
+const GRAVITY = 0.45;
+const FLAP_VEL = -7.5;
+const PIPE_W = 52;
+const PIPE_GAP = 150;
+const PIPE_SPEED = 2.8;
+const PIPE_SPAWN_INTERVAL = 90; // frames
+const GROUND_H = 80;
+
+// ── Main Game Class ─────────────────────────────────
 class Main extends egret.DisplayObjectContainer {
+
+  // bird
+  private bird: egret.Shape;
+  private birdVy = 0;
+  private birdY = 250;
+
+  // pipes
+  private pipes: PipePair[] = [];
+  private pipeTimer = 0;
+
+  // state
+  private score = 0;
+  private scoreText: egret.TextField;
+  private gameState: 'idle' | 'playing' | 'over' = 'idle';
+
+  // layers
+  private gameLayer: egret.DisplayObjectContainer;
+  private uiLayer: egret.DisplayObjectContainer;
+  private startBtn: egret.TextField;
+
+  // ── Init ──────────────────────────────────────────
   constructor() {
     super();
     this.addEventListener(egret.Event.ADDED_TO_STAGE, () => {
-      // Sky background
-      const sky = new egret.Shape();
-      sky.graphics.beginFill(0x0ea5e9);
-      sky.graphics.drawRect(0, 0, 480, 700);
-      sky.graphics.endFill();
-      this.addChild(sky);
-
-      // Title
-      const label = new egret.TextField();
-      label.text = 'Hello Egret!';
-      label.size = 32;
-      label.textColor = 0xffffff;
-      label.x = 100; label.y = 300;
-      label.width = 280;
-      this.addChild(label);
+      this.createScene();
+      this.createBird();
+      this.createStartButton();
+      this.createScore();
+      this.addEventListener(egret.Event.ENTER_FRAME, this.update, this);
+      this.stage.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTap, this);
     }, this);
+  }
+
+  // ── Scene ─────────────────────────────────────────
+  private createScene(): void {
+    // Sky gradient (top dark blue → bottom light blue)
+    const sky = new egret.Shape();
+    sky.graphics.beginFill(0x4ec0ca);
+    sky.graphics.drawRect(0, 0, GAME_W, GAME_H);
+    sky.graphics.endFill();
+    this.addChild(sky);
+
+    this.gameLayer = new egret.DisplayObjectContainer();
+    this.addChild(this.gameLayer);
+
+    this.uiLayer = new egret.DisplayObjectContainer();
+    this.addChild(this.uiLayer);
+
+    // Ground
+    const ground = new egret.Shape();
+    ground.graphics.beginFill(0xded895);
+    ground.graphics.drawRect(0, GAME_H - GROUND_H, GAME_W, GROUND_H);
+    ground.graphics.endFill();
+    // Grass strip
+    ground.graphics.beginFill(0x7ec850);
+    ground.graphics.drawRect(0, GAME_H - GROUND_H, GAME_W, 3);
+    ground.graphics.endFill();
+    this.gameLayer.addChild(ground);
+  }
+
+  // ── Bird ──────────────────────────────────────────
+  private createBird(): void {
+    this.bird = new egret.Shape();
+    this.drawBird(0);
+    this.bird.x = 80;
+    this.bird.y = this.birdY;
+    this.gameLayer.addChild(this.bird);
+  }
+
+  private drawBird(rotation: number): void {
+    const g = this.bird.graphics;
+    g.clear();
+    // Body
+    g.beginFill(0xf5c842);
+    g.drawRoundRect(0, 0, BIRD_W, BIRD_H, 6, 6);
+    g.endFill();
+    // Eye (white)
+    g.beginFill(0xffffff);
+    g.drawCircle(BIRD_W - 8, 8, 5);
+    g.endFill();
+    // Pupil (black)
+    g.beginFill(0x000000);
+    g.drawCircle(BIRD_W - 6, 8, 2.5);
+    g.endFill();
+    // Beak
+    g.beginFill(0xff6b35);
+    g.moveTo(BIRD_W, 11);
+    g.lineTo(BIRD_W + 8, 13);
+    g.lineTo(BIRD_W, 16);
+    g.endFill();
+    this.bird.rotation = rotation;
+  }
+
+  // ── UI ────────────────────────────────────────────
+  private createStartButton(): void {
+    this.startBtn = new egret.TextField();
+    this.startBtn.text = '▶ TAP TO START';
+    this.startBtn.size = 22;
+    this.startBtn.textColor = 0xffffff;
+    this.startBtn.bold = true;
+    this.startBtn.strokeColor = 0x333333;
+    this.startBtn.stroke = 2;
+    this.startBtn.textAlign = egret.HorizontalAlign.CENTER;
+    this.startBtn.width = GAME_W;
+    this.startBtn.y = GAME_H * 0.45;
+    this.uiLayer.addChild(this.startBtn);
+
+    // Blink animation hint
+    const hint = new egret.TextField();
+    hint.text = 'Tap anywhere to flap';
+    hint.size = 16;
+    hint.textColor = 0xdddddd;
+    hint.textAlign = egret.HorizontalAlign.CENTER;
+    hint.width = GAME_W;
+    hint.y = GAME_H * 0.52;
+    this.uiLayer.addChild(hint);
+  }
+
+  private createScore(): void {
+    this.scoreText = new egret.TextField();
+    this.scoreText.size = 48;
+    this.scoreText.textColor = 0xffffff;
+    this.scoreText.strokeColor = 0x000000;
+    this.scoreText.stroke = 3;
+    this.scoreText.bold = true;
+    this.scoreText.textAlign = egret.HorizontalAlign.CENTER;
+    this.scoreText.width = GAME_W;
+    this.scoreText.y = 60;
+    this.scoreText.text = '0';
+    this.scoreText.visible = false;
+    this.uiLayer.addChild(this.scoreText);
+  }
+
+  // ── Game Loop ─────────────────────────────────────
+  private update(): void {
+    if (this.gameState !== 'playing') return;
+
+    // Bird physics
+    this.birdVy += GRAVITY;
+    this.birdY += this.birdVy;
+    this.bird.y = this.birdY;
+    const rot = Math.max(-30, Math.min(60, this.birdVy * 6));
+    this.bird.rotation = rot;
+
+    // Ground / ceiling collision
+    if (this.birdY < -BIRD_H || this.birdY > GAME_H - GROUND_H - BIRD_H) {
+      this.gameOver();
+      return;
+    }
+
+    // Spawn pipes
+    this.pipeTimer++;
+    if (this.pipeTimer >= PIPE_SPAWN_INTERVAL) {
+      this.pipeTimer = 0;
+      this.spawnPipe();
+    }
+
+    // Move pipes + collision
+    for (let i = this.pipes.length - 1; i >= 0; i--) {
+      const p = this.pipes[i];
+      p.x -= PIPE_SPEED;
+
+      // Score
+      if (!p.scored && p.x + PIPE_W < this.bird.x) {
+        p.scored = true;
+        this.score++;
+        this.scoreText.text = String(this.score);
+      }
+
+      // Collision (AABB)
+      if (this.checkCollision(p)) {
+        this.gameOver();
+        return;
+      }
+
+      // Remove off-screen
+      if (p.x < -PIPE_W) {
+        this.gameLayer.removeChild(p.topPipe);
+        this.gameLayer.removeChild(p.bottomPipe);
+        p.disposed = true;
+        this.pipes.splice(i, 1);
+      }
+    }
+  }
+
+  // ── Pipes ─────────────────────────────────────────
+  private spawnPipe(): void {
+    const minTop = 40;
+    const maxTop = GAME_H - GROUND_H - PIPE_GAP - 40;
+    const topH = minTop + Math.random() * (maxTop - minTop);
+
+    const topPipe = new egret.Shape();
+    topPipe.graphics.beginFill(0x73bf2e);
+    topPipe.graphics.drawRect(0, 0, PIPE_W, topH);
+    topPipe.graphics.endFill();
+    // Pipe cap
+    topPipe.graphics.beginFill(0x5a9a1e);
+    topPipe.graphics.drawRect(-3, topH - 20, PIPE_W + 6, 20);
+    topPipe.graphics.endFill();
+    topPipe.x = GAME_W;
+    topPipe.y = 0;
+    this.gameLayer.addChild(topPipe);
+
+    const bottomY = topH + PIPE_GAP;
+    const bottomH = GAME_H - GROUND_H - bottomY;
+    const bottomPipe = new egret.Shape();
+    bottomPipe.graphics.beginFill(0x73bf2e);
+    bottomPipe.graphics.drawRect(0, 0, PIPE_W, bottomH);
+    bottomPipe.graphics.endFill();
+    // Pipe cap
+    bottomPipe.graphics.beginFill(0x5a9a1e);
+    bottomPipe.graphics.drawRect(-3, 0, PIPE_W + 6, 20);
+    bottomPipe.graphics.endFill();
+    bottomPipe.x = GAME_W;
+    bottomPipe.y = bottomY;
+    this.gameLayer.addChild(bottomPipe);
+
+    this.pipes.push({
+      x: GAME_W,
+      topH,
+      bottomY,
+      topPipe,
+      bottomPipe,
+      scored: false,
+      disposed: false,
+    });
+  }
+
+  // ── Collision ─────────────────────────────────────
+  private checkCollision(p: PipePair): boolean {
+    if (p.disposed) return false;
+    const bx = this.bird.x;
+    const by = this.bird.y;
+    const bw = BIRD_W;
+    const bh = BIRD_H;
+
+    // AABB with top pipe
+    if (
+      bx + bw > p.x && bx < p.x + PIPE_W &&
+      by + bh > 0 && by < p.topH
+    ) return true;
+
+    // AABB with bottom pipe
+    if (
+      bx + bw > p.x && bx < p.x + PIPE_W &&
+      by + bh > p.bottomY && by < GAME_H - GROUND_H
+    ) return true;
+
+    return false;
+  }
+
+  // ── Input ─────────────────────────────────────────
+  private onTap(): void {
+    if (this.gameState === 'idle') {
+      this.startGame();
+      return;
+    }
+    if (this.gameState === 'over') {
+      this.restart();
+      return;
+    }
+    // Flap
+    this.birdVy = FLAP_VEL;
+  }
+
+  // ── State Transitions ─────────────────────────────
+  private startGame(): void {
+    this.gameState = 'playing';
+    this.startBtn.visible = false;
+    this.scoreText.visible = true;
+    this.scoreText.text = '0';
+    this.score = 0;
+    this.birdVy = FLAP_VEL;
+  }
+
+  private gameOver(): void {
+    this.gameState = 'over';
+    // Clear pipes
+    for (const p of this.pipes) {
+      if (!p.disposed) {
+        this.gameLayer.removeChild(p.topPipe);
+        this.gameLayer.removeChild(p.bottomPipe);
+        p.disposed = true;
+      }
+    }
+    this.pipes = [];
+    this.pipeTimer = 0;
+
+    // Game over overlay
+    const overlay = new egret.Shape();
+    overlay.graphics.beginFill(0x000000, 0.4);
+    overlay.graphics.drawRect(0, 0, GAME_W, GAME_H);
+    overlay.graphics.endFill();
+    this.uiLayer.addChild(overlay);
+
+    const goText = new egret.TextField();
+    goText.text = 'GAME OVER';
+    goText.size = 40;
+    goText.textColor = 0xff4444;
+    goText.bold = true;
+    goText.strokeColor = 0x000000;
+    goText.stroke = 3;
+    goText.textAlign = egret.HorizontalAlign.CENTER;
+    goText.width = GAME_W;
+    goText.y = GAME_H * 0.3;
+    this.uiLayer.addChild(goText);
+
+    const scoreLabel = new egret.TextField();
+    scoreLabel.text = `Score: ${this.score}`;
+    scoreLabel.size = 28;
+    scoreLabel.textColor = 0xffffff;
+    scoreLabel.strokeColor = 0x000000;
+    scoreLabel.stroke = 2;
+    scoreLabel.textAlign = egret.HorizontalAlign.CENTER;
+    scoreLabel.width = GAME_W;
+    scoreLabel.y = GAME_H * 0.42;
+    this.uiLayer.addChild(scoreLabel);
+
+    const retryText = new egret.TextField();
+    retryText.text = 'TAP TO RETRY';
+    retryText.size = 20;
+    retryText.textColor = 0xffcc00;
+    retryText.bold = true;
+    retryText.textAlign = egret.HorizontalAlign.CENTER;
+    retryText.width = GAME_W;
+    retryText.y = GAME_H * 0.55;
+    this.uiLayer.addChild(retryText);
+  }
+
+  private restart(): void {
+    // Clear UI layer (remove game over elements)
+    while (this.uiLayer.numChildren > 2) {
+      this.uiLayer.removeChildAt(2);
+    }
+    this.scoreText.visible = true;
+    this.scoreText.text = '0';
+    this.score = 0;
+    this.birdY = 250;
+    this.bird.y = this.birdY;
+    this.birdVy = 0;
+    this.bird.rotation = 0;
+    this.drawBird(0);
+    this.pipes = [];
+    this.pipeTimer = 0;
+    this.startGame();
   }
 }
 
+// ── Pipe Data Type ──────────────────────────────────
+interface PipePair {
+  x: number;
+  topH: number;
+  bottomY: number;
+  topPipe: egret.Shape;
+  bottomPipe: egret.Shape;
+  scored: boolean;
+  disposed: boolean;
+}
+
+// ── Entry ───────────────────────────────────────────
 (window as any).Main = Main;
 
 if (document.readyState === 'loading') {
