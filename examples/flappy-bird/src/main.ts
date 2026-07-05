@@ -7,12 +7,12 @@ const GAME_W = 480;
 const GAME_H = 700;
 const BIRD_W = 34;
 const BIRD_H = 26;
-const GRAVITY = 0.45;
-const FLAP_VEL = -7.5;
+const GRAVITY = 0.35;
+const FLAP_VEL = -6.5;
 const PIPE_W = 52;
-const PIPE_GAP = 150;
-const PIPE_SPEED = 2.8;
-const PIPE_SPAWN_INTERVAL = 90; // frames
+const PIPE_GAP = 160;
+const PIPE_SPEED = 2.5;
+const PIPE_SPAWN_INTERVAL = 100; // frames
 const GROUND_H = 80;
 
 // ── Main Game Class ─────────────────────────────────
@@ -48,9 +48,14 @@ class Main extends egret.DisplayObjectContainer {
       this.createBird();
       this.createStartButton();
       this.createScore();
-      this.addEventListener(egret.Event.ENTER_FRAME, this.update, this);
+      this.touchEnabled = true;
+      this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTap, this);
       this.stage.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTap, this);
+      // Game loop via setInterval (ENTER_FRAME not reliable in ESM bundle)
+      setInterval(() => this.update(), 1000 / 60);
     }, this);
+    document.addEventListener('click', () => this.onTap());
+    document.addEventListener('touchstart', (e: Event) => { e.preventDefault(); this.onTap(); });
   }
 
   // ── Scene ─────────────────────────────────────────
@@ -214,7 +219,6 @@ class Main extends egret.DisplayObjectContainer {
     }
 
     if (this.gameState !== 'playing') {
-      // idle → draw bird with wings out; over → keep last frame
       return;
     }
 
