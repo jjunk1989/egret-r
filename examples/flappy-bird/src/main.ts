@@ -9,9 +9,9 @@ const BIRD_W = 34;
 const BIRD_H = 26;
 const GRAVITY = 0.35;
 const FLAP_VEL = -6.5;
-const PIPE_W = 52;
-const PIPE_GAP = 160;
-const PIPE_SPEED = 2.5;
+const PIPE_W = 60;
+const PIPE_GAP = 150;
+const PIPE_SPEED = 3;
 const PIPE_SPAWN_INTERVAL = 100; // frames
 const GROUND_H = 80;
 
@@ -280,21 +280,20 @@ class Main extends egret.DisplayObjectContainer {
     const topH = minTop + Math.random() * (maxTop - minTop);
 
     const topPipe = new egret.Shape();
-    // Green pipe body
-    topPipe.graphics.beginFill(0x2ecc71);
+    // Pipe body (dark green-yellow, visible against sky)
+    topPipe.graphics.beginFill(0xe67e22);
     topPipe.graphics.drawRect(0, 0, PIPE_W, topH);
     topPipe.graphics.endFill();
-    // Darker border left
-    topPipe.graphics.beginFill(0x27ae60);
-    topPipe.graphics.drawRect(0, 0, 3, topH);
+    // Highlight stripe
+    topPipe.graphics.beginFill(0xf39c12);
+    topPipe.graphics.drawRect(PIPE_W - 5, 0, 5, topH);
     topPipe.graphics.endFill();
-    // Pipe cap (wider)
-    topPipe.graphics.beginFill(0x27ae60);
-    topPipe.graphics.drawRect(-4, topH - 22, PIPE_W + 8, 22);
+    // Pipe cap
+    topPipe.graphics.beginFill(0xd35400);
+    topPipe.graphics.drawRect(-4, topH - 24, PIPE_W + 8, 24);
     topPipe.graphics.endFill();
-    // Cap highlight
-    topPipe.graphics.beginFill(0x2ecc71);
-    topPipe.graphics.drawRect(-4, topH - 22, PIPE_W + 8, 4);
+    topPipe.graphics.beginFill(0xe67e22);
+    topPipe.graphics.drawRect(-4, topH - 24, PIPE_W + 8, 5);
     topPipe.graphics.endFill();
     topPipe.x = GAME_W;
     topPipe.y = 0;
@@ -303,21 +302,20 @@ class Main extends egret.DisplayObjectContainer {
     const bottomY = topH + PIPE_GAP;
     const bottomH = GAME_H - GROUND_H - bottomY;
     const bottomPipe = new egret.Shape();
-    // Green pipe body
-    bottomPipe.graphics.beginFill(0x2ecc71);
+    // Pipe body
+    bottomPipe.graphics.beginFill(0xe67e22);
     bottomPipe.graphics.drawRect(0, 0, PIPE_W, bottomH);
     bottomPipe.graphics.endFill();
-    // Darker border left
-    bottomPipe.graphics.beginFill(0x27ae60);
-    bottomPipe.graphics.drawRect(0, 0, 3, bottomH);
+    // Highlight stripe
+    bottomPipe.graphics.beginFill(0xf39c12);
+    bottomPipe.graphics.drawRect(PIPE_W - 5, 0, 5, bottomH);
     bottomPipe.graphics.endFill();
     // Pipe cap
-    bottomPipe.graphics.beginFill(0x27ae60);
-    bottomPipe.graphics.drawRect(-4, 0, PIPE_W + 8, 22);
+    bottomPipe.graphics.beginFill(0xd35400);
+    bottomPipe.graphics.drawRect(-4, 0, PIPE_W + 8, 24);
     bottomPipe.graphics.endFill();
-    // Cap highlight
-    bottomPipe.graphics.beginFill(0x2ecc71);
-    bottomPipe.graphics.drawRect(-4, 18, PIPE_W + 8, 4);
+    bottomPipe.graphics.beginFill(0xe67e22);
+    bottomPipe.graphics.drawRect(-4, 19, PIPE_W + 8, 5);
     bottomPipe.graphics.endFill();
     bottomPipe.x = GAME_W;
     bottomPipe.y = bottomY;
