@@ -51,8 +51,13 @@ class Main extends egret.DisplayObjectContainer {
       this.touchEnabled = true;
       this.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTap, this);
       this.stage.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTap, this);
-      // Game loop via setInterval (ENTER_FRAME not reliable in ESM bundle)
-      setInterval(() => this.update(), 1000 / 60);
+      // Game loop via engine ticker (follows render cycle)
+      (egret as any).startTick((_timeStamp: number) => {
+        this.update();
+        return false;
+      }, this);
+      // Also register ENTER_FRAME as fallback
+      this.addEventListener(egret.Event.ENTER_FRAME, this.update, this);
     }, this);
     document.addEventListener('click', () => this.onTap());
     document.addEventListener('touchstart', (e: Event) => { e.preventDefault(); this.onTap(); });
