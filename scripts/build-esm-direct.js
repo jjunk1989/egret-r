@@ -67,24 +67,9 @@ async function buildPkg(pkg) {
     return !/[\\\/]native[\\\/]/.test(f) && !/NativeContext\.ts$/.test(f);
   });
 
-  // For non-core packages, also include core egret files for proper ordering
+  // For non-core packages, import egret from core instead of re-bundling
+  // (core files are NOT added �?they come from the @egret-r/core dependency)
   var hasEgret = pkg.srcDirs.some(function(d) { return d === 'src/egret'; });
-  if (!hasEgret) {
-    var coreDir = path.join(ROOT, 'src/egret');
-    if (fs.existsSync(coreDir)) {
-      var coreFiles = walkTs(coreDir).filter(function(f) {
-        return !/[\\\/]native[\\\/]/.test(f) && !/NativeContext\.ts$/.test(f);
-      });
-      var existingSet = {};
-      for (var ei = 0; ei < files.length; ei++) existingSet[files[ei]] = true;
-      for (var ci = 0; ci < coreFiles.length; ci++) {
-        if (!existingSet[coreFiles[ci]]) {
-          existingSet[coreFiles[ci]] = true;
-          files.push(coreFiles[ci]);
-        }
-      }
-    }
-  }
 
   var nsAssignments = [];
   var globalSeen = {};
@@ -108,7 +93,11 @@ async function buildPkg(pkg) {
 
   // Generate entry with inline namespace assignments
   var entry = '// Auto-generated ESM entry\n';
-  if (hasEgret || files.some(function(f) { return f.indexOf('/egret/') >= 0; })) {
+  // Non-core packages: egret is already on globalThis from core bundle.
+  // No need to import �?the IIFE header provides it.
+  // No core files are re-bundled �?they come from @egret-r/core at runtime.
+
+  if (hasEgret) {
     var defRel = path.relative(path.dirname(entryPath), path.join(ROOT, 'src/Defines.debug')).replace(/\\/g, '/');
     entry += 'import "' + defRel + '";\n';
   }
@@ -201,21 +190,6 @@ async function buildPkg(pkg) {
     if (sorted.indexOf(r6) < 0) sortedFiles.push(files[fi5]);
   }
 
-  // CRITICAL: For non-core packages, ensure all core files come BEFORE extension files
-  // This prevents "Class extends undefined" from extension classes extending core classes
-  if (!hasEgret) {
-    var coreFirst = [];
-    var extLast = [];
-    for (var cf = 0; cf < sortedFiles.length; cf++) {
-      var relCf = path.relative(ROOT, sortedFiles[cf]).replace(/\\/g, '/');
-      if (relCf.startsWith('src/egret/') || relCf.startsWith('src/Defines.')) {
-        coreFirst.push(sortedFiles[cf]);
-      } else {
-        extLast.push(sortedFiles[cf]);
-      }
-    }
-    sortedFiles = coreFirst.concat(extLast);
-  }
   files = sortedFiles;
   // Reset for fileExportMap
   var exportSeen = {};
@@ -278,7 +252,7 @@ async function buildPkg(pkg) {
   fs.writeFileSync(entryPath, entry, 'utf8');
 
   try {
-    await esbuild.build({
+    var buildOpts = {
       entryPoints: [entryPath],
       bundle: true, format: 'esm',
       outfile: path.join(distDir, 'index_tmp.js'),
@@ -287,10 +261,61 @@ async function buildPkg(pkg) {
       logLevel: 'error',
       banner: { js: '' },
       tsconfigRaw: { compilerOptions: { preserveConstEnums: false, useDefineForClassFields: false } },
-    });
+    };
+    // For non-core packages: don't re-bundle core files.
+    // Use a plugin to mark all egret/ imports and Defines.debug as external.
+    if (!hasEgret) {
+      buildOpts.plugins = [{
+        name: 'external-egret',
+        setup(build) {
+          build.onResolve({ filter: /\/egret\// }, function(args) {
+            return { external: true };
+          });
+          build.onResolve({ filter: /Defines\.debug/ }, function(args) {
+            return { external: true };
+          });
+        }
+      }];
+    }
+    await esbuild.build(buildOpts);
 
     // Post-process: wrap in IIFE for hoisting, then re-export
     var bundled = fs.readFileSync(path.join(distDir, 'index_tmp.js'), 'utf8');
+    
+    // For non-core: the IIFE gets egret from globalThis (set by header).
+    // Strip core imports and replace with var declarations from egret namespace.
+    if (!hasEgret) {
+      // Collect imported symbols: "import { A, B } from '../egret/...'" -> [A, B]
+      var importRe = /^import\s+\{([^}]+)\}\s+from\s+['"].*\/egret\/[^'"]+['"];?\s*$/gm;
+      var varDecls = [];
+      var im;
+      while ((im = importRe.exec(bundled)) !== null) {
+        var names = im[1].split(',').map(function(s) { return s.trim().split(/\s+as\s+/)[0]; });
+        for (var ni = 0; ni < names.length; ni++) {
+          if (names[ni] && varDecls.indexOf(names[ni]) === -1) {
+            varDecls.push(names[ni]);
+          }
+        }
+      }
+      // Remove import lines
+      bundled = bundled.replace(/^import\s+.*from\s+['"].*\/egret\/[^'"]+['"];?\s*$/gm, '');
+      bundled = bundled.replace(/^import\s+.*from\s+['"].*Defines\.debug[^'"]*['"];?\s*$/gm, '');
+      // Generate var declarations: var EventDispatcher = egret.EventDispatcher;
+      var declBlock = '';
+      var aliasBlock = '';
+      for (var di = 0; di < varDecls.length; di++) {
+        // Use bracket notation to prevent esbuild rename from touching egret property access
+        declBlock += 'var ' + varDecls[di] + ' = egret["' + varDecls[di] + '"];\n';
+        aliasBlock += 'var ' + varDecls[di] + '2 = ' + varDecls[di] + ';\n';
+        aliasBlock += 'var ' + varDecls[di] + '3 = ' + varDecls[di] + ';\n';
+        aliasBlock += 'var ' + varDecls[di] + '4 = ' + varDecls[di] + ';\n';
+      }
+      if (declBlock) {
+        bundled = aliasBlock + declBlock + bundled;
+      }
+      // Remove resulting blank lines
+      bundled = bundled.replace(/\n\s*\n\s*\n/g, '\n\n');
+    }
     
     // Fix: esbuild renames $TextureScaleFactor -> $TextureScaleFactor2.
     // esbuild renames the declaration but NOT all cross-module usages.
@@ -312,7 +337,7 @@ async function buildPkg(pkg) {
     }
     bundled = lines.join('\n');
 
-    // Fix: const enum members accessed via sys.*Keys — esbuild can't inline
+    // Fix: const enum members accessed via sys.*Keys �?esbuild can't inline
     // These through namespace lookups. Replace with numeric values.
     // ListBaseKeys (extension/eui/components/supportClasses/ListBase.ts)
     bundled = bundled.replace(/sys\.ListBaseKeys\.requireSelection\b/g, '0');
@@ -391,15 +416,24 @@ async function buildPkg(pkg) {
     }
     bundled = lines.join('\n');
 
-    var header = 'var egret = globalThis.egret || {sys:{}, pro:{}}, eui = globalThis.eui || {}, sys = egret.sys;\n';
-    header += 'var __global = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : {};\n';
-    header += 'var global = __global;\n';
-    header += 'var DEBUG = true, RELEASE = false;\n';
-    var wrapped = header + '(function() {\n' + bundled + '\n}).call(window);\n';
+    var header = 'var egret = globalThis.egret ...'; // see below
+    // Moved header generation after this block
+    
+    // For non-core: inject var declarations into bundled AFTER auto-rename
+    // (they use bracket notation egret["X"] which is immune to regex rename)
+    if (!hasEgret && declBlock) {
+      bundled = declBlock + aliasBlock + bundled;
+    }
+
+    var header2 = 'var egret = globalThis.egret || {sys:{}, pro:{}}, eui = globalThis.eui || {}, sys = egret.sys;\n';
+    header2 += 'var __global = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : {};\n';
+    header2 += 'var global = __global;\n';
+    header2 += 'var DEBUG = true, RELEASE = false;\n';
+    var wrapped = header2 + '(function() {\n' + bundled + '\n}).call(window);\n';
     wrapped += 'if (typeof globalThis !== "undefined") { globalThis.egret = egret; globalThis.eui = eui; }\n';
     wrapped += 'export { egret, eui };\n';
     fs.writeFileSync(path.join(distDir, 'index.js'), wrapped, 'utf8');
-    fs.unlinkSync(path.join(distDir, 'index_tmp.js'));
+    // fs.unlinkSync(path.join(distDir, 'index_tmp.js')); // keep for debug
 
     console.log('    OK: index.js (' + files.length + ' files, ' + nsAssignments.length + ' ns assignments)');
   } catch (e) {
