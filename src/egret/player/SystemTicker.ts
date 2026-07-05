@@ -319,11 +319,10 @@ import { DEBUG } from "../../Defines.debug";
          * 广播Render事件。
          */
         private broadcastRender(): void {
-            let list = DisplayObject.$renderCallBackList;
+            let list: any[] = (egret as any).__renderCallBackList;
+            if (!list) { return; }
             let length = list.length;
-            if (length == 0) {
-                return;
-            }
+            if (length == 0) { return; }
             list = list.concat();
             for (let i = 0; i < length; i++) {
                 list[i].dispatchEventWith(Event.RENDER);
