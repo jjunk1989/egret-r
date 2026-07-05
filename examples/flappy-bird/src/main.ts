@@ -195,27 +195,36 @@ class Main extends egret.DisplayObjectContainer {
   private update(): void {
     this.frameCount++;
 
-    // Scroll clouds slowly (background parallax)
+    // Always scroll clouds
     for (const cloud of this.clouds) {
-      cloud.x -= 0.4;
+      cloud.x -= 0.8;
       if (cloud.x < -120) {
         cloud.x = GAME_W + 20;
         cloud.y = 30 + Math.random() * 120;
       }
     }
 
-    if (this.gameState !== 'playing') return;
+    // Always animate bird bob + wing flap
+    const bobX = Math.sin(this.frameCount * 0.1) * 4;
+    const bobY = Math.sin(this.frameCount * 0.08) * 2;
+    this.bird.x = 80 + bobX;
+    if (this.gameState === 'idle') {
+      this.bird.y = this.birdY + bobY;
+      this.bird.rotation = Math.sin(this.frameCount * 0.06) * 8;
+    }
 
-    // Scrolling ground strip
+    if (this.gameState !== 'playing') {
+      // idle → draw bird with wings out; over → keep last frame
+      return;
+    }
+
+    // Scrolling ground strip (only in play)
     this.drawGroundStrip((this.frameCount * PIPE_SPEED) % 24);
 
     // Bird physics
     this.birdVy += GRAVITY;
     this.birdY += this.birdVy;
     this.bird.y = this.birdY;
-    // Horizontal bob when flying
-    const bobX = Math.sin(this.frameCount * 0.12) * 3;
-    this.bird.x = 80 + bobX;
     const rot = Math.max(-30, Math.min(60, this.birdVy * 6));
     this.bird.rotation = rot;
 
