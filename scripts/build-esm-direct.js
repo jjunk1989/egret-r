@@ -325,6 +325,11 @@ async function buildPkg(pkg) {
     bundled = bundled.replace(/sys\.ListBaseKeys\.touchDownItemRenderer\b/g, '7');
     bundled = bundled.replace(/sys\.ListBaseKeys\.touchCancle\b/g, '8');
 
+    // Fix: esbuild renames Event -> _Event but code still references Event.XXX
+    // as a bare global (e.g. Event.ADDED, Event.ADDED_TO_STAGE). Replace all
+    // Event. property accesses with _Event.
+    bundled = bundled.replace(/\bEvent\./g, '_Event.');
+
     var header = 'var egret = globalThis.egret || {sys:{}, pro:{}}, eui = globalThis.eui || {}, sys = egret.sys;\n';
     header += 'var __global = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : {};\n';
     header += 'var global = __global;\n';
