@@ -249,6 +249,8 @@ class Main extends egret.DisplayObjectContainer {
     for (let i = this.pipes.length - 1; i >= 0; i--) {
       const p = this.pipes[i];
       p.x -= PIPE_SPEED;
+      p.topPipe.x = p.x;
+      p.bottomPipe.x = p.x;
 
       // Score
       if (!p.scored && p.x + PIPE_W < this.bird.x) {
