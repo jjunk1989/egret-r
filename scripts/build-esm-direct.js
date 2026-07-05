@@ -328,7 +328,38 @@ async function buildPkg(pkg) {
     // Fix: esbuild renames Event -> _Event but code still references Event.XXX
     // as a bare global (e.g. Event.ADDED, Event.ADDED_TO_STAGE). Replace all
     // Event. property accesses with _Event.
-    bundled = bundled.replace(/\bEvent\./g, '_Event.');
+    lines = bundled.split('\n');
+    for (var li4 = 0; li4 < lines.length; li4++) {
+      if (lines[li4].indexOf('_ns(') >= 0) continue;
+      if (lines[li4].indexOf('__name(') >= 0) continue;
+      lines[li4] = lines[li4].replace(/\bEvent\./g, '_Event.');
+    }
+    bundled = lines.join('\n');
+
+    // Fix: esbuild renames functions with a 2-suffix when there are naming
+    // conflicts in the IIFE scope. The original unqualified name is still
+    // used as a bare global in other modules.
+    lines = bundled.split('\n');
+    for (var li5 = 0; li5 < lines.length; li5++) {
+      if (lines[li5].indexOf('_ns(') >= 0) continue;
+      if (lines[li5].indexOf('__name(') >= 0) continue;
+      if (lines[li5].indexOf('var toColorString2') >= 0) continue;
+      if (lines[li5].indexOf('var EgretShaderLib2') >= 0) continue;
+      if (lines[li5].indexOf('function tr2') >= 0) continue;
+      if (lines[li5].indexOf('function toColorString2') >= 0) continue;
+      if (lines[li5].indexOf('function getFontString2') >= 0) continue;
+      if (lines[li5].indexOf('function getPrefixStyleName2') >= 0) continue;
+      if (lines[li5].indexOf('function getDefinitionByName2') >= 0) continue;
+      if (lines[li5].indexOf('function getQualifiedClassName2') >= 0) continue;
+      lines[li5] = lines[li5].replace(/\btoColorString\b/g, 'toColorString2');
+      lines[li5] = lines[li5].replace(/\bgetFontString\b/g, 'getFontString2');
+      lines[li5] = lines[li5].replace(/\bgetPrefixStyleName\b/g, 'getPrefixStyleName2');
+      lines[li5] = lines[li5].replace(/\bgetDefinitionByName\b(?!2)/g, 'getDefinitionByName2');
+      lines[li5] = lines[li5].replace(/\bgetQualifiedClassName\b(?!2)/g, 'getQualifiedClassName2');
+      lines[li5] = lines[li5].replace(/\btr(?=\()/g, 'tr2');
+      lines[li5] = lines[li5].replace(/\bEgretShaderLib\b(?!2)/g, 'EgretShaderLib2');
+    }
+    bundled = lines.join('\n');
 
     var header = 'var egret = globalThis.egret || {sys:{}, pro:{}}, eui = globalThis.eui || {}, sys = egret.sys;\n';
     header += 'var __global = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : {};\n';
