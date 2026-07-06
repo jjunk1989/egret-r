@@ -106,6 +106,7 @@ class Main extends egret.DisplayObjectContainer {
       this._uiBaseCount = this.uiLayer.numChildren;
     }, this);
     document.addEventListener('click', () => this.onTap());
+    document.addEventListener('keydown', (e: KeyboardEvent) => { if (e.code === 'Space' || e.code === 'ArrowUp') { e.preventDefault(); this.onTap(); } });
     document.addEventListener('touchstart', (e: Event) => { e.preventDefault(); this.onTap(); });
   }
 
