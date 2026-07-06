@@ -2,6 +2,41 @@ import { egret } from '@egret-r/core';
 import { eui } from '@egret-r/eui';
 import '@egret-r/game';
 import '@egret-r/tween';
+
+// ── Simple Sound Engine ─────────────────────────────
+class SoundEngine {
+  private ctx: AudioContext | null = null;
+  private getCtx(): AudioContext {
+    if (!this.ctx) this.ctx = new AudioContext();
+    return this.ctx;
+  }
+  private beep(freq: number, dur: number, type: OscillatorType = "square", vol = 0.08) {
+    const ctx = this.getCtx();
+    const o = ctx.createOscillator();
+    const g = ctx.createGain();
+    o.type = type; o.frequency.setValueAtTime(freq, ctx.currentTime);
+    g.gain.setValueAtTime(vol, ctx.currentTime);
+    g.gain.linearRampToValueAtTime(0, ctx.currentTime + dur);
+    o.connect(g).connect(ctx.destination);
+    o.start(); o.stop(ctx.currentTime + dur);
+  }
+  paddle() { this.beep(300, 0.08); }
+  brick() { this.beep(600, 0.06, "square", 0.06); }
+  wall() { this.beep(200, 0.05, "triangle", 0.05); }
+  lose() {
+    const ctx = this.getCtx();
+    [300, 200, 100].forEach((f, i) => {
+      const o = ctx.createOscillator();
+      const g = ctx.createGain();
+      o.type = "sawtooth"; o.frequency.setValueAtTime(f, ctx.currentTime + i * 0.12);
+      g.gain.setValueAtTime(0.08, ctx.currentTime + i * 0.12);
+      g.gain.linearRampToValueAtTime(0, ctx.currentTime + i * 0.12 + 0.15);
+      o.connect(g).connect(ctx.destination);
+      o.start(ctx.currentTime + i * 0.12); o.stop(ctx.currentTime + i * 0.12 + 0.15);
+    });
+  }
+}
+const sfx = new SoundEngine();
 import { createStartButton } from './startButton';
 
 class Main extends egret.DisplayObjectContainer {
@@ -75,16 +110,17 @@ class Main extends egret.DisplayObjectContainer {
       this.ballX += this.ballVX; this.ballY += this.ballVY;
       ball.x = this.ballX; ball.y = this.ballY;
 
-      if (this.ballX - this.BALL_R < 0 || this.ballX + this.BALL_R > this.W) this.ballVX *= -1;
-      if (this.ballY - this.BALL_R < 0) this.ballVY *= -1;
+      if (this.ballX - this.BALL_R < 0 || this.ballX + this.BALL_R > this.W) { sfx.wall(); this.ballVX *= -1; }
+      if (this.ballY - this.BALL_R < 0) { sfx.wall(); this.ballVY *= -1; }
 
       if (this.ballY + this.BALL_R > paddle.y - this.PADDLE_H / 2 && this.ballY - this.BALL_R < paddle.y + this.PADDLE_H / 2 &&
         this.ballX > this.paddleX - this.PADDLE_W / 2 && this.ballX < this.paddleX + this.PADDLE_W / 2 && this.ballVY > 0) {
+        sfx.paddle();
         this.ballVY *= -1; this.ballVX += (this.ballX - this.paddleX) * 0.1;
       }
 
       if (this.ballY > this.H + 50) {
-        this.lives--; scoreLabel.text = `Score: ${this.score}  Lives: ${this.lives}`;
+        sfx.lose(); this.lives--; scoreLabel.text = `Score: ${this.score}  Lives: ${this.lives}`;
         if (this.lives <= 0) return this.endGame('Game Over', this.score);
         this.ballX = this.W / 2; this.ballY = this.H - 80; this.ballVX = 3; this.ballVY = -3;
       }
@@ -94,7 +130,7 @@ class Main extends egret.DisplayObjectContainer {
         const bx = c * (this.BRICK_W + 4) + 20, by = r * (this.BRICK_H + 4) + 118;
         if (this.ballX + this.BALL_R > bx && this.ballX - this.BALL_R < bx + this.BRICK_W &&
           this.ballY + this.BALL_R > by && this.ballY - this.BALL_R < by + this.BRICK_H) {
-          this.bricks[r][c] = false; this.ballVY *= -1; this.score += 10;
+          sfx.brick(); this.bricks[r][c] = false; this.ballVY *= -1; this.score += 10;
           scoreLabel.text = `Score: ${this.score}  Lives: ${this.lives}`;
           drawBricks();
           if (this.bricks.every(row => row.every(b => !b))) return this.endGame('You Win!', this.score);
