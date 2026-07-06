@@ -6,6 +6,14 @@ import { createStartButton } from './startButton';
 const COLS = 20, ROWS = 20;
 const CELL = 24;
 const OX = (480 - COLS * CELL) / 2, OY = 80;
+
+class SoundEngine {
+  private ctx: AudioContext | null = null;
+  private getCtx() { if (!this.ctx) this.ctx = new AudioContext(); return this.ctx; }
+  eat() { const a=this.getCtx(),o=a.createOscillator(),g=a.createGain();o.type="square";o.frequency.setValueAtTime(500,a.currentTime);o.frequency.linearRampToValueAtTime(900,a.currentTime+.06);g.gain.setValueAtTime(.1,a.currentTime);g.gain.linearRampToValueAtTime(0,a.currentTime+.08);o.connect(g).connect(a.destination);o.start();o.stop(a.currentTime+.08); }
+  die() { const a=this.getCtx();[300,200,100].forEach((f,i)=>{const o=a.createOscillator(),g=a.createGain();o.type="sawtooth";o.frequency.setValueAtTime(f,a.currentTime+i*.1);g.gain.setValueAtTime(.08,a.currentTime+i*.1);g.gain.linearRampToValueAtTime(0,a.currentTime+i*.1+.15);o.connect(g).connect(a.destination);o.start(a.currentTime+i*.1);o.stop(a.currentTime+i*.1+.15)}) }
+}
+const sfx = new SoundEngine();
 const SPEED = 8; // frames per move
 const HEAD_COLOR = 0x22c55e, BODY_COLOR = 0x16a34a, FOOD_COLOR = 0xef4444;
 
@@ -101,6 +109,7 @@ class Main extends egret.DisplayObjectContainer {
     this.snake.unshift({ x: nx, y: ny });
     if (nx === this.food.x && ny === this.food.y) {
       this.score += 10; this.scoreText.text = `Score: ${this.score}`;
+      sfx.eat();
       this.spawnFood();
     } else {
       this.snake.pop();

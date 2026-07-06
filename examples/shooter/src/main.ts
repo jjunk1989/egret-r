@@ -5,6 +5,15 @@ import { createStartButton } from './startButton';
 
 const W = 480, H = 700;
 const BULLET_SPEED = 8, ENEMY_SPEED = 1.5;
+
+class SoundEngine {
+  private ctx: AudioContext | null = null;
+  private getCtx() { if (!this.ctx) this.ctx = new AudioContext(); return this.ctx; }
+  shoot() { const a=this.getCtx(),o=a.createOscillator(),g=a.createGain();o.type="square";o.frequency.setValueAtTime(800,a.currentTime);o.frequency.linearRampToValueAtTime(400,a.currentTime+.04);g.gain.setValueAtTime(.06,a.currentTime);g.gain.linearRampToValueAtTime(0,a.currentTime+.06);o.connect(g).connect(a.destination);o.start();o.stop(a.currentTime+.06); }
+  hit() { const a=this.getCtx();[600,200].forEach((f,i)=>{const o=a.createOscillator(),g=a.createGain();o.type="square";o.frequency.setValueAtTime(f,a.currentTime+i*.05);g.gain.setValueAtTime(.06,a.currentTime+i*.05);g.gain.linearRampToValueAtTime(0,a.currentTime+i*.05+.08);o.connect(g).connect(a.destination);o.start(a.currentTime+i*.05);o.stop(a.currentTime+i*.05+.08)}) }
+  explode() { const a=this.getCtx(),o=a.createOscillator(),g=a.createGain();o.type="sawtooth";o.frequency.setValueAtTime(200,a.currentTime);o.frequency.linearRampToValueAtTime(50,a.currentTime+.3);g.gain.setValueAtTime(.1,a.currentTime);g.gain.linearRampToValueAtTime(0,a.currentTime+.35);o.connect(g).connect(a.destination);o.start();o.stop(a.currentTime+.35); }
+}
+const sfx = new SoundEngine();
 const SPAWN_INTERVAL = 50;
 
 interface Bullet { x: number; y: number; shape: egret.Shape }
@@ -134,7 +143,7 @@ class Main extends egret.DisplayObjectContainer {
       if (Math.abs(e.x - this.shipX) < 18 && Math.abs(e.y - (H - 60)) < 22) {
         this.gameLayer.removeChild(e.shape); this.enemies.splice(i, 1);
         this.lives--; this.scoreText.text = `Score: ${this.score}  Lives: ${this.lives}`;
-        if (this.lives <= 0) this.endGame();
+        if (this.lives <= 0) { sfx.explode(); this.endGame(); }
         continue;
       }
 
