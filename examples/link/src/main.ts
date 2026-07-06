@@ -83,41 +83,40 @@ class Main extends egret.DisplayObjectContainer {
     });
   }
 
-  // Path with at most 2 turns (3 segments: horizontal-vertical-horizontal or vertical-horizontal-vertical)
-  private canConnect(c1: number, r1: number, c2: number, r2: number): boolean {
-    if (c1 === c2) return this.isLineClear(c1, Math.min(r1, r2), c1, Math.max(r1, r2), true);
-    if (r1 === r2) return this.isLineClear(Math.min(c1, c2), r1, Math.max(c1, c2), r1, false);
-    // 1 turn: via (c1, r2) or (c2, r1)
-    if (this.grid[r2][c1] === 0 && this.isLineClear(c1, Math.min(r1, r2), c1, Math.max(r1, r2), true) &&
-        this.isLineClear(Math.min(c1, c2), r2, Math.max(c1, c2), r2, false)) return true;
-    if (this.grid[r1][c2] === 0 && this.isLineClear(c2, Math.min(r1, r2), c2, Math.max(r1, r2), true) &&
-        this.isLineClear(Math.min(c1, c2), r1, Math.max(c1, c2), r1, false)) return true;
-    // 2 turns: scan vertical
-    for (let r = 0; r < ROWS; r++) {
-      if (r === r1 || r === r2) continue;
-      if (this.grid[r][c1] !== 0 || this.grid[r][c2] !== 0) continue;
-      if (this.isLineClear(c1, Math.min(r1, r), c1, Math.max(r1, r), true) &&
-          this.isLineClear(Math.min(c1, c2), r, Math.max(c1, c2), r, false) &&
-          this.isLineClear(c2, Math.min(r, r2), c2, Math.max(r, r2), true)) return true;
-    }
-    // 2 turns: scan horizontal
-    for (let c = 0; c < COLS; c++) {
-      if (c === c1 || c === c2) continue;
-      if (this.grid[r1][c] !== 0 || this.grid[r2][c] !== 0) continue;
-      if (this.isLineClear(Math.min(c1, c), r1, Math.max(c1, c), r1, false) &&
-          this.isLineClear(c, Math.min(r1, r2), c, Math.max(r1, r2), true) &&
-          this.isLineClear(Math.min(c, c2), r2, Math.max(c, c2), r2, false)) return true;
-    }
-    return false;
+  // Find path with at most 2 turns, returns array of [c, r] points or null
+  private findPath(c1: number, r1: number, c2: number, r2: number): number[][] | null {
+    const line = (x1:number,y1:number,x2:number,y2:number,vert:boolean):boolean=>{
+      if(vert){for(let r=Math.min(y1,y2);r<=Math.max(y1,y2);r++){if(r!==y1&&r!==y2&&this.grid[r][x1]!==0)return false}}
+      else{for(let c=Math.min(x1,x2);c<=Math.max(x1,x2);c++){if(c!==x1&&c!==x2&&this.grid[y1][c]!==0)return false}}
+      return true};
+    if(c1===c2&&line(c1,r1,c1,r2,true))return[[c1,r1],[c1,r2]];
+    if(r1===r2&&line(c1,r1,c2,r1,false))return[[c1,r1],[c2,r1]];
+    // 1 turn
+    if(this.grid[r2][c1]===0&&line(c1,r1,c1,r2,true)&&line(c1,r2,c2,r2,false))return[[c1,r1],[c1,r2],[c2,r2]];
+    if(this.grid[r1][c2]===0&&line(c1,r1,c2,r1,false)&&line(c2,r1,c2,r2,true))return[[c1,r1],[c2,r1],[c2,r2]];
+    // 2 turns
+    for(let r=0;r<ROWS;r++){if(r===r1||r===r2)continue;if(this.grid[r][c1]!==0||this.grid[r][c2]!==0)continue;
+      if(line(c1,r1,c1,r,true)&&line(c1,r,c2,r,false)&&line(c2,r,c2,r2,true))return[[c1,r1],[c1,r],[c2,r],[c2,r2]]}
+    for(let c=0;c<COLS;c++){if(c===c1||c===c2)continue;if(this.grid[r1][c]!==0||this.grid[r2][c]!==0)continue;
+      if(line(c1,r1,c,r1,false)&&line(c,r1,c,r2,true)&&line(c,r2,c2,r2,false))return[[c1,r1],[c,r1],[c,r2],[c2,r2]]}
+    return null;
   }
 
-  private isLineClear(x1: number, y1: number, x2: number, y2: number, vertical: boolean): boolean {
-    if (vertical) {
-      for (let r = y1; r <= y2; r++) { if (r !== y1 && r !== y2 && this.grid[r][x1] !== 0) return false; }
-    } else {
-      for (let c = x1; c <= x2; c++) { if (c !== x1 && c !== x2 && this.grid[y1][c] !== 0) return false; }
+  // Draw connection line and remove after delay
+  private drawPath(pts: number[][]): void {
+    const line = new egret.Shape();
+    line.graphics.lineStyle(3, 0xfbbf24);
+    for (let i = 0; i < pts.length - 1; i++) {
+      const x1 = OX + pts[i][0] * (CELL + GAP) + CELL / 2;
+      const y1 = OY + pts[i][1] * (CELL + GAP) + CELL / 2;
+      const x2 = OX + pts[i+1][0] * (CELL + GAP) + CELL / 2;
+      const y2 = OY + pts[i+1][1] * (CELL + GAP) + CELL / 2;
+      line.graphics.moveTo(x1, y1);
+      line.graphics.lineTo(x2, y2);
     }
-    return true;
+    line.graphics.endFill();
+    this.addChild(line);
+    setTimeout(() => { if (line.parent) line.parent.removeChild(line); }, 300);
   }
 
   private draw(): void {
