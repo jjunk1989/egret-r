@@ -61,10 +61,10 @@ class Main extends egret.DisplayObjectContainer {
   private createShip(): void {
     this.ship = new egret.Shape();
     this.ship.graphics.beginFill(0x3b82f6);
-    this.ship.moveTo(0, -16); this.ship.lineTo(14, 12); this.ship.lineTo(-14, 12); this.ship.lineTo(0, -16);
+    this.ship.graphics.moveTo(0, -16); this.ship.graphics.lineTo(14, 12); this.ship.graphics.lineTo(-14, 12); this.ship.graphics.lineTo(0, -16);
     this.ship.graphics.endFill();
     this.ship.graphics.beginFill(0x60a5fa);
-    this.ship.moveTo(0, -8); this.ship.lineTo(8, 6); this.ship.lineTo(-8, 6); this.ship.lineTo(0, -8);
+    this.ship.graphics.moveTo(0, -8); this.ship.graphics.lineTo(8, 6); this.ship.graphics.lineTo(-8, 6); this.ship.graphics.lineTo(0, -8);
     this.ship.graphics.endFill();
     this.ship.x = this.shipX; this.ship.y = H - 60;
     this.gameLayer.addChild(this.ship);
@@ -102,7 +102,7 @@ class Main extends egret.DisplayObjectContainer {
   private spawnEnemy(): void {
     const enemy = new egret.Shape();
     enemy.graphics.beginFill(0xef4444);
-    enemy.moveTo(0, 10); enemy.lineTo(-12, -8); enemy.lineTo(12, -8); enemy.lineTo(0, 10);
+    enemy.graphics.moveTo(0, 10); enemy.graphics.lineTo(-12, -8); enemy.graphics.lineTo(12, -8); enemy.graphics.lineTo(0, 10);
     enemy.graphics.endFill();
     const ex = 30 + Math.random() * (W - 60);
     enemy.x = ex; enemy.y = -20;
