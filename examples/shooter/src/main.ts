@@ -30,6 +30,8 @@ class Main extends egret.DisplayObjectContainer {
       this.createShip();
       this.createUI();
       this.addEventListener(egret.Event.ENTER_FRAME, this.update, this);
+      const { onClick } = createStartButton(this, W, H, 'Shooter');
+      onClick.then(() => { this.running = true; });
       document.addEventListener('keydown', (e: KeyboardEvent) => {
         if (e.code === 'Space') { e.preventDefault(); this.shoot(); }
       });
@@ -38,7 +40,7 @@ class Main extends egret.DisplayObjectContainer {
       });
       document.addEventListener('click', () => {
         if (this.gameOver) { this.restart(); return; }
-        if (!this.running) { this.running = true; this.hideStart(); }
+        this.shoot();
       });
     }, this);
   }
@@ -86,8 +88,6 @@ class Main extends egret.DisplayObjectContainer {
     this.addChild(hint);
     setTimeout(() => { hint.visible = false; }, 5000);
   }
-
-  private hideStart(): void { }
 
   private shoot(): void {
     if (!this.running) return;
