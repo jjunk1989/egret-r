@@ -2,7 +2,7 @@
 
 
 import { egret } from '@egret-r/core';
-const { ImageLoader, HttpRequest, IOErrorEvent, Sound, Event, Texture, Rectangle, KTXContainer, BitmapData, HttpResponseType, XML, SpriteSheet, BitmapFont, Capabilities, RuntimeType, fontResourceCache } = egret;
+const { ImageLoader, HttpRequest, IOErrorEvent, Sound, Event, Texture, Rectangle, KTXContainer, BitmapData, HttpResponseType, XML, SpriteSheet, BitmapFont, Capabilities } = egret;
 import { MovieClipDataFactory } from "../../../game/display/MovieClipDataFactory";
 
 import { ProcessHost, ResourceManagerError } from "../core/ResourceManager";
@@ -565,18 +565,18 @@ import { ResourceInfo } from "../core/ResourceConfig";
     export const TTFProcessor: Processor = {
         onLoadStart(host, resource) {
             return host.load(resource, "bin").then((data) => {
-                if (Capabilities.runtimeType == RuntimeType.WEB) {
-                    if (!fontResourceCache) {
-                        fontResourceCache = {};
+                if (Capabilities.runtimeType == "web") {
+                    if (!egret.fontResourceCache) {
+                        egret.fontResourceCache = {};
                     }
-                    fontResourceCache[resource.root + resource.url] = data;
+                    egret.fontResourceCache[resource.root + resource.url] = data;
                 }
             });
         },
 
         onRemoveStart(host, resource) {
-            if (Capabilities.runtimeType == RuntimeType.WEB) {
-                const fontResCache = fontResourceCache;
+            if (Capabilities.runtimeType == "web") {
+                const fontResCache = egret.fontResourceCache;
                 if (fontResCache && fontResCache[resource.url]) {
                     fontResCache[resource.root + resource.url] = null;
                 }

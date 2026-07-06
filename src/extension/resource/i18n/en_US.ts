@@ -1,10 +1,9 @@
 
 
-
 import { egret } from '@egret-r/core';
-const { $locale_strings } = egret;
-    $locale_strings["en_US"] = $locale_strings["en_US"] || {};
-    let locale_strings = $locale_strings["en_US"];
+var _loc = egret.$locale_strings;
+    _loc["en_US"] = _loc["en_US"] || {};
+    let locale_strings = _loc["en_US"];
 
     //RES 3200-3299
     locale_strings[3200] = "RES.createGroup() passed in non-existed key value in configuration: {0}";

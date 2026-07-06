@@ -1,9 +1,15 @@
+import { egret } from "@egret-r/core";
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
 import { ResourceItem } from "../shim/ResourceItem";
 import { File, FileSystem } from "./FileSystem";
-import { ResourceManagerError, config } from "./ResourceManager";
+// Break circular import: access config/queue/host/ResourceManagerError via egret namespace.
+// Use string concat to prevent esbuild auto-rename from mangling property names.
+var _RES = function() { return egret as any; };
+var _RES_cfg = function() { return _RES()[String.fromCharCode(99,111,110,102,105,103)]; };
+var _RES_q = function() { return _RES()[String.fromCharCode(113,117,101,117,101)]; };
+var _RES_h = function() { return _RES()[String.fromCharCode(104,111,115,116)]; };
 import { $warn } from "../../../../Defines.debug";
 
 type ResourceRootSelector<T extends string> = () => T;
@@ -37,10 +43,12 @@ type ResourceMergerSelector = (file: string) => { path: string, alias: string };
      * @language zh_CN
      */
     export function getResourceInfo(path: string): File | null {
-        let result = config.config.fileSystem.getFile(path);
+        var cfg = _RES_cfg().config;
+        if (!cfg || !cfg.fileSystem) return null;
+        let result = cfg.fileSystem.getFile(path);
         if (!result) {
             path = RES.resourceNameSelector(path);
-            result = config.config.fileSystem.getFile(path);
+            result = cfg.fileSystem.getFile(path);
         }
         return result;
     }
@@ -135,7 +143,7 @@ type ResourceMergerSelector = (file: string) => { path: string, alias: string };
                     loadGroup: []
                 }
             }
-            return queue.pushResItem(configItem).catch(e => {
+            return _RES_q().pushResItem(configItem).catch(e => {
                 if (!RES.isCompatible) {
                     if (!e.__resource_manager_error__) {
                         if (e.error) {
@@ -143,10 +151,10 @@ type ResourceMergerSelector = (file: string) => { path: string, alias: string };
                         } else {
                             console.error(e.stack);
                         }
-                        e = new ResourceManagerError(1002);
+                        e = new _RES().ResourceManagerError(1002);
                     }
                 }
-                host.remove(configItem);
+                _RES_h().remove(configItem);
                 return Promise.reject(e);
             })
         }
@@ -165,7 +173,7 @@ type ResourceMergerSelector = (file: string) => { path: string, alias: string };
             }
             for (var paramKey of group) {
                 let tempResult;
-                tempResult = config.getResourceWithSubkey(paramKey);
+                tempResult = _RES_cfg().getResourceWithSubkey(paramKey);
                 if (tempResult == null) {
                     continue;
                 }
@@ -191,7 +199,7 @@ type ResourceMergerSelector = (file: string) => { path: string, alias: string };
             if (RES.typeSelector) {
                 let type = RES.typeSelector(url);
                 if (!type) {
-                    throw new ResourceManagerError(2004, url);
+                    throw new _RES().ResourceManagerError(2004, url);
                 }
                 return type;
             }
@@ -293,14 +301,14 @@ type ResourceMergerSelector = (file: string) => { path: string, alias: string };
             if (!data.type) {
                 data.type = this.__temp__get__type__via__url(data.url);
             }
-            config.config.fileSystem.addFile(data);
+            _RES_cfg().config.fileSystem.addFile(data);
         }
 
         public removeResourceData(data: { name: string, type?: string, url: string, root?: string, extra?: 1 | undefined }): void {
             if (!RES.hasRes(data.name)) {
                 return;
             }
-            config.config.fileSystem.removeFile(data.url);
+            _RES_cfg().config.fileSystem.removeFile(data.url);
             if (this.config.alias[data.name]) {
                 delete this.config.alias[data.name];
             }

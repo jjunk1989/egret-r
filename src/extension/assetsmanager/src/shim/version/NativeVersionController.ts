@@ -4,7 +4,6 @@
 
 import { egret } from '@egret-r/core';
 const { Capabilities } = egret;
-import { RuntimeType } from "../system/Capabilities";
 import { IVersionController } from "./IVersionController";
 
     interface R {
@@ -41,6 +40,6 @@ import { IVersionController } from "./IVersionController";
             return null;
         }
     }
-    if (Capabilities.runtimeType == RuntimeType.NATIVE) {
+    if (Capabilities.runtimeType == "native") {
         VersionController = NativeVersionController;
     }

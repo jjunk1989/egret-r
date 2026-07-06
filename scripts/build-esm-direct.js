@@ -8,6 +8,8 @@ var PACKAGES = [
   { name: 'game', srcDirs: ['src/extension/game'], nss: ['egret'] },
   { name: 'tween', srcDirs: ['src/extension/tween'], nss: ['egret'] },
   { name: 'socket', srcDirs: ['src/extension/socket'], nss: ['egret'] },
+  { name: 'assetsmanager', srcDirs: ['src/extension/assetsmanager/src'], nss: ['egret'] },
+  { name: 'resource', srcDirs: ['src/extension/resource'], nss: ['egret'] },
 ];
 
 function walkTs(dir) {
@@ -101,6 +103,8 @@ async function buildPkg(pkg) {
     for (var k = 0; k < syms.length; k++) {
       if (!globalSeen[syms[k]]) {
         globalSeen[syms[k]] = true;
+        // Skip shared globals that should not be overwritten by non-core packages
+        if (syms[k] === '$locale_strings' || syms[k] === '$language') continue;
         nsAssignments.push(ns + '.' + syms[k] + ' = ' + syms[k] + ';');
       }
     }
@@ -286,7 +290,7 @@ async function buildPkg(pkg) {
       keepNames: true,
       logLevel: 'error',
       banner: { js: '' },
-      tsconfigRaw: { compilerOptions: { preserveConstEnums: false, useDefineForClassFields: false } },
+      tsconfigRaw: { compilerOptions: { preserveConstEnums: false, useDefineForClassFields: false, experimentalDecorators: true } },
     });
 
     // Post-process: wrap in IIFE for hoisting, then re-export
@@ -352,7 +356,8 @@ async function buildPkg(pkg) {
       var renamed = nsMatch[2];
       if (origName + '2' !== renamed) continue;
       // Skip names too short or very common (risk of false positives)
-      if (/^(tr|is|do|if|in|or|on|to|be|no|sys|log|warn|setTimeout|setInterval|WebSocket)$/.test(origName)) continue;
+      // Also skip cross-bundle class names to avoid property name mismatch (e.g. $TextField in eui vs core)
+      if (/^(tr|is|do|if|in|or|on|to|be|no|sys|log|warn|setTimeout|setInterval|WebSocket|TextField|TextKeys)$/.test(origName)) continue;
       renames.push({ orig: origName, renamed: renamed });
     }
     // Add extra renames
@@ -392,11 +397,13 @@ async function buildPkg(pkg) {
     bundled = lines.join('\n');
 
     var header = 'var egret = globalThis.egret || {sys:{}, pro:{}}, eui = globalThis.eui || {}, sys = egret.sys;\n';
+    header += 'var RES = globalThis.RES || {};\n';
     header += 'var __global = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : {};\n';
     header += 'var global = __global;\n';
     header += 'var DEBUG = true, RELEASE = false;\n';
+    header += 'var warn = typeof console !== "undefined" ? console.warn.bind(console) : function() {};\n';
     var wrapped = header + '(function() {\n' + bundled + '\n}).call(window);\n';
-    wrapped += 'if (typeof globalThis !== "undefined") { globalThis.egret = egret; globalThis.eui = eui; }\n';
+    wrapped += 'if (typeof globalThis !== "undefined") { globalThis.egret = egret; globalThis.eui = eui; globalThis.RES = RES; }\n';
     wrapped += 'export { egret, eui };\n';
     fs.writeFileSync(path.join(distDir, 'index.js'), wrapped, 'utf8');
     fs.unlinkSync(path.join(distDir, 'index_tmp.js'));

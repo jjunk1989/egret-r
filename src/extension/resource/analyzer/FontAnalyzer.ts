@@ -5,7 +5,7 @@
 import { egret } from '@egret-r/core';
 const { Texture, BitmapFont } = egret;
 import { SheetAnalyzer } from "./SheetAnalyzer";
-import { ResourceItem } from "../../assetsmanager/src/shim/ResourceItem";
+import { ResourceItem } from "../core/ResourceItem";
 
     /**
      * @private

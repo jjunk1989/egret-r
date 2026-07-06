@@ -1,0 +1,23 @@
+{
+  "app": {
+    "name": "Egret Demo App",
+    "version": "1.0.0",
+    "debug": true
+  },
+  "display": {
+    "width": 920,
+    "height": 632,
+    "backgroundColor": "#f1f5f9",
+    "frameRate": 60
+  },
+  "features": {
+    "enableSound": true,
+    "enablePhysics": false,
+    "maxParticles": 1000
+  },
+  "items": [
+    { "id": 1, "name": "Sword", "type": "weapon", "damage": 42 },
+    { "id": 2, "name": "Shield", "type": "armor", "defense": 30 },
+    { "id": 3, "name": "Potion", "type": "consumable", "heal": 50 }
+  ]
+}

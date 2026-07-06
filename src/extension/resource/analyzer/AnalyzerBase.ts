@@ -4,9 +4,9 @@
 
 import { egret } from '@egret-r/core';
 const { HashObject } = egret;
-import { ResourceConfig } from "../../assetsmanager/src/core/ResourceConfig";
+import { ResourceConfig } from "../core/ResourceConfig";
 import { compFunc } from "./AnimationAnalyzer";
-import { ResourceItem } from "../../assetsmanager/src/shim/ResourceItem";
+import { ResourceItem } from "../core/ResourceItem";
 
     /**
      * @classic

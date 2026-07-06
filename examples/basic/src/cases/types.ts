@@ -9,7 +9,7 @@ export type TestCaseContext = {
 export type TestCaseDefinition = {
   id: string;
   title: string;
-  module: 'core' | 'eui' | 'game' | 'tween' | 'socket';
+  module: 'core' | 'eui' | 'game' | 'tween' | 'socket' | 'assetsmanager' | 'resource';
   run: (ctx: TestCaseContext) => void | (() => void) | Promise<void | (() => void)>;
 };
 

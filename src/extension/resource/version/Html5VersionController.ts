@@ -4,7 +4,7 @@
 
 import { egret } from '@egret-r/core';
 const { EventDispatcher, HttpRequest, IOErrorEvent, Event } = egret;
-import { VersionController } from "../../assetsmanager/src/shim/version/IVersionController";
+import { VersionController } from "./IVersionController";
 import { DEBUG } from "../../../Defines.debug";
 
     /**
@@ -44,4 +44,4 @@ import { DEBUG } from "../../../Defines.debug";
         }
     }
 
-    VersionController = Html5VersionController;
+    egret.VersionController = Html5VersionController;

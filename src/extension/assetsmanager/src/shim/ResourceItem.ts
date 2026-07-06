@@ -1,3 +1,4 @@
+import { egret } from "@egret-r/core";
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 

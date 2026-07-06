@@ -5,7 +5,7 @@
 import { egret } from '@egret-r/core';
 const { HttpResponseType, XML } = egret;
 import { BinAnalyzer } from "./BinAnalyzer";
-import { ResourceItem } from "../../assetsmanager/src/shim/ResourceItem";
+import { ResourceItem } from "../core/ResourceItem";
 
     /**
      * @private

@@ -5,7 +5,7 @@
 import { egret } from '@egret-r/core';
 const { ImageLoader, Event, IOErrorEvent, Texture, Rectangle } = egret;
 import { AnalyzerBase } from "./AnalyzerBase";
-import { ResourceItem } from "../../assetsmanager/src/shim/ResourceItem";
+import { ResourceItem } from "../core/ResourceItem";
 import { $getVirtualUrl } from "../Resource";
 
     /**

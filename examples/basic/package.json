@@ -15,7 +15,9 @@
     "@egret-r/eui": "*",
     "@egret-r/game": "*",
     "@egret-r/socket": "*",
-    "@egret-r/tween": "*"
+    "@egret-r/tween": "*",
+    "@egret-r/assetsmanager": "*",
+    "@egret-r/resource": "*"
   },
   "devDependencies": {
     "jsdom": "^26.1.0",

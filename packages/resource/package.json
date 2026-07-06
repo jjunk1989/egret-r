@@ -1,0 +1,27 @@
+{
+  "name": "@egret-r/resource",
+  "version": "6.0.0",
+  "description": "Egret Engine R Resource - RES module (legacy resource loading API)",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "clean": "rimraf dist",
+    "watch": "tsc --watch"
+  },
+  "dependencies": {
+    "@egret-r/core": "*",
+    "@egret-r/assetsmanager": "*"
+  }
+}

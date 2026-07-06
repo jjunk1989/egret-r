@@ -5,7 +5,8 @@
 import { egret } from '@egret-r/core';
 const { EventDispatcher, Event } = egret;
 import { ResourceInfo } from "./ResourceConfig";
-import { PromiseTaskReporter, ResourceManagerError, config } from "./ResourceManager";
+// Lazy access to break circular import with ResourceManager (see ResourceConfig.ts)
+function _res() { return egret as any; }
 import { ResourceItem } from "../shim/ResourceItem";
 
 	/**
@@ -322,7 +323,7 @@ import { ResourceItem } from "../shim/ResourceItem";
 				p = processor.isSupport(r);
 			}
 			if (!p) {
-				throw new ResourceManagerError(2001, r.name, r.type);
+				throw new _res().ResourceManagerError(2001, r.name, r.type);
 			}
 			host.state[r.root + r.name] = 1;
 			const promise = p.onLoadStart(host, r);
@@ -344,7 +345,7 @@ import { ResourceItem } from "../shim/ResourceItem";
 				p.onRemoveStart(host, r);
 				host.remove(r);
 				if (r.extra == 1) {
-					config.removeResourceData(r);
+					_res().config.removeResourceData(r);
 				}
 				return true;
 			}

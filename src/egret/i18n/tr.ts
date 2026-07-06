@@ -22,7 +22,8 @@
      * @returns 返回拼接后的字符串
      */
     export function tr(code:number, ...args):string{
-        let text = $locale_strings[$language][code];
+        let dict = $locale_strings[$language];
+        let text = dict && dict[code];
         if(!text){
             return "{"+code+"}";
         }

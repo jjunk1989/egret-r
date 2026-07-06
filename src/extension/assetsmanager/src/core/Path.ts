@@ -1,3 +1,4 @@
+import { egret } from "@egret-r/core";
     /**
      * Print the memory occupied by the picture.
      * @version Egret 5.2

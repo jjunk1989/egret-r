@@ -6,7 +6,7 @@ import { egret } from '@egret-r/core';
 const { HttpResponseType, SpriteSheet, Event, HttpRequest, IOErrorEvent, Texture, Rectangle, ImageLoader } = egret;
 import { $warn } from "../../../Defines.debug";
 import { BinAnalyzer } from "./BinAnalyzer";
-import { ResourceItem } from "../../assetsmanager/src/shim/ResourceItem";
+import { ResourceItem } from "../core/ResourceItem";
 import { $getVirtualUrl } from "../Resource";
 
     /**
@@ -26,10 +26,10 @@ import { $getVirtualUrl } from "../Resource";
                 res = this.textureMap[name];
             }
             if (!res) {
-                let prefix:string = RES.AnalyzerBase.getStringPrefix(name);
+                let prefix:string = AnalyzerBase.getStringPrefix(name);
                 res = this.fileDic[prefix];
                 if (res) {
-                    let tail:string = RES.AnalyzerBase.getStringTail(name);
+                    let tail:string = AnalyzerBase.getStringTail(name);
                     res = (<SpriteSheet> res).getTexture(tail);
                 }
             }

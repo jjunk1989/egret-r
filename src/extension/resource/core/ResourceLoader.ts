@@ -4,8 +4,8 @@
 
 import { egret } from '@egret-r/core';
 const { EventDispatcher } = egret;
-import { ResourceItem } from "../../assetsmanager/src/shim/ResourceItem";
-import { ResourceEvent } from "../../assetsmanager/src/shim/ResourceEvent";
+import { ResourceItem } from "../core/ResourceItem";
+import { ResourceEvent } from "../events/ResourceEvent";
 import { AnalyzerBase } from "../analyzer/AnalyzerBase";
 import { $warn } from "../../../Defines.debug";
 

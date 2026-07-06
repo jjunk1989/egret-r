@@ -1,3 +1,4 @@
+import { egret } from "@egret-r/core";
     /**
      * Decorator, determine if the parameter is null
      * @internal

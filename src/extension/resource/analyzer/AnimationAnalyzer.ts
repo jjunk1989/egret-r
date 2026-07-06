@@ -5,7 +5,7 @@
 import { egret } from '@egret-r/core';
 const { HttpResponseType, Event, HttpRequest, IOErrorEvent, ImageLoader, BitmapData, Texture } = egret;
 import { BinAnalyzer } from "./BinAnalyzer";
-import { ResourceItem } from "../../assetsmanager/src/shim/ResourceItem";
+import { ResourceItem } from "../core/ResourceItem";
 import { $warn } from "../../../Defines.debug";
 
     /**

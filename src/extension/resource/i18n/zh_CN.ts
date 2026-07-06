@@ -1,10 +1,9 @@
 
 
-
 import { egret } from '@egret-r/core';
-const { $locale_strings } = egret;
-    $locale_strings["zh_CN"] = $locale_strings["zh_CN"] || {};
-    let locale_strings = $locale_strings["zh_CN"];
+var _loc = egret.$locale_strings;
+    _loc["zh_CN"] = _loc["zh_CN"] || {};
+    let locale_strings = _loc["zh_CN"];
 
     //RES 3200-3299
     locale_strings[3200] = "RES.createGroup()传入了配置中不存在的键值: {0}";

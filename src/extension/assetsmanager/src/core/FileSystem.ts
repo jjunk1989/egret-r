@@ -1,3 +1,4 @@
+import { egret } from "@egret-r/core";
     /**
      * assetsManager underlying storage resource information
      * @version Egret 5.2

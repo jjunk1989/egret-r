@@ -4,13 +4,13 @@
 
 import { egret } from '@egret-r/core';
 const { BitmapData, EventDispatcher, callLater, Texture, HtmlSound } = egret;
-import { ResourceItem } from "../assetsmanager/src/shim/ResourceItem";
+import { ResourceItem } from "./core/ResourceItem";
 import { AnalyzerBase } from "./analyzer/AnalyzerBase";
-import { VersionController } from "../assetsmanager/src/shim/version/IVersionController";
+import { VersionController } from "./version/IVersionController";
 
-import { ResourceLoader } from "../assetsmanager/src/core/ResourceLoader";
-import { ResourceConfig } from "../assetsmanager/src/core/ResourceConfig";
-import { ResourceEvent } from "../assetsmanager/src/shim/ResourceEvent";
+import { ResourceLoader } from "./core/ResourceLoader";
+import { ResourceConfig } from "./core/ResourceConfig";
+import { ResourceEvent } from "./events/ResourceEvent";
 import { $error } from "../../Defines.debug";
 import { DEBUG } from "../../Defines.debug";
 import { $warn } from "../../Defines.debug";
@@ -534,7 +534,7 @@ import { $warn } from "../../Defines.debug";
          * 初始化
          */
         private init():void{
-            this.vcs = new VersionController();
+            this.vcs = new (egret as any).VersionController();
             let analyzerClassMap = this.analyzerClassMap;
             analyzerClassMap[ResourceItem.TYPE_BIN] = BinAnalyzer;
             analyzerClassMap[ResourceItem.TYPE_IMAGE] = ImageAnalyzer;
@@ -739,7 +739,7 @@ import { $warn } from "../../Defines.debug";
         public hasRes(key:string):boolean{
             let type:string = this.resConfig.getType(key);
             if(type==""){
-                let prefix:string = RES.AnalyzerBase.getStringTail(key);
+                let prefix:string = AnalyzerBase.getStringTail(key);
                 type = this.resConfig.getType(prefix);
                 if(type==""){
                     return false;
@@ -768,7 +768,7 @@ import { $warn } from "../../Defines.debug";
         public getRes(key:string):any{
             let type:string = this.resConfig.getType(key);
             if(type==""){
-                let prefix:string = RES.AnalyzerBase.getStringPrefix(key);
+                let prefix:string = AnalyzerBase.getStringPrefix(key);
                 type = this.resConfig.getType(prefix);
                 if(type==""){
                     return null;
@@ -794,7 +794,7 @@ import { $warn } from "../../Defines.debug";
             let type:string = this.resConfig.getType(key);
             let name:string = this.resConfig.getName(key);
             if(type==""){
-                name = RES.AnalyzerBase.getStringPrefix(key);
+                name = AnalyzerBase.getStringPrefix(key);
                 type = this.resConfig.getType(name);
                 if(type==""){
                     egret.$callAsync(compFunc, thisObject);

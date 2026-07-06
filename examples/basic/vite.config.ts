@@ -10,7 +10,7 @@ export default defineConfig({
     minify: 'esbuild',
   },
   optimizeDeps: {
-    exclude: ['@egret-r/core', '@egret-r/eui', '@egret-r/game', '@egret-r/tween', '@egret-r/socket'],
+    exclude: ['@egret-r/core', '@egret-r/eui', '@egret-r/game', '@egret-r/tween', '@egret-r/socket', '@egret-r/assetsmanager', '@egret-r/resource'],
   },
   resolve: {
     preserveSymlinks: true,

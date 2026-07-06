@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { ResourceItem } from "../../assetsmanager/src/shim/ResourceItem";
+import { egret } from '@egret-r/core';
+import { ResourceItem } from "../core/ResourceItem";
 import { $warn } from "../../../Defines.debug";
 
 

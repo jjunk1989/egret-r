@@ -4,7 +4,7 @@
 
 import { egret } from '@egret-r/core';
 const { Event, IEventDispatcher } = egret;
-import { ResourceItem } from "../../assetsmanager/src/shim/ResourceItem";
+import { ResourceItem } from "../core/ResourceItem";
 
 	/**
 	 * The events of resource loading.

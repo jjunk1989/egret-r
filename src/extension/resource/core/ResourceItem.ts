@@ -2,6 +2,7 @@
 // Copyright (c) 2014-present, Egret Technology.
 
 
+import { egret } from '@egret-r/core';
 	/**
 	 * Resource term. One of the resources arrays in resource.json.
 	 * @version Egret 2.4

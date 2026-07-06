@@ -5,7 +5,7 @@
 import { egret } from '@egret-r/core';
 const { HttpRequest, IOErrorEvent, HttpResponseType, Event } = egret;
 import { AnalyzerBase } from "./AnalyzerBase";
-import { ResourceItem } from "../../assetsmanager/src/shim/ResourceItem";
+import { ResourceItem } from "../core/ResourceItem";
 
     /**
      * @private
