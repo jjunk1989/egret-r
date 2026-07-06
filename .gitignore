@@ -50,7 +50,6 @@ obj/
 *.config
 tsconfig.debug.json
 /src/tsc_config_temp.txt
-/index.html
 /src/tests
 /tests**
 /target**
