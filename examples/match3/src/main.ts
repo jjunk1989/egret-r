@@ -9,11 +9,12 @@ const COLORS = [0xef4444, 0xf59e0b, 0x22c55e, 0x3b82f6, 0x8b5cf6, 0xec4899];
 class Main extends egret.DisplayObjectContainer {
   private grid: number[][] = [];
   private gems: egret.Shape[][] = [];
-  private selected: { c: number; r: number } | null = null;
   private busy = false;
   private score = 0;
   private scoreText!: egret.TextField;
   private gameLayer!: egret.DisplayObjectContainer;
+  private dragGem: egret.Shape | null = null;
+  private dragC = 0; private dragR = 0;
 
   constructor() {
     super();
@@ -47,7 +48,7 @@ class Main extends egret.DisplayObjectContainer {
   private spawnGems(animate: boolean): void {
     this.gameLayer.removeChildren(); this.gems = [];
     for (let r = 0; r < ROWS; r++) { this.gems[r] = []; for (let c = 0; c < COLS; c++) {
-      const g = new egret.Shape(); this.redrawGem(g, this.grid[r][c]);
+      const g = new egret.Shape(); this.redraw(g, this.grid[r][c]);
       g.x = OX + c * (CELL + GAP);
       g.y = animate ? OY - 100 - r * 30 : OY + r * (CELL + GAP);
       this.gameLayer.addChild(g); this.gems[r][c] = g;
@@ -64,61 +65,108 @@ class Main extends egret.DisplayObjectContainer {
       if(t<1)requestAnimationFrame(tick);else{moves.forEach(m=>{m.g.y=OY+m.r*(CELL+GAP)});this.busy=false;}};tick();
   }
 
-  private dragGem: egret.Shape | null = null;
-  private dragC = 0; private dragR = 0;
+  private redraw(g: egret.Shape, colorIdx: number): void {
+    g.graphics.clear(); g.graphics.beginFill(COLORS[colorIdx]);
+    g.graphics.drawRoundRect(0, 0, CELL, CELL, 8, 8); g.graphics.endFill();
+  }
 
   private addListeners(): void {
     const canvas = document.querySelector("canvas")!;
     const onStart = (e: MouseEvent | TouchEvent) => {
       if (this.busy) return;
       const ev = "touches" in e ? (e as TouchEvent).touches[0] : (e as MouseEvent);
-      const { c, r } = this.posFromClient(ev.clientX, ev.clientY);
+      const { c, r } = this.pos(ev.clientX, ev.clientY);
       if (c < 0 || c >= COLS || r < 0 || r >= ROWS) return;
-      this.dragC = c; this.dragR = r;
-      this.dragGem = this.gems[r][c];
-      if (this.dragGem) this.gameLayer.addChild(this.dragGem); // bring to front
+      this.dragC = c; this.dragR = r; this.dragGem = this.gems[r][c];
+      if (this.dragGem) this.gameLayer.addChild(this.dragGem);
     };
     const onMove = (e: MouseEvent | TouchEvent) => {
-      if (!this.dragGem || this.busy) return;
-      e.preventDefault();
+      if (!this.dragGem || this.busy) return; e.preventDefault();
       const ev = "touches" in e ? (e as TouchEvent).touches[0] : (e as MouseEvent);
-      const { c, r } = this.posFromClient(ev.clientX, ev.clientY);
-      const dx = c - this.dragC, dy = r - this.dragR;
-      const maxOff = (CELL + GAP) * 0.7;
-      const offX = Math.max(-maxOff, Math.min(maxOff, dx * (CELL + GAP)));
-      const offY = Math.max(-maxOff, Math.min(maxOff, dy * (CELL + GAP)));
-      this.dragGem.x = OX + this.dragC * (CELL + GAP) + offX;
-      this.dragGem.y = OY + this.dragR * (CELL + GAP) + offY;
+      const { c, r } = this.pos(ev.clientX, ev.clientY);
+      const dx=c-this.dragC, dy=r-this.dragR, m=(CELL+GAP)*0.7;
+      this.dragGem.x = OX + this.dragC*(CELL+GAP) + Math.max(-m, Math.min(m, dx*(CELL+GAP)));
+      this.dragGem.y = OY + this.dragR*(CELL+GAP) + Math.max(-m, Math.min(m, dy*(CELL+GAP)));
     };
     const onEnd = (e: MouseEvent | TouchEvent) => {
       if (!this.dragGem || this.busy) return;
       const ev = "changedTouches" in e ? (e as TouchEvent).changedTouches[0] : (e as MouseEvent);
-      const { c, r } = this.posFromClient(ev.clientX, ev.clientY);
-      this.dragGem.x = OX + this.dragC * (CELL + GAP);
-      this.dragGem.y = OY + this.dragR * (CELL + GAP);
-      const dc = c - this.dragC, dr = r - this.dragR;
-      const targetC = this.dragC + (Math.abs(dc) > Math.abs(dr) ? Math.sign(dc) : 0);
-      const targetR = this.dragR + (Math.abs(dr) >= Math.abs(dc) ? Math.sign(dr) : 0);
+      const { c, r } = this.pos(ev.clientX, ev.clientY);
+      this.dragGem.x = OX + this.dragC*(CELL+GAP);
+      this.dragGem.y = OY + this.dragR*(CELL+GAP);
+      const dc=c-this.dragC, dr=r-this.dragR, tc=this.dragC+(Math.abs(dc)>Math.abs(dr)?Math.sign(dc):0),
+        tr=this.dragR+(Math.abs(dr)>=Math.abs(dc)?Math.sign(dr):0);
       this.dragGem = null;
-      if ((targetC !== this.dragC || targetR !== this.dragR) &&
-          targetC >= 0 && targetC < COLS && targetR >= 0 && targetR < ROWS &&
-          Math.abs(targetC - this.dragC) + Math.abs(targetR - this.dragR) === 1) {
-        this.doSwap(this.dragC, this.dragR, targetC, targetR);
-      }
+      if((tc!==this.dragC||tr!==this.dragR)&&tc>=0&&tc<COLS&&tr>=0&&tr<ROWS&&Math.abs(tc-this.dragC)+Math.abs(tr-this.dragR)===1)
+        this.swap(this.dragC,this.dragR,tc,tr);
     };
-    canvas.addEventListener("mousedown", onStart);
-    canvas.addEventListener("mousemove", onMove);
-    canvas.addEventListener("mouseup", onEnd);
-    canvas.addEventListener("touchstart", onStart, { passive: false });
-    canvas.addEventListener("touchmove", onMove, { passive: false });
-    canvas.addEventListener("touchend", onEnd);
+    canvas.addEventListener("mousedown", onStart); canvas.addEventListener("mousemove", onMove); canvas.addEventListener("mouseup", onEnd);
+    canvas.addEventListener("touchstart", onStart, { passive: false }); canvas.addEventListener("touchmove", onMove, { passive: false }); canvas.addEventListener("touchend", onEnd);
   }
-  private posFromClient(cx: number, cy: number): { c: number; r: number } {
-    const canvas = document.querySelector("canvas"); if (!canvas) return { c: -1, r: -1 };
-    const rect = canvas.getBoundingClientRect();
-    const mx = (cx - rect.left) * (480 / rect.width);
-    const my = (cy - rect.top) * (700 / rect.height);
-    return { c: Math.floor((mx - OX) / (CELL + GAP)), r: Math.floor((my - OY) / (CELL + GAP)) };
+  private pos(cx:number,cy:number):{c:number,r:number}{
+    const ca=document.querySelector("canvas");if(!ca)return{c:-1,r:-1};const re=ca.getBoundingClientRect();
+    return{c:Math.floor(((cx-re.left)*(480/re.width)-OX)/(CELL+GAP)),r:Math.floor(((cy-re.top)*(700/re.height)-OY)/(CELL+GAP))};
+  }
+
+  private async swap(c1:number,r1:number,c2:number,r2:number): Promise<void> {
+    this.busy=true;
+    [this.grid[r1][c1],this.grid[r2][c2]]=[this.grid[r2][c2],this.grid[r1][c1]];
+    [this.gems[r1][c1],this.gems[r2][c2]]=[this.gems[r2][c2],this.gems[r1][c1]];
+    await this.anim(c1,r1,c2,r2);
+    if(!this.matches()){
+      [this.grid[r1][c1],this.grid[r2][c2]]=[this.grid[r2][c2],this.grid[r1][c1]];
+      [this.gems[r1][c1],this.gems[r2][c2]]=[this.gems[r2][c2],this.gems[r1][c1]];
+      await this.anim(c1,r1,c2,r2);
+    }else{await this.process();}
+    this.busy=false;
+  }
+  private anim(c1:number,r1:number,c2:number,r2:number): Promise<void> {
+    return new Promise(resolve=>{
+      const g1=this.gems[r1][c1],g2=this.gems[r2][c2];
+      const x1=OX+c1*(CELL+GAP),y1=OY+r1*(CELL+GAP),x2=OX+c2*(CELL+GAP),y2=OY+r2*(CELL+GAP);
+      this.redraw(g1,this.grid[r1][c1]);this.redraw(g2,this.grid[r2][c2]);
+      const s=Date.now(),d=180;
+      const tick=()=>{const t=Math.min(1,(Date.now()-s)/d),e=t<.5?2*t*t:-1+(4-2*t)*t;
+        g1.x=x1+(x2-x1)*e;g1.y=y1+(y2-y1)*e;g2.x=x2+(x1-x2)*e;g2.y=y2+(y1-y2)*e;
+        if(t<1)requestAnimationFrame(tick);else{g1.x=x1;g1.y=y1;g2.x=x2;g2.y=y2;resolve();}};tick();});
+  }
+  private _m=new Set<string>();
+  private matches(): boolean {
+    this._m.clear();
+    for(let r=0;r<ROWS;r++)for(let c=0;c<COLS-2;c++)
+      if(this.grid[r][c]>=0&&this.grid[r][c]===this.grid[r][c+1]&&this.grid[r][c]===this.grid[r][c+2])
+        {this._m.add(r+","+c);this._m.add(r+","+(c+1));this._m.add(r+","+(c+2));}
+    for(let c=0;c<COLS;c++)for(let r=0;r<ROWS-2;r++)
+      if(this.grid[r][c]>=0&&this.grid[r][c]===this.grid[r+1][c]&&this.grid[r][c]===this.grid[r+2][c])
+        {this._m.add(r+","+c);this._m.add((r+1)+","+c);this._m.add((r+2)+","+c);}
+    return this._m.size>0;
+  }
+  private async process(): Promise<void> {
+    while(this._m.size>0){
+      const rm=this._m;
+      await new Promise<void>(resolve=>{const s=Date.now(),d=200;
+        const tick=()=>{const t=Math.min(1,(Date.now()-s)/d);
+          rm.forEach(k=>{const[p,q]=k.split(",").map(Number);const g=this.gems[p]?.[q];if(g)g.scaleX=g.scaleY=1-t;});
+          if(t<1)requestAnimationFrame(tick);else resolve();};tick();});
+      rm.forEach(k=>{const[p,q]=k.split(",").map(Number);
+        if(this.gems[p][q]){this.gameLayer.removeChild(this.gems[p][q]);this.gems[p][q]=null!;}
+        this.grid[p][q]=-1;});
+      this.score+=rm.size*10;this.scoreText.text="Score: "+this.score;
+      const mv:{g:egret.Shape,r:number,c:number,fr:number}[]=[];
+      for(let c=0;c<COLS;c++){let wr=ROWS-1;
+        for(let r=ROWS-1;r>=0;r--){if(this.grid[r][c]!==-1){
+          if(r!==wr){mv.push({g:this.gems[r][c],r:wr,c,fr:r});this.gems[wr][c]=this.gems[r][c];}
+          this.grid[wr--][c]=this.grid[r][c];}}
+        for(let r=wr;r>=0;r--){this.grid[r][c]=Math.floor(Math.random()*COLORS.length);
+          const g=new egret.Shape();this.redraw(g,this.grid[r][c]);
+          g.x=OX+c*(CELL+GAP);g.y=OY-(wr-r+2)*(CELL+GAP);
+          this.gameLayer.addChild(g);this.gems[r][c]=g;mv.push({g,r,c,fr:r-(wr-r+2)});}}
+      await new Promise<void>(resolve=>{const s=Date.now(),d=280;
+        const tick=()=>{const t=Math.min(1,(Date.now()-s)/d),e=1-Math.pow(1-t,3);
+          mv.forEach(m=>{m.g.y=OY+(m.fr+(m.r-m.fr)*e)*(CELL+GAP);});
+          if(t<1)requestAnimationFrame(tick);else{mv.forEach(m=>{m.g.y=OY+m.r*(CELL+GAP)});resolve();}};tick();});
+      this.matches();
+    }
   }
 }
 
