@@ -19,7 +19,7 @@ const GROUND_H = 80;
 class Main extends egret.DisplayObjectContainer {
 
   // bird
-  private bird: egret.Shape;
+  private bird!: egret.Shape;
   private birdVy = 0;
   private birdY = 250;
 
@@ -29,14 +29,14 @@ class Main extends egret.DisplayObjectContainer {
 
   // state
   private score = 0;
-  private scoreText: egret.TextField;
+  private scoreText!: egret.TextField;
   private gameState: 'idle' | 'playing' | 'over' = 'idle';
 
   // layers
-  private gameLayer: egret.DisplayObjectContainer;
-  private uiLayer: egret.DisplayObjectContainer;
-  private startBtn: egret.TextField;
-  private groundStrip: egret.Shape;
+  private gameLayer!: egret.DisplayObjectContainer;
+  private uiLayer!: egret.DisplayObjectContainer;
+  private startBtn!: egret.TextField;
+  private groundStrip!: egret.Shape;
   private clouds: egret.Shape[] = [];
   private frameCount = 0;
 
