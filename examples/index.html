@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Egret Engine R — Demos</title>
+  <style>
+    :root {
+      --bg: #0f172a; --card: #1e293b; --text: #e2e8f0; --muted: #94a3b8;
+      --accent: #38bdf8; --accent2: #818cf8; --border: #334155; --radius: 12px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--bg); color: var(--text); font-family: system-ui, sans-serif;
+      min-height: 100vh; padding: 2rem;
+    }
+    header {
+      text-align: center; padding: 3rem 1rem 2rem;
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      border-bottom: 1px solid var(--border); margin: -2rem -2rem 2rem;
+    }
+    h1 { font-size: 2.4rem; font-weight: 800; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    header p { color: var(--muted); margin-top: 0.5rem; font-size: 1.1rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.25rem; max-width: 1100px; margin: 0 auto; }
+    .card {
+      background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 1.5rem; transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
+      display: flex; flex-direction: column; gap: 0.75rem; text-decoration: none; color: inherit;
+    }
+    .card:hover { transform: translateY(-2px); border-color: var(--accent); box-shadow: 0 8px 25px rgba(56,189,248,0.12); }
+    .card h3 { font-size: 1.25rem; }
+    .card .tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .tag {
+      font-size: 0.75rem; padding: 2px 10px; border-radius: 99px;
+      background: rgba(56,189,248,0.15); color: var(--accent); white-space: nowrap;
+    }
+    .tag.eui { background: rgba(129,140,248,0.15); color: var(--accent2); }
+    .card p { color: var(--muted); font-size: 0.9rem; line-height: 1.5; flex: 1; }
+    .card .link-row { display: flex; gap: 1rem; font-size: 0.85rem; }
+    .card .link-row a { color: var(--accent); text-decoration: none; }
+    .card .link-row a:hover { text-decoration: underline; }
+    footer { text-align: center; padding: 3rem 1rem 1rem; color: var(--muted); font-size: 0.85rem; }
+    footer a { color: var(--accent); }
+  </style>
+</head>
+<body>
+<header>
+  <h1>Egret Engine R — Demos</h1>
+  <p>Monorepo 示例 &amp; 游戏合集 — <a href="https://github.com/egret-labs/egret-r" style="color:var(--accent)">GitHub</a></p>
+</header>
+<main class="grid">
+
+  <a class="card" href="basic/dist/index.html">
+    <h3>🧪 Basic Example</h3>
+    <div class="tags"><span class="tag">core</span><span class="tag eui">eui</span><span class="tag">game</span><span class="tag">tween</span><span class="tag">socket</span><span class="tag">assetsmanager</span><span class="tag">resource</span></div>
+    <p>引擎功能测试台，涵盖核心 API、UI 组件、补间动画、网络、资源管理等模块的交互式测试用例</p>
+    <div class="link-row"><span>📦 28+ 测试用例</span><a href="basic/dist/index.html">▶ 打开</a></div>
+  </a>
+
+  <a class="card" href="flappy-bird/dist/index.html">
+    <h3>🐦 Flappy Bird</h3>
+    <div class="tags"><span class="tag">core</span><span class="tag">game</span></div>
+    <p>经典像素鸟游戏，点击/空格键飞行，躲避管道。支持分数统计、游戏结束重开</p>
+    <div class="link-row"><span>🎮 完整游戏</span><a href="flappy-bird/dist/index.html">▶ 打开</a></div>
+  </a>
+
+  <a class="card" href="breakout/dist/index.html">
+    <h3>🧱 Breakout</h3>
+    <div class="tags"><span class="tag">core</span><span class="tag">game</span></div>
+    <p>经典打砖块游戏，鼠标/触控控制挡板，弹球消除彩色砖块</p>
+    <div class="link-row"><span>🎮 完整游戏</span><a href="breakout/dist/index.html">▶ 打开</a></div>
+  </a>
+
+  <a class="card" href="2048/dist/index.html">
+    <h3>🔢 2048</h3>
+    <div class="tags"><span class="tag">core</span><span class="tag eui">eui</span></div>
+    <p>数字合并益智游戏，方向键滑动，合成 2048 方块。支持撤销和分数统计</p>
+    <div class="link-row"><span>🎮 完整游戏</span><a href="2048/dist/index.html">▶ 打开</a></div>
+  </a>
+
+  <a class="card" href="snake/dist/index.html">
+    <h3>🐍 Snake</h3>
+    <div class="tags"><span class="tag">core</span><span class="tag">game</span></div>
+    <p>经典贪吃蛇，方向键/触控控制，吃食物变长，撞墙/撞自己结束</p>
+    <div class="link-row"><span>🎮 完整游戏</span><a href="snake/dist/index.html">▶ 打开</a></div>
+  </a>
+
+  <a class="card" href="shooter/dist/index.html">
+    <h3>🚀 Shooter</h3>
+    <div class="tags"><span class="tag">core</span><span class="tag">game</span></div>
+    <p>纵向卷轴射击游戏，移动飞机发射子弹，消灭敌机获取分数</p>
+    <div class="link-row"><span>🎮 完整游戏</span><a href="shooter/dist/index.html">▶ 打开</a></div>
+  </a>
+
+  <a class="card" href="match3/dist/index.html">
+    <h3>💎 Match-3</h3>
+    <div class="tags"><span class="tag">core</span><span class="tag eui">eui</span></div>
+    <p>三消益智游戏，交换相邻宝石，三个以上连成一线消除得分</p>
+    <div class="link-row"><span>🎮 完整游戏</span><a href="match3/dist/index.html">▶ 打开</a></div>
+  </a>
+
+  <a class="card" href="link/dist/index.html">
+    <h3>🔗 Link (连连看)</h3>
+    <div class="tags"><span class="tag">core</span><span class="tag eui">eui</span></div>
+    <p>经典连连看消除游戏，找到两个相同图案并用不超过 3 条直线连接消除</p>
+    <div class="link-row"><span>🎮 完整游戏</span><a href="link/dist/index.html">▶ 打开</a></div>
+  </a>
+
+</main>
+<footer>
+  Powered by <a href="https://github.com/egret-labs/egret-r">Egret Engine R</a> · TypeScript + Vite + esbuild
+</footer>
+</body>
+</html>
