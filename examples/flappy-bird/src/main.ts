@@ -15,6 +15,55 @@ const PIPE_SPEED = 3;
 const PIPE_SPAWN_INTERVAL = 120; // frames (later first pipe)
 const GROUND_H = 80;
 
+// ── Simple Sound Engine (Web Audio API) ─────────────
+class SoundEngine {
+  private ctx: AudioContext | null = null;
+  private getCtx(): AudioContext {
+    if (!this.ctx) this.ctx = new AudioContext();
+    return this.ctx;
+  }
+  flap(): void {
+    const ctx = this.getCtx();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = "square";
+    osc.frequency.setValueAtTime(400, ctx.currentTime);
+    osc.frequency.linearRampToValueAtTime(800, ctx.currentTime + 0.08);
+    gain.gain.setValueAtTime(0.15, ctx.currentTime);
+    gain.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.1);
+    osc.connect(gain).connect(ctx.destination);
+    osc.start(); osc.stop(ctx.currentTime + 0.1);
+  }
+  score(): void {
+    const ctx = this.getCtx();
+    [600, 900].forEach((freq, i) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "sine";
+      const t = ctx.currentTime + i * 0.08;
+      osc.frequency.setValueAtTime(freq, t);
+      gain.gain.setValueAtTime(0.12, t);
+      gain.gain.linearRampToValueAtTime(0, t + 0.12);
+      osc.connect(gain).connect(ctx.destination);
+      osc.start(t); osc.stop(t + 0.12);
+    });
+  }
+  hit(): void {
+    const ctx = this.getCtx();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = "sawtooth";
+    osc.frequency.setValueAtTime(300, ctx.currentTime);
+    osc.frequency.linearRampToValueAtTime(80, ctx.currentTime + 0.4);
+    gain.gain.setValueAtTime(0.12, ctx.currentTime);
+    gain.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.5);
+    osc.connect(gain).connect(ctx.destination);
+    osc.start(); osc.stop(ctx.currentTime + 0.5);
+  }
+}
+const sfx = new SoundEngine();
+
+
 // ── Main Game Class ─────────────────────────────────
 class Main extends egret.DisplayObjectContainer {
 
@@ -258,6 +307,7 @@ class Main extends egret.DisplayObjectContainer {
         p.scored = true;
         this.score++;
         this.scoreText.text = String(this.score);
+        sfx.score();
       }
 
       // Collision (AABB)
@@ -371,6 +421,7 @@ class Main extends egret.DisplayObjectContainer {
       return;
     }
     // Flap
+    sfx.flap();
     this.birdVy = FLAP_VEL;
   }
 
@@ -385,6 +436,7 @@ class Main extends egret.DisplayObjectContainer {
   }
 
   private gameOver(): void {
+    sfx.hit();
     this.gameState = 'over';
     // Clear pipes
     for (const p of this.pipes) {
