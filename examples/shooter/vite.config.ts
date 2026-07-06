@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
+  base: './',
   server: { port: 3006, open: true },
   build: { target: 'es2020', minify: 'esbuild' },
   optimizeDeps: {
