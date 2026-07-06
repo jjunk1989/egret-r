@@ -83,7 +83,7 @@ class Main extends egret.DisplayObjectContainer {
         this.ballVY *= -1; this.ballVX += (this.ballX - this.paddleX) * 0.1;
       }
 
-      if (this.ballY > this.H) {
+      if (this.ballY > this.H + 50) {
         this.lives--; scoreLabel.text = `Score: ${this.score}  Lives: ${this.lives}`;
         if (this.lives <= 0) return this.endGame('Game Over', this.score);
         this.ballX = this.W / 2; this.ballY = this.H - 80; this.ballVX = 3; this.ballVY = -3;
