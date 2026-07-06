@@ -76,6 +76,8 @@ class Main extends egret.DisplayObjectContainer {
           this.drawPath(path);
           this.grid[s.r][s.c] = 0; this.grid[r][c] = 0;
           this.score += 10; this.scoreText.text = `Score: ${this.score}`;
+        } else {
+          this.flashTile(s.c, s.r); this.flashTile(c, r);
         }
         this.selected = null;
       } else {
@@ -119,6 +121,16 @@ class Main extends egret.DisplayObjectContainer {
     line.graphics.endFill();
     this.addChild(line);
     setTimeout(() => { if (line.parent) line.parent.removeChild(line); }, 300);
+  }
+
+  // Flash a tile red briefly to indicate invalid match
+  private flashTile(c: number, r: number): void {
+    const flash = new egret.Shape();
+    flash.graphics.beginFill(0xef4444, 0.6);
+    flash.graphics.drawRoundRect(OX + c * (CELL + GAP), OY + r * (CELL + GAP), CELL, CELL, 6, 6);
+    flash.graphics.endFill();
+    this.addChild(flash);
+    setTimeout(() => { if (flash.parent) flash.parent.removeChild(flash); }, 200);
   }
 
   private draw(): void {
