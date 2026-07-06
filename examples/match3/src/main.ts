@@ -64,22 +64,52 @@ class Main extends egret.DisplayObjectContainer {
       if(t<1)requestAnimationFrame(tick);else{moves.forEach(m=>{m.g.y=OY+m.r*(CELL+GAP)});this.busy=false;}};tick();
   }
 
+  private dragGem: egret.Shape | null = null;
+  private dragC = 0; private dragR = 0;
+
   private addListeners(): void {
-    document.addEventListener("click", (e: MouseEvent) => {
+    const canvas = document.querySelector('canvas')!;
+    canvas.addEventListener('mousedown', (e: MouseEvent) => {
       if (this.busy) return;
-      const canvas = document.querySelector("canvas"); if (!canvas) return;
-      const rect = canvas.getBoundingClientRect();
-      const mx = (e.clientX - rect.left) * (480 / rect.width);
-      const my = (e.clientY - rect.top) * (700 / rect.height);
-      const c = Math.floor((mx - OX) / (CELL + GAP));
-      const r = Math.floor((my - OY) / (CELL + GAP));
+      const { c, r } = this.posFromEvent(e);
       if (c < 0 || c >= COLS || r < 0 || r >= ROWS) return;
-      if (this.selected) {
-        const s = this.selected; this.selected = null; this.clearHighlight();
-        if (Math.abs(s.c - c) + Math.abs(s.r - r) === 1) this.doSwap(s.c, s.r, c, r);
-        else this.highlight(c, r);
-      } else { this.selected = { c, r }; this.highlight(c, r); }
+      this.dragC = c; this.dragR = r;
+      this.dragGem = this.gems[r][c];
+      this.selected = { c, r };
     });
+    canvas.addEventListener('mousemove', (e: MouseEvent) => {
+      if (!this.dragGem || this.busy) return;
+      const { c, r } = this.posFromEvent(e);
+      const dx = c - this.dragC, dy = r - this.dragR;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      const maxOff = (CELL + GAP) * 0.6;
+      const offX = dist > 0 ? Math.min(maxOff, Math.abs(dx * (CELL + GAP))) * Math.sign(dx) : 0;
+      const offY = dist > 0 ? Math.min(maxOff, Math.abs(dy * (CELL + GAP))) * Math.sign(dy) : 0;
+      this.dragGem.x = OX + this.dragC * (CELL + GAP) + offX;
+      this.dragGem.y = OY + this.dragR * (CELL + GAP) + offY;
+    });
+    canvas.addEventListener('mouseup', (e: MouseEvent) => {
+      if (!this.dragGem || this.busy) return;
+      const { c, r } = this.posFromEvent(e);
+      this.dragGem.x = OX + this.dragC * (CELL + GAP);
+      this.dragGem.y = OY + this.dragR * (CELL + GAP);
+      const dc = c - this.dragC, dr = r - this.dragR;
+      const targetC = this.dragC + (Math.abs(dc) > Math.abs(dr) ? Math.sign(dc) : 0);
+      const targetR = this.dragR + (Math.abs(dr) >= Math.abs(dc) ? Math.sign(dr) : 0);
+      this.dragGem = null; this.selected = null;
+      if ((targetC !== this.dragC || targetR !== this.dragR) &&
+          targetC >= 0 && targetC < COLS && targetR >= 0 && targetR < ROWS &&
+          Math.abs(targetC - this.dragC) + Math.abs(targetR - this.dragR) === 1) {
+        this.doSwap(this.dragC, this.dragR, targetC, targetR);
+      }
+    });
+  }
+  private posFromEvent(e: MouseEvent): { c: number; r: number } {
+    const canvas = document.querySelector('canvas'); if (!canvas) return { c: -1, r: -1 };
+    const rect = canvas.getBoundingClientRect();
+    const mx = (e.clientX - rect.left) * (480 / rect.width);
+    const my = (e.clientY - rect.top) * (700 / rect.height);
+    return { c: Math.floor((mx - OX) / (CELL + GAP)), r: Math.floor((my - OY) / (CELL + GAP)) };
   }
 
   private clearHighlight(): void {
