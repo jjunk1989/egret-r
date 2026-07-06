@@ -37,25 +37,28 @@ class Main extends egret.DisplayObjectContainer {
 
     this.addRandom(); this.addRandom(); this.drawGrid();
 
-    // Start button — blocks input until clicked
+    // Start button — blocks input until clicked, then register controls
     const { onClick } = createStartButton(root, 480, 700, '2048');
+    onClick.then(() => {
+      const onKey = (e: KeyboardEvent) => {
+        if (this.gameOver) return;
+        if (e.key === 'ArrowLeft') this.move('left');
+        else if (e.key === 'ArrowRight') this.move('right');
+        else if (e.key === 'ArrowUp') this.move('up');
+        else if (e.key === 'ArrowDown') this.move('down');
+      };
+      document.addEventListener('keydown', onKey);
 
-    const onKey = (e: KeyboardEvent) => {
-      if (this.gameOver) return;
-      if (e.key === 'ArrowLeft') this.move('left');
-      else if (e.key === 'ArrowRight') this.move('right');
-      else if (e.key === 'ArrowUp') this.move('up');
-      else if (e.key === 'ArrowDown') this.move('down');
-    };
-    document.addEventListener('keydown', onKey);
-
-    let sx = 0, sy = 0;
-    stage.addEventListener(egret.TouchEvent.TOUCH_BEGIN, (e) => { sx = e.stageX; sy = e.stageY; }, root);
-    stage.addEventListener(egret.TouchEvent.TOUCH_END, (e) => {
-      const dx = e.stageX - sx, dy = e.stageY - sy;
-      if (Math.abs(dx) > Math.abs(dy)) this.move(dx > 20 ? 'right' : dx < -20 ? 'left' : 'up');
-      else this.move(dy > 20 ? 'down' : dy < -20 ? 'up' : 'right');
-    }, root);
+      let sx = 0, sy = 0;
+      stage.addEventListener(egret.TouchEvent.TOUCH_BEGIN, (e) => { sx = e.stageX; sy = e.stageY; }, root);
+      stage.addEventListener(egret.TouchEvent.TOUCH_END, (e) => {
+        const dx = e.stageX - sx, dy = e.stageY - sy;
+        const absDx = Math.abs(dx), absDy = Math.abs(dy);
+        if (absDx < 20 && absDy < 20) return; // ignore taps
+        if (absDx > absDy) this.move(dx > 0 ? 'right' : 'left');
+        else this.move(dy > 0 ? 'down' : 'up');
+      }, root);
+    });
   }
 
   private drawGrid() {
