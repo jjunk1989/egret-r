@@ -92,7 +92,7 @@ class Main extends egret.DisplayObjectContainer {
     };
     drawBricks();
 
-    const { onClick } = createStartButton(root, this.W, this.H, 'Start');
+    const { onClick } = createStartButton(root, this.W, this.H, 'Breakout');
     onClick.then(() => { this.running = true; });
 
     let mouseActive = false;
