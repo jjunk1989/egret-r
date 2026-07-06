@@ -1,6 +1,7 @@
 import { egret } from '@egret-r/core';
 import '@egret-r/eui';
 import '@egret-r/game';
+import { createStartButton } from './startButton';
 
 const W = 480, H = 700;
 const BULLET_SPEED = 8, ENEMY_SPEED = 1.5;

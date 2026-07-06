@@ -1,6 +1,7 @@
 import { egret } from '@egret-r/core';
 import '@egret-r/eui';
 import '@egret-r/game';
+import { createStartButton } from './startButton';
 
 const COLS = 20, ROWS = 20;
 const CELL = 24;
@@ -29,9 +30,11 @@ class Main extends egret.DisplayObjectContainer {
       this.spawnFood();
       this.draw();
       this.addEventListener(egret.Event.ENTER_FRAME, this.update, this);
+      const { onClick } = createStartButton(this, 480, 700, 'Snake');
+      onClick.then(() => { this.running = true; this.hideStart(); });
       document.addEventListener('keydown', (e: KeyboardEvent) => {
         if (this.gameOver) { if (e.code === 'Space') this.restart(); return; }
-        if (!this.running) { this.running = true; this.hideStart(); }
+        if (!this.running) return;
         if (e.key === 'ArrowUp' && this.dir.y !== 1) this.nextDir = { x: 0, y: -1 };
         if (e.key === 'ArrowDown' && this.dir.y !== -1) this.nextDir = { x: 0, y: 1 };
         if (e.key === 'ArrowLeft' && this.dir.x !== 1) this.nextDir = { x: -1, y: 0 };
