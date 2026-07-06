@@ -45,7 +45,10 @@ class Main extends egret.DisplayObjectContainer {
         if (e.code === 'Space') { e.preventDefault(); this.shoot(); }
       });
       document.addEventListener('mousemove', (e) => {
-        if (this.running) this.shipX = e.clientX;
+        if (this.running) {
+          const rect = (this.stage! as any).$stage['$displayList']?.renderBuffer?.surface?.getBoundingClientRect?.();
+          if (rect) this.shipX = Math.max(20, Math.min(W - 20, e.clientX - rect.left));
+        }
       });
       document.addEventListener('click', () => {
         if (this.gameOver) { this.restart(); return; }
