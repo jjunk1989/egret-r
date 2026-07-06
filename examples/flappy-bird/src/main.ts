@@ -88,6 +88,7 @@ class Main extends egret.DisplayObjectContainer {
   private groundStrip!: egret.Shape;
   private clouds: egret.Shape[] = [];
   private frameCount = 0;
+  private _uiBaseCount = 0; // numChildren after initial UI setup
 
   // ── Init ──────────────────────────────────────────
   constructor() {
@@ -102,6 +103,7 @@ class Main extends egret.DisplayObjectContainer {
       this.stage.addEventListener(egret.TouchEvent.TOUCH_BEGIN, this.onTap, this);
       // Frame loop via ENTER_FRAME event
       this.addEventListener(egret.Event.ENTER_FRAME, this.update, this);
+      this._uiBaseCount = this.uiLayer.numChildren;
     }, this);
     document.addEventListener('click', () => this.onTap());
     document.addEventListener('touchstart', (e: Event) => { e.preventDefault(); this.onTap(); });
@@ -491,9 +493,9 @@ class Main extends egret.DisplayObjectContainer {
   }
 
   private restart(): void {
-    // Clear UI layer (remove game over elements)
-    while (this.uiLayer.numChildren > 2) {
-      this.uiLayer.removeChildAt(2);
+    // Clear UI layer (remove game over elements, keep scoreText)
+    while (this.uiLayer.numChildren > this._uiBaseCount) {
+      this.uiLayer.removeChildAt(this.uiLayer.numChildren - 1);
     }
     this.scoreText.visible = true;
     this.scoreText.text = '0';
