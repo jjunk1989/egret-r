@@ -71,7 +71,9 @@ class Main extends egret.DisplayObjectContainer {
       if (this.selected) {
         const s = this.selected;
         if (s.c === c && s.r === r) { this.selected = null; this.draw(); return; }
-        if (this.grid[s.r][s.c] === this.grid[r][c] && this.canConnect(s.c, s.r, c, r)) {
+        const path = this.findPath(s.c, s.r, c, r);
+        if (this.grid[s.r][s.c] === this.grid[r][c] && path) {
+          this.drawPath(path);
           this.grid[s.r][s.c] = 0; this.grid[r][c] = 0;
           this.score += 10; this.scoreText.text = `Score: ${this.score}`;
         }
