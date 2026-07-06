@@ -38,7 +38,7 @@ class Main extends egret.DisplayObjectContainer {
     this.addRandom(); this.addRandom(); this.drawGrid();
 
     // Start button — blocks input until clicked
-    const { onClick } = createStartButton(root, 480, 700, 'Start');
+    const { onClick } = createStartButton(root, 480, 700, '2048');
 
     const onKey = (e: KeyboardEvent) => {
       if (this.gameOver) return;
