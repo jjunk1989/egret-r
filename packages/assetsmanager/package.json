@@ -20,7 +20,12 @@
     "clean": "rimraf dist",
     "watch": "tsc --watch"
   },
-  "dependencies": {
+  "peerDependencies": {
     "@egret-r/core": "*"
+  },
+  "devDependencies": {
+    "@egret-r/core": "*",
+    "typescript": "^5.9.0",
+    "rimraf": "^5.0.0"
   }
 }

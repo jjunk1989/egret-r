@@ -5,6 +5,9 @@ node_modules/
 packages/*/dist/
 packages/*/*.tsbuildinfo
 
+# API docs
+docs/api/
+
 # Generated entry files
 packages/*/_esm_entry.ts
 

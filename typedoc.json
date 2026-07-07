@@ -1,0 +1,56 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "name": "Egret Engine R",
+  "entryPoints": [
+    "src/egret",
+    "src/extension/eui",
+    "src/extension/game",
+    "src/extension/tween",
+    "src/extension/socket",
+    "src/extension/assetsmanager",
+    "src/extension/resource"
+  ],
+  "entryPointStrategy": "expand",
+  "out": "docs/api",
+  "tsconfig": "tsconfig.base.json",
+  "readme": "README.md",
+  "includeVersion": true,
+  "exclude": [
+    "**/native/**",
+    "**/node_modules/**",
+    "examples/**",
+    "templates/**",
+    "packages/**",
+    "scripts/**",
+    "**/*.debug.ts",
+    "**/*.release.ts"
+  ],
+  "externalPattern": [
+    "examples/**",
+    "templates/**"
+  ],
+  "excludeExternals": true,
+  "skipErrorChecking": true,
+  "excludePrivate": true,
+  "excludeProtected": false,
+  "hideGenerator": true,
+  "navigation": {
+    "includeCategories": true,
+    "includeGroups": true
+  },
+  "categorizeByGroup": true,
+  "sort": ["source-order"],
+  "kindSortOrder": [
+    "Namespace",
+    "Class",
+    "Interface",
+    "TypeAlias",
+    "Enum",
+    "Function",
+    "Variable"
+  ],
+  "searchInComments": true,
+  "cleanOutputDir": true,
+  "githubPages": false,
+  "plugin": []
+}
