@@ -325,7 +325,7 @@ src/egret/*.ts src/extension/*.ts (ESM source)
 
 - 🎮 **[Online Demos](https://jjunk1989.github.io/egret-r/)** playable examples &amp; test cases
 - 📖 **[API Docs](https://jjunk1989.github.io/egret-r/docs/api/)** full TypeDoc reference
-- 📦 **[GitHub](https://github.com/egret-labs/egret-r)** source &amp; issues
+- 📦 **[GitHub](https://jjunk1989.github.io/egret-r)** source &amp; issues
 
 ---
 
