@@ -1,0 +1,277 @@
+<!DOCTYPE html><html class="default" lang="en" data-base="./"><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>Egret Engine R - v6.0.0</title><meta name="description" content="Documentation for Egret Engine R"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script defer src="assets/main.js"></script><script async src="assets/icons.js" id="tsd-icons-script"></script><script async src="assets/search.js" id="tsd-search-script"></script><script async src="assets/navigation.js" id="tsd-nav-script"></script><script async src="assets/hierarchy.js" id="tsd-hierarchy-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => window.app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar">
+<div class="tsd-toolbar-contents container"><a href="index.html" class="title">Egret Engine R - v6.0.0</a>
+<div id="tsd-toolbar-links"></div><button id="tsd-search-trigger" class="tsd-widget" aria-label="Search"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="assets/icons.svg#icon-search"></use></svg></button><dialog id="tsd-search" aria-label="Search"><input role="combobox" id="tsd-search-input" aria-controls="tsd-search-results" aria-autocomplete="list" aria-expanded="true" autocapitalize="off" autocomplete="off" placeholder="Search the docs" maxLength="100"/>
+<ul role="listbox" id="tsd-search-results"></ul>
+<div id="tsd-search-status" aria-live="polite" aria-atomic="true">
+<div>Preparing search index...</div></div></dialog><a href="#" class="tsd-widget menu" id="tsd-toolbar-menu-trigger" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="assets/icons.svg#icon-menu"></use></svg></a></div></header>
+<div class="container container-main">
+<div class="col-content">
+<div class="tsd-page-title">
+<h1>Egret Engine R - v6.0.0</h1></div>
+<div class="tsd-panel tsd-typography"><h1 id="egret-engine-r" class="tsd-anchor-link">Egret Engine R<a href="#egret-engine-r" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h1>
+<blockquote>
+<p>Modern HTML5 Game Engine — ES Module packages, esbuild powered.</p>
+</blockquote>
+<p><a href="./LICENSE.md"><img src="https://img.shields.io/badge/license-New%20BSD-blue.svg" alt="License"></a>
+<a href="https://github.com/egret-labs/egret-r/actions/workflows/ci.yml"><img src="https://github.com/egret-labs/egret-r/actions/workflows/ci.yml/badge.svg" alt="CI"></a></p>
+<p>Egret Engine R is a modernized version of the Egret HTML5 game engine, repackaged as <strong>ES Module npm packages</strong> with <strong>esbuild</strong> as the build toolchain. It provides 2D rendering (Canvas/WebGL), an EUI component library, audio, networking, resource management, and more.</p>
+<hr>
+<h2 id="packages" class="tsd-anchor-link">Packages<a href="#packages" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<table>
+<thead>
+<tr>
+<th>Package</th>
+<th>Description</th>
+<th>Size (min)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="media/core"><code>@egret-r/core</code></a></td>
+<td>Core engine: DisplayList, Events, Media, Net, Rendering</td>
+<td>309 KB</td>
+</tr>
+<tr>
+<td><a href="media/eui"><code>@egret-r/eui</code></a></td>
+<td>UI component library: Button, List, Scroller, Layouts, EXML</td>
+<td>190 KB</td>
+</tr>
+<tr>
+<td><a href="media/game"><code>@egret-r/game</code></a></td>
+<td>Game extensions: MovieClip, URLLoader, ScrollView</td>
+<td>33 KB</td>
+</tr>
+<tr>
+<td><a href="media/tween"><code>@egret-r/tween</code></a></td>
+<td>Easing animation: Tween, Ease (chain, parallel, wait)</td>
+<td>10 KB</td>
+</tr>
+<tr>
+<td><a href="media/socket"><code>@egret-r/socket</code></a></td>
+<td>WebSocket wrapper</td>
+<td>3 KB</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="installation" class="tsd-anchor-link">Installation<a href="#installation" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<pre><code class="bash"><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-2">install</span><span class="hl-1"> </span><span class="hl-2">@egret-r/core</span><span class="hl-1"> </span><span class="hl-2">@egret-r/eui</span><span class="hl-1"> </span><span class="hl-2">@egret-r/game</span><span class="hl-1"> </span><span class="hl-2">@egret-r/tween</span>
+</code><button type="button">Copy</button></pre>
+
+<hr>
+<h2 id="quick-start" class="tsd-anchor-link">Quick Start<a href="#quick-start" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<h3 id="using-with-vite" class="tsd-anchor-link">Using with Vite<a href="#using-with-vite" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<pre><code class="bash"><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-2">create</span><span class="hl-1"> </span><span class="hl-2">vite@latest</span><span class="hl-1"> </span><span class="hl-2">my-game</span><span class="hl-1"> </span><span class="hl-3">--</span><span class="hl-1"> </span><span class="hl-3">--template</span><span class="hl-1"> </span><span class="hl-2">vanilla-ts</span><br/><span class="hl-0">cd</span><span class="hl-1"> </span><span class="hl-2">my-game</span><br/><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-2">install</span><span class="hl-1"> </span><span class="hl-2">@egret-r/core</span><span class="hl-1"> </span><span class="hl-2">@egret-r/eui</span><span class="hl-1"> </span><span class="hl-2">@egret-r/game</span>
+</code><button type="button">Copy</button></pre>
+
+<pre><code class="typescript"><span class="hl-4">// src/main.ts</span><br/><span class="hl-5">import</span><span class="hl-1"> { </span><span class="hl-6">egret</span><span class="hl-1"> } </span><span class="hl-5">from</span><span class="hl-1"> </span><span class="hl-2">&#39;@egret-r/core&#39;</span><span class="hl-1">;</span><br/><span class="hl-5">import</span><span class="hl-1"> </span><span class="hl-2">&#39;@egret-r/eui&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-3">class</span><span class="hl-1"> </span><span class="hl-7">Main</span><span class="hl-1"> </span><span class="hl-3">extends</span><span class="hl-1"> </span><span class="hl-7">egret</span><span class="hl-1">.</span><span class="hl-7">DisplayObjectContainer</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-3">constructor</span><span class="hl-1">() {</span><br/><span class="hl-1">    </span><span class="hl-3">super</span><span class="hl-1">();</span><br/><span class="hl-1">    </span><span class="hl-3">this</span><span class="hl-1">.</span><span class="hl-0">once</span><span class="hl-1">(</span><span class="hl-6">egret</span><span class="hl-1">.</span><span class="hl-6">Event</span><span class="hl-1">.</span><span class="hl-8">ADDED_TO_STAGE</span><span class="hl-1">, () </span><span class="hl-3">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1">      </span><span class="hl-3">this</span><span class="hl-1">.</span><span class="hl-6">stage</span><span class="hl-1">.</span><span class="hl-6">frameRate</span><span class="hl-1"> = </span><span class="hl-9">60</span><span class="hl-1">;</span><br/><span class="hl-1">    }, </span><span class="hl-3">this</span><span class="hl-1">);</span><br/><span class="hl-1">  }</span><br/><span class="hl-1">}</span><br/><br/><span class="hl-6">window</span><span class="hl-1">.</span><span class="hl-6">Main</span><span class="hl-1"> = </span><span class="hl-6">Main</span><span class="hl-1">;</span><br/><br/><span class="hl-6">window</span><span class="hl-1">.</span><span class="hl-0">addEventListener</span><span class="hl-1">(</span><span class="hl-2">&#39;DOMContentLoaded&#39;</span><span class="hl-1">, () </span><span class="hl-3">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-3">const</span><span class="hl-1"> </span><span class="hl-8">container</span><span class="hl-1"> = </span><span class="hl-6">document</span><span class="hl-1">.</span><span class="hl-0">getElementById</span><span class="hl-1">(</span><span class="hl-2">&#39;game-container&#39;</span><span class="hl-1">) </span><span class="hl-5">as</span><span class="hl-1"> </span><span class="hl-7">HTMLDivElement</span><span class="hl-1"> | </span><span class="hl-7">null</span><span class="hl-1">;</span><br/><span class="hl-1">  </span><span class="hl-5">if</span><span class="hl-1"> (!</span><span class="hl-6">container</span><span class="hl-1">) </span><span class="hl-5">return</span><span class="hl-1">;</span><br/><br/><span class="hl-1">  </span><span class="hl-6">container</span><span class="hl-1">.</span><span class="hl-6">classList</span><span class="hl-1">.</span><span class="hl-0">add</span><span class="hl-1">(</span><span class="hl-2">&#39;egret-player&#39;</span><span class="hl-1">);</span><br/><span class="hl-1">  </span><span class="hl-6">container</span><span class="hl-1">.</span><span class="hl-0">setAttribute</span><span class="hl-1">(</span><span class="hl-2">&#39;data-entry-class&#39;</span><span class="hl-1">, </span><span class="hl-2">&#39;Main&#39;</span><span class="hl-1">);</span><br/><span class="hl-1">  </span><span class="hl-6">container</span><span class="hl-1">.</span><span class="hl-0">setAttribute</span><span class="hl-1">(</span><span class="hl-2">&#39;data-scale-mode&#39;</span><span class="hl-1">, </span><span class="hl-6">egret</span><span class="hl-1">.</span><span class="hl-6">StageScaleMode</span><span class="hl-1">.</span><span class="hl-8">NO_SCALE</span><span class="hl-1">);</span><br/><span class="hl-1">  </span><span class="hl-6">container</span><span class="hl-1">.</span><span class="hl-0">setAttribute</span><span class="hl-1">(</span><span class="hl-2">&#39;data-frame-rate&#39;</span><span class="hl-1">, </span><span class="hl-2">&#39;60&#39;</span><span class="hl-1">);</span><br/><span class="hl-1">  </span><span class="hl-6">container</span><span class="hl-1">.</span><span class="hl-0">setAttribute</span><span class="hl-1">(</span><span class="hl-2">&#39;data-content-width&#39;</span><span class="hl-1">, </span><span class="hl-0">String</span><span class="hl-1">(</span><span class="hl-6">container</span><span class="hl-1">.</span><span class="hl-6">clientWidth</span><span class="hl-1"> || </span><span class="hl-6">window</span><span class="hl-1">.</span><span class="hl-6">innerWidth</span><span class="hl-1">));</span><br/><span class="hl-1">  </span><span class="hl-6">container</span><span class="hl-1">.</span><span class="hl-0">setAttribute</span><span class="hl-1">(</span><span class="hl-2">&#39;data-content-height&#39;</span><span class="hl-1">, </span><span class="hl-0">String</span><span class="hl-1">(</span><span class="hl-6">container</span><span class="hl-1">.</span><span class="hl-6">clientHeight</span><span class="hl-1"> || </span><span class="hl-6">window</span><span class="hl-1">.</span><span class="hl-6">innerHeight</span><span class="hl-1">));</span><br/><br/><span class="hl-1">  </span><span class="hl-6">egret</span><span class="hl-1">.</span><span class="hl-0">runEgret</span><span class="hl-1">({ </span><span class="hl-6">renderMode:</span><span class="hl-1"> </span><span class="hl-2">&#39;webgl&#39;</span><span class="hl-1"> });</span><br/><span class="hl-1">});</span>
+</code><button type="button">Copy</button></pre>
+
+<h3 id="run-the-basic-example" class="tsd-anchor-link">Run the Basic Example<a href="#run-the-basic-example" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<pre><code class="bash"><span class="hl-4"># from repository root — one command</span><br/><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-2">run</span><span class="hl-1"> </span><span class="hl-2">dev</span><br/><br/><span class="hl-4"># or manually:</span><br/><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-2">install</span><br/><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-2">run</span><span class="hl-1"> </span><span class="hl-2">build</span><br/><span class="hl-0">cd</span><span class="hl-1"> </span><span class="hl-2">examples/basic</span><span class="hl-1"> &amp;&amp; </span><span class="hl-0">npx</span><span class="hl-1"> </span><span class="hl-2">vite</span><span class="hl-1"> </span><span class="hl-3">--host</span><span class="hl-1"> </span><span class="hl-9">127.0.0.1</span><span class="hl-1"> </span><span class="hl-3">--port</span><span class="hl-1"> </span><span class="hl-9">3005</span><span class="hl-1"> </span><span class="hl-3">--strictPort</span>
+</code><button type="button">Copy</button></pre>
+
+<p>Open <code>http://127.0.0.1:3005/</code> in your browser. Use the top-right dropdown to switch between <strong>23 test cases</strong> covering all packages.</p>
+<h3 id="test-cases-included" class="tsd-anchor-link">Test Cases Included<a href="#test-cases-included" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<table>
+<thead>
+<tr>
+<th>Module</th>
+<th>Cases</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Core</td>
+<td>Geometry, Event/Touch, Graphics, Text, Transform, RenderTexture, BlendMode, Benchmark×3, HttpRequest, Sound, Video, ImageLoader</td>
+</tr>
+<tr>
+<td>EUI</td>
+<td>ArrayCollection, Button, CheckBox/RadioButton, List/Scroller</td>
+</tr>
+<tr>
+<td>Game</td>
+<td>URLVariables, MovieClip</td>
+</tr>
+<tr>
+<td>Tween</td>
+<td>Easing, Multi-target</td>
+</tr>
+<tr>
+<td>Socket</td>
+<td>WebSocket</td>
+</tr>
+</tbody>
+</table>
+<h3 id="mini-game-demos" class="tsd-anchor-link">Mini-Game Demos<a href="#mini-game-demos" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<p>Standalone playable games in <code>examples/</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Project</th>
+<th>Directory</th>
+<th>Dev Server</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🎮 <strong>Flappy Bird</strong></td>
+<td><code>examples/flappy-bird/</code></td>
+<td><code>npm -w examples/flappy-bird run dev</code> → <a href="http://localhost:3001">http://localhost:3001</a></td>
+</tr>
+<tr>
+<td>🎮 <strong>Breakout</strong></td>
+<td><code>examples/breakout/</code></td>
+<td><code>npm -w examples/breakout run dev</code> → <a href="http://localhost:3002">http://localhost:3002</a></td>
+</tr>
+<tr>
+<td>🎮 <strong>2048</strong></td>
+<td><code>examples/2048/</code></td>
+<td><code>npm -w examples/2048 run dev</code> → <a href="http://localhost:3003">http://localhost:3003</a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="recommended-development-workflow" class="tsd-anchor-link">Recommended Development Workflow<a href="#recommended-development-workflow" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<p><strong>Single command (build + dev server):</strong></p>
+<pre><code class="bash"><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-2">run</span><span class="hl-1"> </span><span class="hl-2">dev</span>
+</code><button type="button">Copy</button></pre>
+
+<p>For fast iteration during development, open <strong>two terminals</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Terminal 1</th>
+<th>Terminal 2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>npm run watch</code></td>
+<td><code>npm -w examples/basic run dev</code></td>
+</tr>
+<tr>
+<td>Watches <code>src/</code> changes → auto-rebuilds packages</td>
+<td>Vite dev server → HMR auto-refreshes browser</td>
+</tr>
+</tbody>
+</table>
+<h3 id="using-the-vite-template" class="tsd-anchor-link">Using the Vite Template<a href="#using-the-vite-template" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<pre><code class="bash"><span class="hl-4"># Copy the template from the egret-r repository</span><br/><span class="hl-0">cp</span><span class="hl-1"> </span><span class="hl-3">-r</span><span class="hl-1"> </span><span class="hl-2">templates/vite-game</span><span class="hl-1"> </span><span class="hl-2">my-game</span><br/><span class="hl-0">cd</span><span class="hl-1"> </span><span class="hl-2">my-game</span><br/><br/><span class="hl-4"># Install dependencies</span><br/><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-2">install</span><br/><br/><span class="hl-4"># Link local packages (monorepo dev)</span><br/><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-2">link</span><span class="hl-1"> </span><span class="hl-2">../../packages/core</span><span class="hl-1"> </span><span class="hl-2">../../packages/eui</span><span class="hl-1"> </span><span class="hl-2">../../packages/game</span><span class="hl-1"> </span><span class="hl-2">../../packages/tween</span><br/><br/><span class="hl-4"># Start dev server</span><br/><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-2">run</span><span class="hl-1"> </span><span class="hl-2">dev</span>
+</code><button type="button">Copy</button></pre>
+
+<p>The template (<code>templates/vite-game/</code>) includes a ready-to-run game skeleton with Stage, Button, Label and Tween animation examples. See <a href="media/README.md">templates/vite-game/README.md</a> for details.</p>
+<h3 id="using-with-html-tag" class="tsd-anchor-link">Using with HTML <code>&lt;script&gt;</code> tag<a href="#using-with-html-tag" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<pre><code class="html"><span class="hl-10">&lt;</span><span class="hl-11">script</span><span class="hl-12"> </span><span class="hl-13">type</span><span class="hl-12">=</span><span class="hl-14">&quot;module&quot;</span><span class="hl-10">&gt;</span><br/><span class="hl-12">  </span><span class="hl-5">import</span><span class="hl-12"> { </span><span class="hl-6">egret</span><span class="hl-12"> } </span><span class="hl-5">from</span><span class="hl-12"> </span><span class="hl-2">&#39;./node_modules/@egret-r/core/dist/index.js&#39;</span><span class="hl-12">;</span><br/><span class="hl-12">  </span><span class="hl-5">import</span><span class="hl-12"> { </span><span class="hl-6">eui</span><span class="hl-12"> } </span><span class="hl-5">from</span><span class="hl-12"> </span><span class="hl-2">&#39;./node_modules/@egret-r/eui/dist/index.js&#39;</span><span class="hl-12">;</span><br/><span class="hl-12">  </span><br/><span class="hl-12">  </span><span class="hl-3">const</span><span class="hl-12"> </span><span class="hl-8">stage</span><span class="hl-12"> </span><span class="hl-1">=</span><span class="hl-12"> </span><span class="hl-6">egret</span><span class="hl-12">.</span><span class="hl-6">Stage</span><span class="hl-12">.</span><span class="hl-0">getInstance</span><span class="hl-12">();</span><br/><span class="hl-12">  </span><span class="hl-4">// ...</span><br/><span class="hl-10">&lt;/</span><span class="hl-11">script</span><span class="hl-10">&gt;</span>
+</code><button type="button">Copy</button></pre>
+
+<hr>
+<h2 id="api-overview" class="tsd-anchor-link">API Overview<a href="#api-overview" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<h3 id="egret-rcore" class="tsd-anchor-link">@egret-r/core<a href="#egret-rcore" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<pre><code class="typescript"><span class="hl-5">import</span><span class="hl-1"> { </span><span class="hl-6">egret</span><span class="hl-1"> } </span><span class="hl-5">from</span><span class="hl-1"> </span><span class="hl-2">&#39;@egret-r/core&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-4">// Display objects</span><br/><span class="hl-3">const</span><span class="hl-1"> </span><span class="hl-8">bitmap</span><span class="hl-1"> = </span><span class="hl-3">new</span><span class="hl-1"> </span><span class="hl-6">egret</span><span class="hl-1">.</span><span class="hl-0">Bitmap</span><span class="hl-1">(</span><span class="hl-6">texture</span><span class="hl-1">);</span><br/><span class="hl-3">const</span><span class="hl-1"> </span><span class="hl-8">shape</span><span class="hl-1"> = </span><span class="hl-3">new</span><span class="hl-1"> </span><span class="hl-6">egret</span><span class="hl-1">.</span><span class="hl-0">Shape</span><span class="hl-1">();</span><br/><span class="hl-6">shape</span><span class="hl-1">.</span><span class="hl-6">graphics</span><span class="hl-1">.</span><span class="hl-0">beginFill</span><span class="hl-1">(</span><span class="hl-9">0xff0000</span><span class="hl-1">);</span><br/><span class="hl-6">shape</span><span class="hl-1">.</span><span class="hl-6">graphics</span><span class="hl-1">.</span><span class="hl-0">drawRect</span><span class="hl-1">(</span><span class="hl-9">0</span><span class="hl-1">, </span><span class="hl-9">0</span><span class="hl-1">, </span><span class="hl-9">100</span><span class="hl-1">, </span><span class="hl-9">100</span><span class="hl-1">);</span><br/><br/><span class="hl-4">// Stage</span><br/><span class="hl-3">const</span><span class="hl-1"> </span><span class="hl-8">stage</span><span class="hl-1"> = </span><span class="hl-6">egret</span><span class="hl-1">.</span><span class="hl-6">Stage</span><span class="hl-1">.</span><span class="hl-0">getInstance</span><span class="hl-1">();</span><br/><span class="hl-6">stage</span><span class="hl-1">.</span><span class="hl-0">addChild</span><span class="hl-1">(</span><span class="hl-6">bitmap</span><span class="hl-1">);</span><br/><br/><span class="hl-4">// Events</span><br/><span class="hl-6">bitmap</span><span class="hl-1">.</span><span class="hl-0">addEventListener</span><span class="hl-1">(</span><span class="hl-6">egret</span><span class="hl-1">.</span><span class="hl-6">TouchEvent</span><span class="hl-1">.</span><span class="hl-8">TOUCH_TAP</span><span class="hl-1">, () </span><span class="hl-3">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-6">console</span><span class="hl-1">.</span><span class="hl-0">log</span><span class="hl-1">(</span><span class="hl-2">&#39;Tapped!&#39;</span><span class="hl-1">);</span><br/><span class="hl-1">}, </span><span class="hl-3">this</span><span class="hl-1">);</span><br/><br/><span class="hl-4">// HTTP</span><br/><span class="hl-3">const</span><span class="hl-1"> </span><span class="hl-8">request</span><span class="hl-1"> = </span><span class="hl-3">new</span><span class="hl-1"> </span><span class="hl-6">egret</span><span class="hl-1">.</span><span class="hl-0">HttpRequest</span><span class="hl-1">();</span><br/><span class="hl-6">request</span><span class="hl-1">.</span><span class="hl-0">open</span><span class="hl-1">(</span><span class="hl-2">&#39;https://api.example.com/data.json&#39;</span><span class="hl-1">, </span><span class="hl-6">egret</span><span class="hl-1">.</span><span class="hl-6">HttpMethod</span><span class="hl-1">.</span><span class="hl-8">GET</span><span class="hl-1">);</span><br/><span class="hl-6">request</span><span class="hl-1">.</span><span class="hl-0">addEventListener</span><span class="hl-1">(</span><span class="hl-6">egret</span><span class="hl-1">.</span><span class="hl-6">Event</span><span class="hl-1">.</span><span class="hl-8">COMPLETE</span><span class="hl-1">, () </span><span class="hl-3">=&gt;</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-3">const</span><span class="hl-1"> </span><span class="hl-8">data</span><span class="hl-1"> = </span><span class="hl-8">JSON</span><span class="hl-1">.</span><span class="hl-0">parse</span><span class="hl-1">(</span><span class="hl-6">request</span><span class="hl-1">.</span><span class="hl-6">response</span><span class="hl-1">);</span><br/><span class="hl-1">}, </span><span class="hl-3">this</span><span class="hl-1">);</span><br/><span class="hl-6">request</span><span class="hl-1">.</span><span class="hl-0">send</span><span class="hl-1">();</span><br/><br/><span class="hl-4">// Sound</span><br/><span class="hl-3">const</span><span class="hl-1"> </span><span class="hl-8">sound</span><span class="hl-1"> = </span><span class="hl-3">new</span><span class="hl-1"> </span><span class="hl-6">egret</span><span class="hl-1">.</span><span class="hl-0">Sound</span><span class="hl-1">();</span><br/><span class="hl-6">sound</span><span class="hl-1">.</span><span class="hl-0">load</span><span class="hl-1">(</span><span class="hl-2">&#39;https://example.com/click.mp3&#39;</span><span class="hl-1">);</span><br/><span class="hl-6">sound</span><span class="hl-1">.</span><span class="hl-0">play</span><span class="hl-1">();</span>
+</code><button type="button">Copy</button></pre>
+
+<h3 id="egret-reui" class="tsd-anchor-link">@egret-r/eui<a href="#egret-reui" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<pre><code class="typescript"><span class="hl-5">import</span><span class="hl-1"> { </span><span class="hl-6">eui</span><span class="hl-1"> } </span><span class="hl-5">from</span><span class="hl-1"> </span><span class="hl-2">&#39;@egret-r/eui&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-4">// Components</span><br/><span class="hl-3">const</span><span class="hl-1"> </span><span class="hl-8">list</span><span class="hl-1"> = </span><span class="hl-3">new</span><span class="hl-1"> </span><span class="hl-6">eui</span><span class="hl-1">.</span><span class="hl-0">List</span><span class="hl-1">();</span><br/><span class="hl-3">const</span><span class="hl-1"> </span><span class="hl-8">scroller</span><span class="hl-1"> = </span><span class="hl-3">new</span><span class="hl-1"> </span><span class="hl-6">eui</span><span class="hl-1">.</span><span class="hl-0">Scroller</span><span class="hl-1">();</span><br/><span class="hl-3">const</span><span class="hl-1"> </span><span class="hl-8">panel</span><span class="hl-1"> = </span><span class="hl-3">new</span><span class="hl-1"> </span><span class="hl-6">eui</span><span class="hl-1">.</span><span class="hl-0">Panel</span><span class="hl-1">();</span><br/><br/><span class="hl-4">// Layout</span><br/><span class="hl-3">const</span><span class="hl-1"> </span><span class="hl-8">layout</span><span class="hl-1"> = </span><span class="hl-3">new</span><span class="hl-1"> </span><span class="hl-6">eui</span><span class="hl-1">.</span><span class="hl-0">HorizontalLayout</span><span class="hl-1">();</span><br/><span class="hl-6">layout</span><span class="hl-1">.</span><span class="hl-6">gap</span><span class="hl-1"> = </span><span class="hl-9">10</span><span class="hl-1">;</span><br/><span class="hl-6">scroller</span><span class="hl-1">.</span><span class="hl-6">layout</span><span class="hl-1"> = </span><span class="hl-6">layout</span><span class="hl-1">;</span><br/><br/><span class="hl-4">// Data binding</span><br/><span class="hl-3">const</span><span class="hl-1"> </span><span class="hl-8">collection</span><span class="hl-1"> = </span><span class="hl-3">new</span><span class="hl-1"> </span><span class="hl-6">eui</span><span class="hl-1">.</span><span class="hl-0">ArrayCollection</span><span class="hl-1">([</span><br/><span class="hl-1">  { </span><span class="hl-6">label:</span><span class="hl-1"> </span><span class="hl-2">&#39;Item 1&#39;</span><span class="hl-1">, </span><span class="hl-6">value:</span><span class="hl-1"> </span><span class="hl-9">1</span><span class="hl-1"> },</span><br/><span class="hl-1">  { </span><span class="hl-6">label:</span><span class="hl-1"> </span><span class="hl-2">&#39;Item 2&#39;</span><span class="hl-1">, </span><span class="hl-6">value:</span><span class="hl-1"> </span><span class="hl-9">2</span><span class="hl-1"> },</span><br/><span class="hl-1">]);</span><br/><span class="hl-6">list</span><span class="hl-1">.</span><span class="hl-6">dataProvider</span><span class="hl-1"> = </span><span class="hl-6">collection</span><span class="hl-1">;</span>
+</code><button type="button">Copy</button></pre>
+
+<h3 id="egret-rtween" class="tsd-anchor-link">@egret-r/tween<a href="#egret-rtween" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<pre><code class="typescript"><span class="hl-5">import</span><span class="hl-1"> { </span><span class="hl-6">Tween</span><span class="hl-1">, </span><span class="hl-6">Ease</span><span class="hl-1"> } </span><span class="hl-5">from</span><span class="hl-1"> </span><span class="hl-2">&#39;@egret-r/tween&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-4">// Basic tween</span><br/><span class="hl-6">Tween</span><span class="hl-1">.</span><span class="hl-0">get</span><span class="hl-1">(</span><span class="hl-6">target</span><span class="hl-1">)</span><br/><span class="hl-1">  .</span><span class="hl-0">to</span><span class="hl-1">({ </span><span class="hl-6">x:</span><span class="hl-1"> </span><span class="hl-9">200</span><span class="hl-1">, </span><span class="hl-6">y:</span><span class="hl-1"> </span><span class="hl-9">300</span><span class="hl-1"> }, </span><span class="hl-9">500</span><span class="hl-1">)</span><br/><span class="hl-1">  .</span><span class="hl-0">to</span><span class="hl-1">({ </span><span class="hl-6">scaleX:</span><span class="hl-1"> </span><span class="hl-9">1.5</span><span class="hl-1">, </span><span class="hl-6">scaleY:</span><span class="hl-1"> </span><span class="hl-9">1.5</span><span class="hl-1"> }, </span><span class="hl-9">300</span><span class="hl-1">, </span><span class="hl-6">Ease</span><span class="hl-1">.</span><span class="hl-6">backOut</span><span class="hl-1">);</span><br/><br/><span class="hl-4">// Chain</span><br/><span class="hl-6">Tween</span><span class="hl-1">.</span><span class="hl-0">get</span><span class="hl-1">(</span><span class="hl-6">obj1</span><span class="hl-1">)</span><br/><span class="hl-1">  .</span><span class="hl-0">to</span><span class="hl-1">({ </span><span class="hl-6">alpha:</span><span class="hl-1"> </span><span class="hl-9">0</span><span class="hl-1"> }, </span><span class="hl-9">400</span><span class="hl-1">)</span><br/><span class="hl-1">  .</span><span class="hl-0">wait</span><span class="hl-1">(</span><span class="hl-9">200</span><span class="hl-1">)</span><br/><span class="hl-1">  .</span><span class="hl-0">call</span><span class="hl-1">(() </span><span class="hl-3">=&gt;</span><span class="hl-1"> </span><span class="hl-6">console</span><span class="hl-1">.</span><span class="hl-0">log</span><span class="hl-1">(</span><span class="hl-2">&#39;Done!&#39;</span><span class="hl-1">));</span>
+</code><button type="button">Copy</button></pre>
+
+<h3 id="egret-rgame" class="tsd-anchor-link">@egret-r/game<a href="#egret-rgame" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<pre><code class="typescript"><span class="hl-5">import</span><span class="hl-1"> { </span><span class="hl-6">egret</span><span class="hl-1"> } </span><span class="hl-5">from</span><span class="hl-1"> </span><span class="hl-2">&#39;@egret-r/core&#39;</span><span class="hl-1">;</span><br/><span class="hl-5">import</span><span class="hl-1"> { </span><span class="hl-6">game</span><span class="hl-1"> } </span><span class="hl-5">from</span><span class="hl-1"> </span><span class="hl-2">&#39;@egret-r/game&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-4">// MovieClip</span><br/><span class="hl-3">const</span><span class="hl-1"> </span><span class="hl-8">mcData</span><span class="hl-1"> = </span><span class="hl-6">game</span><span class="hl-1">.</span><span class="hl-6">MovieClipDataFactory</span><span class="hl-1">.</span><span class="hl-0">generateMovieClipData</span><span class="hl-1">(</span><span class="hl-6">jsonData</span><span class="hl-1">, </span><span class="hl-6">texture</span><span class="hl-1">);</span><br/><span class="hl-3">const</span><span class="hl-1"> </span><span class="hl-8">mc</span><span class="hl-1"> = </span><span class="hl-3">new</span><span class="hl-1"> </span><span class="hl-6">game</span><span class="hl-1">.</span><span class="hl-0">MovieClip</span><span class="hl-1">(</span><span class="hl-6">mcData</span><span class="hl-1">);</span><br/><span class="hl-6">mc</span><span class="hl-1">.</span><span class="hl-0">gotoAndPlay</span><span class="hl-1">(</span><span class="hl-2">&#39;walk&#39;</span><span class="hl-1">);</span><br/><br/><span class="hl-4">// URLLoader</span><br/><span class="hl-3">const</span><span class="hl-1"> </span><span class="hl-8">loader</span><span class="hl-1"> = </span><span class="hl-3">new</span><span class="hl-1"> </span><span class="hl-6">game</span><span class="hl-1">.</span><span class="hl-0">URLLoader</span><span class="hl-1">();</span><br/><span class="hl-6">loader</span><span class="hl-1">.</span><span class="hl-6">dataFormat</span><span class="hl-1"> = </span><span class="hl-6">game</span><span class="hl-1">.</span><span class="hl-6">URLLoaderDataFormat</span><span class="hl-1">.</span><span class="hl-8">TEXT</span><span class="hl-1">;</span><br/><span class="hl-6">loader</span><span class="hl-1">.</span><span class="hl-0">load</span><span class="hl-1">(</span><span class="hl-3">new</span><span class="hl-1"> </span><span class="hl-6">game</span><span class="hl-1">.</span><span class="hl-0">URLRequest</span><span class="hl-1">(</span><span class="hl-2">&#39;https://example.com/data.txt&#39;</span><span class="hl-1">));</span>
+</code><button type="button">Copy</button></pre>
+
+<hr>
+<h2 id="development" class="tsd-anchor-link">Development<a href="#development" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<h3 id="project-structure" class="tsd-anchor-link">Project Structure<a href="#project-structure" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<pre><code><span class="hl-6">egret</span><span class="hl-1">-</span><span class="hl-6">r</span><span class="hl-1">/</span><br/><span class="hl-1">├── </span><span class="hl-6">packages</span><span class="hl-1">/</span><br/><span class="hl-1">│   ├── </span><span class="hl-6">core</span><span class="hl-1">/          # @</span><span class="hl-6">egret</span><span class="hl-1">-</span><span class="hl-6">r</span><span class="hl-1">/</span><span class="hl-6">core</span><br/><span class="hl-1">│   ├── </span><span class="hl-6">eui</span><span class="hl-1">/           # @</span><span class="hl-6">egret</span><span class="hl-1">-</span><span class="hl-6">r</span><span class="hl-1">/</span><span class="hl-6">eui</span><br/><span class="hl-1">│   ├── </span><span class="hl-6">game</span><span class="hl-1">/          # @</span><span class="hl-6">egret</span><span class="hl-1">-</span><span class="hl-6">r</span><span class="hl-1">/</span><span class="hl-6">game</span><br/><span class="hl-1">│   ├── </span><span class="hl-6">tween</span><span class="hl-1">/         # @</span><span class="hl-6">egret</span><span class="hl-1">-</span><span class="hl-6">r</span><span class="hl-1">/</span><span class="hl-6">tween</span><br/><span class="hl-1">│   └── </span><span class="hl-6">socket</span><span class="hl-1">/        # @</span><span class="hl-6">egret</span><span class="hl-1">-</span><span class="hl-6">r</span><span class="hl-1">/</span><span class="hl-6">socket</span><br/><span class="hl-1">├── </span><span class="hl-6">src</span><span class="hl-1">/               # </span><span class="hl-8">ESM</span><span class="hl-1"> </span><span class="hl-0">source</span><span class="hl-1"> (</span><span class="hl-6">namespace</span><span class="hl-1">→</span><span class="hl-8">ESM</span><span class="hl-1"> </span><span class="hl-6">migration</span><span class="hl-1">)</span><br/><span class="hl-1">├── </span><span class="hl-6">scripts</span><span class="hl-1">/           # </span><span class="hl-6">Build</span><span class="hl-1"> </span><span class="hl-6">tooling</span><br/><span class="hl-1">└── </span><span class="hl-6">package</span><span class="hl-1">.</span><span class="hl-6">json</span><span class="hl-1">       # </span><span class="hl-6">Monorepo</span><span class="hl-1"> </span><span class="hl-0">root</span><span class="hl-1"> (</span><span class="hl-6">npm</span><span class="hl-1"> </span><span class="hl-6">workspaces</span><span class="hl-1">)</span>
+</code><button>Copy</button></pre>
+
+<h3 id="commands" class="tsd-anchor-link">Commands<a href="#commands" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<pre><code class="bash"><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-2">install</span><span class="hl-1">           </span><span class="hl-4"># Install dependencies</span><br/><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-2">run</span><span class="hl-1"> </span><span class="hl-2">build</span><span class="hl-1">         </span><span class="hl-4"># Build all 5 packages</span><br/><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-2">run</span><span class="hl-1"> </span><span class="hl-2">build:core</span><span class="hl-1">    </span><span class="hl-4"># Build @egret-r/core only</span><br/><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-2">run</span><span class="hl-1"> </span><span class="hl-2">dev</span><span class="hl-1">           </span><span class="hl-4"># Build + start example dev server</span><br/><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-2">run</span><span class="hl-1"> </span><span class="hl-2">clean</span><span class="hl-1">         </span><span class="hl-4"># Remove all dist/ directories</span><br/><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-2">test</span><span class="hl-1">              </span><span class="hl-4"># Run all tests (88 tests, 5 suites)</span>
+</code><button type="button">Copy</button></pre>
+
+<h3 id="build-pipeline" class="tsd-anchor-link">Build Pipeline<a href="#build-pipeline" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<pre><code><span class="hl-6">src</span><span class="hl-1">/</span><span class="hl-6">egret</span><span class="hl-4">/*.ts src/extension/*.ts (ESM source)</span><br/><span class="hl-4">    │</span><br/><span class="hl-4">    ├── Defines.debug.ts → injected first (debug constants)</span><br/><span class="hl-4">    ├── Kahn topological sort → resolve circular dependencies</span><br/><span class="hl-4">    ├── import type → break remaining cycles</span><br/><span class="hl-4">    │</span><br/><span class="hl-4">    └── esbuild</span><br/><span class="hl-4">          ├── bundle + ESM → dist/index_tmp.js</span><br/><span class="hl-4">          ├── IIFE wrap → var hoisting for class extends</span><br/><span class="hl-4">          └── inline namespace assignments → dist/index.js</span>
+</code><button>Copy</button></pre>
+
+<hr>
+<h2 id="platform-support" class="tsd-anchor-link">Platform Support<a href="#platform-support" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<table>
+<thead>
+<tr>
+<th>Platform</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Chrome, Edge, Firefox, Safari</td>
+<td>✅ Full</td>
+</tr>
+<tr>
+<td>iOS Safari, Android Chrome</td>
+<td>✅ Full</td>
+</tr>
+<tr>
+<td>WeChat Mini Game</td>
+<td>✅ (via Web API)</td>
+</tr>
+<tr>
+<td>Facebook Instant Games</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="license" class="tsd-anchor-link">License<a href="#license" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p>BSD License — see <a href="media/LICENSE.md">LICENSE.md</a> for details.</p>
+</div></div>
+<div class="col-sidebar">
+<div class="page-menu">
+<div class="tsd-navigation settings">
+<details class="tsd-accordion"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="assets/icons.svg#icon-chevronDown"></use></svg>
+<h3>Settings</h3></summary>
+<div class="tsd-accordion-details">
+<div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span>
+<ul id="tsd-filter-options">
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li></ul></div>
+<div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div>
+<details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="assets/icons.svg#icon-chevronDown"></use></svg>
+<h3>On This Page</h3></summary>
+<div class="tsd-accordion-details"><a href="#egret-engine-r"><span>Egret <wbr/>Engine <wbr/>R</span></a>
+<ul>
+<li><a href="#packages"><span>Packages</span></a></li>
+<li><a href="#installation"><span>Installation</span></a></li>
+<li><a href="#quick-start"><span>Quick <wbr/>Start</span></a></li>
+<li>
+<ul>
+<li><a href="#using-with-vite"><span>Using with <wbr/>Vite</span></a></li>
+<li><a href="#run-the-basic-example"><span>Run the <wbr/>Basic <wbr/>Example</span></a></li>
+<li><a href="#test-cases-included"><span>Test <wbr/>Cases <wbr/>Included</span></a></li>
+<li><a href="#mini-game-demos"><span>Mini-<wbr/>Game <wbr/>Demos</span></a></li>
+<li><a href="#recommended-development-workflow"><span>Recommended <wbr/>Development <wbr/>Workflow</span></a></li>
+<li><a href="#using-the-vite-template"><span>Using the <wbr/>Vite <wbr/>Template</span></a></li>
+<li><a href="#using-with-html-tag"><span>Using with <wbr/>HTML  tag</span></a></li></ul></li>
+<li><a href="#api-overview"><span>API <wbr/>Overview</span></a></li>
+<li>
+<ul>
+<li><a href="#egret-rcore"><span>@egret-<wbr/>r/core</span></a></li>
+<li><a href="#egret-reui"><span>@egret-<wbr/>r/eui</span></a></li>
+<li><a href="#egret-rtween"><span>@egret-<wbr/>r/tween</span></a></li>
+<li><a href="#egret-rgame"><span>@egret-<wbr/>r/game</span></a></li></ul></li>
+<li><a href="#development"><span>Development</span></a></li>
+<li>
+<ul>
+<li><a href="#project-structure"><span>Project <wbr/>Structure</span></a></li>
+<li><a href="#commands"><span>Commands</span></a></li>
+<li><a href="#build-pipeline"><span>Build <wbr/>Pipeline</span></a></li></ul></li>
+<li><a href="#platform-support"><span>Platform <wbr/>Support</span></a></li>
+<li><a href="#license"><span>License</span></a></li></ul></div></details></div>
+<div class="site-menu">
+<nav class="tsd-navigation"><a href="modules.html">Egret Engine R - v6.0.0</a>
+<ul class="tsd-small-nested-navigation" id="tsd-nav-container">
+<li>Loading...</li></ul></nav></div></div></div><footer></footer>
+<div class="overlay"></div></body></html>

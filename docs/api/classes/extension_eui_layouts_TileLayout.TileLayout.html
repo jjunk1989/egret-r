@@ -1,0 +1,1088 @@
+<!DOCTYPE html><html class="default" lang="en" data-base="../"><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>TileLayout | Egret Engine R - v6.0.0</title><meta name="description" content="Documentation for Egret Engine R"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script><script async src="../assets/hierarchy.js" id="tsd-hierarchy-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => window.app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar">
+<div class="tsd-toolbar-contents container"><a href="../index.html" class="title">Egret Engine R - v6.0.0</a>
+<div id="tsd-toolbar-links"></div><button id="tsd-search-trigger" class="tsd-widget" aria-label="Search"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-search"></use></svg></button><dialog id="tsd-search" aria-label="Search"><input role="combobox" id="tsd-search-input" aria-controls="tsd-search-results" aria-autocomplete="list" aria-expanded="true" autocapitalize="off" autocomplete="off" placeholder="Search the docs" maxLength="100"/>
+<ul role="listbox" id="tsd-search-results"></ul>
+<div id="tsd-search-status" aria-live="polite" aria-atomic="true">
+<div>Preparing search index...</div></div></dialog><a href="#" class="tsd-widget menu" id="tsd-toolbar-menu-trigger" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-menu"></use></svg></a></div></header>
+<div class="container container-main">
+<div class="col-content">
+<div class="tsd-page-title">
+<ul class="tsd-breadcrumb" aria-label="Breadcrumb">
+<li><a href="../modules/extension_eui_layouts_TileLayout.html">extension/eui/layouts/TileLayout</a></li>
+<li><a href="" aria-current="page">TileLayout</a></li></ul>
+<h1>Class TileLayout</h1></div>
+<section class="tsd-panel tsd-comment">
+<div class="tsd-comment tsd-typography"><p>TileLayout 类在单元格大小相等的列和行中排列布局元素。
+TileLayout 类使用许多属性来控制列和行的方向、计数、大小、间隙和两端对齐以及单元格内的元素对齐。</p>
+</div>
+<div class="tsd-comment tsd-typography">
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version">Version<a href="#version" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Egret 2.4</p>
+</div>
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-1">Version<a href="#version-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>eui 1.0</p>
+</div>
+<div class="tsd-tag-platform">
+<h4 class="tsd-anchor-link" id="platform">Platform<a href="#platform" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Web</p>
+</div>
+<div class="tsd-tag-includeExample">
+<h4 class="tsd-anchor-link" id="include-example">Include Example<a href="#include-example" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>extension/eui/layout/TileLayoutExample.ts</p>
+</div>
+<div class="tsd-tag-language">
+<h4 class="tsd-anchor-link" id="language">Language<a href="#language" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>zh_CN</p>
+</div></div></section>
+<section class="tsd-panel tsd-hierarchy" data-refl="19416">
+<h4>Hierarchy (<a href="../hierarchy.html#extension/eui/layouts/TileLayout.TileLayout">View Summary</a>)</h4>
+<ul class="tsd-hierarchy">
+<li class="tsd-hierarchy-item"><a href="extension_eui_layouts_supportClasses_LayoutBase.LayoutBase.html" class="tsd-signature-type tsd-kind-class">LayoutBase</a>
+<ul class="tsd-hierarchy">
+<li class="tsd-hierarchy-item"><span class="tsd-hierarchy-target">TileLayout</span></li></ul></li></ul></section><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/jjunk1989/egret-r/blob/59cf01520cdfe65259db926f7f8c28395bef86f0/src/extension/eui/layouts/TileLayout.ts#L41">extension/eui/layouts/TileLayout.ts:41</a></li></ul></aside>
+<section class="tsd-panel-group tsd-index-group">
+<section class="tsd-panel tsd-index-panel">
+<details class="tsd-index-content tsd-accordion" open><summary class="tsd-accordion-summary tsd-index-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
+<h5 class="tsd-index-heading uppercase">Index</h5></summary>
+<div class="tsd-accordion-details">
+<section class="tsd-index-section">
+<h3 class="tsd-index-heading tsd-anchor-link" id="constructors">Constructors<a href="#constructors" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<div class="tsd-index-list"><a href="#constructor" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Constructor"><use href="../assets/icons.svg#icon-512"></use></svg><span>constructor</span></a>
+</div></section>
+<section class="tsd-index-section">
+<h3 class="tsd-index-heading tsd-anchor-link" id="accessors">Accessors<a href="#accessors" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<div class="tsd-index-list"><a href="#horizontalgap" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Accessor"><use href="../assets/icons.svg#icon-262144"></use></svg><span>horizontal<wbr/>Gap</span></a>
+<a href="#verticalgap" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Accessor"><use href="../assets/icons.svg#icon-262144"></use></svg><span>vertical<wbr/>Gap</span></a>
+<a href="#columncount" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Accessor"><use href="../assets/icons.svg#icon-262144"></use></svg><span>column<wbr/>Count</span></a>
+<a href="#requestedcolumncount" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Accessor"><use href="../assets/icons.svg#icon-262144"></use></svg><span>requested<wbr/>Column<wbr/>Count</span></a>
+<a href="#rowcount" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Accessor"><use href="../assets/icons.svg#icon-262144"></use></svg><span>row<wbr/>Count</span></a>
+<a href="#requestedrowcount" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Accessor"><use href="../assets/icons.svg#icon-262144"></use></svg><span>requested<wbr/>Row<wbr/>Count</span></a>
+<a href="#columnwidth" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Accessor"><use href="../assets/icons.svg#icon-262144"></use></svg><span>column<wbr/>Width</span></a>
+<a href="#rowheight" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Accessor"><use href="../assets/icons.svg#icon-262144"></use></svg><span>row<wbr/>Height</span></a>
+<a href="#paddingleft" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Accessor"><use href="../assets/icons.svg#icon-262144"></use></svg><span>padding<wbr/>Left</span></a>
+<a href="#paddingright" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Accessor"><use href="../assets/icons.svg#icon-262144"></use></svg><span>padding<wbr/>Right</span></a>
+<a href="#paddingtop" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Accessor"><use href="../assets/icons.svg#icon-262144"></use></svg><span>padding<wbr/>Top</span></a>
+<a href="#paddingbottom" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Accessor"><use href="../assets/icons.svg#icon-262144"></use></svg><span>padding<wbr/>Bottom</span></a>
+<a href="#horizontalalign" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Accessor"><use href="../assets/icons.svg#icon-262144"></use></svg><span>horizontal<wbr/>Align</span></a>
+<a href="#verticalalign" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Accessor"><use href="../assets/icons.svg#icon-262144"></use></svg><span>vertical<wbr/>Align</span></a>
+<a href="#columnalign" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Accessor"><use href="../assets/icons.svg#icon-262144"></use></svg><span>column<wbr/>Align</span></a>
+<a href="#rowalign" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Accessor"><use href="../assets/icons.svg#icon-262144"></use></svg><span>row<wbr/>Align</span></a>
+<a href="#orientation" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Accessor"><use href="../assets/icons.svg#icon-262144"></use></svg><span>orientation</span></a>
+<a href="#target" class="tsd-index-link tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Accessor"><use href="../assets/icons.svg#icon-262144"></use></svg><span>target</span></a>
+<a href="#usevirtuallayout" class="tsd-index-link tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Accessor"><use href="../assets/icons.svg#icon-262144"></use></svg><span>use<wbr/>Virtual<wbr/>Layout</span></a>
+</div></section>
+<section class="tsd-index-section">
+<h3 class="tsd-index-heading tsd-anchor-link" id="methods">Methods<a href="#methods" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<div class="tsd-index-list"><a href="#measure" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>measure</span></a>
+<a href="#clearvirtuallayoutcache" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>clear<wbr/>Virtual<wbr/>Layout<wbr/>Cache</span></a>
+<a href="#scrollpositionchanged" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>scroll<wbr/>Position<wbr/>Changed</span></a>
+<a href="#updatedisplaylist" class="tsd-index-link"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>update<wbr/>Display<wbr/>List</span></a>
+<a href="#settypicalsize" class="tsd-index-link tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>set<wbr/>Typical<wbr/>Size</span></a>
+<a href="#elementadded" class="tsd-index-link tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>element<wbr/>Added</span></a>
+<a href="#elementremoved" class="tsd-index-link tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>element<wbr/>Removed</span></a>
+<a href="#getelementindicesinview" class="tsd-index-link tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>get<wbr/>Element<wbr/>Indices<wbr/>In<wbr/>View</span></a>
+</div></section></div></details></section></section>
+<details class="tsd-panel-group tsd-member-group tsd-accordion" open><summary class="tsd-accordion-summary" data-key="section-Constructors"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
+<h2 class="tsd-anchor-link" id="constructors-1">Constructors<a href="#constructors-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2></summary>
+<section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="constructor"><span>constructor</span><a href="#constructor" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="">
+<div class="tsd-signature tsd-anchor-link" id="constructortilelayout"><span class="tsd-signature-keyword">new</span> <span class="tsd-kind-constructor-signature">TileLayout</span><span class="tsd-signature-symbol">()</span><span class="tsd-signature-symbol">:</span> <a href="" class="tsd-signature-type tsd-kind-class">TileLayout</a><a href="#constructortilelayout" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>构造函数。</p>
+</div>
+<h4 class="tsd-returns-title">Returns <a href="" class="tsd-signature-type tsd-kind-class">TileLayout</a></h4>
+<div class="tsd-comment tsd-typography">
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-2">Version<a href="#version-2" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Egret 2.4</p>
+</div>
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-3">Version<a href="#version-3" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>eui 1.0</p>
+</div>
+<div class="tsd-tag-platform">
+<h4 class="tsd-anchor-link" id="platform-1">Platform<a href="#platform-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Web</p>
+</div>
+<div class="tsd-tag-language">
+<h4 class="tsd-anchor-link" id="language-1">Language<a href="#language-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>zh_CN</p>
+</div></div><aside class="tsd-sources">
+<p>Overrides <a href="extension_eui_layouts_supportClasses_LayoutBase.LayoutBase.html">LayoutBase</a>.<a href="extension_eui_layouts_supportClasses_LayoutBase.LayoutBase.html#constructor">constructor</a></p>
+<ul>
+<li>Defined in <a href="https://github.com/jjunk1989/egret-r/blob/59cf01520cdfe65259db926f7f8c28395bef86f0/src/extension/eui/layouts/TileLayout.ts#L57">extension/eui/layouts/TileLayout.ts:57</a></li></ul></aside></div></li></ul></section></section></details>
+<details class="tsd-panel-group tsd-member-group tsd-accordion" open><summary class="tsd-accordion-summary" data-key="section-Accessors"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
+<h2 class="tsd-anchor-link" id="accessors-1">Accessors<a href="#accessors-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2></summary>
+<section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="horizontalgap"><span>horizontal<wbr/>Gap</span><a href="#horizontalgap" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li>
+<div class="tsd-signature" id="horizontalgaphorizontalgap"><span class="tsd-signature-keyword">get</span> <span class="tsd-kind-get-signature">horizontalGap</span><span class="tsd-signature-symbol">()</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>列之间的水平空间（以像素为单位）。</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+<div class="tsd-comment tsd-typography">
+<div class="tsd-tag-default">
+<h4 class="tsd-anchor-link" id="default">Default<a href="#default" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><pre><code class="ts"><span class="hl-9">6</span>
+</code><button type="button">Copy</button></pre>
+
+</div>
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-4">Version<a href="#version-4" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Egret 2.4</p>
+</div>
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-5">Version<a href="#version-5" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>eui 1.0</p>
+</div>
+<div class="tsd-tag-platform">
+<h4 class="tsd-anchor-link" id="platform-2">Platform<a href="#platform-2" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Web</p>
+</div>
+<div class="tsd-tag-language">
+<h4 class="tsd-anchor-link" id="language-2">Language<a href="#language-2" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>zh_CN</p>
+</div></div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/jjunk1989/egret-r/blob/59cf01520cdfe65259db926f7f8c28395bef86f0/src/extension/eui/layouts/TileLayout.ts#L91">extension/eui/layouts/TileLayout.ts:91</a></li></ul></aside></div></li>
+<li>
+<div class="tsd-signature" id="horizontalgaphorizontalgap-1"><span class="tsd-signature-keyword">set</span> <span class="tsd-kind-set-signature">horizontalGap</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">value</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">void</span></div>
+<div class="tsd-description">
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li><span><span class="tsd-kind-parameter">value</span>: <span class="tsd-signature-type">number</span></span></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/jjunk1989/egret-r/blob/59cf01520cdfe65259db926f7f8c28395bef86f0/src/extension/eui/layouts/TileLayout.ts#L95">extension/eui/layouts/TileLayout.ts:95</a></li></ul></aside></div></li></ul></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="verticalgap"><span>vertical<wbr/>Gap</span><a href="#verticalgap" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li>
+<div class="tsd-signature" id="verticalgapverticalgap"><span class="tsd-signature-keyword">get</span> <span class="tsd-kind-get-signature">verticalGap</span><span class="tsd-signature-symbol">()</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>行之间的垂直空间（以像素为单位）。</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+<div class="tsd-comment tsd-typography">
+<div class="tsd-tag-default">
+<h4 class="tsd-anchor-link" id="default-1">Default<a href="#default-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><pre><code class="ts"><span class="hl-9">6</span>
+</code><button type="button">Copy</button></pre>
+
+</div>
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-6">Version<a href="#version-6" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Egret 2.4</p>
+</div>
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-7">Version<a href="#version-7" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>eui 1.0</p>
+</div>
+<div class="tsd-tag-platform">
+<h4 class="tsd-anchor-link" id="platform-3">Platform<a href="#platform-3" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Web</p>
+</div>
+<div class="tsd-tag-language">
+<h4 class="tsd-anchor-link" id="language-3">Language<a href="#language-3" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>zh_CN</p>
+</div></div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/jjunk1989/egret-r/blob/59cf01520cdfe65259db926f7f8c28395bef86f0/src/extension/eui/layouts/TileLayout.ts#L136">extension/eui/layouts/TileLayout.ts:136</a></li></ul></aside></div></li>
+<li>
+<div class="tsd-signature" id="verticalgapverticalgap-1"><span class="tsd-signature-keyword">set</span> <span class="tsd-kind-set-signature">verticalGap</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">value</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">void</span></div>
+<div class="tsd-description">
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li><span><span class="tsd-kind-parameter">value</span>: <span class="tsd-signature-type">number</span></span></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/jjunk1989/egret-r/blob/59cf01520cdfe65259db926f7f8c28395bef86f0/src/extension/eui/layouts/TileLayout.ts#L140">extension/eui/layouts/TileLayout.ts:140</a></li></ul></aside></div></li></ul></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="columncount"><span>column<wbr/>Count</span><a href="#columncount" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li>
+<div class="tsd-signature" id="columncountcolumncount"><span class="tsd-signature-keyword">get</span> <span class="tsd-kind-get-signature">columnCount</span><span class="tsd-signature-symbol">()</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>实际列计数。</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+<div class="tsd-comment tsd-typography">
+<div class="tsd-tag-default">
+<h4 class="tsd-anchor-link" id="default-2">Default<a href="#default-2" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><pre><code class="ts"><span class="hl-1">-</span><span class="hl-9">1</span>
+</code><button type="button">Copy</button></pre>
+
+</div>
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-8">Version<a href="#version-8" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Egret 2.4</p>
+</div>
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-9">Version<a href="#version-9" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>eui 1.0</p>
+</div>
+<div class="tsd-tag-platform">
+<h4 class="tsd-anchor-link" id="platform-4">Platform<a href="#platform-4" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Web</p>
+</div>
+<div class="tsd-tag-language">
+<h4 class="tsd-anchor-link" id="language-4">Language<a href="#language-4" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>zh_CN</p>
+</div></div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/jjunk1989/egret-r/blob/59cf01520cdfe65259db926f7f8c28395bef86f0/src/extension/eui/layouts/TileLayout.ts#L173">extension/eui/layouts/TileLayout.ts:173</a></li></ul></aside></div></li></ul></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="requestedcolumncount"><span>requested<wbr/>Column<wbr/>Count</span><a href="#requestedcolumncount" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li>
+<div class="tsd-signature" id="requestedcolumncountrequestedcolumncount"><span class="tsd-signature-keyword">get</span> <span class="tsd-kind-get-signature">requestedColumnCount</span><span class="tsd-signature-symbol">()</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>要显示的列数。</p>
+<p>设置为 0 会允许 TileLayout 自动确定列计数。</p>
+<p>如果将 <code>orientation</code> 属性设置为 <code>TileOrientation.ROWS</code>，
+则设置此属性不会产生任何效果。这种情况下，会显式设置 code>rowCount</code>，并显式设置容器宽度。</p></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+<div class="tsd-comment tsd-typography">
+<div class="tsd-tag-default">
+<h4 class="tsd-anchor-link" id="default-3">Default<a href="#default-3" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><pre><code class="ts"><span class="hl-9">0</span>
+</code><button type="button">Copy</button></pre>
+
+</div>
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-10">Version<a href="#version-10" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Egret 2.4</p>
+</div>
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-11">Version<a href="#version-11" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>eui 1.0</p>
+</div>
+<div class="tsd-tag-platform">
+<h4 class="tsd-anchor-link" id="platform-5">Platform<a href="#platform-5" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Web</p>
+</div>
+<div class="tsd-tag-language">
+<h4 class="tsd-anchor-link" id="language-5">Language<a href="#language-5" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>zh_CN</p>
+</div></div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/jjunk1989/egret-r/blob/59cf01520cdfe65259db926f7f8c28395bef86f0/src/extension/eui/layouts/TileLayout.ts#L210">extension/eui/layouts/TileLayout.ts:210</a></li></ul></aside></div></li>
+<li>
+<div class="tsd-signature" id="requestedcolumncountrequestedcolumncount-1"><span class="tsd-signature-keyword">set</span> <span class="tsd-kind-set-signature">requestedColumnCount</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">value</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">void</span></div>
+<div class="tsd-description">
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li><span><span class="tsd-kind-parameter">value</span>: <span class="tsd-signature-type">number</span></span></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/jjunk1989/egret-r/blob/59cf01520cdfe65259db926f7f8c28395bef86f0/src/extension/eui/layouts/TileLayout.ts#L214">extension/eui/layouts/TileLayout.ts:214</a></li></ul></aside></div></li></ul></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="rowcount"><span>row<wbr/>Count</span><a href="#rowcount" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li>
+<div class="tsd-signature" id="rowcountrowcount"><span class="tsd-signature-keyword">get</span> <span class="tsd-kind-get-signature">rowCount</span><span class="tsd-signature-symbol">()</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>行计数。</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+<div class="tsd-comment tsd-typography">
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-12">Version<a href="#version-12" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Egret 2.4</p>
+</div>
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-13">Version<a href="#version-13" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>eui 1.0</p>
+</div>
+<div class="tsd-tag-platform">
+<h4 class="tsd-anchor-link" id="platform-6">Platform<a href="#platform-6" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Web</p>
+</div>
+<div class="tsd-tag-language">
+<h4 class="tsd-anchor-link" id="language-6">Language<a href="#language-6" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>zh_CN</p>
+</div></div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/jjunk1989/egret-r/blob/59cf01520cdfe65259db926f7f8c28395bef86f0/src/extension/eui/layouts/TileLayout.ts#L243">extension/eui/layouts/TileLayout.ts:243</a></li></ul></aside></div></li></ul></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="requestedrowcount"><span>requested<wbr/>Row<wbr/>Count</span><a href="#requestedrowcount" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li>
+<div class="tsd-signature" id="requestedrowcountrequestedrowcount"><span class="tsd-signature-keyword">get</span> <span class="tsd-kind-get-signature">requestedRowCount</span><span class="tsd-signature-symbol">()</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>要显示的行数。
+<code>设置为 -1 会删除显式覆盖并允许 TileLayout 自动确定行计数。</code>
+<code>如果将 <code>orientation</code> 属性设置为 <code>TileOrientation.COLUMNS</code>，
+则设置此属性不会产生任何效果。这种情况下，会显式设置 <code>columnCount</code>，并显式设置容器高度。</code></p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+<div class="tsd-comment tsd-typography">
+<div class="tsd-tag-default">
+<h4 class="tsd-anchor-link" id="default-4">Default<a href="#default-4" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><pre><code class="ts"><span class="hl-9">0</span>
+</code><button type="button">Copy</button></pre>
+
+</div>
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-14">Version<a href="#version-14" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Egret 2.4</p>
+</div>
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-15">Version<a href="#version-15" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>eui 1.0</p>
+</div>
+<div class="tsd-tag-platform">
+<h4 class="tsd-anchor-link" id="platform-7">Platform<a href="#platform-7" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Web</p>
+</div>
+<div class="tsd-tag-language">
+<h4 class="tsd-anchor-link" id="language-7">Language<a href="#language-7" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>zh_CN</p>
+</div></div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/jjunk1989/egret-r/blob/59cf01520cdfe65259db926f7f8c28395bef86f0/src/extension/eui/layouts/TileLayout.ts#L280">extension/eui/layouts/TileLayout.ts:280</a></li></ul></aside></div></li>
+<li>
+<div class="tsd-signature" id="requestedrowcountrequestedrowcount-1"><span class="tsd-signature-keyword">set</span> <span class="tsd-kind-set-signature">requestedRowCount</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">value</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">void</span></div>
+<div class="tsd-description">
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li><span><span class="tsd-kind-parameter">value</span>: <span class="tsd-signature-type">number</span></span></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/jjunk1989/egret-r/blob/59cf01520cdfe65259db926f7f8c28395bef86f0/src/extension/eui/layouts/TileLayout.ts#L284">extension/eui/layouts/TileLayout.ts:284</a></li></ul></aside></div></li></ul></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="columnwidth"><span>column<wbr/>Width</span><a href="#columnwidth" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li>
+<div class="tsd-signature" id="columnwidthcolumnwidth"><span class="tsd-signature-keyword">get</span> <span class="tsd-kind-get-signature">columnWidth</span><span class="tsd-signature-symbol">()</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>包含实际列宽（以像素为单位）。</p>
+<p>若未显式设置，则从根据最宽的元素的宽度确定列宽度。</p></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+<div class="tsd-comment tsd-typography">
+<div class="tsd-tag-default">
+<h4 class="tsd-anchor-link" id="default-5">Default<a href="#default-5" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><pre><code class="ts"><span class="hl-3">NaN</span>
+</code><button type="button">Copy</button></pre>
+
+</div>
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-16">Version<a href="#version-16" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Egret 2.4</p>
+</div>
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-17">Version<a href="#version-17" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>eui 1.0</p>
+</div>
+<div class="tsd-tag-platform">
+<h4 class="tsd-anchor-link" id="platform-8">Platform<a href="#platform-8" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Web</p>
+</div>
+<div class="tsd-tag-language">
+<h4 class="tsd-anchor-link" id="language-8">Language<a href="#language-8" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>zh_CN</p>
+</div></div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/jjunk1989/egret-r/blob/59cf01520cdfe65259db926f7f8c28395bef86f0/src/extension/eui/layouts/TileLayout.ts#L326">extension/eui/layouts/TileLayout.ts:326</a></li></ul></aside></div></li>
+<li>
+<div class="tsd-signature" id="columnwidthcolumnwidth-1"><span class="tsd-signature-keyword">set</span> <span class="tsd-kind-set-signature">columnWidth</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">value</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">void</span></div>
+<div class="tsd-description">
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li><span><span class="tsd-kind-parameter">value</span>: <span class="tsd-signature-type">number</span></span></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/jjunk1989/egret-r/blob/59cf01520cdfe65259db926f7f8c28395bef86f0/src/extension/eui/layouts/TileLayout.ts#L330">extension/eui/layouts/TileLayout.ts:330</a></li></ul></aside></div></li></ul></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="rowheight"><span>row<wbr/>Height</span><a href="#rowheight" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li>
+<div class="tsd-signature" id="rowheightrowheight"><span class="tsd-signature-keyword">get</span> <span class="tsd-kind-get-signature">rowHeight</span><span class="tsd-signature-symbol">()</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>行高（以像素为单位）。</p>
+<p>如果未显式设置，则从元素的高度的最大值确定行高度。<p></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+<div class="tsd-comment tsd-typography">
+<div class="tsd-tag-default">
+<h4 class="tsd-anchor-link" id="default-6">Default<a href="#default-6" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><pre><code class="ts"><span class="hl-3">NaN</span>
+</code><button type="button">Copy</button></pre>
+
+</div>
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-18">Version<a href="#version-18" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Egret 2.4</p>
+</div>
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-19">Version<a href="#version-19" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>eui 1.0</p>
+</div>
+<div class="tsd-tag-platform">
+<h4 class="tsd-anchor-link" id="platform-9">Platform<a href="#platform-9" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Web</p>
+</div>
+<div class="tsd-tag-language">
+<h4 class="tsd-anchor-link" id="language-9">Language<a href="#language-9" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>zh_CN</p>
+</div></div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/jjunk1989/egret-r/blob/59cf01520cdfe65259db926f7f8c28395bef86f0/src/extension/eui/layouts/TileLayout.ts#L372">extension/eui/layouts/TileLayout.ts:372</a></li></ul></aside></div></li>
+<li>
+<div class="tsd-signature" id="rowheightrowheight-1"><span class="tsd-signature-keyword">set</span> <span class="tsd-kind-set-signature">rowHeight</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">value</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">void</span></div>
+<div class="tsd-description">
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li><span><span class="tsd-kind-parameter">value</span>: <span class="tsd-signature-type">number</span></span></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/jjunk1989/egret-r/blob/59cf01520cdfe65259db926f7f8c28395bef86f0/src/extension/eui/layouts/TileLayout.ts#L376">extension/eui/layouts/TileLayout.ts:376</a></li></ul></aside></div></li></ul></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="paddingleft"><span>padding<wbr/>Left</span><a href="#paddingleft" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li>
+<div class="tsd-signature" id="paddingleftpaddingleft"><span class="tsd-signature-keyword">get</span> <span class="tsd-kind-get-signature">paddingLeft</span><span class="tsd-signature-symbol">()</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+<div class="tsd-description">
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+<div class="tsd-comment tsd-typography">
+<div class="tsd-tag-copy">
+<h4 class="tsd-anchor-link" id="copy">Copy<a href="#copy" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>LinearLayoutBase#paddingLeft</p>
+</div>
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-20">Version<a href="#version-20" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Egret 2.4</p>
+</div>
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-21">Version<a href="#version-21" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>eui 1.0</p>
+</div>
+<div class="tsd-tag-platform">
+<h4 class="tsd-anchor-link" id="platform-10">Platform<a href="#platform-10" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Web</p>
+</div></div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/jjunk1989/egret-r/blob/59cf01520cdfe65259db926f7f8c28395bef86f0/src/extension/eui/layouts/TileLayout.ts#L396">extension/eui/layouts/TileLayout.ts:396</a></li></ul></aside></div></li>
+<li>
+<div class="tsd-signature" id="paddingleftpaddingleft-1"><span class="tsd-signature-keyword">set</span> <span class="tsd-kind-set-signature">paddingLeft</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">value</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">void</span></div>
+<div class="tsd-description">
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li><span><span class="tsd-kind-parameter">value</span>: <span class="tsd-signature-type">number</span></span></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/jjunk1989/egret-r/blob/59cf01520cdfe65259db926f7f8c28395bef86f0/src/extension/eui/layouts/TileLayout.ts#L400">extension/eui/layouts/TileLayout.ts:400</a></li></ul></aside></div></li></ul></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="paddingright"><span>padding<wbr/>Right</span><a href="#paddingright" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li>
+<div class="tsd-signature" id="paddingrightpaddingright"><span class="tsd-signature-keyword">get</span> <span class="tsd-kind-get-signature">paddingRight</span><span class="tsd-signature-symbol">()</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+<div class="tsd-description">
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+<div class="tsd-comment tsd-typography">
+<div class="tsd-tag-copy">
+<h4 class="tsd-anchor-link" id="copy-1">Copy<a href="#copy-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>LinearLayoutBase#paddingRight</p>
+</div>
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-22">Version<a href="#version-22" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Egret 2.4</p>
+</div>
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-23">Version<a href="#version-23" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>eui 1.0</p>
+</div>
+<div class="tsd-tag-platform">
+<h4 class="tsd-anchor-link" id="platform-11">Platform<a href="#platform-11" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Web</p>
+</div></div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/jjunk1989/egret-r/blob/59cf01520cdfe65259db926f7f8c28395bef86f0/src/extension/eui/layouts/TileLayout.ts#L420">extension/eui/layouts/TileLayout.ts:420</a></li></ul></aside></div></li>
+<li>
+<div class="tsd-signature" id="paddingrightpaddingright-1"><span class="tsd-signature-keyword">set</span> <span class="tsd-kind-set-signature">paddingRight</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">value</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">void</span></div>
+<div class="tsd-description">
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li><span><span class="tsd-kind-parameter">value</span>: <span class="tsd-signature-type">number</span></span></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/jjunk1989/egret-r/blob/59cf01520cdfe65259db926f7f8c28395bef86f0/src/extension/eui/layouts/TileLayout.ts#L424">extension/eui/layouts/TileLayout.ts:424</a></li></ul></aside></div></li></ul></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="paddingtop"><span>padding<wbr/>Top</span><a href="#paddingtop" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li>
+<div class="tsd-signature" id="paddingtoppaddingtop"><span class="tsd-signature-keyword">get</span> <span class="tsd-kind-get-signature">paddingTop</span><span class="tsd-signature-symbol">()</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+<div class="tsd-description">
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+<div class="tsd-comment tsd-typography">
+<div class="tsd-tag-copy">
+<h4 class="tsd-anchor-link" id="copy-2">Copy<a href="#copy-2" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>LinearLayoutBase#paddingTop</p>
+</div>
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-24">Version<a href="#version-24" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Egret 2.4</p>
+</div>
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-25">Version<a href="#version-25" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>eui 1.0</p>
+</div>
+<div class="tsd-tag-platform">
+<h4 class="tsd-anchor-link" id="platform-12">Platform<a href="#platform-12" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Web</p>
+</div></div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/jjunk1989/egret-r/blob/59cf01520cdfe65259db926f7f8c28395bef86f0/src/extension/eui/layouts/TileLayout.ts#L444">extension/eui/layouts/TileLayout.ts:444</a></li></ul></aside></div></li>
+<li>
+<div class="tsd-signature" id="paddingtoppaddingtop-1"><span class="tsd-signature-keyword">set</span> <span class="tsd-kind-set-signature">paddingTop</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">value</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">void</span></div>
+<div class="tsd-description">
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li><span><span class="tsd-kind-parameter">value</span>: <span class="tsd-signature-type">number</span></span></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/jjunk1989/egret-r/blob/59cf01520cdfe65259db926f7f8c28395bef86f0/src/extension/eui/layouts/TileLayout.ts#L448">extension/eui/layouts/TileLayout.ts:448</a></li></ul></aside></div></li></ul></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="paddingbottom"><span>padding<wbr/>Bottom</span><a href="#paddingbottom" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li>
+<div class="tsd-signature" id="paddingbottompaddingbottom"><span class="tsd-signature-keyword">get</span> <span class="tsd-kind-get-signature">paddingBottom</span><span class="tsd-signature-symbol">()</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+<div class="tsd-description">
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+<div class="tsd-comment tsd-typography">
+<div class="tsd-tag-copy">
+<h4 class="tsd-anchor-link" id="copy-3">Copy<a href="#copy-3" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>LinearLayoutBase#paddingBottom</p>
+</div>
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-26">Version<a href="#version-26" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Egret 2.4</p>
+</div>
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-27">Version<a href="#version-27" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>eui 1.0</p>
+</div>
+<div class="tsd-tag-platform">
+<h4 class="tsd-anchor-link" id="platform-13">Platform<a href="#platform-13" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Web</p>
+</div></div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/jjunk1989/egret-r/blob/59cf01520cdfe65259db926f7f8c28395bef86f0/src/extension/eui/layouts/TileLayout.ts#L467">extension/eui/layouts/TileLayout.ts:467</a></li></ul></aside></div></li>
+<li>
+<div class="tsd-signature" id="paddingbottompaddingbottom-1"><span class="tsd-signature-keyword">set</span> <span class="tsd-kind-set-signature">paddingBottom</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">value</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">void</span></div>
+<div class="tsd-description">
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li><span><span class="tsd-kind-parameter">value</span>: <span class="tsd-signature-type">number</span></span></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/jjunk1989/egret-r/blob/59cf01520cdfe65259db926f7f8c28395bef86f0/src/extension/eui/layouts/TileLayout.ts#L471">extension/eui/layouts/TileLayout.ts:471</a></li></ul></aside></div></li></ul></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="horizontalalign"><span>horizontal<wbr/>Align</span><a href="#horizontalalign" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li>
+<div class="tsd-signature" id="horizontalalignhorizontalalign"><span class="tsd-signature-keyword">get</span> <span class="tsd-kind-get-signature">horizontalAlign</span><span class="tsd-signature-symbol">()</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>指定如何在水平方向上对齐单元格内的元素。支持的值有
+HorizontalAlign.LEFT、HorizontalAlign.CENTER、
+HorizontalAlign.RIGHT、JustifyAlign.JUSTIFY。</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+<div class="tsd-comment tsd-typography">
+<div class="tsd-tag-default">
+<h4 class="tsd-anchor-link" id="default-7">Default<a href="#default-7" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><pre><code class="ts"><span class="hl-1">&lt;</span><span class="hl-7">code</span><span class="hl-1">&gt;</span><span class="hl-6">JustifyAlign</span><span class="hl-1">.</span><span class="hl-8">JUSTIFY</span><span class="hl-1">&lt;/</span><span class="hl-6">code</span><span class="hl-1">&gt;</span>
+</code><button type="button">Copy</button></pre>
+
+</div>
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-28">Version<a href="#version-28" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Egret 2.4</p>
+</div>
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-29">Version<a href="#version-29" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>eui 1.0</p>
+</div>
+<div class="tsd-tag-platform">
+<h4 class="tsd-anchor-link" id="platform-14">Platform<a href="#platform-14" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Web</p>
+</div>
+<div class="tsd-tag-language">
+<h4 class="tsd-anchor-link" id="language-10">Language<a href="#language-10" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>zh_CN</p>
+</div></div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/jjunk1989/egret-r/blob/59cf01520cdfe65259db926f7f8c28395bef86f0/src/extension/eui/layouts/TileLayout.ts#L508">extension/eui/layouts/TileLayout.ts:508</a></li></ul></aside></div></li>
+<li>
+<div class="tsd-signature" id="horizontalalignhorizontalalign-1"><span class="tsd-signature-keyword">set</span> <span class="tsd-kind-set-signature">horizontalAlign</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">value</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">void</span></div>
+<div class="tsd-description">
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li><span><span class="tsd-kind-parameter">value</span>: <span class="tsd-signature-type">string</span></span></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/jjunk1989/egret-r/blob/59cf01520cdfe65259db926f7f8c28395bef86f0/src/extension/eui/layouts/TileLayout.ts#L512">extension/eui/layouts/TileLayout.ts:512</a></li></ul></aside></div></li></ul></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="verticalalign"><span>vertical<wbr/>Align</span><a href="#verticalalign" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li>
+<div class="tsd-signature" id="verticalalignverticalalign"><span class="tsd-signature-keyword">get</span> <span class="tsd-kind-get-signature">verticalAlign</span><span class="tsd-signature-symbol">()</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Specifies how to align the elements within the cells in the vertical direction.
+Supported values are
+VerticalAlign.TOP、VerticalAlign.MIDDLE、
+VerticalAlign.BOTTOM、JustifyAlign.JUSTIFY。</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+<div class="tsd-comment tsd-typography">
+<div class="tsd-tag-default">
+<h4 class="tsd-anchor-link" id="default-8">Default<a href="#default-8" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><pre><code class="ts"><span class="hl-1">&lt;</span><span class="hl-7">code</span><span class="hl-1">&gt;</span><span class="hl-6">JustifyAlign</span><span class="hl-1">.</span><span class="hl-8">JUSTIFY</span><span class="hl-1">&lt;/</span><span class="hl-6">code</span><span class="hl-1">&gt;</span>
+</code><button type="button">Copy</button></pre>
+
+</div>
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-30">Version<a href="#version-30" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Egret 2.4</p>
+</div>
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-31">Version<a href="#version-31" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>eui 1.0</p>
+</div>
+<div class="tsd-tag-platform">
+<h4 class="tsd-anchor-link" id="platform-15">Platform<a href="#platform-15" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Web</p>
+</div>
+<div class="tsd-tag-language">
+<h4 class="tsd-anchor-link" id="language-11">Language<a href="#language-11" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>zh_CN</p>
+</div></div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/jjunk1989/egret-r/blob/59cf01520cdfe65259db926f7f8c28395bef86f0/src/extension/eui/layouts/TileLayout.ts#L551">extension/eui/layouts/TileLayout.ts:551</a></li></ul></aside></div></li>
+<li>
+<div class="tsd-signature" id="verticalalignverticalalign-1"><span class="tsd-signature-keyword">set</span> <span class="tsd-kind-set-signature">verticalAlign</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">value</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">void</span></div>
+<div class="tsd-description">
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li><span><span class="tsd-kind-parameter">value</span>: <span class="tsd-signature-type">string</span></span></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/jjunk1989/egret-r/blob/59cf01520cdfe65259db926f7f8c28395bef86f0/src/extension/eui/layouts/TileLayout.ts#L555">extension/eui/layouts/TileLayout.ts:555</a></li></ul></aside></div></li></ul></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="columnalign"><span>column<wbr/>Align</span><a href="#columnalign" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li>
+<div class="tsd-signature" id="columnaligncolumnalign"><span class="tsd-signature-keyword">get</span> <span class="tsd-kind-get-signature">columnAlign</span><span class="tsd-signature-symbol">()</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>指定如何将完全可见列与容器宽度对齐。</p>
+<p>设置为 <code>ColumnAlign.LEFT</code> 时，它会关闭列两端对齐。
+在容器的最后一列和右边缘之间可能存在部分可见的列或空白。这是默认值。</p>
+<p>设置为 <code>ColumnAlign.JUSTIFY_USING_GAP</code> 时，<code>horizontalGap</code> 的实际值将增大，
+这样最后一个完全可见列右边缘会与容器的右边缘对齐。仅存在一个完全可见列时，
+<code>horizontalGap</code> 的实际值将增大，这样它会将任何部分可见列推到容器的右边缘之外。
+请注意显式设置 <code>horizontalGap</code> 属性不会关闭两端对齐。它仅确定初始间隙值。两端对齐可能会增大它。</p>
+<p>设置为 <code>ColumnAlign.JUSTIFY_USING_WIDTH</code> 时，<code>columnWidth</code> 的实际值将增大，
+这样最后一个完全可见列右边缘会与容器的右边缘对齐。请注意显式设置 <code>columnWidth</code> 属性不会关闭两端对齐。
+它仅确定初始列宽度值。两端对齐可能会增大它。</p></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+<div class="tsd-comment tsd-typography">
+<div class="tsd-tag-default">
+<h4 class="tsd-anchor-link" id="default-9">Default<a href="#default-9" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><pre><code class="ts"><span class="hl-6">ColumnAlign</span><span class="hl-1">.</span><span class="hl-8">LEFT</span>
+</code><button type="button">Copy</button></pre>
+
+</div>
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-32">Version<a href="#version-32" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Egret 2.4</p>
+</div>
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-33">Version<a href="#version-33" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>eui 1.0</p>
+</div>
+<div class="tsd-tag-platform">
+<h4 class="tsd-anchor-link" id="platform-16">Platform<a href="#platform-16" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Web</p>
+</div>
+<div class="tsd-tag-language">
+<h4 class="tsd-anchor-link" id="language-12">Language<a href="#language-12" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>zh_CN</p>
+</div></div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/jjunk1989/egret-r/blob/59cf01520cdfe65259db926f7f8c28395bef86f0/src/extension/eui/layouts/TileLayout.ts#L621">extension/eui/layouts/TileLayout.ts:621</a></li></ul></aside></div></li>
+<li>
+<div class="tsd-signature" id="columnaligncolumnalign-1"><span class="tsd-signature-keyword">set</span> <span class="tsd-kind-set-signature">columnAlign</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">value</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">void</span></div>
+<div class="tsd-description">
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li><span><span class="tsd-kind-parameter">value</span>: <span class="tsd-signature-type">string</span></span></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/jjunk1989/egret-r/blob/59cf01520cdfe65259db926f7f8c28395bef86f0/src/extension/eui/layouts/TileLayout.ts#L625">extension/eui/layouts/TileLayout.ts:625</a></li></ul></aside></div></li></ul></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="rowalign"><span>row<wbr/>Align</span><a href="#rowalign" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li>
+<div class="tsd-signature" id="rowalignrowalign"><span class="tsd-signature-keyword">get</span> <span class="tsd-kind-get-signature">rowAlign</span><span class="tsd-signature-symbol">()</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>指定如何将完全可见行与容器高度对齐。</p>
+<p>设置为 <code>RowAlign.TOP</code> 时，它会关闭列两端对齐。
+在容器的最后一行和底边缘之间可能存在部分可见的行或空白。这是默认值。</p>
+<p>设置为 <code>RowAlign.JUSTIFY_USING_GAP</code> 时，<code>verticalGap</code> 的实际值会增大，
+这样最后一个完全可见行底边缘会与容器的底边缘对齐。仅存在一个完全可见行时，<code>verticalGap</code> 的值会增大，
+这样它会将任何部分可见行推到容器的底边缘之外。请注意，显式设置 <code>verticalGap</code>
+不会关闭两端对齐，而只是确定初始间隙值。两端对齐接着可以增大它。</p>
+<p>设置为 <code>RowAlign.JUSTIFY_USING_HEIGHT</code> 时，<code>rowHeight</code> 的实际值会增大，
+这样最后一个完全可见行底边缘会与容器的底边缘对齐。请注意，显式设置 <code>rowHeight</code>
+不会关闭两端对齐，而只是确定初始行高度值。两端对齐接着可以增大它。</p></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+<div class="tsd-comment tsd-typography">
+<div class="tsd-tag-default">
+<h4 class="tsd-anchor-link" id="default-10">Default<a href="#default-10" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><pre><code class="ts"><span class="hl-6">RowAlign</span><span class="hl-1">.</span><span class="hl-8">TOP</span>
+</code><button type="button">Copy</button></pre>
+
+</div>
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-34">Version<a href="#version-34" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Egret 2.4</p>
+</div>
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-35">Version<a href="#version-35" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>eui 1.0</p>
+</div>
+<div class="tsd-tag-platform">
+<h4 class="tsd-anchor-link" id="platform-17">Platform<a href="#platform-17" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Web</p>
+</div>
+<div class="tsd-tag-language">
+<h4 class="tsd-anchor-link" id="language-13">Language<a href="#language-13" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>zh_CN</p>
+</div></div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/jjunk1989/egret-r/blob/59cf01520cdfe65259db926f7f8c28395bef86f0/src/extension/eui/layouts/TileLayout.ts#L689">extension/eui/layouts/TileLayout.ts:689</a></li></ul></aside></div></li>
+<li>
+<div class="tsd-signature" id="rowalignrowalign-1"><span class="tsd-signature-keyword">set</span> <span class="tsd-kind-set-signature">rowAlign</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">value</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">void</span></div>
+<div class="tsd-description">
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li><span><span class="tsd-kind-parameter">value</span>: <span class="tsd-signature-type">string</span></span></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/jjunk1989/egret-r/blob/59cf01520cdfe65259db926f7f8c28395bef86f0/src/extension/eui/layouts/TileLayout.ts#L693">extension/eui/layouts/TileLayout.ts:693</a></li></ul></aside></div></li></ul></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="orientation"><span>orientation</span><a href="#orientation" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li>
+<div class="tsd-signature" id="orientationorientation"><span class="tsd-signature-keyword">get</span> <span class="tsd-kind-get-signature">orientation</span><span class="tsd-signature-symbol">()</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>指定是逐行还是逐列排列元素。</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+<div class="tsd-comment tsd-typography">
+<div class="tsd-tag-default">
+<h4 class="tsd-anchor-link" id="default-11">Default<a href="#default-11" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><pre><code class="ts"><span class="hl-6">TileOrientation</span><span class="hl-1">.</span><span class="hl-8">ROWS</span>
+</code><button type="button">Copy</button></pre>
+
+</div>
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-36">Version<a href="#version-36" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Egret 2.4</p>
+</div>
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-37">Version<a href="#version-37" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>eui 1.0</p>
+</div>
+<div class="tsd-tag-platform">
+<h4 class="tsd-anchor-link" id="platform-18">Platform<a href="#platform-18" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Web</p>
+</div>
+<div class="tsd-tag-language">
+<h4 class="tsd-anchor-link" id="language-14">Language<a href="#language-14" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>zh_CN</p>
+</div></div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/jjunk1989/egret-r/blob/59cf01520cdfe65259db926f7f8c28395bef86f0/src/extension/eui/layouts/TileLayout.ts#L726">extension/eui/layouts/TileLayout.ts:726</a></li></ul></aside></div></li>
+<li>
+<div class="tsd-signature" id="orientationorientation-1"><span class="tsd-signature-keyword">set</span> <span class="tsd-kind-set-signature">orientation</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">value</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">void</span></div>
+<div class="tsd-description">
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li><span><span class="tsd-kind-parameter">value</span>: <span class="tsd-signature-type">string</span></span></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/jjunk1989/egret-r/blob/59cf01520cdfe65259db926f7f8c28395bef86f0/src/extension/eui/layouts/TileLayout.ts#L730">extension/eui/layouts/TileLayout.ts:730</a></li></ul></aside></div></li></ul></section>
+<section class="tsd-panel tsd-member tsd-is-inherited">
+<h3 class="tsd-anchor-link" id="target"><span>target</span><a href="#target" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-is-inherited">
+<li>
+<div class="tsd-signature" id="targettarget"><span class="tsd-signature-keyword">get</span> <span class="tsd-kind-get-signature">target</span><span class="tsd-signature-symbol">()</span><span class="tsd-signature-symbol">:</span> <a href="extension_eui_components_Group.Group.html" class="tsd-signature-type tsd-kind-class">Group</a></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>此布局将测量其元素、调整其元素的大小并定位其元素的 Group 容器。</p>
+</div>
+<h4 class="tsd-returns-title">Returns <a href="extension_eui_components_Group.Group.html" class="tsd-signature-type tsd-kind-class">Group</a></h4>
+<div class="tsd-comment tsd-typography">
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-38">Version<a href="#version-38" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Egret 2.4</p>
+</div>
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-39">Version<a href="#version-39" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>eui 1.0</p>
+</div>
+<div class="tsd-tag-platform">
+<h4 class="tsd-anchor-link" id="platform-19">Platform<a href="#platform-19" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Web</p>
+</div>
+<div class="tsd-tag-language">
+<h4 class="tsd-anchor-link" id="language-15">Language<a href="#language-15" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>zh_CN</p>
+</div></div><aside class="tsd-sources">
+<p>Inherited from LayoutBase.target</p>
+<ul>
+<li>Defined in <a href="https://github.com/jjunk1989/egret-r/blob/59cf01520cdfe65259db926f7f8c28395bef86f0/src/extension/eui/layouts/supportClasses/LayoutBase.ts#L78">extension/eui/layouts/supportClasses/LayoutBase.ts:78</a></li></ul></aside></div></li>
+<li>
+<div class="tsd-signature" id="targettarget-1"><span class="tsd-signature-keyword">set</span> <span class="tsd-kind-set-signature">target</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">value</span><span class="tsd-signature-symbol">:</span> <a href="extension_eui_components_Group.Group.html" class="tsd-signature-type tsd-kind-class">Group</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">void</span></div>
+<div class="tsd-description">
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li><span><span class="tsd-kind-parameter">value</span>: <a href="extension_eui_components_Group.Group.html" class="tsd-signature-type tsd-kind-class">Group</a></span></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<p>Inherited from LayoutBase.target</p>
+<ul>
+<li>Defined in <a href="https://github.com/jjunk1989/egret-r/blob/59cf01520cdfe65259db926f7f8c28395bef86f0/src/extension/eui/layouts/supportClasses/LayoutBase.ts#L82">extension/eui/layouts/supportClasses/LayoutBase.ts:82</a></li></ul></aside></div></li></ul></section>
+<section class="tsd-panel tsd-member tsd-is-inherited">
+<h3 class="tsd-anchor-link" id="usevirtuallayout"><span>use<wbr/>Virtual<wbr/>Layout</span><a href="#usevirtuallayout" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-is-inherited">
+<li>
+<div class="tsd-signature" id="usevirtuallayoutusevirtuallayout"><span class="tsd-signature-keyword">get</span> <span class="tsd-kind-get-signature">useVirtualLayout</span><span class="tsd-signature-symbol">()</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>若要配置容器使用虚拟布局，请为与容器关联的布局的 <code>useVirtualLayout</code> 属性设置为 <code>true</code>。
+只有布局设置为 VerticalLayout、HorizontalLayout 或 TileLayout 的 DataGroup 才支持虚拟布局。
+不支持虚拟化的布局子类必须禁止更改此属性。</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+<div class="tsd-comment tsd-typography">
+<div class="tsd-tag-default">
+<h4 class="tsd-anchor-link" id="default-12">Default<a href="#default-12" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><pre><code class="ts"><span class="hl-3">false</span>
+</code><button type="button">Copy</button></pre>
+
+</div>
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-40">Version<a href="#version-40" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Egret 2.4</p>
+</div>
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-41">Version<a href="#version-41" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>eui 1.0</p>
+</div>
+<div class="tsd-tag-platform">
+<h4 class="tsd-anchor-link" id="platform-20">Platform<a href="#platform-20" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Web</p>
+</div>
+<div class="tsd-tag-language">
+<h4 class="tsd-anchor-link" id="language-16">Language<a href="#language-16" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>zh_CN</p>
+</div></div><aside class="tsd-sources">
+<p>Inherited from LayoutBase.useVirtualLayout</p>
+<ul>
+<li>Defined in <a href="https://github.com/jjunk1989/egret-r/blob/59cf01520cdfe65259db926f7f8c28395bef86f0/src/extension/eui/layouts/supportClasses/LayoutBase.ts#L121">extension/eui/layouts/supportClasses/LayoutBase.ts:121</a></li></ul></aside></div></li>
+<li>
+<div class="tsd-signature" id="usevirtuallayoutusevirtuallayout-1"><span class="tsd-signature-keyword">set</span> <span class="tsd-kind-set-signature">useVirtualLayout</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">value</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">void</span></div>
+<div class="tsd-description">
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li><span><span class="tsd-kind-parameter">value</span>: <span class="tsd-signature-type">boolean</span></span></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<p>Inherited from LayoutBase.useVirtualLayout</p>
+<ul>
+<li>Defined in <a href="https://github.com/jjunk1989/egret-r/blob/59cf01520cdfe65259db926f7f8c28395bef86f0/src/extension/eui/layouts/supportClasses/LayoutBase.ts#L125">extension/eui/layouts/supportClasses/LayoutBase.ts:125</a></li></ul></aside></div></li></ul></section></section></details>
+<details class="tsd-panel-group tsd-member-group tsd-accordion" open><summary class="tsd-accordion-summary" data-key="section-Methods"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
+<h2 class="tsd-anchor-link" id="methods-1">Methods<a href="#methods-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2></summary>
+<section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="measure"><span>measure</span><a href="#measure" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="">
+<div class="tsd-signature tsd-anchor-link" id="measure-1"><span class="tsd-kind-call-signature">measure</span><span class="tsd-signature-symbol">()</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">void</span><a href="#measure-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>基于目标的内容测量其默认大小</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+<div class="tsd-comment tsd-typography">
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-42">Version<a href="#version-42" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Egret 2.4</p>
+</div>
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-43">Version<a href="#version-43" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>eui 1.0</p>
+</div>
+<div class="tsd-tag-platform">
+<h4 class="tsd-anchor-link" id="platform-21">Platform<a href="#platform-21" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Web</p>
+</div>
+<div class="tsd-tag-language">
+<h4 class="tsd-anchor-link" id="language-17">Language<a href="#language-17" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>zh_CN</p>
+</div></div><aside class="tsd-sources">
+<p>Overrides <a href="extension_eui_layouts_supportClasses_LayoutBase.LayoutBase.html">LayoutBase</a>.<a href="extension_eui_layouts_supportClasses_LayoutBase.LayoutBase.html#measure">measure</a></p>
+<ul>
+<li>Defined in <a href="https://github.com/jjunk1989/egret-r/blob/59cf01520cdfe65259db926f7f8c28395bef86f0/src/extension/eui/layouts/TileLayout.ts#L757">extension/eui/layouts/TileLayout.ts:757</a></li></ul></aside></div></li></ul></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="clearvirtuallayoutcache"><span>clear<wbr/>Virtual<wbr/>Layout<wbr/>Cache</span><a href="#clearvirtuallayoutcache" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="">
+<div class="tsd-signature tsd-anchor-link" id="clearvirtuallayoutcache-1"><span class="tsd-kind-call-signature">clearVirtualLayoutCache</span><span class="tsd-signature-symbol">()</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">void</span><a href="#clearvirtuallayoutcache-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>如果 <code>useVirtualLayout</code> 为 <code>true</code>，
+则当布局目标改变时，布局目标可以使用此方法来清除已缓存布局信息。</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+<div class="tsd-comment tsd-typography">
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-44">Version<a href="#version-44" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Egret 2.4</p>
+</div>
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-45">Version<a href="#version-45" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>eui 1.0</p>
+</div>
+<div class="tsd-tag-platform">
+<h4 class="tsd-anchor-link" id="platform-22">Platform<a href="#platform-22" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Web</p>
+</div>
+<div class="tsd-tag-language">
+<h4 class="tsd-anchor-link" id="language-18">Language<a href="#language-18" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>zh_CN</p>
+</div></div><aside class="tsd-sources">
+<p>Overrides <a href="extension_eui_layouts_supportClasses_LayoutBase.LayoutBase.html">LayoutBase</a>.<a href="extension_eui_layouts_supportClasses_LayoutBase.LayoutBase.html#clearvirtuallayoutcache">clearVirtualLayoutCache</a></p>
+<ul>
+<li>Defined in <a href="https://github.com/jjunk1989/egret-r/blob/59cf01520cdfe65259db926f7f8c28395bef86f0/src/extension/eui/layouts/TileLayout.ts#L951">extension/eui/layouts/TileLayout.ts:951</a></li></ul></aside></div></li></ul></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="scrollpositionchanged"><span>scroll<wbr/>Position<wbr/>Changed</span><a href="#scrollpositionchanged" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="">
+<div class="tsd-signature tsd-anchor-link" id="scrollpositionchanged-1"><span class="tsd-kind-call-signature">scrollPositionChanged</span><span class="tsd-signature-symbol">()</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">void</span><a href="#scrollpositionchanged-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p><code>verticalScrollPosition</code> 或 <code>horizontalScrollPosition</code>
+属性更改时调用。</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+<div class="tsd-comment tsd-typography">
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-46">Version<a href="#version-46" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Egret 2.4</p>
+</div>
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-47">Version<a href="#version-47" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>eui 1.0</p>
+</div>
+<div class="tsd-tag-platform">
+<h4 class="tsd-anchor-link" id="platform-23">Platform<a href="#platform-23" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Web</p>
+</div>
+<div class="tsd-tag-language">
+<h4 class="tsd-anchor-link" id="language-19">Language<a href="#language-19" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>zh_CN</p>
+</div></div><aside class="tsd-sources">
+<p>Overrides <a href="extension_eui_layouts_supportClasses_LayoutBase.LayoutBase.html">LayoutBase</a>.<a href="extension_eui_layouts_supportClasses_LayoutBase.LayoutBase.html#scrollpositionchanged">scrollPositionChanged</a></p>
+<ul>
+<li>Defined in <a href="https://github.com/jjunk1989/egret-r/blob/59cf01520cdfe65259db926f7f8c28395bef86f0/src/extension/eui/layouts/TileLayout.ts#L980">extension/eui/layouts/TileLayout.ts:980</a></li></ul></aside></div></li></ul></section>
+<section class="tsd-panel tsd-member">
+<h3 class="tsd-anchor-link" id="updatedisplaylist"><span>update<wbr/>Display<wbr/>List</span><a href="#updatedisplaylist" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures">
+<li class="">
+<div class="tsd-signature tsd-anchor-link" id="updatedisplaylist-1"><span class="tsd-kind-call-signature">updateDisplayList</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">width</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">,</span> <span class="tsd-kind-parameter">height</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">void</span><a href="#updatedisplaylist-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>调整目标的元素的大小并定位这些元素。</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li><span><span class="tsd-kind-parameter">width</span>: <span class="tsd-signature-type">number</span></span></li>
+<li><span><span class="tsd-kind-parameter">height</span>: <span class="tsd-signature-type">number</span></span></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+<div class="tsd-comment tsd-typography">
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-48">Version<a href="#version-48" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Egret 2.4</p>
+</div>
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-49">Version<a href="#version-49" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>eui 1.0</p>
+</div>
+<div class="tsd-tag-platform">
+<h4 class="tsd-anchor-link" id="platform-24">Platform<a href="#platform-24" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Web</p>
+</div>
+<div class="tsd-tag-language">
+<h4 class="tsd-anchor-link" id="language-20">Language<a href="#language-20" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>zh_CN</p>
+</div></div><aside class="tsd-sources">
+<p>Overrides <a href="extension_eui_layouts_supportClasses_LayoutBase.LayoutBase.html">LayoutBase</a>.<a href="extension_eui_layouts_supportClasses_LayoutBase.LayoutBase.html#updatedisplaylist">updateDisplayList</a></p>
+<ul>
+<li>Defined in <a href="https://github.com/jjunk1989/egret-r/blob/59cf01520cdfe65259db926f7f8c28395bef86f0/src/extension/eui/layouts/TileLayout.ts#L1067">extension/eui/layouts/TileLayout.ts:1067</a></li></ul></aside></div></li></ul></section>
+<section class="tsd-panel tsd-member tsd-is-inherited">
+<h3 class="tsd-anchor-link" id="settypicalsize"><span>set<wbr/>Typical<wbr/>Size</span><a href="#settypicalsize" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-is-inherited">
+<li class="tsd-is-inherited">
+<div class="tsd-signature tsd-anchor-link" id="settypicalsize-1"><span class="tsd-kind-call-signature">setTypicalSize</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">width</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">,</span> <span class="tsd-kind-parameter">height</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">void</span><a href="#settypicalsize-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>设置一个典型元素的大小</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li><span><span class="tsd-kind-parameter">width</span>: <span class="tsd-signature-type">number</span></span>
+<div class="tsd-comment tsd-typography"><p>元素的宽</p>
+</div></li>
+<li><span><span class="tsd-kind-parameter">height</span>: <span class="tsd-signature-type">number</span></span>
+<div class="tsd-comment tsd-typography"><p>元素的高</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+<div class="tsd-comment tsd-typography">
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-50">Version<a href="#version-50" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Egret 2.4</p>
+</div>
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-51">Version<a href="#version-51" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>eui 1.0</p>
+</div>
+<div class="tsd-tag-platform">
+<h4 class="tsd-anchor-link" id="platform-25">Platform<a href="#platform-25" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Web</p>
+</div>
+<div class="tsd-tag-language">
+<h4 class="tsd-anchor-link" id="language-21">Language<a href="#language-21" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>zh_CN</p>
+</div></div><aside class="tsd-sources">
+<p>Inherited from <a href="extension_eui_layouts_supportClasses_LayoutBase.LayoutBase.html">LayoutBase</a>.<a href="extension_eui_layouts_supportClasses_LayoutBase.LayoutBase.html#settypicalsize">setTypicalSize</a></p>
+<ul>
+<li>Defined in <a href="https://github.com/jjunk1989/egret-r/blob/59cf01520cdfe65259db926f7f8c28395bef86f0/src/extension/eui/layouts/supportClasses/LayoutBase.ts#L170">extension/eui/layouts/supportClasses/LayoutBase.ts:170</a></li></ul></aside></div></li></ul></section>
+<section class="tsd-panel tsd-member tsd-is-inherited">
+<h3 class="tsd-anchor-link" id="elementadded"><span>element<wbr/>Added</span><a href="#elementadded" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-is-inherited">
+<li class="tsd-is-inherited">
+<div class="tsd-signature tsd-anchor-link" id="elementadded-1"><span class="tsd-kind-call-signature">elementAdded</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">index</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">void</span><a href="#elementadded-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>在已添加布局元素之后且在验证目标的大小和显示列表之前，由目标调用。
+按元素状态缓存的布局（比如虚拟布局）可以覆盖此方法以更新其缓存。</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li><span><span class="tsd-kind-parameter">index</span>: <span class="tsd-signature-type">number</span></span>
+<div class="tsd-comment tsd-typography"><p>发生改变的子项索引</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+<div class="tsd-comment tsd-typography">
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-52">Version<a href="#version-52" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Egret 2.4</p>
+</div>
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-53">Version<a href="#version-53" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>eui 1.0</p>
+</div>
+<div class="tsd-tag-platform">
+<h4 class="tsd-anchor-link" id="platform-26">Platform<a href="#platform-26" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Web</p>
+</div>
+<div class="tsd-tag-language">
+<h4 class="tsd-anchor-link" id="language-22">Language<a href="#language-22" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>zh_CN</p>
+</div></div><aside class="tsd-sources">
+<p>Inherited from <a href="extension_eui_layouts_supportClasses_LayoutBase.LayoutBase.html">LayoutBase</a>.<a href="extension_eui_layouts_supportClasses_LayoutBase.LayoutBase.html#elementadded">elementAdded</a></p>
+<ul>
+<li>Defined in <a href="https://github.com/jjunk1989/egret-r/blob/59cf01520cdfe65259db926f7f8c28395bef86f0/src/extension/eui/layouts/supportClasses/LayoutBase.ts#L250">extension/eui/layouts/supportClasses/LayoutBase.ts:250</a></li></ul></aside></div></li></ul></section>
+<section class="tsd-panel tsd-member tsd-is-inherited">
+<h3 class="tsd-anchor-link" id="elementremoved"><span>element<wbr/>Removed</span><a href="#elementremoved" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-is-inherited">
+<li class="tsd-is-inherited">
+<div class="tsd-signature tsd-anchor-link" id="elementremoved-1"><span class="tsd-kind-call-signature">elementRemoved</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">index</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">void</span><a href="#elementremoved-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>必须在已删除布局元素之后且在验证目标的大小和显示列表之前，由目标调用此方法。
+按元素状态缓存的布局（比如虚拟布局）可以覆盖此方法以更新其缓存。</p>
+</div>
+<div class="tsd-parameters">
+<h4 class="tsd-parameters-title">Parameters</h4>
+<ul class="tsd-parameter-list">
+<li><span><span class="tsd-kind-parameter">index</span>: <span class="tsd-signature-type">number</span></span>
+<div class="tsd-comment tsd-typography"><p>发生改变的子项索引</p>
+</div></li></ul></div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+<div class="tsd-comment tsd-typography">
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-54">Version<a href="#version-54" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Egret 2.4</p>
+</div>
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-55">Version<a href="#version-55" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>eui 1.0</p>
+</div>
+<div class="tsd-tag-platform">
+<h4 class="tsd-anchor-link" id="platform-27">Platform<a href="#platform-27" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Web</p>
+</div>
+<div class="tsd-tag-language">
+<h4 class="tsd-anchor-link" id="language-23">Language<a href="#language-23" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>zh_CN</p>
+</div></div><aside class="tsd-sources">
+<p>Inherited from <a href="extension_eui_layouts_supportClasses_LayoutBase.LayoutBase.html">LayoutBase</a>.<a href="extension_eui_layouts_supportClasses_LayoutBase.LayoutBase.html#elementremoved">elementRemoved</a></p>
+<ul>
+<li>Defined in <a href="https://github.com/jjunk1989/egret-r/blob/59cf01520cdfe65259db926f7f8c28395bef86f0/src/extension/eui/layouts/supportClasses/LayoutBase.ts#L279">extension/eui/layouts/supportClasses/LayoutBase.ts:279</a></li></ul></aside></div></li></ul></section>
+<section class="tsd-panel tsd-member tsd-is-inherited">
+<h3 class="tsd-anchor-link" id="getelementindicesinview"><span>get<wbr/>Element<wbr/>Indices<wbr/>In<wbr/>View</span><a href="#getelementindicesinview" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-is-inherited">
+<li class="tsd-is-inherited">
+<div class="tsd-signature tsd-anchor-link" id="getelementindicesinview-1"><span class="tsd-kind-call-signature">getElementIndicesInView</span><span class="tsd-signature-symbol">()</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span><a href="#getelementindicesinview-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
+<div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>返回此 Group 中可见的元素的索引。</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></h4><p>可见的元素的索引。</p>
+
+<div class="tsd-comment tsd-typography">
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-56">Version<a href="#version-56" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Egret 2.4</p>
+</div>
+<div class="tsd-tag-version">
+<h4 class="tsd-anchor-link" id="version-57">Version<a href="#version-57" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>eui 1.0</p>
+</div>
+<div class="tsd-tag-platform">
+<h4 class="tsd-anchor-link" id="platform-28">Platform<a href="#platform-28" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>Web</p>
+</div>
+<div class="tsd-tag-language">
+<h4 class="tsd-anchor-link" id="language-24">Language<a href="#language-24" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>zh_CN</p>
+</div></div><aside class="tsd-sources">
+<p>Inherited from <a href="extension_eui_layouts_supportClasses_LayoutBase.LayoutBase.html">LayoutBase</a>.<a href="extension_eui_layouts_supportClasses_LayoutBase.LayoutBase.html#getelementindicesinview">getElementIndicesInView</a></p>
+<ul>
+<li>Defined in <a href="https://github.com/jjunk1989/egret-r/blob/59cf01520cdfe65259db926f7f8c28395bef86f0/src/extension/eui/layouts/supportClasses/LayoutBase.ts#L302">extension/eui/layouts/supportClasses/LayoutBase.ts:302</a></li></ul></aside></div></li></ul></section></section></details></div>
+<div class="col-sidebar">
+<div class="page-menu">
+<div class="tsd-navigation settings">
+<details class="tsd-accordion"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
+<h3>Settings</h3></summary>
+<div class="tsd-accordion-details">
+<div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span>
+<ul id="tsd-filter-options">
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li>
+<li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li></ul></div>
+<div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div>
+<details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
+<h3>On This Page</h3></summary>
+<div class="tsd-accordion-details">
+<details open class="tsd-accordion tsd-page-navigation-section"><summary class="tsd-accordion-summary" data-key="section-Constructors"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Constructors</summary>
+<div><a href="#constructor"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Constructor"><use href="../assets/icons.svg#icon-512"></use></svg><span>constructor</span></a></div></details>
+<details open class="tsd-accordion tsd-page-navigation-section"><summary class="tsd-accordion-summary" data-key="section-Accessors"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Accessors</summary>
+<div><a href="#horizontalgap"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Accessor"><use href="../assets/icons.svg#icon-262144"></use></svg><span>horizontal<wbr/>Gap</span></a><a href="#verticalgap"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Accessor"><use href="../assets/icons.svg#icon-262144"></use></svg><span>vertical<wbr/>Gap</span></a><a href="#columncount"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Accessor"><use href="../assets/icons.svg#icon-262144"></use></svg><span>column<wbr/>Count</span></a><a href="#requestedcolumncount"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Accessor"><use href="../assets/icons.svg#icon-262144"></use></svg><span>requested<wbr/>Column<wbr/>Count</span></a><a href="#rowcount"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Accessor"><use href="../assets/icons.svg#icon-262144"></use></svg><span>row<wbr/>Count</span></a><a href="#requestedrowcount"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Accessor"><use href="../assets/icons.svg#icon-262144"></use></svg><span>requested<wbr/>Row<wbr/>Count</span></a><a href="#columnwidth"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Accessor"><use href="../assets/icons.svg#icon-262144"></use></svg><span>column<wbr/>Width</span></a><a href="#rowheight"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Accessor"><use href="../assets/icons.svg#icon-262144"></use></svg><span>row<wbr/>Height</span></a><a href="#paddingleft"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Accessor"><use href="../assets/icons.svg#icon-262144"></use></svg><span>padding<wbr/>Left</span></a><a href="#paddingright"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Accessor"><use href="../assets/icons.svg#icon-262144"></use></svg><span>padding<wbr/>Right</span></a><a href="#paddingtop"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Accessor"><use href="../assets/icons.svg#icon-262144"></use></svg><span>padding<wbr/>Top</span></a><a href="#paddingbottom"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Accessor"><use href="../assets/icons.svg#icon-262144"></use></svg><span>padding<wbr/>Bottom</span></a><a href="#horizontalalign"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Accessor"><use href="../assets/icons.svg#icon-262144"></use></svg><span>horizontal<wbr/>Align</span></a><a href="#verticalalign"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Accessor"><use href="../assets/icons.svg#icon-262144"></use></svg><span>vertical<wbr/>Align</span></a><a href="#columnalign"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Accessor"><use href="../assets/icons.svg#icon-262144"></use></svg><span>column<wbr/>Align</span></a><a href="#rowalign"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Accessor"><use href="../assets/icons.svg#icon-262144"></use></svg><span>row<wbr/>Align</span></a><a href="#orientation"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Accessor"><use href="../assets/icons.svg#icon-262144"></use></svg><span>orientation</span></a><a href="#target" class="tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Accessor"><use href="../assets/icons.svg#icon-262144"></use></svg><span>target</span></a><a href="#usevirtuallayout" class="tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Accessor"><use href="../assets/icons.svg#icon-262144"></use></svg><span>use<wbr/>Virtual<wbr/>Layout</span></a></div></details>
+<details open class="tsd-accordion tsd-page-navigation-section"><summary class="tsd-accordion-summary" data-key="section-Methods"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Methods</summary>
+<div><a href="#measure"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>measure</span></a><a href="#clearvirtuallayoutcache"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>clear<wbr/>Virtual<wbr/>Layout<wbr/>Cache</span></a><a href="#scrollpositionchanged"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>scroll<wbr/>Position<wbr/>Changed</span></a><a href="#updatedisplaylist"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>update<wbr/>Display<wbr/>List</span></a><a href="#settypicalsize" class="tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>set<wbr/>Typical<wbr/>Size</span></a><a href="#elementadded" class="tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>element<wbr/>Added</span></a><a href="#elementremoved" class="tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>element<wbr/>Removed</span></a><a href="#getelementindicesinview" class="tsd-is-inherited"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>get<wbr/>Element<wbr/>Indices<wbr/>In<wbr/>View</span></a></div></details></div></details></div>
+<div class="site-menu">
+<nav class="tsd-navigation"><a href="../modules.html">Egret Engine R - v6.0.0</a>
+<ul class="tsd-small-nested-navigation" id="tsd-nav-container">
+<li>Loading...</li></ul></nav></div></div></div><footer></footer>
+<div class="overlay"></div></body></html>
