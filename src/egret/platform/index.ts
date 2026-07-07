@@ -13,4 +13,5 @@ export type { MiniGameAdapter, SystemInfo } from "./MiniGameAdapter";
 export { WebAdapter } from "./WebAdapter";
 export { GenericMiniGameAdapter } from "./GenericMiniGameAdapter";
 export { WxAdapter } from "./WxAdapter";
+export { TtAdapter, KsAdapter, QqAdapter } from "./OtherAdapters";
 export { registerPlatform, getPlatform, hasPlatform, getPlatformId } from "./PlatformRegistry";

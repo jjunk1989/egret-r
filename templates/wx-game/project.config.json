@@ -1,0 +1,15 @@
+{
+  "description": "Egret Engine R - Mini Game",
+  "setting": {
+    "urlCheck": true,
+    "es6": true,
+    "enhance": true,
+    "postcss": false,
+    "minified": false
+  },
+  "compileType": "game",
+  "libVersion": "latest",
+  "appid": "",
+  "projectname": "egret-r-game",
+  "condition": {}
+}

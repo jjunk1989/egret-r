@@ -283,7 +283,8 @@ egret-r/
 
 ```bash
 npm install           # Install dependencies
-npm run build         # Build all 7 packages
+npm run build         # Build all 7 packages (Web target)
+npm run build:minigame# Build all packages (Mini-Game target)
 npm run build:core    # Build @egret-r/core only
 npm run build:examples# Build all example demos
 npm run dev           # Build + start example dev server
@@ -312,12 +313,18 @@ src/egret/*.ts src/extension/*.ts (ESM source)
 
 ## Platform Support
 
-| Platform | Status |
-|----------|--------|
-| Chrome, Edge, Firefox, Safari | ✅ Full |
-| iOS Safari, Android Chrome | ✅ Full |
-| WeChat Mini Game | ✅ (via Web API) |
-| Facebook Instant Games | ✅ |
+| Platform | Status | Adapter |
+|----------|--------|---------|
+| Chrome, Edge, Firefox, Safari | ✅ Full | `WebAdapter` (auto) |
+| iOS Safari, Android Chrome | ✅ Full | `WebAdapter` (auto) |
+| WeChat Mini Game | ✅ | `WxAdapter` |
+| Douyin Mini Game | ✅ | `TtAdapter` |
+| Kuaishou Mini Game | ✅ | `KsAdapter` |
+| QQ Mini Game | ✅ | `QqAdapter` |
+| Facebook Instant Games | ⬜ | Planned |
+
+> All mini-game adapters share the same `GenericMiniGameAdapter` base class.
+> Adding a new platform is ~5 lines of code. See [src/egret/platform](./src/egret/platform/).
 
 ---
 

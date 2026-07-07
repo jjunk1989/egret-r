@@ -4,6 +4,7 @@ import esbuild from 'esbuild';
 import { fileURLToPath } from 'node:url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, '..');
+var miniGameMode = false;
 
 var PACKAGES = [
   { name: 'core', srcDirs: ['src/egret'], nss: ['egret'] },
@@ -69,7 +70,15 @@ async function buildPkg(pkg) {
     files = files.concat(walkTs(srcDir));
   }
   files = files.filter(function(f) {
-    return !/[\\\/]native[\\\/]/.test(f) && !/NativeContext\.ts$/.test(f);
+    if (/[\\\/]native[\\\/]/.test(f) || /NativeContext\.ts$/.test(f)) return false;
+    // Mini-game: exclude web-specific files (DOM APIs)
+    if (miniGameMode) {
+      if (/[\\\/]web[\\\/]/.test(f)) return false;
+      if (/HtmlSound\.ts$/.test(f) || /WebAudioSound\.ts$/.test(f)) return false;
+      if (/WebTouchHandler\.ts$/.test(f)) return false;
+      if (/WebVideo\.ts$/.test(f) || /WebAudio\.ts/.test(f)) return false;
+    }
+    return true;
   });
 
   // For non-core packages, also include core egret files for proper ordering
@@ -285,7 +294,7 @@ async function buildPkg(pkg) {
   fs.writeFileSync(entryPath, entry, 'utf8');
 
   try {
-    await esbuild.build({
+    var esbuildOpts = {
       entryPoints: [entryPath],
       bundle: true, format: 'esm',
       outfile: path.join(distDir, 'index_tmp.js'),
@@ -294,7 +303,17 @@ async function buildPkg(pkg) {
       logLevel: 'error',
       banner: { js: '' },
       tsconfigRaw: { compilerOptions: { preserveConstEnums: false, useDefineForClassFields: false, experimentalDecorators: true } },
-    });
+    };
+
+    // Mini-game: add conditional compilation defines
+    if (miniGameMode) {
+      esbuildOpts.define = {
+        'WEB_ONLY': 'false',
+        'MINIGAME': 'true',
+      };
+    }
+
+    await esbuild.build(esbuildOpts);
 
     // Post-process: wrap in IIFE for hoisting, then re-export
     var bundled = fs.readFileSync(path.join(distDir, 'index_tmp.js'), 'utf8');
@@ -408,6 +427,11 @@ async function buildPkg(pkg) {
 
 async function main() {
   var watchMode = process.argv.includes('--watch');
+  miniGameMode = process.argv.includes('--minigame');
+
+  if (miniGameMode) {
+    console.log('Building ESM packages (mini-game target)...\n');
+  }
 
   if (watchMode) {
     console.log('Building ESM packages (direct, watch mode)...\n');

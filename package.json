@@ -5,6 +5,7 @@
   "description": "Egret Engine R - Modern HTML5 Game Engine",
   "scripts": {
     "build": "node scripts/build-esm-direct.mjs",
+    "build:minigame": "node scripts/build-esm-direct.mjs --minigame",
     "build:examples": "node scripts/build-examples.mjs",
     "build:v3": "node scripts/build-esm-v3.mjs",
     "build:core": "node scripts/build-esm-direct.mjs",
