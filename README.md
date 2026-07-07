@@ -106,9 +106,14 @@ Standalone playable games in `examples/`:
 
 | Project | Directory | Dev Server |
 |---------|-----------|------------|
-| 🎮 **Flappy Bird** | `examples/flappy-bird/` | `npm -w examples/flappy-bird run dev` → http://localhost:3001 |
-| 🎮 **Breakout** | `examples/breakout/` | `npm -w examples/breakout run dev` → http://localhost:3002 |
-| 🎮 **2048** | `examples/2048/` | `npm -w examples/2048 run dev` → http://localhost:3003 |
+| 🧪 **Basic** | `examples/basic/` | `npm -w examples/basic run dev` → http://localhost:3000 |
+| 🐦 **Flappy Bird** | `examples/flappy-bird/` | `npm -w examples/flappy-bird run dev` → http://localhost:3001 |
+| 🧱 **Breakout** | `examples/breakout/` | `npm -w examples/breakout run dev` → http://localhost:3002 |
+| 🔢 **2048** | `examples/2048/` | `npm -w examples/2048 run dev` → http://localhost:3003 |
+| 🐍 **Snake** | `examples/snake/` | `npm -w examples/snake run dev` → http://localhost:3005 |
+| 🚀 **Shooter** | `examples/shooter/` | `npm -w examples/shooter run dev` → http://localhost:3006 |
+| 💎 **Match-3** | `examples/match3/` | `npm -w examples/match3 run dev` → http://localhost:3008 |
+| 🔗 **Link** | `examples/link/` | `npm -w examples/link run dev` → http://localhost:3009 |
 
 ### Recommended Development Workflow
 
