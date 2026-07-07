@@ -20,6 +20,10 @@ import { $locale_strings, $language, set$language } from "../i18n/tr";
 import { Html5Capatibility } from "./Html5Capatibility";
 import { Capabilities, RuntimeType } from "../system/Capabilities";
 import { WebGLUtils } from "./rendering/webgl/WebGLUtils";
+import { registerPlatform, WebAdapter } from "../platform";
+
+    // Auto-register Web platform adapter
+    registerPlatform(new WebAdapter());
 
     /**
      * @private
