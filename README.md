@@ -17,10 +17,10 @@ Egret Engine R is a modernized version of the Egret HTML5 game engine, repackage
 | [`@egret-r/game`](./packages/game) | Game extensions: MovieClip, URLLoader, ScrollView | 33 KB |
 | [`@egret-r/tween`](./packages/tween) | Easing animation: Tween, Ease (chain, parallel, wait) | 10 KB |
 | [`@egret-r/socket`](./packages/socket) | WebSocket wrapper | 3 KB |
-| [`@egret-r/assetsmanager`](./packages/assetsmanager) | Resource loading &amp; management | �?|
-| [`@egret-r/resource`](./packages/resource) | Legacy RES module | �?|
+| [`@egret-r/assetsmanager`](./packages/assetsmanager) | Resource loading &amp; management | —|
+| [`@egret-r/resource`](./packages/resource) | Legacy RES module | —|
 
-> Extension packages (`eui`, `game`, `tween`, `socket`, `assetsmanager`, `resource`) declare `@egret-r/core` as **peerDependency** �?install core once, no duplication.
+> Extension packages (`eui`, `game`, `tween`, `socket`, `assetsmanager`, `resource`) declare `@egret-r/core` as **peerDependency** —install core once, no duplication.
 
 🔗 **[Online Demos](https://jjunk1989.github.io/egret-r/)** · 📖 **[API Docs](https://jjunk1989.github.io/egret-r/docs/api/)**
 
@@ -128,7 +128,7 @@ For fast iteration during development, open **two terminals**:
 | Terminal 1 | Terminal 2 |
 |------------|------------|
 | `npm run watch` | `npm -w examples/basic run dev` |
-| Watches `src/` changes �?auto-rebuilds packages | Vite dev server �?HMR auto-refreshes browser |
+| Watches `src/` changes —auto-rebuilds packages | Vite dev server —HMR auto-refreshes browser |
 
 ### Using the Vite Template
 

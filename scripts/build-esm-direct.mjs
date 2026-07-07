@@ -299,19 +299,6 @@ async function buildPkg(pkg) {
     // Post-process: wrap in IIFE for hoisting, then re-export
     var bundled = fs.readFileSync(path.join(distDir, 'index_tmp.js'), 'utf8');
 
-    // Fix: const enum members accessed via sys.*Keys — esbuild can't inline
-    // These through namespace lookups. Replace with numeric values.
-    // ListBaseKeys (extension/eui/components/supportClasses/ListBase.ts)
-    bundled = bundled.replace(/sys\.ListBaseKeys\.requireSelection\b/g, '0');
-    bundled = bundled.replace(/sys\.ListBaseKeys\.requireSelectionChanged\b/g, '1');
-    bundled = bundled.replace(/sys\.ListBaseKeys\.proposedSelectedIndex\b/g, '2');
-    bundled = bundled.replace(/sys\.ListBaseKeys\.selectedIndex\b/g, '3');
-    bundled = bundled.replace(/sys\.ListBaseKeys\.dispatchChangeAfterSelection\b/g, '4');
-    bundled = bundled.replace(/sys\.ListBaseKeys\.pendingSelectedItem\b/g, '5');
-    bundled = bundled.replace(/sys\.ListBaseKeys\.selectedIndexAdjusted\b/g, '6');
-    bundled = bundled.replace(/sys\.ListBaseKeys\.touchDownItemRenderer\b/g, '7');
-    bundled = bundled.replace(/sys\.ListBaseKeys\.touchCancle\b/g, '8');
-
     // Fix: esbuild renames Event -> _Event but code still references Event.XXX
     // as a bare global (e.g. Event.ADDED, Event.ADDED_TO_STAGE). Replace all
     // Event. property accesses with _Event.
