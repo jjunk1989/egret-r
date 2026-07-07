@@ -18,13 +18,20 @@ Egret Engine R is a modernized version of the Egret HTML5 game engine, repackage
 | [`@egret-r/game`](./packages/game) | Game extensions: MovieClip, URLLoader, ScrollView | 33 KB |
 | [`@egret-r/tween`](./packages/tween) | Easing animation: Tween, Ease (chain, parallel, wait) | 10 KB |
 | [`@egret-r/socket`](./packages/socket) | WebSocket wrapper | 3 KB |
+| [`@egret-r/assetsmanager`](./packages/assetsmanager) | Resource loading &amp; management | — |
+| [`@egret-r/resource`](./packages/resource) | Legacy RES module | — |
+
+> Extension packages (`eui`, `game`, `tween`, `socket`, `assetsmanager`, `resource`) declare `@egret-r/core` as **peerDependency** — install core once, no duplication.
+
+🔗 **[Online Demos](https://egret-labs.github.io/egret-r/)** · 📖 **[API Docs](https://egret-labs.github.io/egret-r/docs/api/)**
 
 ---
 
 ## Installation
 
 ```bash
-npm install @egret-r/core @egret-r/eui @egret-r/game @egret-r/tween
+npm install @egret-r/core   # required
+npm install @egret-r/eui @egret-r/game @egret-r/tween @egret-r/socket  # optional extensions
 ```
 
 ---
@@ -258,9 +265,13 @@ egret-r/
 │   ├── eui/           # @egret-r/eui
 │   ├── game/          # @egret-r/game
 │   ├── tween/         # @egret-r/tween
-│   └── socket/        # @egret-r/socket
+│   ├── socket/        # @egret-r/socket
+│   ├── assetsmanager/ # @egret-r/assetsmanager
+│   └── resource/      # @egret-r/resource
 ├── src/               # ESM source (namespace→ESM migration)
-├── scripts/           # Build tooling
+├── scripts/           # Build tooling (ESM .mjs)
+├── examples/          # 8 game demos + testbed
+├── docs/api/          # API reference (TypeDoc)
 └── package.json       # Monorepo root (npm workspaces)
 ```
 
@@ -268,11 +279,13 @@ egret-r/
 
 ```bash
 npm install           # Install dependencies
-npm run build         # Build all 5 packages
+npm run build         # Build all 7 packages
 npm run build:core    # Build @egret-r/core only
+npm run build:examples# Build all example demos
 npm run dev           # Build + start example dev server
+npm run docs          # Generate API docs (TypeDoc)
 npm run clean         # Remove all dist/ directories
-npm test              # Run all tests (88 tests, 5 suites)
+npm test              # Run all tests
 ```
 
 ### Build Pipeline
@@ -281,8 +294,9 @@ npm test              # Run all tests (88 tests, 5 suites)
 src/egret/*.ts src/extension/*.ts (ESM source)
     │
     ├── Defines.debug.ts → injected first (debug constants)
-    ├── Kahn topological sort → resolve circular dependencies
-    ├── import type → break remaining cycles
+    ├── Kahn topological sort → resolve dependency order
+    ├── Auto-generated ESM entry (_esm_entry.ts)
+    ├── Namespace bridging → namespace → ESM re-exports
     │
     └── esbuild
           ├── bundle + ESM → dist/index_tmp.js
@@ -300,6 +314,14 @@ src/egret/*.ts src/extension/*.ts (ESM source)
 | iOS Safari, Android Chrome | ✅ Full |
 | WeChat Mini Game | ✅ (via Web API) |
 | Facebook Instant Games | ✅ |
+
+---
+
+## Links
+
+- 🎮 **[Online Demos](https://egret-labs.github.io/egret-r/)** — playable examples &amp; test cases
+- 📖 **[API Docs](https://egret-labs.github.io/egret-r/docs/api/)** — full TypeDoc reference
+- 📦 **[GitHub](https://github.com/egret-labs/egret-r)** — source &amp; issues
 
 ---
 

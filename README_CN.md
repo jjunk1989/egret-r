@@ -17,13 +17,20 @@ Egret Engine R 是 Egret HTML5 游戏引擎的现代化版本，重新打包为 
 | [`@egret-r/game`](./packages/game) | 游戏扩展：MovieClip、URLLoader、ScrollView | 33 KB |
 | [`@egret-r/tween`](./packages/tween) | 缓动动画：Tween、Ease（链式、并行、等待） | 10 KB |
 | [`@egret-r/socket`](./packages/socket) | WebSocket 封装 | 3 KB |
+| [`@egret-r/assetsmanager`](./packages/assetsmanager) | 资源加载与管理 | — |
+| [`@egret-r/resource`](./packages/resource) | 旧版 RES 模块 | — |
+
+> 扩展包（`eui`、`game`、`tween`、`socket`、`assetsmanager`、`resource`）将 `@egret-r/core` 声明为 **peerDependency** — 只安装一份 core，无需重复打包。
+
+🔗 **[在线演示](https://egret-labs.github.io/egret-r/)** · 📖 **[API 文档](https://egret-labs.github.io/egret-r/docs/api/)**
 
 ---
 
 ## 安装
 
 ```bash
-npm install @egret-r/core @egret-r/eui @egret-r/game @egret-r/tween
+npm install @egret-r/core   # 必装
+npm install @egret-r/eui @egret-r/game @egret-r/tween @egret-r/socket  # 可选扩展
 ```
 
 ---
@@ -257,9 +264,13 @@ egret-r/
 │   ├── eui/           # @egret-r/eui
 │   ├── game/          # @egret-r/game
 │   ├── tween/         # @egret-r/tween
-│   └── socket/        # @egret-r/socket
+│   ├── socket/        # @egret-r/socket
+│   ├── assetsmanager/ # @egret-r/assetsmanager
+│   └── resource/      # @egret-r/resource
 ├── src/               # ESM 源码（namespace→ESM 迁移）
-├── scripts/           # 构建工具
+├── scripts/           # 构建工具（ESM .mjs）
+├── examples/          # 8 个游戏 Demo + 测试台
+├── docs/api/          # API 参考文档（TypeDoc）
 └── package.json       # Monorepo 根（npm workspaces）
 ```
 
@@ -267,11 +278,13 @@ egret-r/
 
 ```bash
 npm install           # 安装依赖
-npm run build         # 构建所有 5 个包
+npm run build         # 构建所有 7 个包
 npm run build:core    # 仅构建 @egret-r/core
+npm run build:examples# 构建所有示例
 npm run dev           # 构建 + 启动示例开发服务器
+npm run docs          # 生成 API 文档（TypeDoc）
 npm run clean         # 清理所有 dist/ 目录
-npm test              # 运行所有测试（88 项，5 套件）
+npm test              # 运行所有测试
 ```
 
 ### 构建流程
@@ -280,8 +293,9 @@ npm test              # 运行所有测试（88 项，5 套件）
 src/egret/*.ts src/extension/*.ts（ESM 源码）
     │
     ├── Defines.debug.ts → 最先注入（调试常量）
-    ├── Kahn 拓扑排序 → 解析循环依赖
-    ├── import type → 打破剩余循环
+    ├── Kahn 拓扑排序 → 解析依赖顺序
+    ├── 自动生成 ESM 入口（_esm_entry.ts）
+    ├── 命名空间桥接 → namespace → ESM 重导出
     │
     └── esbuild
           ├── bundle + ESM → dist/index_tmp.js
@@ -299,6 +313,14 @@ src/egret/*.ts src/extension/*.ts（ESM 源码）
 | iOS Safari、Android Chrome | ✅ 完全支持 |
 | 微信小游戏 | ✅（通过 Web API） |
 | Facebook Instant Games | ✅ |
+
+---
+
+## 链接
+
+- 🎮 **[在线演示](https://egret-labs.github.io/egret-r/)** — 可玩的示例和测试用例
+- 📖 **[API 文档](https://egret-labs.github.io/egret-r/docs/api/)** — 完整 TypeDoc 参考
+- 📦 **[GitHub](https://github.com/egret-labs/egret-r)** — 源码和问题追踪
 
 ---
 
