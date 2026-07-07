@@ -298,26 +298,6 @@ async function buildPkg(pkg) {
 
     // Post-process: wrap in IIFE for hoisting, then re-export
     var bundled = fs.readFileSync(path.join(distDir, 'index_tmp.js'), 'utf8');
-    
-    // Fix: esbuild renames $TextureScaleFactor -> $TextureScaleFactor2.
-    // esbuild renames the declaration but NOT all cross-module usages.
-    var lines = bundled.split('\n');
-    for (var li = 0; li < lines.length; li++) {
-      if (lines[li].indexOf('_ns(') >= 0 && lines[li].indexOf('"$TextureScaleFactor"') >= 0) continue;
-      if (lines[li].indexOf('"$TextureScaleFactor"') >= 0) continue;
-      lines[li] = lines[li].replace(/(?<!\w)\$TextureScaleFactor(?!\w)/g, '$TextureScaleFactor2');
-    }
-    bundled = lines.join('\n');
-
-    // Fix: esbuild renames $TempMatrix -> $TempMatrix2.
-    lines = bundled.split('\n');
-    for (var li3 = 0; li3 < lines.length; li3++) {
-      if (lines[li3].indexOf('_ns(') >= 0 && lines[li3].indexOf('"$TempMatrix"') >= 0) continue;
-      if (lines[li3].indexOf('"$TempMatrix"') >= 0) continue;
-      if (lines[li3].indexOf('var $TempMatrix2') >= 0) continue;
-      lines[li3] = lines[li3].replace(/(?<!\w)\$TempMatrix(?!\w)/g, '$TempMatrix2');
-    }
-    bundled = lines.join('\n');
 
     // Fix: const enum members accessed via sys.*Keys — esbuild can't inline
     // These through namespace lookups. Replace with numeric values.
@@ -335,7 +315,7 @@ async function buildPkg(pkg) {
     // Fix: esbuild renames Event -> _Event but code still references Event.XXX
     // as a bare global (e.g. Event.ADDED, Event.ADDED_TO_STAGE). Replace all
     // Event. property accesses with _Event.
-    lines = bundled.split('\n');
+    var lines = bundled.split('\n');
     for (var li4 = 0; li4 < lines.length; li4++) {
       if (lines[li4].indexOf('_ns(') >= 0) continue;
       if (lines[li4].indexOf('__name(') >= 0) continue;

@@ -4,7 +4,7 @@
 import { nativeRender } from "../player/Player";
 import { MeshNode } from "../player/nodes/MeshNode";
 import { Bitmap } from "./Bitmap";
-import { Texture } from "./Texture";
+import { Texture, $TextureScaleFactor } from "./Texture";
 import { Rectangle } from "../geom/Rectangle";
 
     /**

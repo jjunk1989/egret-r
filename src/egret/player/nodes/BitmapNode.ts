@@ -7,6 +7,7 @@ import { Rectangle } from "../../geom/Rectangle";
 import { NormalBitmapNode } from "./NormalBitmapNode";
 import { RenderNode, RenderNodeType } from "./RenderNode";
 import { BitmapData } from "../../display/BitmapData";
+import { $TextureScaleFactor } from "../../display/Texture";
 import { ColorMatrixFilter } from "../../filters/ColorMatrixFilter";
 
 

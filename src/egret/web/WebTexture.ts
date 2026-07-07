@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { Texture } from "../display/Texture";
+import { Texture, $TextureScaleFactor } from "../display/Texture";
 import { Rectangle, $TempRectangle } from "../geom/Rectangle";
 import { RenderTexture } from "../display/RenderTexture";
 import { Bitmap } from "../display/Bitmap";
