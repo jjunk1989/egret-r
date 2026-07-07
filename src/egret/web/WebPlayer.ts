@@ -33,7 +33,7 @@ import { getPrefixStyleName } from "./Html5Capatibility";
         }
 
         private init(container: HTMLDivElement, options: runEgretOptions): void {
-            console.egret.log("Egret Engine Version:", Capabilities.engineVersion)
+            console.log("Egret Engine Version:", Capabilities.engineVersion)
             let option = this.readOption(container, options);
             let stage = new Stage();
             stage.$screen = this;

@@ -66,7 +66,7 @@ import { $warn } from "../../../../Defines.debug";
             if (webglTexture[sys.engine_default_empty_texture]) {
                 if (DEBUG) {
                     //引擎默认的空白纹理，不允许删除
-                    console.egret.warn('deleteWebGLTexture:' + sys.engine_default_empty_texture);
+                    console.warn('deleteWebGLTexture:' + sys.engine_default_empty_texture);
                 }
                 return;
             }

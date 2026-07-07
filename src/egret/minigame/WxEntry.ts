@@ -140,7 +140,7 @@ export function runMiniGame(options: MiniGameOptions = {}): void {
       const instance = new clazz();
       stage.addChild(instance);
     } else {
-      adapter.egret.warn("Entry class not found: " + options.entryClass);
+      adapter.warn("Entry class not found: " + options.entryClass);
     }
   }
 
@@ -151,7 +151,7 @@ export function runMiniGame(options: MiniGameOptions = {}): void {
   }
   loop();
 
-  adapter.egret.log("Mini-game started (" + adapter.platformId + ") "
+  adapter.log("Mini-game started (" + adapter.platformId + ") "
     + cw + "x" + ch);
 }
 
