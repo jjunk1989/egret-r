@@ -18,13 +18,12 @@
   ],
   "scripts": {
     "build": "tsc",
-    "clean": "rimraf dist",
+    "clean": "node -e \"fs.rmSync('dist',{recursive:true,force:true})\"",
     "watch": "tsc --watch"
   },
   "dependencies": {},
   "devDependencies": {
-    "typescript": "^5.9.0",
-    "rimraf": "^5.0.0"
+    "typescript": "^5.9.0"
   },
   "keywords": [
     "egret",
