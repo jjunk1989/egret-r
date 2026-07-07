@@ -1,13 +1,14 @@
-"use strict";
-var fs = require('fs');
-var path = require('path');
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-var root = path.join(__dirname, '..', 'packages');
+const root = path.join(__dirname, '..', 'packages');
 
 function checkPkg(name) {
-  var dts = path.join(root, name, 'dist', 'index.d.ts');
+  const dts = path.join(root, name, 'dist', 'index.d.ts');
   if (!fs.existsSync(dts)) { console.log(name + ': NO index.d.ts'); return; }
-  var c = fs.readFileSync(dts, 'utf8');
+  const c = fs.readFileSync(dts, 'utf8');
   console.log(name + ':');
   console.log('  $error:', /declare\s+function\s+\$error/.test(c));
   console.log('  $warn:', /declare\s+function\s+\$warn/.test(c));

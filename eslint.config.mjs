@@ -11,7 +11,7 @@ export default tseslint.config(
       '**/dist/**',
       '**/node_modules/**',
       '**/packages/*/src/**',  // generated copies
-      'scripts/*.js',           // CommonJS build scripts
+      'scripts/*.js',           // legacy CommonJS scripts
     ],
   },
   {

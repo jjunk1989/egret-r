@@ -20,10 +20,10 @@ jobs:
       - run: npm ci
 
       - name: Build packages
-        run: node scripts/build-esm-direct.js
+        run: node scripts/build-esm-direct.mjs
 
       - name: Verify bundles (no bare globals)
-        run: node scripts/verify-bundle.js
+        run: node scripts/verify-bundle.mjs
 
       - name: Run tests
         run: npm -w examples/basic run test

@@ -1,6 +1,9 @@
-"use strict";
-var fs = require('fs'), path = require('path'), esbuild = require('esbuild');
-var ROOT = path.join(__dirname, '..');
+import fs from 'node:fs';
+import path from 'node:path';
+import esbuild from 'esbuild';
+import { fileURLToPath } from 'node:url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const ROOT = path.join(__dirname, '..');
 
 var PACKAGES = [
   { name: 'core', srcDirs: ['src/egret'], nss: ['egret'] },
@@ -463,7 +466,7 @@ async function main() {
     console.log('\nWatching ' + watchPaths.length + ' source paths for changes...\n');
 
     // Use chokidar for reliable cross-platform file watching
-    var chokidar = require('chokidar');
+    var { default: chokidar } = await import('chokidar');
     var watchPaths = [];
     for (var si = 0; si < PACKAGES.length; si++) {
       for (var di = 0; di < PACKAGES[si].srcDirs.length; di++) {

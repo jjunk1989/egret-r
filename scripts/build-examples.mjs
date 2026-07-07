@@ -1,29 +1,31 @@
 #!/usr/bin/env node
 /**
  * Build all example demos under examples/
- * Usage: node scripts/build-examples.js
+ * Usage: node scripts/build-examples.mjs
  */
-var fs = require('fs');
-var path = require('path');
-var cp = require('child_process');
+import fs from 'node:fs';
+import path from 'node:path';
+import cp from 'node:child_process';
+import { fileURLToPath } from 'node:url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-var EXAMPLES_DIR = path.join(__dirname, '..', 'examples');
-var SKIP = []; // add folder names to skip
+const EXAMPLES_DIR = path.join(__dirname, '..', 'examples');
+const SKIP = []; // add folder names to skip
 
-var dirs = fs.readdirSync(EXAMPLES_DIR, { withFileTypes: true })
-  .filter(function(d) { return d.isDirectory() && SKIP.indexOf(d.name) < 0; })
-  .filter(function(d) { return fs.existsSync(path.join(EXAMPLES_DIR, d.name, 'package.json')); })
-  .map(function(d) { return d.name; });
+const dirs = fs.readdirSync(EXAMPLES_DIR, { withFileTypes: true })
+  .filter(d => d.isDirectory() && !SKIP.includes(d.name))
+  .filter(d => fs.existsSync(path.join(EXAMPLES_DIR, d.name, 'package.json')))
+  .map(d => d.name);
 
 console.log('Building ' + dirs.length + ' example(s): ' + dirs.join(', ') + '\n');
 
-var failed = [];
-dirs.forEach(function(name) {
-  var dir = path.join(EXAMPLES_DIR, name);
+const failed = [];
+for (const name of dirs) {
+  const dir = path.join(EXAMPLES_DIR, name);
   console.log('[' + name + '] installing...');
   try {
     cp.execSync('npm install', { cwd: dir, stdio: 'pipe' });
-  } catch (e) { /* ignore install warnings */ }
+  } catch (_) { /* ignore install warnings */ }
 
   console.log('[' + name + '] building...');
   try {
@@ -34,7 +36,7 @@ dirs.forEach(function(name) {
     console.error('[' + name + '] ❌ FAILED\n');
     if (e.stderr) console.error(e.stderr.toString());
   }
-});
+}
 
 if (failed.length > 0) {
   console.error('\nFAILED: ' + failed.join(', '));

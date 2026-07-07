@@ -1,5 +1,3 @@
-"use strict";
-
 /**
  * Enhanced build: handles sub-namespaces, ambient declarations, platform targets.
  * 
@@ -11,11 +9,13 @@
  * - Includes EXML/CodeFactory in eui package
  */
 
-var fs = require('fs');
-var path = require('path');
-var esbuild = require('esbuild');
+import fs from 'node:fs';
+import path from 'node:path';
+import esbuild from 'esbuild';
+import { fileURLToPath } from 'node:url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-var ROOT = path.join(__dirname, '..');
+const ROOT = path.join(__dirname, '..');
 
 var args = process.argv.slice(2);
 var WATCH = args.indexOf('--watch') !== -1;
@@ -307,6 +307,18 @@ async function buildPackage(pkg) {
     if (fs.existsSync(prePath)) {
       var preCode = fs.readFileSync(prePath, 'utf8');
       preCode = preCode.replace(/\/\/\/\s*<reference\s+path\s*=\s*["'][^"']+["']\s*\/>\s*\n?/g, '');
+      // Strip ESM import/export from preamble too (same rules)
+      preCode = preCode.replace(/^import\s+\{[^}]*\}\s+from\s+["'][^"']*["'];?\s*$/gm, '');
+      preCode = preCode.replace(/^import\s+\*\s+as\s+\w+\s+from\s+["'][^"']*["'];?\s*$/gm, '');
+      preCode = preCode.replace(/^import\s+["'][^"']*["'];?\s*$/gm, '');
+      preCode = preCode.replace(/^import\s+\w+\s*(?:,\s*\{[^}]*\})?\s+from\s+["'][^"']*["'];?\s*$/gm, '');
+      preCode = preCode.replace(/^import\s*\{[\s\S]*?\}\s*from\s*["'][^"']+["'];?\s*$/gm, '');
+      preCode = preCode.replace(/^export\s*\{[^}]*\}\s*;?\s*$/gm, '');
+      preCode = preCode.replace(/^export\s+default\s+/gm, '');
+      preCode = preCode.replace(/(^|\n)(\s*)export\s+(?=class\s|function\s|let\s|const\s|var\s|interface\s|enum\s|type\s|namespace\s|abstract\s|declare\s)/gm, '$1$2');
+      // Remove declare function/class (type-only, not needed at runtime)
+      preCode = preCode.replace(/^(\s*)declare\s+(function|class|let|const|var)\s+/gm, '$1// declare $2 ');
+      preCode = preCode.replace(/^(\s*)(let|const)\s+(?!enum\b)(\w[\w$]*\s*[:=])/gm, '$1var $3');
       preambleCodes += '\n// === preamble: ' + pkg.preambles[pre] + ' ===\n' + preCode + '\n';
     }
   }
@@ -331,6 +343,26 @@ async function buildPackage(pkg) {
     var rel = path.relative(pkgSrc, order[j]).replace(/\\/g, '/');
     var srcCode = fs.readFileSync(order[j], 'utf8');
     srcCode = srcCode.replace(/\/\/\/\s*<reference\s+path\s*=\s*["'][^"']+["']\s*\/>\s*\n?/g, '');
+
+    // Strip ESM import/export — namespace wrapping provides module scope
+    // Remove import lines (including multi-line)
+    srcCode = srcCode.replace(/^import\s+\{[^}]*\}\s+from\s+["'][^"']+["'];?\s*$/gm, '');
+    srcCode = srcCode.replace(/^import\s+\*\s+as\s+\w+\s+from\s+["'][^"']+["'];?\s*$/gm, '');
+    srcCode = srcCode.replace(/^import\s+["'][^"']+["'];?\s*$/gm, '');
+    srcCode = srcCode.replace(/^import\s+\w+\s*(?:,\s*\{[^}]*\})?\s+from\s+["'][^"']+["'];?\s*$/gm, '');
+    // Multi-line imports: import { ...\n... } from "..."
+    srcCode = srcCode.replace(/^import\s*\{[\s\S]*?\}\s*from\s*["'][^"']+["'];?\s*$/gm, '');
+    // export { ... };
+    srcCode = srcCode.replace(/^export\s*\{[^}]*\}\s*;?\s*$/gm, '');
+    // export default ...
+    srcCode = srcCode.replace(/^export\s+default\s+/gm, '');
+    // Remove standalone export keyword at line start (before class/function/let/const/var/interface/enum/type/namespace/abstract)
+    srcCode = srcCode.replace(/(^|\n)(\s*)export\s+(?=class\s|function\s|let\s|const\s|var\s|interface\s|enum\s|type\s|namespace\s|abstract\s|declare\s)/gm, '$1$2');
+    // Convert let/const with assignment to var (allows duplicates in namespace), skip const enum and type-only declarations
+    srcCode = srcCode.replace(/^(\s*)(let|const)\s+(?!enum\b)(\w[\w$]*\s*[:=])/gm, '$1var $3');
+    // Also handle bare declarations without assignment: let x; -> var x;
+    srcCode = srcCode.replace(/^(\s*)(let|const)\s+(?!enum\b)(\w[\w$]*)\s*;/gm, '$1var $3;');
+
     entryContent += '\n// === ' + rel + ' ===\n';
     entryContent += srcCode + '\n';
   }
@@ -369,7 +401,7 @@ async function buildPackage(pkg) {
     if (skipNames[name] || KEYWORDS[name]) {
       continue;
     }
-    var declaredRe = new RegExp('(?:^|[^\\w$])(?:var|let|const|function|class)\\s+' + escapeRegExp(name) + '\\b');
+    var declaredRe = new RegExp('(?:^|[^\\w$])(?<!declare\\s)(?:var|let|const|function|class)\\s+' + escapeRegExp(name) + '\\b');
     if (declaredRe.test(entryContent)) {
       continue;
     }
@@ -377,7 +409,18 @@ async function buildPackage(pkg) {
   }
   entryContent = bareDecls + entryContent;
 
-  entryContent += '\nexport {};\n';
+  entryContent += '\n';
+  if (pkg.name === 'core') {
+    entryContent += 'if (typeof globalThis !== "undefined") { globalThis.egret = egret; }\n';
+    entryContent += 'export { egret };\n';
+  } else if (pkg.name === 'eui') {
+    entryContent += 'if (typeof globalThis !== "undefined") { globalThis.egret = egret; globalThis.eui = eui; }\n';
+    entryContent += 'export { eui };\n';
+  } else {
+    // game, tween, socket: extend egret namespace, must write back
+    entryContent += 'if (typeof globalThis !== "undefined") { globalThis.egret = egret; }\n';
+    entryContent += 'export {};\n';
+  }
   fs.writeFileSync(entryPath, entryContent, 'utf8');
 
   // Common esbuild options
@@ -395,18 +438,11 @@ async function buildPackage(pkg) {
   };
 
   var runtimeBanner = '';
-  if (pkg.name === 'game' || pkg.name === 'tween' || pkg.name === 'socket') {
+  if (pkg.name === 'eui' || pkg.name === 'game' || pkg.name === 'tween' || pkg.name === 'socket') {
     runtimeBanner = [
       'var egret = (typeof globalThis !== "undefined" && globalThis.egret) ? globalThis.egret : undefined;',
       'var ticker = egret && (egret.ticker || (egret.sys && egret.sys.$ticker));',
     ].join('\n') + '\n';
-  }
-
-  var exportFooter = '';
-  if (pkg.name === 'core') {
-    exportFooter = '\nif (typeof globalThis !== "undefined") { globalThis.egret = egret; }\nexport { egret };\n';
-  } else if (pkg.name === 'eui') {
-    exportFooter = '\nif (typeof globalThis !== "undefined") { globalThis.eui = eui; }\nexport { eui };\n';
   }
 
   // Build normal version
@@ -415,7 +451,6 @@ async function buildPackage(pkg) {
     outfile: path.join(distDir, 'index.js'),
     minify: false, keepNames: true,
     banner: { js: runtimeBanner },
-    footer: { js: exportFooter },
   }));
   console.log('    ' + (fs.statSync(path.join(distDir, 'index.js')).size / 1024).toFixed(1) + ' KB');
 
@@ -438,7 +473,7 @@ async function buildPackage(pkg) {
   console.log('    ' + (fs.statSync(dtsPath).size / 1024).toFixed(1) + ' KB');
 
   // Clean up
-  // KEEP entry for debug
+  if (fs.existsSync(entryPath)) fs.unlinkSync(entryPath);
 }
 
 async function buildAll() {
