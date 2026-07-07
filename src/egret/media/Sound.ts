@@ -38,7 +38,7 @@ import { SoundChannel } from "./SoundChannel";
      * The Sound class lets you create a Sound object, load and play an external audio file into that object.
      * More detailed control of the sound is performed through the SoundChannel
      *
-     * @event Event.COMPLETE Dispatch when the audio resource is loaded and ready to play
+     * @event egret.Event.COMPLETE Dispatch when the audio resource is loaded and ready to play
      * @event IOErrorEvent.IO_ERROR Dispatch when the audio resource is failed to load
      * @version Egret 2.4
      * @platform Web
@@ -50,7 +50,7 @@ import { SoundChannel } from "./SoundChannel";
      * 可通过 SoundChannel 对声音执行更精细的控制，如控制音量和监控播放进度。
      * @see http://edn.egret.com/cn/docs/page/156 音频系统
      *
-     * @event Event.COMPLETE 音频加载完成时抛出
+     * @event egret.Event.COMPLETE 音频加载完成时抛出
      * @event IOErrorEvent.IO_ERROR 音频加载失败时抛出
      * @version Egret 2.4
      * @platform Web

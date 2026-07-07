@@ -110,7 +110,7 @@ import { DEBUG } from "../../../Defines.debug";
     /**
      * Note: The skin name values in the skin theme are used as default values,which can not be changed while running.
      * You can change the skin of a component with the skinName property.
-     * @event Event.COMPLETE Dispatch when EXML used in this theme is loaded and parsed.
+     * @event egret.Event.COMPLETE Dispatch when EXML used in this theme is loaded and parsed.
      * @version Egret 2.4
      * @version eui 1.0
      * @platform Web
@@ -119,7 +119,7 @@ import { DEBUG } from "../../../Defines.debug";
      */
     /**
      * 皮肤主题。注意：皮肤主题是一次性设置的默认值,并不能运行时切换所有组件默认皮肤。切换单个皮肤您可以自行对Component.skinName赋值来修改。
-     * @event Event.COMPLETE 当主题关联的EXML加载解析完成时派发
+     * @event egret.Event.COMPLETE 当主题关联的EXML加载解析完成时派发
      * @version Egret 2.4
      * @version eui 1.0
      * @platform Web
@@ -239,7 +239,7 @@ import { DEBUG } from "../../../Defines.debug";
         private onLoaded(classes?: any[], urls?: string[]) {
             this.initialized = true;
             this.handleDelayList();
-            this.dispatchEventWith(Event.COMPLETE);
+            this.dispatchEventWith(egret.Event.COMPLETE);
         }
 
         /**

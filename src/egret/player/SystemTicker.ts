@@ -17,7 +17,7 @@ import { DEBUG } from "../../Defines.debug";
 
     /**
      * @private
-     * 是否要广播Event.RENDER事件的标志。
+     * 是否要广播egret.Event.RENDER事件的标志。
      */
     export let $invalidateRenderFlag: boolean = false;
     export function invalidateRenderFlag() { $invalidateRenderFlag = true; }
@@ -310,7 +310,7 @@ import { DEBUG } from "../../Defines.debug";
             if (length == 0) { return; }
             list = list.concat();
             for (let i = 0; i < length; i++) {
-                list[i].dispatchEventWith(Event.ENTER_FRAME);
+                list[i].dispatchEventWith(egret.Event.ENTER_FRAME);
             }
         }
 
@@ -325,7 +325,7 @@ import { DEBUG } from "../../Defines.debug";
             if (length == 0) { return; }
             list = list.concat();
             for (let i = 0; i < length; i++) {
-                list[i].dispatchEventWith(Event.RENDER);
+                list[i].dispatchEventWith(egret.Event.RENDER);
             }
         }
 
@@ -439,7 +439,7 @@ if (callAsyncState.functionList.length > 0) {
             pause() {
                 if (isActivate) {
                     isActivate = false;
-                    stage.dispatchEvent(new Event(Event.DEACTIVATE));
+                    stage.dispatchEvent(new Event(egret.Event.DEACTIVATE));
                     if (onPause) {
                         onPause();
                     }
@@ -449,7 +449,7 @@ if (callAsyncState.functionList.length > 0) {
             resume() {
                 if (!isActivate) {
                     isActivate = true;
-                    stage.dispatchEvent(new Event(Event.ACTIVATE));
+                    stage.dispatchEvent(new Event(egret.Event.ACTIVATE));
                     if (onResume) {
                         onResume();
                     }

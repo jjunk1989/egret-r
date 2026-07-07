@@ -132,13 +132,13 @@ import { Component } from "../Component";
             if (viewport)
             {
                 viewport.removeEventListener(PropertyEvent.PROPERTY_CHANGE, this.onPropertyChanged,this);
-                viewport.removeEventListener(Event.RESIZE, this.onViewportResize,this);
+                viewport.removeEventListener(egret.Event.RESIZE, this.onViewportResize,this);
             }
             this.$viewport = value;
             if (value)
             {
                 value.addEventListener(PropertyEvent.PROPERTY_CHANGE, this.onPropertyChanged,this);
-                value.addEventListener(Event.RESIZE, this.onViewportResize,this);
+                value.addEventListener(egret.Event.RESIZE, this.onViewportResize,this);
             }
             this.invalidateDisplayList();
         }

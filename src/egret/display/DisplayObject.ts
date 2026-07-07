@@ -64,12 +64,12 @@ import { CustomFilter } from "../filters/CustomFilter";
      * instance, but rather all DisplayObject instances, including those that are not on the display list. This means that you
      * can add a listener to any DisplayObject instance to listen for broadcast events.
      *
-     * @event Event.ADDED Dispatched when a display object is added to the display list.
-     * @event Event.ADDED_TO_STAGE Dispatched when a display object is added to the on stage display list, either directly or through the addition of a sub tree in which the display object is contained.
-     * @event Event.REMOVED Dispatched when a display object is about to be removed from the display list.
-     * @event Event.REMOVED_FROM_STAGE Dispatched when a display object is about to be removed from the display list, either directly or through the removal of a sub tree in which the display object is contained.
-     * @event Event.ENTER_FRAME [broadcast event] Dispatched when the playhead is entering a new frame.
-     * @event Event.RENDER [broadcast event] Dispatched when the display list is about to be updated and rendered.
+     * @event egret.Event.ADDED Dispatched when a display object is added to the display list.
+     * @event egret.Event.ADDED_TO_STAGE Dispatched when a display object is added to the on stage display list, either directly or through the addition of a sub tree in which the display object is contained.
+     * @event egret.Event.REMOVED Dispatched when a display object is about to be removed from the display list.
+     * @event egret.Event.REMOVED_FROM_STAGE Dispatched when a display object is about to be removed from the display list, either directly or through the removal of a sub tree in which the display object is contained.
+     * @event egret.Event.ENTER_FRAME [broadcast event] Dispatched when the playhead is entering a new frame.
+     * @event egret.Event.RENDER [broadcast event] Dispatched when the display list is about to be updated and rendered.
      * @event TouchEvent.TOUCH_MOVE Dispatched when the user touches the device, and is continuously dispatched until the point of contact is removed.
      * @event TouchEvent.TOUCH_BEGIN Dispatched when the user first contacts a touch-enabled device (such as touches a finger to a mobile phone or tablet with a touch screen).
      * @event TouchEvent.TOUCH_END Dispatched when the user removes contact with a touch-enabled device (such as lifts a finger off a mobile phone or tablet with a touch screen).
@@ -89,12 +89,12 @@ import { CustomFilter } from "../filters/CustomFilter";
      * 但是对于广播事件，目标不是特定的 DisplayObject 实例，而是所有 DisplayObject 实例（包括那些不在显示列表中的实例）。这意味着您可以向任何
      * DisplayObject 实例添加侦听器来侦听广播事件。
      *
-     * @event Event.ADDED 将显示对象添加到显示列表中时调度。
-     * @event Event.ADDED_TO_STAGE 在将显示对象直接添加到舞台显示列表或将包含显示对象的子树添加至舞台显示列表中时调度。
-     * @event Event.REMOVED 将要从显示列表中删除显示对象时调度。
-     * @event Event.REMOVED_FROM_STAGE 在从显示列表中直接删除显示对象或删除包含显示对象的子树时调度。
-     * @event Event.ENTER_FRAME [广播事件] 播放头进入新帧时调度。
-     * @event Event.RENDER [广播事件] 将要更新和呈现显示列表时调度。
+     * @event egret.Event.ADDED 将显示对象添加到显示列表中时调度。
+     * @event egret.Event.ADDED_TO_STAGE 在将显示对象直接添加到舞台显示列表或将包含显示对象的子树添加至舞台显示列表中时调度。
+     * @event egret.Event.REMOVED 将要从显示列表中删除显示对象时调度。
+     * @event egret.Event.REMOVED_FROM_STAGE 在从显示列表中直接删除显示对象或删除包含显示对象的子树时调度。
+     * @event egret.Event.ENTER_FRAME [广播事件] 播放头进入新帧时调度。
+     * @event egret.Event.RENDER [广播事件] 将要更新和呈现显示列表时调度。
      * @event TouchEvent.TOUCH_MOVE 当用户触碰设备时进行调度，而且会连续调度，直到接触点被删除。
      * @event TouchEvent.TOUCH_BEGIN 当用户第一次触摸启用触摸的设备时（例如，用手指触摸手机屏幕）调度。
      * @event TouchEvent.TOUCH_END 当用户移除与启用触摸的设备的接触时（例如，将手指从屏幕上抬起）调度。
@@ -2198,8 +2198,8 @@ import { CustomFilter } from "../filters/CustomFilter";
          */
         $addListener(type: string, listener: Function, thisObject: any, useCapture?: boolean, priority?: number, dispatchOnce?: boolean): void {
             super.$addListener(type, listener, thisObject, useCapture, priority, dispatchOnce);
-            let isEnterFrame = (type == Event.ENTER_FRAME);
-            if (isEnterFrame || type == Event.RENDER) {
+            let isEnterFrame = (type == egret.Event.ENTER_FRAME);
+            if (isEnterFrame || type == egret.Event.RENDER) {
                 let list = isEnterFrame ? DisplayObject.$sharedEnterFrameList : DisplayObject.$sharedRenderList;
                 if (list.indexOf(this) == -1) {
                     list.push(this);
@@ -2214,8 +2214,8 @@ import { CustomFilter } from "../filters/CustomFilter";
          */
         public removeEventListener(type: string, listener: Function, thisObject: any, useCapture?: boolean): void {
             super.removeEventListener(type, listener, thisObject, useCapture);
-            let isEnterFrame: boolean = (type == Event.ENTER_FRAME);
-            if ((isEnterFrame || type == Event.RENDER) && !this.hasEventListener(type)) {
+            let isEnterFrame: boolean = (type == egret.Event.ENTER_FRAME);
+            if ((isEnterFrame || type == egret.Event.RENDER) && !this.hasEventListener(type)) {
                 let list = isEnterFrame ? DisplayObject.$sharedEnterFrameList : DisplayObject.$sharedRenderList;
                 let index = list.indexOf(this);
                 if (index !== -1) {

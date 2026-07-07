@@ -80,7 +80,7 @@ import { DEBUG } from "../../../Defines.debug";
             super();
             this.$renderNode = new BitmapNode();
             this.src = url;
-            this.once(Event.ADDED_TO_STAGE, this.loadPoster, this);
+            this.once(egret.Event.ADDED_TO_STAGE, this.loadPoster, this);
             if (url) {
                 this.load();
             }
@@ -158,7 +158,7 @@ import { DEBUG } from "../../../Defines.debug";
         public play(startTime?: number, loop: boolean = false) {
             if (this.loaded == false) {
                 this.load(this.src);
-                this.once(Event.COMPLETE, e => this.play(startTime, loop), this);
+                this.once(egret.Event.COMPLETE, e => this.play(startTime, loop), this);
                 return;
             }
 
@@ -315,7 +315,7 @@ import { DEBUG } from "../../../Defines.debug";
             if (this._fullscreen) {
                 this.exitFullscreen();
             }
-            this.dispatchEventWith(Event.ENDED);
+            this.dispatchEventWith(egret.Event.ENDED);
         }
 
         /**
@@ -441,7 +441,7 @@ import { DEBUG } from "../../../Defines.debug";
             if (!poster)
                 return;
             let imageLoader = new ImageLoader();
-            imageLoader.once(Event.COMPLETE, e => {
+            imageLoader.once(egret.Event.COMPLETE, e => {
                 let posterData = <HTMLImageElement><any>imageLoader.data;
                 this.posterData = imageLoader.data;
                 this.$renderDirty = true;
@@ -474,7 +474,7 @@ import { DEBUG } from "../../../Defines.debug";
             video.width = video.videoWidth;
             video.height = video.videoHeight;
             window.setTimeout(() => {
-                this.dispatchEventWith(Event.COMPLETE);
+                this.dispatchEventWith(egret.Event.COMPLETE);
             }, 200);
         };
 

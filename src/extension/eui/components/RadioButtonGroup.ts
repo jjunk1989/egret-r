@@ -46,7 +46,7 @@ import { PropertyEvent } from "../events/PropertyEvent";
      * that act as a single mutually exclusive component; therefore,
      * a user can select only one RadioButton component at a time.
      *
-     * @event Event.CHANGE Dispatched when the value of the selected RadioButton component in
+     * @event egret.Event.CHANGE Dispatched when the value of the selected RadioButton component in
      * this group changes.
      *
      * @version Egret 2.4
@@ -58,7 +58,7 @@ import { PropertyEvent } from "../events/PropertyEvent";
     /**
      * RadioButtonGroup 组件定义一组 RadioButton 组件，这些组件相互排斥；因此，用户每次只能选择一个 RadioButton 组件
      *
-     * @event Event.CHANGE 此组中所选 RadioButton 组件的值更改时分派。
+     * @event egret.Event.CHANGE 此组中所选 RadioButton 组件的值更改时分派。
      *
      * @version Egret 2.4
      * @version eui 1.0
@@ -309,7 +309,7 @@ import { PropertyEvent } from "../events/PropertyEvent";
          * 添加单选按钮到组内
          */
         $addInstance(instance:RadioButton):void {
-            instance.addEventListener(Event.REMOVED_FROM_STAGE, this.removedHandler, this);
+            instance.addEventListener(egret.Event.REMOVED_FROM_STAGE, this.removedHandler, this);
             let buttons = this.radioButtons;
             buttons.push(instance);
             buttons.sort(breadthOrderCompare);
@@ -342,7 +342,7 @@ import { PropertyEvent } from "../events/PropertyEvent";
                     }
                     else if (rb == instance) {
                         if (addListener)
-                            instance.addEventListener(Event.ADDED_TO_STAGE, this.addedHandler, this);
+                            instance.addEventListener(egret.Event.ADDED_TO_STAGE, this.addedHandler, this);
                         if (instance == this._selection)
                             this._selection = null;
                         instance.$radioButtonGroup = null;
@@ -369,7 +369,7 @@ import { PropertyEvent } from "../events/PropertyEvent";
                     this._selection.selected = false;
                     this._selection = null;
                     if (fireChange)
-                        this.dispatchEventWith(Event.CHANGE);
+                        this.dispatchEventWith(egret.Event.CHANGE);
                 }
             }
             else {
@@ -398,7 +398,7 @@ import { PropertyEvent } from "../events/PropertyEvent";
                 this._selection = rb;
                 this._selection.selected = true;
                 if (fireChange)
-                    this.dispatchEventWith(Event.CHANGE);
+                    this.dispatchEventWith(egret.Event.CHANGE);
             }
         }
 
@@ -409,7 +409,7 @@ import { PropertyEvent } from "../events/PropertyEvent";
         private addedHandler(event:Event):void {
             let rb:RadioButton = event.target;
             if (rb == event.currentTarget) {
-                rb.removeEventListener(Event.ADDED_TO_STAGE, this.addedHandler, this);
+                rb.removeEventListener(egret.Event.ADDED_TO_STAGE, this.addedHandler, this);
                 this.$addInstance(rb);
             }
         }
@@ -421,7 +421,7 @@ import { PropertyEvent } from "../events/PropertyEvent";
         private removedHandler(event:Event):void {
             let rb:RadioButton = event.target;
             if (rb == event.currentTarget) {
-                rb.removeEventListener(Event.REMOVED_FROM_STAGE, this.removedHandler, this);
+                rb.removeEventListener(egret.Event.REMOVED_FROM_STAGE, this.removedHandler, this);
                 this.$removeInstance(rb, true);
             }
         }

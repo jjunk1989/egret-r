@@ -134,7 +134,7 @@ import { $error } from "../../../Defines.debug";
         private onPlayEnd = () => {
             if (this.$loops == 1) {
                 this.stop();
-                this.dispatchEventWith(Event.SOUND_COMPLETE);
+                this.dispatchEventWith(egret.Event.SOUND_COMPLETE);
                 return;
             }
 

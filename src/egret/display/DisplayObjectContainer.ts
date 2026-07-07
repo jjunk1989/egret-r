@@ -193,14 +193,14 @@ import { registerClass } from "../utils/registerClass";
                 child.$onAddToStage(stage, self.$nestLevel + 1);
             }
             if (notifyListeners) {
-                child.dispatchEventWith(Event.ADDED, true);
+                child.dispatchEventWith(egret.Event.ADDED, true);
             }
             if (stage) {
                 let list = DisplayObjectContainer.$EVENT_ADD_TO_STAGE_LIST;
                 while (list.length) {
                     let childAddToStage = list.shift();
                     if (childAddToStage.$stage && notifyListeners) {
-                        childAddToStage.dispatchEventWith(Event.ADDED_TO_STAGE);
+                        childAddToStage.dispatchEventWith(egret.Event.ADDED_TO_STAGE);
                     }
                 }
             }
@@ -417,7 +417,7 @@ import { registerClass } from "../utils/registerClass";
             let child: DisplayObject = children[index];
             this.$childRemoved(child, index);
             if (notifyListeners) {
-                child.dispatchEventWith(Event.REMOVED, true);
+                child.dispatchEventWith(egret.Event.REMOVED, true);
             }
             if (this.$stage) {//在舞台上
                 child.$onRemoveFromStage();
@@ -426,7 +426,7 @@ import { registerClass } from "../utils/registerClass";
                     let childAddToStage = list.shift();
                     if (notifyListeners && childAddToStage.$hasAddToStage) {
                         childAddToStage.$hasAddToStage = false;
-                        childAddToStage.dispatchEventWith(Event.REMOVED_FROM_STAGE);
+                        childAddToStage.dispatchEventWith(egret.Event.REMOVED_FROM_STAGE);
                     }
                     childAddToStage.$hasAddToStage = false;
                     childAddToStage.$stage = null;

@@ -26,7 +26,7 @@ import { URLRequestMethod } from "./URLRequestMethod";
      * A URLLoader object downloads all of the data from a URL before making it available to code in the applications. It sends out notifications about the progress of the download,
      * which you can monitor through bytesLoaded and bytesTotal properties, as well as through dispatched events.
      * @see http://edn.egret.com/cn/docs/page/601 Build communication request
-     * @event Event.COMPLETE Dispatched when the net request is complete.
+     * @event egret.Event.COMPLETE Dispatched when the net request is complete.
      * @event IOErrorEvent.IO_ERROR io error. 
      * @version Egret 2.4
      * @platform Web
@@ -38,7 +38,7 @@ import { URLRequestMethod } from "./URLRequestMethod";
      * URLLoader 对象会先从 URL 中下载所有数据，然后才将数据用于应用程序中的代码。它会发出有关下载进度的通知，
      * 通过 bytesLoaded 和 bytesTotal 属性以及已调度的事件，可以监视下载进度。
      * @see http://edn.egret.com/cn/docs/page/601 构建通信请求
-     * @event Event.COMPLETE 加载完成后调度。 
+     * @event egret.Event.COMPLETE 加载完成后调度。 
      * @event IOErrorEvent.IO_ERROR 加载错误后调度。 
      * @version Egret 2.4
      * @platform Web
@@ -171,9 +171,9 @@ import { URLRequestMethod } from "./URLRequestMethod";
                 let urlRequestHeader: URLRequestHeader = request.requestHeaders[i];
                 httpRequest.setRequestHeader(urlRequestHeader.name, urlRequestHeader.value);
             }
-            httpRequest.addEventListener(Event.COMPLETE, function () {
+            httpRequest.addEventListener(egret.Event.COMPLETE, function () {
                 loader.data = httpRequest.response;
-                Event.dispatchEvent(loader, Event.COMPLETE);
+                Event.dispatchEvent(loader, egret.Event.COMPLETE);
             }, this);
             httpRequest.addEventListener(IOErrorEvent.IO_ERROR, function () {
                 IOErrorEvent.dispatchIOErrorEvent(loader);
@@ -209,7 +209,7 @@ import { URLRequestMethod } from "./URLRequestMethod";
 
             let sound: Sound = new Sound();
             this.sound = sound;
-            sound.addEventListener(Event.COMPLETE, this.onSoundoadComplete, this);
+            sound.addEventListener(egret.Event.COMPLETE, this.onSoundoadComplete, this);
             sound.addEventListener(IOErrorEvent.IO_ERROR, this.onSoundLoaderError, this);
             sound.addEventListener(ProgressEvent.PROGRESS, this.onSoundLoaderPostProgress, this);
             sound.load(virtualUrl);
@@ -218,7 +218,7 @@ import { URLRequestMethod } from "./URLRequestMethod";
             this.removeSoundLoaderListeners();
             this.data = this.sound;
             window.setTimeout(()=> {
-                this.dispatchEventWith(Event.COMPLETE);
+                this.dispatchEventWith(egret.Event.COMPLETE);
             }, 0);
         }
         private onSoundLoaderPostProgress(event: ProgressEvent): void {
@@ -228,7 +228,7 @@ import { URLRequestMethod } from "./URLRequestMethod";
             this.dispatchEvent(event);
         }
         private removeSoundLoaderListeners(): void {
-            this.sound.removeEventListener(Event.COMPLETE, this.onSoundoadComplete, this);
+            this.sound.removeEventListener(egret.Event.COMPLETE, this.onSoundoadComplete, this);
             this.sound.removeEventListener(IOErrorEvent.IO_ERROR, this.onSoundLoaderError, this);
             this.sound.removeEventListener(ProgressEvent.PROGRESS, this.onSoundLoaderPostProgress, this);
         }
@@ -249,7 +249,7 @@ import { URLRequestMethod } from "./URLRequestMethod";
             this.virtualUrl = loader._request.url;
             let imageLoader: ImageLoader = new ImageLoader();
             this.imageLoader = imageLoader;
-            imageLoader.addEventListener(Event.COMPLETE, this.onImageLoadComplete, this);
+            imageLoader.addEventListener(egret.Event.COMPLETE, this.onImageLoadComplete, this);
             imageLoader.addEventListener(IOErrorEvent.IO_ERROR, this.onImageLoaderError, this);
             imageLoader.addEventListener(ProgressEvent.PROGRESS, this.onImageLoaderPostProgress, this);
             imageLoader.load(this.virtualUrl);
@@ -264,7 +264,7 @@ import { URLRequestMethod } from "./URLRequestMethod";
             texture._setBitmapData(bitmapData);
             this.data = texture;
             window.setTimeout(()=> {
-                this.dispatchEventWith(Event.COMPLETE);
+                this.dispatchEventWith(egret.Event.COMPLETE);
             }, 0);
         }
         private onImageLoaderPostProgress(event: ProgressEvent): void {
@@ -274,7 +274,7 @@ import { URLRequestMethod } from "./URLRequestMethod";
             this.dispatchEvent(event);
         }
         private removeImageLoaderListeners(): void {
-            this.imageLoader.removeEventListener(Event.COMPLETE, this.onImageLoadComplete, this);
+            this.imageLoader.removeEventListener(egret.Event.COMPLETE, this.onImageLoadComplete, this);
             this.imageLoader.removeEventListener(IOErrorEvent.IO_ERROR, this.onImageLoaderError, this);
             this.imageLoader.removeEventListener(ProgressEvent.PROGRESS, this.onImageLoaderPostProgress, this);
         }

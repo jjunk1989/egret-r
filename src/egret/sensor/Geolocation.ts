@@ -9,8 +9,8 @@ import { EventDispatcher } from "../events/EventDispatcher";
      * It will emit IO_ERROR event if the location request is denied
      * or there is no location service on the device.
      *
-     * @event Event.CHANGE The device's location is changed
-     * @event Event.IO_ERROR Error occurred while getting the location
+     * @event egret.Event.CHANGE The device's location is changed
+     * @event egret.Event.IO_ERROR Error occurred while getting the location
      * @version Egret 2.4
      * @platform Web
      * @includeExample egret/sensor/Geolocation.ts
@@ -21,8 +21,8 @@ import { EventDispatcher } from "../events/EventDispatcher";
      * 当设备的位置发生改变时 Geolocation 会派发 CHANGE 事件。
      * 当定位请求被拒绝或该设备没有定位服务时 Geolocation 会派发 IO_ERROR 事件。
      *
-     * @event Event.CHANGE 设备位置发生改变
-     * @event Event.IO_ERROR 获取设备位置时发生错误
+     * @event egret.Event.CHANGE 设备位置发生改变
+     * @event egret.Event.IO_ERROR 获取设备位置时发生错误
      * @version Egret 2.4
      * @platform Web
      * @includeExample egret/sensor/Geolocation.ts

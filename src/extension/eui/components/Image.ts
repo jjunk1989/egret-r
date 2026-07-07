@@ -18,7 +18,7 @@ import { getAssets } from "../core/UIComponent";
      * to show the data. you can also set the <code>source</code> property, Image will auto load
      * and show the url image or the bitmapData.
      *
-     * @event Event.COMPLETE Dispatched when the image loaded complete.
+     * @event egret.Event.COMPLETE Dispatched when the image loaded complete.
      * @version Egret 2.4
      * @version eui 1.0
      * @platform Web
@@ -30,7 +30,7 @@ import { getAssets } from "../core/UIComponent";
      * 赋值从外部加载得到的位图数据以显示对应图片。同时，Image 还提供了更加方便的 source 属性，source 属性可以接受一个网络图片url作为值，
      * 赋值为url后，它内部会自动去加载并显示图片。并且您同样也可以直接把 BitmapData 对象赋值给 source 属性以显示图片。
      *
-     * @event Event.COMPLETE 当图片加载完成后调度
+     * @event egret.Event.COMPLETE 当图片加载完成后调度
      * @version Egret 2.4
      * @version eui 1.0
      * @platform Web
@@ -219,7 +219,7 @@ import { getAssets } from "../core/UIComponent";
                     }
                     this.$setTexture(data);
                     if (data) {
-                        this.dispatchEventWith(Event.COMPLETE);
+                        this.dispatchEventWith(egret.Event.COMPLETE);
                     }
                     else if (DEBUG) {
                         $warn(2301, source);

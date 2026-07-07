@@ -299,17 +299,6 @@ async function buildPkg(pkg) {
     // Post-process: wrap in IIFE for hoisting, then re-export
     var bundled = fs.readFileSync(path.join(distDir, 'index_tmp.js'), 'utf8');
 
-    // Fix: esbuild renames Event -> _Event but code still references Event.XXX
-    // as a bare global (e.g. Event.ADDED, Event.ADDED_TO_STAGE). Replace all
-    // Event. property accesses with _Event.
-    var lines = bundled.split('\n');
-    for (var li4 = 0; li4 < lines.length; li4++) {
-      if (lines[li4].indexOf('_ns(') >= 0) continue;
-      if (lines[li4].indexOf('__name(') >= 0) continue;
-      lines[li4] = lines[li4].replace(/\bEvent\./g, '_Event.');
-    }
-    bundled = lines.join('\n');
-
     // Fix: esbuild renames symbols with a 2-suffix when there are naming
     // conflicts in the IIFE scope (e.g. _ns(egret, "X", X2)). The original
     // unqualified name X is still used as a bare global in other modules.
@@ -342,7 +331,7 @@ async function buildPkg(pkg) {
       return true;
     });
 
-    lines = bundled.split('\n');
+    var lines = bundled.split('\n');
     for (var li5 = 0; li5 < lines.length; li5++) {
       var l = lines[li5];
       var isNsLine = l.indexOf('_ns(') >= 0;

@@ -189,7 +189,7 @@ import { Event } from "../events/Event";
                     this.stageDisplayList.setClipRect(stageWidth, stageHeight);
                 }
             }
-            stage.dispatchEventWith(Event.RESIZE);
+            stage.dispatchEventWith(egret.Event.RESIZE);
         }
 
 

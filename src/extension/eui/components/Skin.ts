@@ -241,7 +241,7 @@ import { PropertyEvent } from "../events/PropertyEvent";
             if (this._hostComponent == value)
                 return;
             if (this._hostComponent) {
-                this._hostComponent.removeEventListener(Event.ADDED_TO_STAGE, this.onAddedToStage, this);
+                this._hostComponent.removeEventListener(egret.Event.ADDED_TO_STAGE, this.onAddedToStage, this);
             }
             this._hostComponent = value;
             let values = this.$stateValues;
@@ -253,7 +253,7 @@ import { PropertyEvent } from "../events/PropertyEvent";
                         this.initializeStates(value.$stage);
                     }
                     else {
-                        value.once(Event.ADDED_TO_STAGE, this.onAddedToStage, this);
+                        value.once(egret.Event.ADDED_TO_STAGE, this.onAddedToStage, this);
                     }
                 }
             }

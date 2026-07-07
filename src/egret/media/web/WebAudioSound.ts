@@ -191,7 +191,7 @@ export interface AudioBufferSourceNodeEgret {
 
             function onAudioLoaded():void {
                 self.loaded = true;
-                self.dispatchEventWith(Event.COMPLETE);
+                self.dispatchEventWith(egret.Event.COMPLETE);
             }
 
             function onAudioError():void {

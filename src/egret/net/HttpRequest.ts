@@ -12,8 +12,8 @@ import { EventDispatcher } from "../events/EventDispatcher";
      * of the data from a URL before making it available to code in the applications. It sends out notifications about
      * the progress of the download, which you can monitor through the bytesLoaded and bytesTotal properties,
      * as well as through dispatched events.
-     * @event Event.COMPLETE Dispatched when the net request is complete.
-     * @event Event.IO_ERROR Dispatched when the net request is failed.
+     * @event egret.Event.COMPLETE Dispatched when the net request is complete.
+     * @event egret.Event.IO_ERROR Dispatched when the net request is failed.
      * @event ProgressEvent.PROGRESS Dispatched when data is received as the download operation progresses.
      * @see egret.HttpMethod
      * @see HttpResponseType
@@ -26,8 +26,8 @@ import { EventDispatcher } from "../events/EventDispatcher";
      * HttpRequest 类以文本或二进制数据的形式从 URL 下载数据。
      * HttpRequest 对象会先从 URL 中下载所有数据，然后才将数据用于应用程序中的代码。它会发出有关下载进度的通知，
      * 通过 bytesLoaded 和 bytesTotal 属性以及已调度的事件，可以监视下载进度。
-     * @event Event.COMPLETE 加载完成
-     * @event Event.IO_ERROR 加载失败
+     * @event egret.Event.COMPLETE 加载完成
+     * @event egret.Event.IO_ERROR 加载失败
      * @event ProgressEvent.PROGRESS 加载进度，可通过event.bytesLoaded和event.bytesTotal统计进度信息。
      * @see egret.HttpMethod
      * @see HttpResponseType

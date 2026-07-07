@@ -40,7 +40,7 @@ import { DEBUG } from "../../../Defines.debug";
     /**
      * The UIComponent class is the base class for all visual components, both skinnable and nonskinnable.
      *
-     * @event Event.RESIZE Dispatch when the component is resized.
+     * @event egret.Event.RESIZE Dispatch when the component is resized.
      * @event UIEvent.MOVE Dispatch when the object has moved.
      * @event UIEvent.CREATION_COMPLETE  Dispatch when the component has finished its construction,
      * property processing, measuring, layout, and drawing.
@@ -54,7 +54,7 @@ import { DEBUG } from "../../../Defines.debug";
     /**
      * UIComponent 类是所有可视组件（可定制皮肤和不可定制皮肤）的基类。
      *
-     * @event Event.RESIZE 当UI组件的尺寸发生改变时调度
+     * @event egret.Event.RESIZE 当UI组件的尺寸发生改变时调度
      * @event UIEvent.MOVE 当UI组件在父级容器中的位置发生改变时调度
      * @event UIEvent.CREATION_COMPLETE 当UI组件第一次被添加到舞台并完成初始化后调度
      *
@@ -881,7 +881,7 @@ import { DEBUG } from "../../../Defines.debug";
         protected commitProperties(): void {
             let values = this.$UIComponent;
             if (values[UIKeys.oldWidth] != values[UIKeys.width] || values[UIKeys.oldHeight] != values[UIKeys.height]) {
-                this.dispatchEventWith(Event.RESIZE);
+                this.dispatchEventWith(egret.Event.RESIZE);
                 values[UIKeys.oldWidth] = values[UIKeys.width];
                 values[UIKeys.oldHeight] = values[UIKeys.height];
             }
@@ -1322,7 +1322,7 @@ import { DEBUG } from "../../../Defines.debug";
             }
             if (change) {
                 this.invalidateDisplayList();
-                this.dispatchEventWith(Event.RESIZE);
+                this.dispatchEventWith(egret.Event.RESIZE);
             }
         }
 

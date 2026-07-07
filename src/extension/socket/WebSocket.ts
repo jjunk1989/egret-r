@@ -12,9 +12,9 @@ import { $warn } from "../../Defines.debug";
      * The egret.WebSocket class enables code to establish a TCP socket connection, for sending and receiving character string or binary data.
      * To use the methods of the egret.WebSocket class, first use the constructor function new egret.WebSocket to create an egret.WebSocket object.
      * The socket transmits and receives data in asynchronous mode.
-     * @event Event.CONNECT Successfully connect to the server。
+     * @event egret.Event.CONNECT Successfully connect to the server。
      * @event ProgressEvent.SOCKET_DATA Receiving server data。
-     * @event Event.CLOSE Dispatched when the server closes the connection.
+     * @event egret.Event.CLOSE Dispatched when the server closes the connection.
      * @event ProgressEvent Dispatched when an IO error causes a send or load operation to fail.
      * @see http://edn.egret.com/cn/docs/page/602 WebSocket
      * @version Egret 2.4
@@ -26,9 +26,9 @@ import { $warn } from "../../Defines.debug";
      * egret.WebSocket 类启用代码以建立传输控制协议 (TCP) 套接字连接，用于发送和接收字符串或二进制数据。
      * 要使用 egret.WebSocket 类的方法，请先使用构造函数 new egret.WebSocket 创建一个 egret.WebSocket 对象。
      * 套接字以异步方式传输和接收数据。
-     * @event Event.CONNECT 连接服务器成功。
+     * @event egret.Event.CONNECT 连接服务器成功。
      * @event ProgressEvent.SOCKET_DATA 接收服务器数据。
-     * @event Event.CLOSE 在服务器关闭连接时调度。
+     * @event egret.Event.CLOSE 在服务器关闭连接时调度。
      * @event IOErrorEvent.IO_ERROR 在出现输入/输出错误并导致发送或加载操作失败时调度。。
      * @see http://edn.egret.com/cn/docs/page/602 WebSocket
      * @version Egret 2.4
@@ -170,7 +170,7 @@ import { $warn } from "../../Defines.debug";
         private onConnect(): void {
             this._connected = true;
             this._connecting = false;
-            this.dispatchEventWith(Event.CONNECT);
+            this.dispatchEventWith(egret.Event.CONNECT);
         }
 
         /**
@@ -179,7 +179,7 @@ import { $warn } from "../../Defines.debug";
          */
         private onClose(): void {
             this._connected = false;
-            this.dispatchEventWith(Event.CLOSE);
+            this.dispatchEventWith(egret.Event.CLOSE);
         }
 
         /**

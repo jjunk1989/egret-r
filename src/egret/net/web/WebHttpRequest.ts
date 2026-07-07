@@ -242,7 +242,7 @@ import { IOErrorEvent } from "../../events/IOErrorEvent";
                         self.dispatchEventWith(IOErrorEvent.IO_ERROR);
                     }
                     else {
-                        self.dispatchEventWith(Event.COMPLETE);
+                        self.dispatchEventWith(egret.Event.COMPLETE);
                     }
                 }, 0)
 
@@ -275,7 +275,7 @@ import { IOErrorEvent } from "../../events/IOErrorEvent";
                     self.dispatchEventWith(IOErrorEvent.IO_ERROR);
                 }
                 else {
-                    self.dispatchEventWith(Event.COMPLETE);
+                    self.dispatchEventWith(egret.Event.COMPLETE);
                 }
             }, 0);
         }

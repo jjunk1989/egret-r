@@ -322,7 +322,7 @@ import { TextFieldType } from "./TextFieldType";
      * If developers expect  no differences among all platforms, please use BitmapText
      * @see http://edn.egret.com/cn/docs/page/141 Create Text
      *
-     * @event Event.CHANGE Dispatched when entering text user input。
+     * @event egret.Event.CHANGE Dispatched when entering text user input。
      * @event FocusEvent.FOCUS_IN Dispatched after the focus to enter text.
      * @event FocusEvent.FOCUS_OUT Enter the text loses focus after dispatch.
      * @version Egret 2.4
@@ -335,7 +335,7 @@ import { TextFieldType } from "./TextFieldType";
      * 如果开发者希望所有平台完全无差异，请使用BitmapText
      * @see http://edn.egret.com/cn/docs/page/141 创建文本
      *
-     * @event Event.CHANGE 输入文本有用户输入时调度。
+     * @event egret.Event.CHANGE 输入文本有用户输入时调度。
      * @event FocusEvent.FOCUS_IN 聚焦输入文本后调度。
      * @event FocusEvent.FOCUS_OUT 输入文本失去焦点后调度。
      * @version Egret 2.4

@@ -118,8 +118,8 @@ import { IOErrorEvent } from "./IOErrorEvent";
          */
         /**
          * 渲染事件，监听此事件将会在本帧末即将开始渲染的前一刻触发回调，这是一个广播事件，可以在任何一个显示对象上监听，无论它是否在显示列表中。
-         * 注意：每次您希望 Egret 发送 Event.RENDER 事件时，都必须调用 stage.invalidate() 方法，由于每帧只会触发一次屏幕刷新，
-         * 若在 Event.RENDER 回调函数执行期间再次调用stage.invalidate()，将会被忽略。
+         * 注意：每次您希望 Egret 发送 egret.Event.RENDER 事件时，都必须调用 stage.invalidate() 方法，由于每帧只会触发一次屏幕刷新，
+         * 若在 egret.Event.RENDER 回调函数执行期间再次调用stage.invalidate()，将会被忽略。
          * @version Egret 2.4
          * @platform Web
          * @language zh_CN
@@ -251,14 +251,14 @@ import { IOErrorEvent } from "./IOErrorEvent";
         public static DEACTIVATE: string = "deactivate";
 
         /**
-         * Event.CLOSE 常量定义 close 事件对象的 type 属性的值。
+         * egret.Event.CLOSE 常量定义 close 事件对象的 type 属性的值。
          * @version Egret 2.4
          * @platform Web
          */
         public static CLOSE: string = "close";
 
         /**
-         * Event.CONNECT 常量定义 connect 事件对象的 type 属性的值。
+         * egret.Event.CONNECT 常量定义 connect 事件对象的 type 属性的值。
          * @version Egret 2.4
          * @platform Web
          */
@@ -266,14 +266,14 @@ import { IOErrorEvent } from "./IOErrorEvent";
 
 
         /**
-         * Event.LEAVE_STAGE 常量定义 leaveStage 事件对象的 type 属性的值。
+         * egret.Event.LEAVE_STAGE 常量定义 leaveStage 事件对象的 type 属性的值。
          * @version Egret 2.4
          * @platform Web
          */
         public static LEAVE_STAGE: string = "leaveStage";
 
         /**
-         * Event.SOUND_COMPLETE 常量定义 在声音完成播放后调度。
+         * egret.Event.SOUND_COMPLETE 常量定义 在声音完成播放后调度。
          * @version Egret 2.4
          * @platform Web
          */

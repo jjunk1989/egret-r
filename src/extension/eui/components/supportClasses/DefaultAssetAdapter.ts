@@ -62,7 +62,7 @@ import { IAssetAdapter } from "../../core/IAssetAdapter";
             callBackMap[source] = [[callBack, thisObject]];
             loaderMap[loader.$hashCode] = source;
 
-            loader.addEventListener(Event.COMPLETE, this.onLoadFinish, this);
+            loader.addEventListener(egret.Event.COMPLETE, this.onLoadFinish, this);
             loader.addEventListener(IOErrorEvent.IO_ERROR, this.onLoadFinish, this);
             loader.load(source);
         }
@@ -74,10 +74,10 @@ import { IAssetAdapter } from "../../core/IAssetAdapter";
          */
         private onLoadFinish(event:Event):void {
             let loader = event.currentTarget;
-            loader.removeEventListener(Event.COMPLETE, this.onLoadFinish, this);
+            loader.removeEventListener(egret.Event.COMPLETE, this.onLoadFinish, this);
             loader.removeEventListener(IOErrorEvent.IO_ERROR, this.onLoadFinish, this);
             let data:Texture;
-            if (event.$type == Event.COMPLETE) {
+            if (event.$type == egret.Event.COMPLETE) {
                 data = new Texture();
                 data._setBitmapData(loader.data);
                 loader.data = null;

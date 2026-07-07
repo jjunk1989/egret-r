@@ -45,7 +45,7 @@ import { $getVirtualUrl } from "../Resource";
             delete this.resItemDic[request.hashCode];
             let resItem:ResourceItem = data.item;
             let compFunc:Function = data.func;
-            resItem.loaded = (event.type == Event.COMPLETE);
+            resItem.loaded = (event.type == egret.Event.COMPLETE);
             if (resItem.loaded) {
                 if (request instanceof HttpRequest) {
                     resItem.loaded = false;
@@ -194,7 +194,7 @@ import { $getVirtualUrl } from "../Resource";
             let loader = this.recyclerIamge.pop();
             if (!loader) {
                 loader = new ImageLoader();
-                loader.addEventListener(Event.COMPLETE, this.onLoadFinish, this);
+                loader.addEventListener(egret.Event.COMPLETE, this.onLoadFinish, this);
                 loader.addEventListener(IOErrorEvent.IO_ERROR, this.onLoadFinish, this);
             }
             return loader;

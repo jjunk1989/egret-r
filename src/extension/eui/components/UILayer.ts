@@ -43,15 +43,15 @@ import { Group } from "./Group";
          */
         public constructor(){
             super();
-            this.addEventListener(Event.ADDED_TO_STAGE,this.onAddToStage,this);
-            this.addEventListener(Event.REMOVED_FROM_STAGE,this.onRemoveFromStage,this);
+            this.addEventListener(egret.Event.ADDED_TO_STAGE,this.onAddToStage,this);
+            this.addEventListener(egret.Event.REMOVED_FROM_STAGE,this.onRemoveFromStage,this);
         }
         /**
          * @private
          * 添加到舞台
          */
         private onAddToStage(event?:Event):void{
-            this.$stage.addEventListener(Event.RESIZE,this.onResize,this);
+            this.$stage.addEventListener(egret.Event.RESIZE,this.onResize,this);
             this.onResize();
         }
         /**
@@ -59,7 +59,7 @@ import { Group } from "./Group";
          * 从舞台移除
          */
         private onRemoveFromStage(event:Event):void{
-            this.$stage.removeEventListener(Event.RESIZE,this.onResize,this);
+            this.$stage.removeEventListener(egret.Event.RESIZE,this.onResize,this);
         }
 
         /**
