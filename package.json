@@ -7,8 +7,6 @@
     "build": "node scripts/build-esm-direct.mjs",
     "build:minigame": "node scripts/build-esm-direct.mjs --minigame",
     "build:examples": "node scripts/build-examples.mjs",
-    "build:v3": "node scripts/build-esm-v3.mjs",
-    "build:core": "node scripts/build-esm-direct.mjs",
     "clean": "node scripts/clean-dist.mjs",
     "check:bare": "node scripts/check-bare-symbols.mjs",
     "check:bundle": "node scripts/verify-bundle.mjs",
@@ -20,7 +18,8 @@
     "lint:fix": "eslint src/ examples/ --fix",
     "format": "prettier --write \"src/**/*.ts\" \"examples/**/*.ts\"",
     "docs": "typedoc",
-    "docs:watch": "typedoc --watch"
+    "docs:watch": "typedoc --watch",
+    "prepublishOnly": "npm run build"
   },
   "engines": {
     "node": ">=18"

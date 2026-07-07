@@ -285,7 +285,6 @@ egret-r/
 npm install           # Install dependencies
 npm run build         # Build all 7 packages (Web target)
 npm run build:minigame# Build all packages (Mini-Game target)
-npm run build:core    # Build @egret-r/core only
 npm run build:examples# Build all example demos
 npm run dev           # Build + start example dev server
 npm run docs          # Generate API docs (TypeDoc)

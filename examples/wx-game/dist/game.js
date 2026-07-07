@@ -6,7 +6,7 @@
   var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
   var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
 
-  // ../../packages/core/dist/index.js
+  // packages/core/dist/index.js
   var egret = globalThis.egret || { sys: {}, pro: {} };
   var eui = globalThis.eui || {};
   var sys = egret.sys;
@@ -14958,6 +14958,344 @@ let convertResponseBodyToText = function (binary) {\r
     __name(_WebVideo, "WebVideo");
     var WebVideo = _WebVideo;
     setVideo(WebVideo);
+    var _TouchHandler = class _TouchHandler extends HashObject {
+      /**
+       * @private
+       */
+      constructor(stage2) {
+        super();
+        this.maxTouches = 0;
+        this.useTouchesCount = 0;
+        this.touchDownTarget = {};
+        this.lastTouchX = -1;
+        this.lastTouchY = -1;
+        this.$updateMaxTouches = /* @__PURE__ */ __name(function(value) {
+          this.maxTouches = value;
+        }, "$updateMaxTouches");
+        this.stage = stage2;
+      }
+      /**
+       * @private
+       * 设置同时触摸数量
+       */
+      $initMaxTouches() {
+        this.maxTouches = this.stage.$maxTouches;
+      }
+      /**
+       * @private
+       * 触摸开始（按下）
+       * @param x 事件发生处相对于舞台的坐标x
+       * @param y 事件发生处相对于舞台的坐标y
+       * @param touchPointID 分配给触摸点的唯一标识号
+       */
+      onTouchBegin(x, y, touchPointID) {
+        if (this.useTouchesCount >= this.maxTouches) {
+          return;
+        }
+        this.lastTouchX = x;
+        this.lastTouchY = y;
+        let target = this.findTarget(x, y);
+        if (this.touchDownTarget[touchPointID] == null) {
+          this.touchDownTarget[touchPointID] = target;
+          this.useTouchesCount++;
+        }
+        TouchEvent.dispatchTouchEvent(target, TouchEvent.TOUCH_BEGIN, true, true, x, y, touchPointID, true);
+        return target !== this.stage;
+      }
+      /**
+       * @private
+       * 触摸移动
+       * @param x 事件发生处相对于舞台的坐标x
+       * @param y 事件发生处相对于舞台的坐标y
+       * @param touchPointID 分配给触摸点的唯一标识号
+       */
+      onTouchMove(x, y, touchPointID) {
+        if (this.touchDownTarget[touchPointID] == null) {
+          return;
+        }
+        if (this.lastTouchX == x && this.lastTouchY == y) {
+          return;
+        }
+        this.lastTouchX = x;
+        this.lastTouchY = y;
+        let target = this.findTarget(x, y);
+        TouchEvent.dispatchTouchEvent(target, TouchEvent.TOUCH_MOVE, true, true, x, y, touchPointID, true);
+        return target !== this.stage;
+      }
+      /**
+       * @private
+       * 触摸结束（弹起）
+       * @param x 事件发生处相对于舞台的坐标x
+       * @param y 事件发生处相对于舞台的坐标y
+       * @param touchPointID 分配给触摸点的唯一标识号
+       */
+      onTouchEnd(x, y, touchPointID) {
+        if (this.touchDownTarget[touchPointID] == null) {
+          return;
+        }
+        let target = this.findTarget(x, y);
+        let oldTarget = this.touchDownTarget[touchPointID];
+        delete this.touchDownTarget[touchPointID];
+        this.useTouchesCount--;
+        TouchEvent.dispatchTouchEvent(target, TouchEvent.TOUCH_END, true, true, x, y, touchPointID, false);
+        if (oldTarget == target) {
+          TouchEvent.dispatchTouchEvent(target, TouchEvent.TOUCH_TAP, true, true, x, y, touchPointID, false);
+        } else {
+          TouchEvent.dispatchTouchEvent(oldTarget, TouchEvent.TOUCH_RELEASE_OUTSIDE, true, true, x, y, touchPointID, false);
+        }
+        return target !== this.stage;
+      }
+      /**
+       * @private
+       * 获取舞台坐标下的触摸对象
+       */
+      findTarget(stageX, stageY) {
+        let target = this.stage.$hitTest(stageX, stageY);
+        if (!target) {
+          target = this.stage;
+        }
+        return target;
+      }
+    };
+    __name(_TouchHandler, "TouchHandler");
+    var TouchHandler = _TouchHandler;
+    function runMiniGame(options = {}) {
+      const adapter = getPlatform();
+      if (!globalThis.sys) globalThis.sys = {};
+      const sys3 = globalThis.sys;
+      const sharedCanvas2 = adapter.createCanvas();
+      globalThis.canvas = sharedCanvas2;
+      sys3.createCanvas = function(_width, _height) {
+        return sharedCanvas2;
+      };
+      sys3.createCanvasRenderBufferSurface = function(createCanvasFn, width, height, _root) {
+        const canvas = typeof createCanvasFn === "function" ? createCanvasFn(width, height) : sharedCanvas2;
+        if (width) canvas.width = width;
+        if (height) canvas.height = height;
+        return canvas;
+      };
+      if (typeof localStorage === "undefined") {
+        globalThis.localStorage = {
+          getItem: /* @__PURE__ */ __name((key) => adapter.getStorageSync(key), "getItem"),
+          setItem: /* @__PURE__ */ __name((key, value) => {
+            adapter.setStorageSync(key, value);
+          }, "setItem"),
+          removeItem: /* @__PURE__ */ __name((key) => {
+            adapter.removeStorageSync(key);
+          }, "removeItem"),
+          clear: /* @__PURE__ */ __name(() => {
+          }, "clear"),
+          get length() {
+            return 0;
+          },
+          key: /* @__PURE__ */ __name((_index) => null, "key")
+        };
+      }
+      if (typeof XMLHttpRequest === "undefined") {
+        globalThis.XMLHttpRequest = createMiniGameXHR(adapter);
+      }
+      setupMiniGameAudio(adapter, sys3);
+      const info = adapter.getSystemInfo();
+      const cw = options.contentWidth || info.screenWidth;
+      const ch = options.contentHeight || info.screenHeight;
+      const stage2 = new Stage();
+      stage2.$screen = {
+        screenWidth: info.screenWidth,
+        screenHeight: info.screenHeight,
+        pixelRatio: info.pixelRatio
+      };
+      stage2.stageWidth = cw;
+      stage2.stageHeight = ch;
+      stage2.frameRate = 60;
+      if (!sys3.RenderBuffer) {
+        sys3.RenderBuffer = globalThis.egret?.WebGLRenderBuffer;
+      }
+      const player = new Player(stage2);
+      stage2.$player = player;
+      const touchHandler = new TouchHandler(stage2, sharedCanvas2);
+      adapter.onTouchStart((e) => touchHandler.onTouchStart(e));
+      adapter.onTouchMove((e) => touchHandler.onTouchMove(e));
+      adapter.onTouchEnd((e) => touchHandler.onTouchEnd(e));
+      adapter.onTouchCancel((e) => touchHandler.onTouchCancel(e));
+      adapter.onShow?.(() => {
+        ticker.$startTick();
+      });
+      adapter.onHide?.(() => {
+        ticker.$stopTick();
+      });
+      if (options.entryClass) {
+        const clazz = globalThis[options.entryClass];
+        if (clazz) {
+          const instance = new clazz();
+          stage2.addChild(instance);
+        } else {
+          adapter.warn("Entry class not found: " + options.entryClass);
+        }
+      }
+      function loop() {
+        adapter.requestAnimationFrame(loop);
+        ticker.$tick();
+      }
+      __name(loop, "loop");
+      loop();
+      adapter.log("Mini-game started (" + adapter.platformId + ") " + cw + "x" + ch);
+    }
+    __name(runMiniGame, "runMiniGame");
+    function createMiniGameXHR(adapter) {
+      var _a;
+      return _a = class {
+        constructor() {
+          this._url = "";
+          this._method = "GET";
+          this._headers = {};
+          this._data = null;
+          this._responseType = "";
+          this._readyState = 0;
+          this._status = 0;
+          this._response = null;
+          this.onload = null;
+          this.onerror = null;
+          this.onprogress = null;
+          this.onreadystatechange = null;
+          this.UNSENT = 0;
+          this.OPENED = 1;
+          this.HEADERS_RECEIVED = 2;
+          this.LOADING = 3;
+          this.DONE = 4;
+        }
+        get readyState() {
+          return this._readyState;
+        }
+        get status() {
+          return this._status;
+        }
+        get response() {
+          return this._response;
+        }
+        get responseText() {
+          return typeof this._response === "string" ? this._response : "";
+        }
+        get responseURL() {
+          return this._url;
+        }
+        open(method, url) {
+          this._method = method;
+          this._url = url;
+          this._readyState = 1;
+          this.onreadystatechange?.();
+        }
+        setRequestHeader(key, value) {
+          this._headers[key] = value;
+        }
+        set responseType(type) {
+          this._responseType = type;
+        }
+        get responseType() {
+          return this._responseType;
+        }
+        send(data) {
+          this._data = data;
+          this._readyState = 2;
+          this.onreadystatechange?.();
+          const requestTask = globalThis.wx?.request?.({
+            url: this._url,
+            method: this._method,
+            header: this._headers,
+            data: this._data,
+            responseType: this._responseType || "text",
+            success: /* @__PURE__ */ __name((res) => {
+              this._status = res.statusCode || 200;
+              this._response = this._responseType === "arraybuffer" ? res.data : typeof res.data === "string" ? res.data : JSON.stringify(res.data);
+              this._readyState = 4;
+              this.onreadystatechange?.();
+              this.onload?.();
+            }, "success"),
+            fail: /* @__PURE__ */ __name((_err) => {
+              this._status = 0;
+              this._readyState = 4;
+              this.onreadystatechange?.();
+              this.onerror?.();
+            }, "fail")
+          });
+        }
+        abort() {
+          this._readyState = 4;
+        }
+        getAllResponseHeaders() {
+          return "";
+        }
+        getResponseHeader(_key) {
+          return null;
+        }
+        overrideMimeType(_mime) {
+        }
+        addEventListener(_type, _handler) {
+        }
+        removeEventListener(_type, _handler) {
+        }
+      }, __name(_a, "MiniGameXHR"), _a;
+    }
+    __name(createMiniGameXHR, "createMiniGameXHR");
+    function setupMiniGameAudio(adapter, sys3) {
+      sys3.createSound = function(url) {
+        const audio = adapter.createInnerAudioContext();
+        audio.src = url;
+        audio.autoplay = false;
+        return {
+          _audio: audio,
+          _url: url,
+          _loaded: false,
+          load(url2) {
+            this._url = url2;
+            this._audio.src = url2;
+            this._loaded = false;
+            return this;
+          },
+          play(startTime, loops) {
+            const a = this._audio;
+            if (startTime !== void 0) a.seek(startTime);
+            a.loop = loops === 0;
+            a.play();
+          },
+          stop() {
+            this._audio.stop();
+          },
+          pause() {
+            this._audio.pause();
+          },
+          get volume() {
+            return this._audio.volume;
+          },
+          set volume(v) {
+            this._audio.volume = v;
+          },
+          get position() {
+            return this._audio.currentTime || 0;
+          },
+          addEventListener(type, handler) {
+            if (type === "canplaythrough") this._audio.onCanplay(() => {
+              this._loaded = true;
+              handler();
+            });
+            else if (type === "error") this._audio.onError(handler);
+            else if (type === "ended") this._audio.onEnded(handler);
+          },
+          removeEventListener(_type, _handler) {
+          }
+        };
+      };
+    }
+    __name(setupMiniGameAudio, "setupMiniGameAudio");
+    function startMiniGame(options = {}) {
+      const g = globalThis;
+      if (g.wx) registerPlatform(new WxAdapter());
+      else if (g.tt) registerPlatform(new TtAdapter());
+      else if (g.ks) registerPlatform(new KsAdapter());
+      else if (g.qq) registerPlatform(new QqAdapter());
+      else throw new Error("No mini-game platform detected (wx/tt/ks/qq global not found)");
+      runMiniGame(options);
+    }
+    __name(startMiniGame, "startMiniGame");
     var HttpMethod;
     ((HttpMethod2) => {
       HttpMethod2.GET = "GET";
@@ -16859,107 +17197,6 @@ let convertResponseBodyToText = function (binary) {\r
       }
     }
     __name(dropShadowFilter2, "dropShadowFilter2");
-    var _TouchHandler = class _TouchHandler extends HashObject {
-      /**
-       * @private
-       */
-      constructor(stage2) {
-        super();
-        this.maxTouches = 0;
-        this.useTouchesCount = 0;
-        this.touchDownTarget = {};
-        this.lastTouchX = -1;
-        this.lastTouchY = -1;
-        this.$updateMaxTouches = /* @__PURE__ */ __name(function(value) {
-          this.maxTouches = value;
-        }, "$updateMaxTouches");
-        this.stage = stage2;
-      }
-      /**
-       * @private
-       * 设置同时触摸数量
-       */
-      $initMaxTouches() {
-        this.maxTouches = this.stage.$maxTouches;
-      }
-      /**
-       * @private
-       * 触摸开始（按下）
-       * @param x 事件发生处相对于舞台的坐标x
-       * @param y 事件发生处相对于舞台的坐标y
-       * @param touchPointID 分配给触摸点的唯一标识号
-       */
-      onTouchBegin(x, y, touchPointID) {
-        if (this.useTouchesCount >= this.maxTouches) {
-          return;
-        }
-        this.lastTouchX = x;
-        this.lastTouchY = y;
-        let target = this.findTarget(x, y);
-        if (this.touchDownTarget[touchPointID] == null) {
-          this.touchDownTarget[touchPointID] = target;
-          this.useTouchesCount++;
-        }
-        TouchEvent.dispatchTouchEvent(target, TouchEvent.TOUCH_BEGIN, true, true, x, y, touchPointID, true);
-        return target !== this.stage;
-      }
-      /**
-       * @private
-       * 触摸移动
-       * @param x 事件发生处相对于舞台的坐标x
-       * @param y 事件发生处相对于舞台的坐标y
-       * @param touchPointID 分配给触摸点的唯一标识号
-       */
-      onTouchMove(x, y, touchPointID) {
-        if (this.touchDownTarget[touchPointID] == null) {
-          return;
-        }
-        if (this.lastTouchX == x && this.lastTouchY == y) {
-          return;
-        }
-        this.lastTouchX = x;
-        this.lastTouchY = y;
-        let target = this.findTarget(x, y);
-        TouchEvent.dispatchTouchEvent(target, TouchEvent.TOUCH_MOVE, true, true, x, y, touchPointID, true);
-        return target !== this.stage;
-      }
-      /**
-       * @private
-       * 触摸结束（弹起）
-       * @param x 事件发生处相对于舞台的坐标x
-       * @param y 事件发生处相对于舞台的坐标y
-       * @param touchPointID 分配给触摸点的唯一标识号
-       */
-      onTouchEnd(x, y, touchPointID) {
-        if (this.touchDownTarget[touchPointID] == null) {
-          return;
-        }
-        let target = this.findTarget(x, y);
-        let oldTarget = this.touchDownTarget[touchPointID];
-        delete this.touchDownTarget[touchPointID];
-        this.useTouchesCount--;
-        TouchEvent.dispatchTouchEvent(target, TouchEvent.TOUCH_END, true, true, x, y, touchPointID, false);
-        if (oldTarget == target) {
-          TouchEvent.dispatchTouchEvent(target, TouchEvent.TOUCH_TAP, true, true, x, y, touchPointID, false);
-        } else {
-          TouchEvent.dispatchTouchEvent(oldTarget, TouchEvent.TOUCH_RELEASE_OUTSIDE, true, true, x, y, touchPointID, false);
-        }
-        return target !== this.stage;
-      }
-      /**
-       * @private
-       * 获取舞台坐标下的触摸对象
-       */
-      findTarget(stageX, stageY) {
-        let target = this.stage.$hitTest(stageX, stageY);
-        if (!target) {
-          target = this.stage;
-        }
-        return target;
-      }
-    };
-    __name(_TouchHandler, "TouchHandler");
-    var TouchHandler = _TouchHandler;
     var DeviceOrientation = null;
     function setDeviceOrientation(cls) {
       DeviceOrientation = cls;
@@ -25869,243 +26106,6 @@ let convertResponseBodyToText = function (binary) {\r
     };
     __name(_WebPlayer, "WebPlayer");
     var WebPlayer = _WebPlayer;
-    function runMiniGame(options = {}) {
-      const adapter = getPlatform();
-      if (!globalThis.sys) globalThis.sys = {};
-      const sys3 = globalThis.sys;
-      const sharedCanvas2 = adapter.createCanvas();
-      globalThis.canvas = sharedCanvas2;
-      sys3.createCanvas = function(_width, _height) {
-        return sharedCanvas2;
-      };
-      sys3.createCanvasRenderBufferSurface = function(createCanvasFn, width, height, _root) {
-        const canvas = typeof createCanvasFn === "function" ? createCanvasFn(width, height) : sharedCanvas2;
-        if (width) canvas.width = width;
-        if (height) canvas.height = height;
-        return canvas;
-      };
-      if (typeof localStorage === "undefined") {
-        globalThis.localStorage = {
-          getItem: /* @__PURE__ */ __name((key) => adapter.getStorageSync(key), "getItem"),
-          setItem: /* @__PURE__ */ __name((key, value) => {
-            adapter.setStorageSync(key, value);
-          }, "setItem"),
-          removeItem: /* @__PURE__ */ __name((key) => {
-            adapter.removeStorageSync(key);
-          }, "removeItem"),
-          clear: /* @__PURE__ */ __name(() => {
-          }, "clear"),
-          get length() {
-            return 0;
-          },
-          key: /* @__PURE__ */ __name((_index) => null, "key")
-        };
-      }
-      if (typeof XMLHttpRequest === "undefined") {
-        globalThis.XMLHttpRequest = createMiniGameXHR(adapter);
-      }
-      setupMiniGameAudio(adapter, sys3);
-      const info = adapter.getSystemInfo();
-      const cw = options.contentWidth || info.screenWidth;
-      const ch = options.contentHeight || info.screenHeight;
-      const stage2 = new Stage();
-      stage2.$screen = {
-        screenWidth: info.screenWidth,
-        screenHeight: info.screenHeight,
-        pixelRatio: info.pixelRatio
-      };
-      stage2.stageWidth = cw;
-      stage2.stageHeight = ch;
-      stage2.frameRate = 60;
-      if (!sys3.RenderBuffer) {
-        sys3.RenderBuffer = globalThis.egret?.WebGLRenderBuffer;
-      }
-      const player = new Player(stage2);
-      stage2.$player = player;
-      const touchHandler = new TouchHandler(stage2, sharedCanvas2);
-      adapter.onTouchStart((e) => touchHandler.onTouchStart(e));
-      adapter.onTouchMove((e) => touchHandler.onTouchMove(e));
-      adapter.onTouchEnd((e) => touchHandler.onTouchEnd(e));
-      adapter.onTouchCancel((e) => touchHandler.onTouchCancel(e));
-      adapter.onShow?.(() => {
-        ticker.$startTick();
-      });
-      adapter.onHide?.(() => {
-        ticker.$stopTick();
-      });
-      if (options.entryClass) {
-        const clazz = globalThis[options.entryClass];
-        if (clazz) {
-          const instance = new clazz();
-          stage2.addChild(instance);
-        } else {
-          adapter.warn("Entry class not found: " + options.entryClass);
-        }
-      }
-      function loop() {
-        adapter.requestAnimationFrame(loop);
-        ticker.$tick();
-      }
-      __name(loop, "loop");
-      loop();
-      adapter.log("Mini-game started (" + adapter.platformId + ") " + cw + "x" + ch);
-    }
-    __name(runMiniGame, "runMiniGame");
-    function createMiniGameXHR(adapter) {
-      var _a;
-      return _a = class {
-        constructor() {
-          this._url = "";
-          this._method = "GET";
-          this._headers = {};
-          this._data = null;
-          this._responseType = "";
-          this._readyState = 0;
-          this._status = 0;
-          this._response = null;
-          this.onload = null;
-          this.onerror = null;
-          this.onprogress = null;
-          this.onreadystatechange = null;
-          this.UNSENT = 0;
-          this.OPENED = 1;
-          this.HEADERS_RECEIVED = 2;
-          this.LOADING = 3;
-          this.DONE = 4;
-        }
-        get readyState() {
-          return this._readyState;
-        }
-        get status() {
-          return this._status;
-        }
-        get response() {
-          return this._response;
-        }
-        get responseText() {
-          return typeof this._response === "string" ? this._response : "";
-        }
-        get responseURL() {
-          return this._url;
-        }
-        open(method, url) {
-          this._method = method;
-          this._url = url;
-          this._readyState = 1;
-          this.onreadystatechange?.();
-        }
-        setRequestHeader(key, value) {
-          this._headers[key] = value;
-        }
-        set responseType(type) {
-          this._responseType = type;
-        }
-        get responseType() {
-          return this._responseType;
-        }
-        send(data) {
-          this._data = data;
-          this._readyState = 2;
-          this.onreadystatechange?.();
-          const requestTask = globalThis.wx?.request?.({
-            url: this._url,
-            method: this._method,
-            header: this._headers,
-            data: this._data,
-            responseType: this._responseType || "text",
-            success: /* @__PURE__ */ __name((res) => {
-              this._status = res.statusCode || 200;
-              this._response = this._responseType === "arraybuffer" ? res.data : typeof res.data === "string" ? res.data : JSON.stringify(res.data);
-              this._readyState = 4;
-              this.onreadystatechange?.();
-              this.onload?.();
-            }, "success"),
-            fail: /* @__PURE__ */ __name((_err) => {
-              this._status = 0;
-              this._readyState = 4;
-              this.onreadystatechange?.();
-              this.onerror?.();
-            }, "fail")
-          });
-        }
-        abort() {
-          this._readyState = 4;
-        }
-        getAllResponseHeaders() {
-          return "";
-        }
-        getResponseHeader(_key) {
-          return null;
-        }
-        overrideMimeType(_mime) {
-        }
-        addEventListener(_type, _handler) {
-        }
-        removeEventListener(_type, _handler) {
-        }
-      }, __name(_a, "MiniGameXHR"), _a;
-    }
-    __name(createMiniGameXHR, "createMiniGameXHR");
-    function setupMiniGameAudio(adapter, sys3) {
-      sys3.createSound = function(url) {
-        const audio = adapter.createInnerAudioContext();
-        audio.src = url;
-        audio.autoplay = false;
-        return {
-          _audio: audio,
-          _url: url,
-          _loaded: false,
-          load(url2) {
-            this._url = url2;
-            this._audio.src = url2;
-            this._loaded = false;
-            return this;
-          },
-          play(startTime, loops) {
-            const a = this._audio;
-            if (startTime !== void 0) a.seek(startTime);
-            a.loop = loops === 0;
-            a.play();
-          },
-          stop() {
-            this._audio.stop();
-          },
-          pause() {
-            this._audio.pause();
-          },
-          get volume() {
-            return this._audio.volume;
-          },
-          set volume(v) {
-            this._audio.volume = v;
-          },
-          get position() {
-            return this._audio.currentTime || 0;
-          },
-          addEventListener(type, handler) {
-            if (type === "canplaythrough") this._audio.onCanplay(() => {
-              this._loaded = true;
-              handler();
-            });
-            else if (type === "error") this._audio.onError(handler);
-            else if (type === "ended") this._audio.onEnded(handler);
-          },
-          removeEventListener(_type, _handler) {
-          }
-        };
-      };
-    }
-    __name(setupMiniGameAudio, "setupMiniGameAudio");
-    function startMiniGame(options = {}) {
-      const g = globalThis;
-      if (g.wx) registerPlatform(new WxAdapter());
-      else if (g.tt) registerPlatform(new TtAdapter());
-      else if (g.ks) registerPlatform(new KsAdapter());
-      else if (g.qq) registerPlatform(new QqAdapter());
-      else throw new Error("No mini-game platform detected (wx/tt/ks/qq global not found)");
-      runMiniGame(options);
-    }
-    __name(startMiniGame, "startMiniGame");
     function getItem2(key) {
       return window.localStorage.getItem(key);
     }
@@ -26838,6 +26838,8 @@ let convertResponseBodyToText = function (binary) {\r
     _ns(egret, "WebAudioSound", WebAudioSound);
     _ns(egret, "WebAudioSoundChannel", WebAudioSoundChannel);
     _ns(egret, "WebVideo", WebVideo);
+    _ns(egret, "runMiniGame", runMiniGame);
+    _ns(egret, "startMiniGame", startMiniGame);
     _ns(egret, "GET", void 0);
     _ns(egret, "POST", void 0);
     _ns(egret, "setHttpRequest", setHttpRequest);
@@ -26954,8 +26956,6 @@ let convertResponseBodyToText = function (binary) {\r
     _ns(egret, "WEBGL_ATTRIBUTE_TYPE", WEBGL_ATTRIBUTE_TYPE);
     _ns(egret, "WEBGL_UNIFORM_TYPE", WEBGL_UNIFORM_TYPE);
     _ns(egret, "WebTouchHandler", WebTouchHandler);
-    _ns(egret, "runMiniGame", runMiniGame);
-    _ns(egret, "startMiniGame", startMiniGame);
   }).call(window);
   if (typeof globalThis !== "undefined") {
     globalThis.egret = egret;
@@ -26963,7 +26963,7 @@ let convertResponseBodyToText = function (binary) {\r
     globalThis.RES = RES;
   }
 
-  // src/game.ts
+  // examples/wx-game/src/game.ts
   var Main = class extends egret.DisplayObjectContainer {
     constructor() {
       super();

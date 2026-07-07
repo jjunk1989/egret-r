@@ -284,7 +284,6 @@ egret-r/
 ```bash
 npm install           # 安装依赖
 npm run build         # 构建所有 7 个包
-npm run build:core    # 仅构建 @egret-r/core
 npm run build:examples# 构建所有示例
 npm run dev           # 构建 + 启动示例开发服务器
 npm run docs          # 生成 API 文档（TypeDoc）
