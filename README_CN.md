@@ -8,7 +8,7 @@ Egret Engine R 是 Egret HTML5 游戏引擎的现代化版本，重新打包为 
 
 ---
 
-## 包列表
+## 包列�?
 
 | 包名 | 描述 | 体积 (min) |
 |------|------|-----------|
@@ -22,7 +22,7 @@ Egret Engine R 是 Egret HTML5 游戏引擎的现代化版本，重新打包为 
 
 > 扩展包（`eui`、`game`、`tween`、`socket`、`assetsmanager`、`resource`）将 `@egret-r/core` 声明为 **peerDependency** — 只安装一份 core，无需重复打包。
 
-🔗 **[在线演示](https://egret-labs.github.io/egret-r/)** · 📖 **[API 文档](https://egret-labs.github.io/egret-r/docs/api/)**
+🔗 **[在线演示](https://jjunk1989.github.io/egret-r/)** · 📖 **[API 文档](https://jjunk1989.github.io/egret-r/docs/api/index.html)**
 
 ---
 
@@ -318,9 +318,9 @@ src/egret/*.ts src/extension/*.ts（ESM 源码）
 
 ## 链接
 
-- 🎮 **[在线演示](https://egret-labs.github.io/egret-r/)** — 可玩的示例和测试用例
-- 📖 **[API 文档](https://egret-labs.github.io/egret-r/docs/api/)** — 完整 TypeDoc 参考
-- 📦 **[GitHub](https://github.com/egret-labs/egret-r)** — 源码和问题追踪
+- 🎮 **[Online Demos](https://jjunk1989.github.io/egret-r/)** 可玩的示例和测试用例
+- 📖 **[API Docs](https://jjunk1989.github.io/egret-r/docs/api/)** — 完整 TypeDoc 参考
+- 📦 **[GitHub](https://jjunk1989.github.io/egret-r)** — 源码和问题追踪
 
 ---
 
