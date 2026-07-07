@@ -10,7 +10,7 @@ import { fileURLToPath } from 'node:url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const EXAMPLES_DIR = path.join(__dirname, '..', 'examples');
-const SKIP = ['wx-game']; // mini-game projects (not web-based)
+const SKIP = ['wx-game', 'tt-game']; // mini-game projects (not web-based)
 
 const dirs = fs.readdirSync(EXAMPLES_DIR, { withFileTypes: true })
   .filter(d => d.isDirectory() && !SKIP.includes(d.name))
