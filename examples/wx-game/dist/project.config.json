@@ -1,0 +1,15 @@
+{
+  "description": "Egret Engine R - WeChat Mini Game Demo",
+  "setting": {
+    "urlCheck": true,
+    "es6": true,
+    "enhance": true,
+    "postcss": false,
+    "minified": false
+  },
+  "compileType": "game",
+  "libVersion": "latest",
+  "appid": "",
+  "projectname": "egret-r-wx-game",
+  "condition": {}
+}
