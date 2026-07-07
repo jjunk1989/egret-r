@@ -68,9 +68,9 @@ export interface MiniGameAdapter {
 
   // === Logging ===
   /** Log a message (platform-appropriate) */
-  log(message: string): void;
+  egret.log(message: string): void;
   /** Log a warning */
-  warn(message: string): void;
+  egret.warn(message: string): void;
   /** Log an error */
   error(message: string): void;
 }

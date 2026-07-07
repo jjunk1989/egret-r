@@ -104,12 +104,12 @@ export class WebAdapter implements MiniGameAdapter {
   }
 
   // === Logging ===
-  log(message: string): void {
-    console.log("[egret]", message);
+  egret.log(message: string): void {
+    console.egret.log("[egret]", message);
   }
 
-  warn(message: string): void {
-    console.warn("[egret]", message);
+  egret.warn(message: string): void {
+    console.egret.warn("[egret]", message);
   }
 
   error(message: string): void {

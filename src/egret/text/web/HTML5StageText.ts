@@ -119,7 +119,7 @@ import { EventDispatcher } from "../../events/EventDispatcher";
                 node = node.parent;
             }
 
-            let transformKey = getPrefixStyleName("transform");
+            let transformKey = egret.getPrefixStyleName("transform");
             this.inputDiv.style[transformKey] = "rotate(" + rotation + "deg)";
 
             this._gscaleX = scaleX * cX;
@@ -555,9 +555,9 @@ import { EventDispatcher } from "../../events/EventDispatcher";
             this.StageDelegateDiv.style.left = this.canvas.style.left;
             this.StageDelegateDiv.style.top = this.canvas.style.top;
 
-            let transformKey = getPrefixStyleName("transform");
+            let transformKey = egret.getPrefixStyleName("transform");
             this.StageDelegateDiv.style[transformKey] = this.canvas.style[transformKey];
-            this.StageDelegateDiv.style[getPrefixStyleName("transformOrigin")] = "0% 0% 0px";
+            this.StageDelegateDiv.style[egret.getPrefixStyleName("transformOrigin")] = "0% 0% 0px";
         }
 
         /**
@@ -594,7 +594,7 @@ import { EventDispatcher } from "../../events/EventDispatcher";
                 self._inputDIV.style.left = 0 + "px";
                 self._inputDIV.style.top = "-100px";
 
-                self._inputDIV.style[getPrefixStyleName("transformOrigin")] = "0% 0% 0px";
+                self._inputDIV.style[egret.getPrefixStyleName("transformOrigin")] = "0% 0% 0px";
                 stageDelegateDiv.appendChild(self._inputDIV);
 
                 this.canvas.addEventListener("click", self.stageTextClickHandler);

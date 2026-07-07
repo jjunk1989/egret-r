@@ -16,7 +16,7 @@ let _platform: MiniGameAdapter | null = null;
  */
 export function registerPlatform(adapter: MiniGameAdapter): void {
   if (_platform) {
-    _platform.warn("Platform adapter already registered. Overwriting.");
+    _platform.egret.warn("Platform adapter already registered. Overwriting.");
   }
   _platform = adapter;
 }

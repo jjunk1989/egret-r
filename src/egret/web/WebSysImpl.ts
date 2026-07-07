@@ -286,7 +286,7 @@ import { isIOS14Device, setIsIOS14Device } from "./rendering/webgl/WebGLVertexAr
     function loadFontByFontFace(name: string, path: string): void {
         const fontResCache = fontResourceCache;
         if (!fontResCache || !fontResCache[path]) {
-            console.warn(`registerFontMapping_WARN: Can not find TTF file:${path}, please load file first.`);
+            console.egret.warn(`registerFontMapping_WARN: Can not find TTF file:${path}, please load file first.`);
             return;
         }
         const resCache = fontResCache[path];

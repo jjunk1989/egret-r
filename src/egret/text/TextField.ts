@@ -1709,7 +1709,7 @@ import { TextFieldType } from "./TextFieldType";
                         let color: number = typeof lines[i + 3] == "number" ? lines[i + 3] : textColor;
                         if (lastColor < 0 || lastColor != color) {
                             lastColor = color;
-                            strokePath = graphics.lineStyle(2, color, 1, CapsStyle.NONE);
+                            strokePath = graphics.lineStyle(2, color, 1, egret.CapsStyle.NONE);
                         }
                         strokePath.moveTo(x, y);
                         strokePath.lineTo(x + w, y);

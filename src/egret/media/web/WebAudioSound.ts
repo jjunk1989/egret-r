@@ -67,7 +67,7 @@ export interface AudioBufferSourceNodeEgret {
                 WebAudioDecode.isDecoding = false;
                 WebAudioDecode.decodeAudios();
             }, function () {
-                log('sound decode error')
+                egret.log('sound decode error')
                 if (decodeInfo["fail"]) {
                     decodeInfo["fail"]();
                 }

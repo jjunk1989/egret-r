@@ -234,9 +234,9 @@ import { DEBUG } from "../../../Defines.debug";
             let video = this.video;
 
             let fullscreenType: string;
-            fullscreenType = getPrefixStyleName('requestFullscreen', video);
+            fullscreenType = egret.getPrefixStyleName('requestFullscreen', video);
             if (!video[fullscreenType]) {
-                fullscreenType = getPrefixStyleName('requestFullScreen', video);
+                fullscreenType = egret.getPrefixStyleName('requestFullScreen', video);
                 if (!video[fullscreenType]) {
                     return true;
                 }

@@ -27,6 +27,6 @@ import { DisplayObject } from "../display/DisplayObject";
       * @language zh_CN
       */
     export function hasDefinition(name:string):boolean{
-        let definition:any = getDefinitionByName(name);
+        let definition:any = egret.getDefinitionByName(name);
         return definition?true:false;
     }

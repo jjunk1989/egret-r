@@ -37,7 +37,7 @@
         if (!superProto) {
             return null;
         }
-        let superClass = getQualifiedClassName(superProto.constructor);
+        let superClass = egret.getQualifiedClassName(superProto.constructor);
         if (!superClass) {
             return null;
         }

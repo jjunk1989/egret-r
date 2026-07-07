@@ -14,8 +14,8 @@ import { EgretWebGLAttribute } from "./EgretWebGLAttribute";
 
         let compiled = gl.getShaderParameter(shader, gl.COMPILE_STATUS);
         if(!compiled) {
-            console.log("shader not compiled!");
-            console.log(gl.getShaderInfoLog(shader));
+            console.egret.log("shader not compiled!");
+            console.egret.log(gl.getShaderInfoLog(shader));
         }
 
         return shader;

@@ -44,13 +44,13 @@ import { WebGLRenderContext } from "./WebGLRenderContext";
             height = height || 1;
             if (width < 1) {
                 if (DEBUG) {
-                    warn('WebGLRenderTarget _resize width = ' + width);
+                    egret.warn('WebGLRenderTarget _resize width = ' + width);
                 }
                 width = 1;
             }
             if (height < 1) {
                 if (DEBUG) {
-                    warn('WebGLRenderTarget _resize height = ' + height);
+                    egret.warn('WebGLRenderTarget _resize height = ' + height);
                 }
                 height = 1;
             }

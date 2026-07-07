@@ -109,7 +109,7 @@ import { Event } from "../events/Event";
         private initialize(): void {
             let rootClass;
             if (this.entryClassName) {
-                rootClass = getDefinitionByName(this.entryClassName);
+                rootClass = egret.getDefinitionByName(this.entryClassName);
             }
             if (rootClass) {
                 let rootContainer: any = new rootClass();
@@ -375,7 +375,7 @@ import { Event } from "../events/Event";
 
             }
             catch (e) {
-                log(e);
+                egret.log(e);
             }
             this.filter = function (message: string): boolean {
                 if (logFilterRegExp)
@@ -511,12 +511,12 @@ export let WebGLRenderContext: { new(width?: number, height?: number, context?: 
             nativeRender = false;
             const msg = "需要升级微端版本到 0.1.14 才可以开启原生渲染加速";
             sys.$warnToFPS(msg);
-            warn(msg);
+            egret.warn(msg);
         }
         else if (nrABIVersion > requiredNrABIVersion) {
             nativeRender = false;
             const msg = `需要升级引擎版本到 ${nrMinEgretVersion} 才可以开启原生渲染加速`;
             sys.$warnToFPS(msg);
-            warn(msg);
+            egret.warn(msg);
         }
     }

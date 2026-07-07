@@ -250,7 +250,7 @@ import { HashObject } from "../../../utils/HashObject";
                 return null;
             }
             if (textBlock.width > this._maxSize || textBlock.height > this._maxSize) {
-                //console.log('this._maxSize = ' + this._maxSize + ', textBlock.width = ' + textBlock.width + ', textBlock.height = ' + textBlock.height);
+                //console.egret.log('this._maxSize = ' + this._maxSize + ', textBlock.width = ' + textBlock.width + ', textBlock.height = ' + textBlock.height);
                 return null;
             }
             //找到最合适的

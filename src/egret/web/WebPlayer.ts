@@ -33,7 +33,7 @@ import { getPrefixStyleName } from "./Html5Capatibility";
         }
 
         private init(container: HTMLDivElement, options: runEgretOptions): void {
-            console.log("Egret Engine Version:", Capabilities.engineVersion)
+            console.egret.log("Egret Engine Version:", Capabilities.engineVersion)
             let option = this.readOption(container, options);
             let stage = new Stage();
             stage.$screen = this;
@@ -206,7 +206,7 @@ import { getPrefixStyleName } from "./Html5Capatibility";
             let stageHeight = stageSize.stageHeight;
             let displayWidth = stageSize.displayWidth;
             let displayHeight = stageSize.displayHeight;
-            canvas.style[getPrefixStyleName("transformOrigin")] = "0% 0% 0px";
+            canvas.style[egret.getPrefixStyleName("transformOrigin")] = "0% 0% 0px";
             if (canvas.width !== stageWidth) {
                 canvas.width = stageWidth;
             }
@@ -245,7 +245,7 @@ import { getPrefixStyleName } from "./Html5Capatibility";
             m.rotate(rotation * Math.PI / 180);
             let transform = `matrix(${m.a},${m.b},${m.c},${m.d},${m.tx},${m.ty})`;
             Matrix.release(m);
-            canvas.style[getPrefixStyleName("transform")] = transform;
+            canvas.style[egret.getPrefixStyleName("transform")] = transform;
             DisplayList.$setCanvasScale(canvasScaleX, canvasScaleY);
             this.webTouchHandler.updateScaleMode(scalex, scaley, rotation);
             this.webInput.$updateSize();

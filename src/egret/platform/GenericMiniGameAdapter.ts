@@ -197,28 +197,28 @@ export class GenericMiniGameAdapter implements MiniGameAdapter {
   }
 
   // === Logging ===
-  log(message: string): void {
+  egret.log(message: string): void {
     if (this.api.getLogManager) {
       const logger = this.api.getLogManager();
-      logger.log("[egret]", message);
+      logger.egret.log("[egret]", message);
     } else {
-      console.log("[egret]", message);
+      console.egret.log("[egret]", message);
     }
   }
 
-  warn(message: string): void {
+  egret.warn(message: string): void {
     if (this.api.getLogManager) {
       const logger = this.api.getLogManager();
-      logger.warn("[egret]", message);
+      logger.egret.warn("[egret]", message);
     } else {
-      console.warn("[egret]", message);
+      console.egret.warn("[egret]", message);
     }
   }
 
   error(message: string): void {
     if (this.api.getLogManager) {
       const logger = this.api.getLogManager();
-      logger.warn("[egret]", message);
+      logger.egret.warn("[egret]", message);
     } else {
       console.error("[egret]", message);
     }

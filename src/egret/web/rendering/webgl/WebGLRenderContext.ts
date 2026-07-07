@@ -264,9 +264,9 @@ import { DEBUG } from "../../../../Defines.debug";
                         console.error('buildSupportedCompressedTextureInfo failed = ' + extension.name);
                     }
                     else {
-                        log('support: ' + extension.name);
+                        egret.log('support: ' + extension.name);
                         for (const key in extension) {
-                            log(key, extension[key], '0x' + extension[key].toString(16));
+                            egret.log(key, extension[key], '0x' + extension[key].toString(16));
                         }
                     }
                 }
@@ -418,14 +418,14 @@ import { DEBUG } from "../../../../Defines.debug";
         private $debugLogCompressedTextureNotSupported(supportedCompressedTextureInfo: SupportedCompressedTextureInfo[], internalFormat: number): void {
             if (!debugLogCompressedTextureNotSupported[internalFormat]) {
                 debugLogCompressedTextureNotSupported[internalFormat] = true;
-                log('internalFormat = ' + internalFormat + ':' + ('0x' + internalFormat.toString(16)) + ', the current hardware does not support the corresponding compression format.');
+                egret.log('internalFormat = ' + internalFormat + ':' + ('0x' + internalFormat.toString(16)) + ', the current hardware does not support the corresponding compression format.');
                 for (let i = 0, length = supportedCompressedTextureInfo.length; i < length; ++i) {
                     const ss = supportedCompressedTextureInfo[i];
                     if (ss.supportedFormats.length > 0) {
-                        log('support = ' + ss.extensionName);
+                        egret.log('support = ' + ss.extensionName);
                         for (let j = 0, length = ss.supportedFormats.length; j < length; ++j) {
                             const tp = ss.supportedFormats[j];
-                            log(tp[0] + ' : ' + tp[1] + ' : ' + ('0x' + tp[1].toString(16)));
+                            egret.log(tp[0] + ' : ' + tp[1] + ' : ' + ('0x' + tp[1].toString(16)));
                         }
                     }
                 }
