@@ -6,10 +6,26 @@
   var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
   var __publicField = (obj, key, value) => __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
 
-  // packages/core/dist/index.js
+  // ../../packages/core/dist/index.js
   var egret = globalThis.egret || { sys: {}, pro: {} };
   var eui = globalThis.eui || {};
   var sys = egret.sys;
+  if (typeof DOMParser === "undefined") globalThis.DOMParser = function() {
+    this.parseFromString = function() {
+      return { childNodes: [], documentElement: null, getElementsByTagName: function() {
+        return [];
+      } };
+    };
+  };
+  if (typeof localStorage === "undefined") globalThis.localStorage = { _d: {}, getItem: function(k) {
+    return this._d[k] || null;
+  }, setItem: function(k, v) {
+    this._d[k] = v;
+  }, removeItem: function(k) {
+    delete this._d[k];
+  }, clear: function() {
+    this._d = {};
+  } };
   var RES = globalThis.RES || {};
   var __global = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : {};
   var global = __global;
@@ -279,7 +295,13 @@
       }
       // === Frame Loop ===
       requestAnimationFrame(callback) {
-        return this.api.requestAnimationFrame ? this.api.requestAnimationFrame(callback) : this.createCanvas().requestAnimationFrame(callback);
+        if (typeof requestAnimationFrame !== "undefined") {
+          return requestAnimationFrame(callback);
+        }
+        if (this.api.requestAnimationFrame) {
+          return this.api.requestAnimationFrame(callback);
+        }
+        return 0;
       }
       cancelAnimationFrame(handle) {
         if (this.api.cancelAnimationFrame) {
@@ -475,7 +497,6 @@
     var _platform = null;
     function registerPlatform(adapter) {
       if (_platform) {
-        _platform.warn("Platform adapter already registered. Overwriting.");
       }
       _platform = adapter;
     }
@@ -15061,18 +15082,42 @@ let convertResponseBodyToText = function (binary) {\r
     var TouchHandler = _TouchHandler;
     function runMiniGame(options = {}) {
       const adapter = getPlatform();
-      if (!globalThis.sys) globalThis.sys = {};
-      const sys3 = globalThis.sys;
+      const g = globalThis;
+      if (!g.egret) g.egret = {};
+      if (!g.egret.sys) g.egret.sys = {};
+      const sys3 = g.egret.sys;
       const sharedCanvas2 = adapter.createCanvas();
       globalThis.canvas = sharedCanvas2;
       sys3.createCanvas = function(_width, _height) {
+        return adapter.createCanvas();
+      };
+      sys3.mainCanvas = function(_width, _height) {
+        if (!sharedCanvas2.addEventListener) {
+          sharedCanvas2.addEventListener = function() {
+          };
+          sharedCanvas2.removeEventListener = function() {
+          };
+        }
         return sharedCanvas2;
+      };
+      sys3.getContextWebGL = function(canvas) {
+        return canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
       };
       sys3.createCanvasRenderBufferSurface = function(createCanvasFn, width, height, _root) {
         const canvas = typeof createCanvasFn === "function" ? createCanvasFn(width, height) : sharedCanvas2;
         if (width) canvas.width = width;
         if (height) canvas.height = height;
         return canvas;
+      };
+      const measureCanvas = adapter.createCanvas();
+      const measureCtx = measureCanvas.getContext("2d");
+      sys3.measureTextWith = function(ctx, text) {
+        if (ctx && ctx.measureText) return ctx.measureText(text).width;
+        if (measureCtx) {
+          measureCtx.font = ctx?.font || "16px sans-serif";
+          return measureCtx.measureText(text).width;
+        }
+        return text.length * 8;
       };
       if (typeof localStorage === "undefined") {
         globalThis.localStorage = {
@@ -15095,46 +15140,125 @@ let convertResponseBodyToText = function (binary) {\r
         globalThis.XMLHttpRequest = createMiniGameXHR(adapter);
       }
       setupMiniGameAudio(adapter, sys3);
+      if (!systemRenderer && globalThis.egret?.WebGLRenderer) {
+        const RendererClass = globalThis.egret.WebGLRenderer;
+        setSystemRenderer(new RendererClass());
+      }
+      if (!canvasRenderer) {
+        const dummy = {
+          render() {
+          },
+          drawNodeToBuffer() {
+          }
+        };
+        setCanvasRenderer(dummy);
+      }
       const info = adapter.getSystemInfo();
-      const cw = options.contentWidth || info.screenWidth;
-      const ch = options.contentHeight || info.screenHeight;
+      const cw = options.contentWidth || sharedCanvas2.width || info.screenWidth;
+      const ch = options.contentHeight || sharedCanvas2.height || info.screenHeight;
       const stage2 = new Stage();
       stage2.$screen = {
+        updateScreenSize() {
+        },
+        updateMaxTouches() {
+        },
+        setContentSize() {
+        },
         screenWidth: info.screenWidth,
         screenHeight: info.screenHeight,
         pixelRatio: info.pixelRatio
       };
-      stage2.stageWidth = cw;
-      stage2.stageHeight = ch;
+      stage2.$stageWidth = cw;
+      stage2.$stageHeight = ch;
       stage2.frameRate = 60;
-      if (!sys3.RenderBuffer) {
-        sys3.RenderBuffer = globalThis.egret?.WebGLRenderBuffer;
+      const RenderBufferClass = globalThis.egret?.WebGLRenderBuffer || globalThis.egret?.CanvasRenderBuffer;
+      let buffer;
+      if (RenderBufferClass) {
+        sys3.RenderBuffer = RenderBufferClass;
+        buffer = new RenderBufferClass(cw, ch, true);
+      } else {
+        const gl = sharedCanvas2.getContext("webgl") || sharedCanvas2.getContext("experimental-webgl");
+        if (!gl) throw new Error("WebGL not available");
+        buffer = {
+          surface: sharedCanvas2,
+          context: gl,
+          width: cw,
+          height: ch,
+          resize(w, h) {
+            this.width = w;
+            this.height = h;
+          },
+          getPixels() {
+            return [];
+          },
+          toDataURL() {
+            return "";
+          },
+          clear() {
+            gl.clear(gl.COLOR_BUFFER_BIT);
+          },
+          destroy() {
+          }
+        };
       }
-      const player = new Player(stage2);
+      const hitTestCanvas = adapter.createCanvas();
+      const hitTestGl = hitTestCanvas.getContext("webgl") || hitTestCanvas.getContext("experimental-webgl");
+      const hitBuffer = {
+        surface: hitTestCanvas,
+        context: hitTestGl,
+        width: 3,
+        height: 3,
+        resize(w, h) {
+          this.width = w;
+          this.height = h;
+        },
+        getPixels() {
+          return [];
+        },
+        toDataURL() {
+          return "";
+        },
+        clear() {
+          hitTestGl?.clear(hitTestGl.COLOR_BUFFER_BIT);
+        },
+        destroy() {
+        }
+      };
+      setCustomHitTestBuffer(hitBuffer);
+      setCanvasHitTestBuffer(hitBuffer);
+      const player = new Player(buffer, stage2, options.entryClass || "Main");
       stage2.$player = player;
-      const touchHandler = new TouchHandler(stage2, sharedCanvas2);
-      adapter.onTouchStart((e) => touchHandler.onTouchStart(e));
-      adapter.onTouchMove((e) => touchHandler.onTouchMove(e));
-      adapter.onTouchEnd((e) => touchHandler.onTouchEnd(e));
-      adapter.onTouchCancel((e) => touchHandler.onTouchCancel(e));
+      player.start();
+      const touchHandler = new TouchHandler(stage2);
+      touchHandler.$initMaxTouches();
+      const handleTouchEvent = /* @__PURE__ */ __name((type) => (e) => {
+        const touches = e.changedTouches || e.touches || [];
+        for (let i = 0; i < touches.length; i++) {
+          const t = touches[i];
+          const tx = t.clientX ?? t.x ?? t.pageX ?? 0;
+          const ty = t.clientY ?? t.y ?? t.pageY ?? 0;
+          const id = t.identifier ?? i;
+          if (type === "begin") touchHandler.onTouchBegin(tx, ty, id);
+          else if (type === "move") touchHandler.onTouchMove(tx, ty, id);
+          else if (type === "end") touchHandler.onTouchEnd(tx, ty, id);
+        }
+      }, "handleTouchEvent");
+      adapter.onTouchStart(handleTouchEvent("begin"));
+      adapter.onTouchMove(handleTouchEvent("move"));
+      adapter.onTouchEnd(handleTouchEvent("end"));
+      adapter.onTouchCancel(handleTouchEvent("end"));
       adapter.onShow?.(() => {
-        ticker.$startTick();
+        const s = globalThis.egret?.sys;
+        if (s?.$ticker) s.$ticker.resume();
       });
       adapter.onHide?.(() => {
-        ticker.$stopTick();
+        const s = globalThis.egret?.sys;
+        if (s?.$ticker) s.$ticker.pause();
       });
-      if (options.entryClass) {
-        const clazz = globalThis[options.entryClass];
-        if (clazz) {
-          const instance = new clazz();
-          stage2.addChild(instance);
-        } else {
-          adapter.warn("Entry class not found: " + options.entryClass);
-        }
-      }
       function loop() {
         adapter.requestAnimationFrame(loop);
-        ticker.$tick();
+        const s = globalThis.egret?.sys;
+        if (s?.$ticker) s.$ticker.update();
       }
       __name(loop, "loop");
       loop();
@@ -26963,10 +27087,26 @@ let convertResponseBodyToText = function (binary) {\r
     globalThis.RES = RES;
   }
 
-  // packages/game/dist/index.js
+  // ../../packages/game/dist/index.js
   var egret2 = globalThis.egret || { sys: {}, pro: {} };
   var eui2 = globalThis.eui || {};
   var sys2 = egret2.sys;
+  if (typeof DOMParser === "undefined") globalThis.DOMParser = function() {
+    this.parseFromString = function() {
+      return { childNodes: [], documentElement: null, getElementsByTagName: function() {
+        return [];
+      } };
+    };
+  };
+  if (typeof localStorage === "undefined") globalThis.localStorage = { _d: {}, getItem: function(k) {
+    return this._d[k] || null;
+  }, setItem: function(k, v) {
+    this._d[k] = v;
+  }, removeItem: function(k) {
+    delete this._d[k];
+  }, clear: function() {
+    this._d = {};
+  } };
   var RES2 = globalThis.RES || {};
   var warn2 = typeof console !== "undefined" ? console.warn.bind(console) : function() {
   };
@@ -27034,6 +27174,22 @@ let convertResponseBodyToText = function (binary) {\r
     var egret22 = globalThis.egret || { sys: {}, pro: {} };
     var eui3 = globalThis.eui || {};
     var sys3 = egret22.sys;
+    if (typeof DOMParser === "undefined") globalThis.DOMParser = function() {
+      this.parseFromString = function() {
+        return { childNodes: [], documentElement: null, getElementsByTagName: /* @__PURE__ */ __name(function() {
+          return [];
+        }, "getElementsByTagName") };
+      };
+    };
+    if (typeof localStorage === "undefined") globalThis.localStorage = { _d: {}, getItem: /* @__PURE__ */ __name(function(k) {
+      return this._d[k] || null;
+    }, "getItem"), setItem: /* @__PURE__ */ __name(function(k, v) {
+      this._d[k] = v;
+    }, "setItem"), removeItem: /* @__PURE__ */ __name(function(k) {
+      delete this._d[k];
+    }, "removeItem"), clear: /* @__PURE__ */ __name(function() {
+      this._d = {};
+    }, "clear") };
     var RES3 = globalThis.RES || {};
     var __global2 = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global2 !== "undefined" ? global2 : {};
     var global2 = __global2;
@@ -27310,7 +27466,13 @@ let convertResponseBodyToText = function (binary) {\r
         }
         // === Frame Loop ===
         requestAnimationFrame(callback) {
-          return this.api.requestAnimationFrame ? this.api.requestAnimationFrame(callback) : this.createCanvas().requestAnimationFrame(callback);
+          if (typeof requestAnimationFrame !== "undefined") {
+            return requestAnimationFrame(callback);
+          }
+          if (this.api.requestAnimationFrame) {
+            return this.api.requestAnimationFrame(callback);
+          }
+          return 0;
         }
         cancelAnimationFrame(handle) {
           if (this.api.cancelAnimationFrame) {
@@ -27506,7 +27668,6 @@ let convertResponseBodyToText = function (binary) {\r
       var _platform = null;
       function registerPlatform(adapter) {
         if (_platform) {
-          _platform.warn("Platform adapter already registered. Overwriting.");
         }
         _platform = adapter;
       }
@@ -42166,18 +42327,42 @@ let convertResponseBodyToText = function (binary) {\r
       var TouchHandler = _TouchHandler;
       function runMiniGame(options = {}) {
         const adapter = getPlatform();
-        if (!globalThis.sys) globalThis.sys = {};
-        const sys32 = globalThis.sys;
+        const g = globalThis;
+        if (!g.egret) g.egret = {};
+        if (!g.egret.sys) g.egret.sys = {};
+        const sys32 = g.egret.sys;
         const sharedCanvas2 = adapter.createCanvas();
         globalThis.canvas = sharedCanvas2;
         sys32.createCanvas = function(_width, _height) {
+          return adapter.createCanvas();
+        };
+        sys32.mainCanvas = function(_width, _height) {
+          if (!sharedCanvas2.addEventListener) {
+            sharedCanvas2.addEventListener = function() {
+            };
+            sharedCanvas2.removeEventListener = function() {
+            };
+          }
           return sharedCanvas2;
+        };
+        sys32.getContextWebGL = function(canvas) {
+          return canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
         };
         sys32.createCanvasRenderBufferSurface = function(createCanvasFn, width, height, _root) {
           const canvas = typeof createCanvasFn === "function" ? createCanvasFn(width, height) : sharedCanvas2;
           if (width) canvas.width = width;
           if (height) canvas.height = height;
           return canvas;
+        };
+        const measureCanvas = adapter.createCanvas();
+        const measureCtx = measureCanvas.getContext("2d");
+        sys32.measureTextWith = function(ctx, text) {
+          if (ctx && ctx.measureText) return ctx.measureText(text).width;
+          if (measureCtx) {
+            measureCtx.font = ctx?.font || "16px sans-serif";
+            return measureCtx.measureText(text).width;
+          }
+          return text.length * 8;
         };
         if (typeof localStorage === "undefined") {
           globalThis.localStorage = {
@@ -42200,46 +42385,125 @@ let convertResponseBodyToText = function (binary) {\r
           globalThis.XMLHttpRequest = createMiniGameXHR(adapter);
         }
         setupMiniGameAudio(adapter, sys32);
+        if (!systemRenderer && globalThis.egret?.WebGLRenderer) {
+          const RendererClass = globalThis.egret.WebGLRenderer;
+          setSystemRenderer(new RendererClass());
+        }
+        if (!canvasRenderer) {
+          const dummy = {
+            render() {
+            },
+            drawNodeToBuffer() {
+            }
+          };
+          setCanvasRenderer(dummy);
+        }
         const info = adapter.getSystemInfo();
-        const cw = options.contentWidth || info.screenWidth;
-        const ch = options.contentHeight || info.screenHeight;
+        const cw = options.contentWidth || sharedCanvas2.width || info.screenWidth;
+        const ch = options.contentHeight || sharedCanvas2.height || info.screenHeight;
         const stage2 = new Stage4();
         stage2.$screen = {
+          updateScreenSize() {
+          },
+          updateMaxTouches() {
+          },
+          setContentSize() {
+          },
           screenWidth: info.screenWidth,
           screenHeight: info.screenHeight,
           pixelRatio: info.pixelRatio
         };
-        stage2.stageWidth = cw;
-        stage2.stageHeight = ch;
+        stage2.$stageWidth = cw;
+        stage2.$stageHeight = ch;
         stage2.frameRate = 60;
-        if (!sys32.RenderBuffer) {
-          sys32.RenderBuffer = globalThis.egret?.WebGLRenderBuffer;
+        const RenderBufferClass = globalThis.egret?.WebGLRenderBuffer || globalThis.egret?.CanvasRenderBuffer;
+        let buffer;
+        if (RenderBufferClass) {
+          sys32.RenderBuffer = RenderBufferClass;
+          buffer = new RenderBufferClass(cw, ch, true);
+        } else {
+          const gl = sharedCanvas2.getContext("webgl") || sharedCanvas2.getContext("experimental-webgl");
+          if (!gl) throw new Error("WebGL not available");
+          buffer = {
+            surface: sharedCanvas2,
+            context: gl,
+            width: cw,
+            height: ch,
+            resize(w, h) {
+              this.width = w;
+              this.height = h;
+            },
+            getPixels() {
+              return [];
+            },
+            toDataURL() {
+              return "";
+            },
+            clear() {
+              gl.clear(gl.COLOR_BUFFER_BIT);
+            },
+            destroy() {
+            }
+          };
         }
-        const player = new Player(stage2);
+        const hitTestCanvas = adapter.createCanvas();
+        const hitTestGl = hitTestCanvas.getContext("webgl") || hitTestCanvas.getContext("experimental-webgl");
+        const hitBuffer = {
+          surface: hitTestCanvas,
+          context: hitTestGl,
+          width: 3,
+          height: 3,
+          resize(w, h) {
+            this.width = w;
+            this.height = h;
+          },
+          getPixels() {
+            return [];
+          },
+          toDataURL() {
+            return "";
+          },
+          clear() {
+            hitTestGl?.clear(hitTestGl.COLOR_BUFFER_BIT);
+          },
+          destroy() {
+          }
+        };
+        setCustomHitTestBuffer(hitBuffer);
+        setCanvasHitTestBuffer(hitBuffer);
+        const player = new Player(buffer, stage2, options.entryClass || "Main");
         stage2.$player = player;
-        const touchHandler = new TouchHandler(stage2, sharedCanvas2);
-        adapter.onTouchStart((e) => touchHandler.onTouchStart(e));
-        adapter.onTouchMove((e) => touchHandler.onTouchMove(e));
-        adapter.onTouchEnd((e) => touchHandler.onTouchEnd(e));
-        adapter.onTouchCancel((e) => touchHandler.onTouchCancel(e));
+        player.start();
+        const touchHandler = new TouchHandler(stage2);
+        touchHandler.$initMaxTouches();
+        const handleTouchEvent = /* @__PURE__ */ __name2((type) => (e) => {
+          const touches = e.changedTouches || e.touches || [];
+          for (let i = 0; i < touches.length; i++) {
+            const t = touches[i];
+            const tx = t.clientX ?? t.x ?? t.pageX ?? 0;
+            const ty = t.clientY ?? t.y ?? t.pageY ?? 0;
+            const id = t.identifier ?? i;
+            if (type === "begin") touchHandler.onTouchBegin(tx, ty, id);
+            else if (type === "move") touchHandler.onTouchMove(tx, ty, id);
+            else if (type === "end") touchHandler.onTouchEnd(tx, ty, id);
+          }
+        }, "handleTouchEvent");
+        adapter.onTouchStart(handleTouchEvent("begin"));
+        adapter.onTouchMove(handleTouchEvent("move"));
+        adapter.onTouchEnd(handleTouchEvent("end"));
+        adapter.onTouchCancel(handleTouchEvent("end"));
         adapter.onShow?.(() => {
-          ticker7.$startTick();
+          const s = globalThis.egret?.sys;
+          if (s?.$ticker) s.$ticker.resume();
         });
         adapter.onHide?.(() => {
-          ticker7.$stopTick();
+          const s = globalThis.egret?.sys;
+          if (s?.$ticker) s.$ticker.pause();
         });
-        if (options.entryClass) {
-          const clazz = globalThis[options.entryClass];
-          if (clazz) {
-            const instance = new clazz();
-            stage2.addChild(instance);
-          } else {
-            adapter.warn("Entry class not found: " + options.entryClass);
-          }
-        }
         function loop() {
           adapter.requestAnimationFrame(loop);
-          ticker7.$tick();
+          const s = globalThis.egret?.sys;
+          if (s?.$ticker) s.$ticker.update();
         }
         __name(loop, "loop");
         __name2(loop, "loop");
@@ -57408,20 +57672,20 @@ let convertResponseBodyToText = function (binary) {\r
     globalThis.RES = RES2;
   }
 
-  // examples/wx-game/src/startButton.ts
-  function createStartButton(parent, W2, H2, label = "Start") {
+  // src/startButton.ts
+  function createStartButton(parent, W, H, label = "Start") {
     const container = new egret.DisplayObjectContainer();
     const overlay = new egret.Shape();
     overlay.graphics.beginFill(0, 0.35);
-    overlay.graphics.drawRect(0, 0, W2, H2);
+    overlay.graphics.drawRect(0, 0, W, H);
     overlay.graphics.endFill();
     container.addChild(overlay);
     const btnBg = new egret.Shape();
     btnBg.graphics.beginFill(2450411);
     btnBg.graphics.drawRoundRect(-60, -22, 120, 44, 12, 12);
     btnBg.graphics.endFill();
-    btnBg.x = W2 / 2;
-    btnBg.y = H2 / 2 + 40;
+    btnBg.x = W / 2;
+    btnBg.y = H / 2 + 40;
     container.addChild(btnBg);
     const btnText = new egret.TextField();
     btnText.text = label;
@@ -57429,8 +57693,8 @@ let convertResponseBodyToText = function (binary) {\r
     btnText.textColor = 16777215;
     btnText.bold = true;
     btnText.textAlign = egret.HorizontalAlign.CENTER;
-    btnText.x = W2 / 2 - 60;
-    btnText.y = H2 / 2 + 28;
+    btnText.x = W / 2 - 60;
+    btnText.y = H / 2 + 28;
     btnText.width = 120;
     container.addChild(btnText);
     const title = new egret.TextField();
@@ -57440,8 +57704,8 @@ let convertResponseBodyToText = function (binary) {\r
     title.strokeColor = 3355443;
     title.stroke = 2;
     title.textAlign = egret.HorizontalAlign.CENTER;
-    title.x = W2 / 2 - 120;
-    title.y = H2 / 2 - 40;
+    title.x = W / 2 - 120;
+    title.y = H / 2 - 40;
     title.width = 240;
     container.addChild(title);
     parent.addChild(container);
@@ -57451,19 +57715,61 @@ let convertResponseBodyToText = function (binary) {\r
         resolve();
       };
       btnBg.touchEnabled = true;
-      btnBg.addEventListener(egret.TouchEvent.TOUCH_TAP, tapHandler, parent);
+      btnBg.addEventListener(egret.TouchEvent.TOUCH_BEGIN, tapHandler, parent);
     });
     return { button: container, onClick };
   }
 
-  // examples/wx-game/src/game.ts
+  // src/game.ts
+  var _beepId = 0;
+  function playBeep(freq = 800, duration = 100) {
+    try {
+      const wx = globalThis.wx;
+      if (!wx) return;
+      const ctx = wx.createInnerAudioContext();
+      if (!ctx) return;
+      const sampleRate = 8e3;
+      const samples = Math.floor(sampleRate * duration / 1e3);
+      const buffer = new ArrayBuffer(44 + samples * 2);
+      const view = new DataView(buffer);
+      writeString(view, 0, "RIFF");
+      view.setUint32(4, 36 + samples * 2, true);
+      writeString(view, 8, "WAVE");
+      writeString(view, 12, "fmt ");
+      view.setUint32(16, 16, true);
+      view.setUint16(20, 1, true);
+      view.setUint16(22, 1, true);
+      view.setUint32(24, sampleRate, true);
+      view.setUint32(28, sampleRate * 2, true);
+      view.setUint16(32, 2, true);
+      view.setUint16(34, 16, true);
+      writeString(view, 36, "data");
+      view.setUint32(40, samples * 2, true);
+      for (let i = 0; i < samples; i++) {
+        const t = i / sampleRate;
+        const vol = Math.max(0, 1 - i / samples);
+        const v = Math.sin(2 * Math.PI * freq * t) * 0.3 * vol;
+        view.setInt16(44 + i * 2, v * 32767, true);
+      }
+      const filePath = `${wx.env.USER_DATA_PATH}/beep_${_beepId++}_${Date.now()}.wav`;
+      wx.getFileSystemManager().writeFile({ filePath, data: buffer, success: () => {
+        ctx.src = filePath;
+        ctx.play();
+      } });
+      setTimeout(() => {
+        ctx.destroy();
+      }, duration + 300);
+    } catch (_) {
+    }
+  }
+  function writeString(view, offset, str) {
+    for (let i = 0; i < str.length; i++) view.setUint8(offset + i, str.charCodeAt(i));
+  }
   var COLS = 8;
   var ROWS = 8;
-  var CELL = 44;
   var GAP = 4;
-  var W = COLS * (CELL + GAP) + 12;
-  var H = ROWS * (CELL + GAP) + 120;
-  var OX = (W - COLS * (CELL + GAP)) / 2;
+  var CELL = 44;
+  var OX = 10;
   var OY = 90;
   var COLORS = [15680580, 16096779, 2278750, 3900150, 9133302, 15485081];
   var Main = class extends egret.DisplayObjectContainer {
@@ -57478,17 +57784,22 @@ let convertResponseBodyToText = function (binary) {\r
       __publicField(this, "_m", /* @__PURE__ */ new Set());
       this.addEventListener(egret.Event.ADDED_TO_STAGE, () => {
         const stage = this.stage;
-        stage.stageWidth = W;
-        stage.stageHeight = H;
+        CELL = Math.floor((stage.$stageWidth - 16) / COLS) - GAP;
+        if (CELL > 56) CELL = 56;
+        if (CELL < 28) CELL = 28;
+        OX = Math.floor((stage.$stageWidth - COLS * (CELL + GAP)) / 2);
+        const gridH = ROWS * (CELL + GAP);
+        OY = Math.floor(60 + (stage.$stageHeight - 60 - gridH) / 2);
         this.createScene();
         this.initGrid();
-        createStartButton(this, W, H, "Match-3").onClick.then(() => this.addListeners());
+        createStartButton(this, stage.$stageWidth, stage.$stageHeight, "Match-3").onClick.then(() => this.addListeners());
       }, this);
     }
     createScene() {
+      const stage = this.stage;
       const bg = new egret.Shape();
-      bg.graphics.beginFill(1976635);
-      bg.graphics.drawRect(OX - 6, OY - 6, COLS * (CELL + GAP) + 4, ROWS * (CELL + GAP) + 4);
+      bg.graphics.beginFill(1718876);
+      bg.graphics.drawRect(0, 0, stage.$stageWidth, stage.$stageHeight);
       bg.graphics.endFill();
       this.addChild(bg);
       this.gameLayer = new egret.DisplayObjectContainer();
@@ -57593,6 +57904,7 @@ let convertResponseBodyToText = function (binary) {\r
     }
     async swap(c1, r1, c2, r2) {
       this.busy = true;
+      playBeep(440, 60);
       [this.grid[r1][c1], this.grid[r2][c2]] = [this.grid[r2][c2], this.grid[r1][c1]];
       [this.gems[r1][c1], this.gems[r2][c2]] = [this.gems[r2][c2], this.gems[r1][c1]];
       await this.anim(c1, r1, c2, r2);
@@ -57674,6 +57986,8 @@ let convertResponseBodyToText = function (binary) {\r
         });
         this.score += rm.size * 10;
         this.scoreText.text = "Score: " + this.score;
+        if (rm.size >= 4) playBeep(1e3, 150);
+        else playBeep(600, 100);
         const mv = [];
         for (let c = 0; c < COLS; c++) {
           let wr = ROWS - 1;

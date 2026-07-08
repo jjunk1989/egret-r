@@ -3,19 +3,19 @@ import { egret } from '@egret-r/core';
 import '@egret-r/game';
 import { createStartButton } from './startButton';
 
-// Simple sound helper using mini-game audio API
+// Simple sound helper using WeChat mini-game audio API
+let _beepId = 0;
 function playBeep(freq: number = 800, duration: number = 100) {
   try {
-    // Mini-game platforms: use createInnerAudioContext with a data URI
-    const ctx = (globalThis as any).wx?.createInnerAudioContext?.()
-      || (globalThis as any).tt?.createInnerAudioContext?.();
+    const wx = (globalThis as any).wx;
+    if (!wx) return;
+    const ctx = wx.createInnerAudioContext();
     if (!ctx) return;
-    // Generate a simple beep via oscillator and encode as WAV data URI
+    // Generate WAV data
     const sampleRate = 8000;
     const samples = Math.floor(sampleRate * duration / 1000);
     const buffer = new ArrayBuffer(44 + samples * 2);
     const view = new DataView(buffer);
-    // WAV header
     writeString(view, 0, 'RIFF'); view.setUint32(4, 36 + samples * 2, true); writeString(view, 8, 'WAVE');
     writeString(view, 12, 'fmt '); view.setUint32(16, 16, true); view.setUint16(20, 1, true);
     view.setUint16(22, 1, true); view.setUint32(24, sampleRate, true);
@@ -27,11 +27,13 @@ function playBeep(freq: number = 800, duration: number = 100) {
       const v = Math.sin(2 * Math.PI * freq * t) * 0.3 * vol;
       view.setInt16(44 + i * 2, v * 32767, true);
     }
-    const blob = new Blob([buffer], { type: 'audio/wav' });
-    const url = URL.createObjectURL(blob);
-    ctx.src = url; ctx.play();
-    setTimeout(() => { ctx.destroy(); URL.revokeObjectURL(url); }, duration + 200);
-  } catch (_) { /* silent on unsupported platforms */ }
+    // Write to temp file (WeChat mini-game doesn't support Blob/URL)
+    const filePath = `${wx.env.USER_DATA_PATH}/beep_${_beepId++}_${Date.now()}.wav`;
+    wx.getFileSystemManager().writeFile({ filePath, data: buffer, success: () => {
+      ctx.src = filePath; ctx.play();
+    } });
+    setTimeout(() => { ctx.destroy(); }, duration + 300);
+  } catch (_) { /* silent */ }
 }
 function writeString(view: DataView, offset: number, str: string) {
   for (let i = 0; i < str.length; i++) view.setUint8(offset + i, str.charCodeAt(i));

@@ -5,36 +5,11 @@
     "es6": true,
     "enhance": true,
     "postcss": false,
-    "minified": false,
-    "compileWorklet": false,
-    "uglifyFileName": false,
-    "uploadWithSourceMap": true,
-    "packNpmManually": false,
-    "packNpmRelationList": [],
-    "minifyWXSS": true,
-    "minifyWXML": true,
-    "localPlugins": false,
-    "disableUseStrict": false,
-    "useCompilerPlugins": false,
-    "condition": false,
-    "swc": false,
-    "disableSWC": true,
-    "babelSetting": {
-      "ignore": [],
-      "disablePlugins": [],
-      "outputPath": ""
-    }
+    "minified": false
   },
   "compileType": "game",
   "libVersion": "latest",
-  "appid": "wx6ac3f5090a6b99c5",
+  "appid": "",
   "projectname": "egret-r-wx-game",
-  "condition": {},
-  "simulatorPluginLibVersion": {},
-  "packOptions": {
-    "ignore": [],
-    "include": []
-  },
-  "isGameTourist": true,
-  "editorSetting": {}
+  "condition": {}
 }

@@ -375,6 +375,10 @@ async function buildPkg(pkg) {
     bundled = lines.join('\n');
 
     var header = 'var egret = globalThis.egret || {sys:{}, pro:{}}, eui = globalThis.eui || {}, sys = egret.sys;\n';
+    // Polyfill DOMParser for mini-game platforms (harmless on Web)
+    header += 'if(typeof DOMParser==="undefined")globalThis.DOMParser=function(){this.parseFromString=function(){return{childNodes:[],documentElement:null,getElementsByTagName:function(){return[]}}}};\n';
+    // Polyfill localStorage for mini-game platforms (harmless on Web)
+    header += 'if(typeof localStorage==="undefined")globalThis.localStorage={_d:{},getItem:function(k){return this._d[k]||null},setItem:function(k,v){this._d[k]=v},removeItem:function(k){delete this._d[k]},clear:function(){this._d={}}};\n';
     header += 'var RES = globalThis.RES || {};\n';
     header += 'var __global = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : {};\n';
     header += 'var global = __global;\n';
