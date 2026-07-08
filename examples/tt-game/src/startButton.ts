@@ -51,7 +51,7 @@ export function createStartButton(
       resolve();
     };
     btnBg.touchEnabled = true;
-    btnBg.addEventListener(egret.TouchEvent.TOUCH_TAP, tapHandler, parent);
+    btnBg.addEventListener(egret.TouchEvent.TOUCH_BEGIN, tapHandler, parent);
   });
 
   return { button: container, onClick };

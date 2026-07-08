@@ -3,9 +3,43 @@ import { egret } from '@egret-r/core';
 import '@egret-r/game';
 import { createStartButton } from './startButton';
 
-const COLS = 8, ROWS = 8, CELL = 44, GAP = 4;
-const W = COLS * (CELL + GAP) + 12, H = ROWS * (CELL + GAP) + 120;
-const OX = (W - COLS * (CELL + GAP)) / 2, OY = 90;
+// Simple sound helper using mini-game audio API
+function playBeep(freq: number = 800, duration: number = 100) {
+  try {
+    // Mini-game platforms: use createInnerAudioContext with a data URI
+    const ctx = (globalThis as any).wx?.createInnerAudioContext?.()
+      || (globalThis as any).tt?.createInnerAudioContext?.();
+    if (!ctx) return;
+    // Generate a simple beep via oscillator and encode as WAV data URI
+    const sampleRate = 8000;
+    const samples = Math.floor(sampleRate * duration / 1000);
+    const buffer = new ArrayBuffer(44 + samples * 2);
+    const view = new DataView(buffer);
+    // WAV header
+    writeString(view, 0, 'RIFF'); view.setUint32(4, 36 + samples * 2, true); writeString(view, 8, 'WAVE');
+    writeString(view, 12, 'fmt '); view.setUint32(16, 16, true); view.setUint16(20, 1, true);
+    view.setUint16(22, 1, true); view.setUint32(24, sampleRate, true);
+    view.setUint32(28, sampleRate * 2, true); view.setUint16(32, 2, true); view.setUint16(34, 16, true);
+    writeString(view, 36, 'data'); view.setUint32(40, samples * 2, true);
+    for (let i = 0; i < samples; i++) {
+      const t = i / sampleRate;
+      const vol = Math.max(0, 1 - i / samples);
+      const v = Math.sin(2 * Math.PI * freq * t) * 0.3 * vol;
+      view.setInt16(44 + i * 2, v * 32767, true);
+    }
+    const blob = new Blob([buffer], { type: 'audio/wav' });
+    const url = URL.createObjectURL(blob);
+    ctx.src = url; ctx.play();
+    setTimeout(() => { ctx.destroy(); URL.revokeObjectURL(url); }, duration + 200);
+  } catch (_) { /* silent on unsupported platforms */ }
+}
+function writeString(view: DataView, offset: number, str: string) {
+  for (let i = 0; i < str.length; i++) view.setUint8(offset + i, str.charCodeAt(i));
+}
+
+const COLS = 8, ROWS = 8, GAP = 4;
+let CELL = 44;
+let OX = 10, OY = 90;
 const COLORS = [0xef4444, 0xf59e0b, 0x22c55e, 0x3b82f6, 0x8b5cf6, 0xec4899];
 
 class Main extends egret.DisplayObjectContainer {
@@ -18,16 +52,26 @@ class Main extends egret.DisplayObjectContainer {
   constructor() {
     super();
     this.addEventListener(egret.Event.ADDED_TO_STAGE, () => {
-      const stage = this.stage!; stage.stageWidth = W; stage.stageHeight = H;
+      const stage = this.stage!;
+      // Calculate grid size from screen
+      CELL = Math.floor((stage.$stageWidth - 16) / COLS) - GAP;
+      if (CELL > 56) CELL = 56;
+      if (CELL < 28) CELL = 28;
+      OX = Math.floor((stage.$stageWidth - COLS * (CELL + GAP)) / 2);
+      // Center grid vertically
+      const gridH = ROWS * (CELL + GAP);
+      OY = Math.floor(60 + (stage.$stageHeight - 60 - gridH) / 2);
       this.createScene(); this.initGrid();
-      createStartButton(this, W, H, 'Match-3').onClick.then(() => this.addListeners());
+      createStartButton(this, stage.$stageWidth, stage.$stageHeight, 'Match-3').onClick.then(() => this.addListeners());
     }, this);
   }
 
   private createScene(): void {
+    const stage = this.stage!;
+    // Full-screen background
     const bg = new egret.Shape();
-    bg.graphics.beginFill(0x1e293b);
-    bg.graphics.drawRect(OX - 6, OY - 6, COLS * (CELL + GAP) + 4, ROWS * (CELL + GAP) + 4);
+    bg.graphics.beginFill(0x1a3a5c);
+    bg.graphics.drawRect(0, 0, stage.$stageWidth, stage.$stageHeight);
     bg.graphics.endFill(); this.addChild(bg);
     this.gameLayer = new egret.DisplayObjectContainer(); this.addChild(this.gameLayer);
     this.scoreText = new egret.TextField();
@@ -103,6 +147,7 @@ class Main extends egret.DisplayObjectContainer {
 
   private async swap(c1: number, r1: number, c2: number, r2: number): Promise<void> {
     this.busy = true;
+    playBeep(440, 60);
     [this.grid[r1][c1], this.grid[r2][c2]] = [this.grid[r2][c2], this.grid[r1][c1]];
     [this.gems[r1][c1], this.gems[r2][c2]] = [this.gems[r2][c2], this.gems[r1][c1]];
     await this.anim(c1, r1, c2, r2);
@@ -149,6 +194,7 @@ class Main extends egret.DisplayObjectContainer {
         if (this.gems[p][q]) { this.gameLayer.removeChild(this.gems[p][q]); this.gems[p][q] = null!; }
         this.grid[p][q] = -1; });
       this.score += rm.size * 10; this.scoreText.text = 'Score: ' + this.score;
+      if (rm.size >= 4) playBeep(1000, 150); else playBeep(600, 100);
       const mv: { g: egret.Shape; r: number; c: number; fr: number }[] = [];
       for (let c = 0; c < COLS; c++) { let wr = ROWS - 1;
         for (let r = ROWS - 1; r >= 0; r--) { if (this.grid[r][c] !== -1) {

@@ -51,9 +51,14 @@ export class GenericMiniGameAdapter implements MiniGameAdapter {
 
   // === Frame Loop ===
   requestAnimationFrame(callback: () => void): number {
-    return this.api.requestAnimationFrame
-      ? this.api.requestAnimationFrame(callback)
-      : (this.createCanvas() as any).requestAnimationFrame(callback);
+    if (typeof requestAnimationFrame !== 'undefined') {
+      return requestAnimationFrame(callback);
+    }
+    if (this.api.requestAnimationFrame) {
+      return this.api.requestAnimationFrame(callback);
+    }
+    // Fallback: use shared canvas (not createCanvas which makes a new one)
+    return 0;
   }
 
   cancelAnimationFrame(handle: number): void {

@@ -16,7 +16,8 @@ let _platform: MiniGameAdapter | null = null;
  */
 export function registerPlatform(adapter: MiniGameAdapter): void {
   if (_platform) {
-    _platform.warn("Platform adapter already registered. Overwriting.");
+    // Silently overwrite — common when WebAdapter auto-registers first,
+    // then mini-game adapter replaces it.
   }
   _platform = adapter;
 }

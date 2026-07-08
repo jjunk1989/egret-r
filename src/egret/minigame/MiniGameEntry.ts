@@ -20,8 +20,9 @@ import { getPlatform } from "../platform/PlatformRegistry";
 import { Stage } from "../display/Stage";
 import { Player } from "../player/Player";
 import { DisplayList } from "../player/DisplayList";
-import { ticker, SystemTicker } from "../player/SystemTicker";
 import { TouchHandler } from "../player/TouchHandler";
+import { customHitTestBuffer, canvasHitTestBuffer, setCustomHitTestBuffer, setCanvasHitTestBuffer } from "../player/RenderBuffer";
+import { systemRenderer, canvasRenderer, setSystemRenderer, setCanvasRenderer } from "../player/SystemRenderer";
 
 /**
  * Options for running a mini-game.
@@ -45,18 +46,33 @@ export function runMiniGame(options: MiniGameOptions = {}): void {
   const adapter = getPlatform();
 
   // --- Setup sys hooks for mini-game canvas ---
-  // Override canvas creation to use platform adapter
-  if (!(globalThis as any).sys) (globalThis as any).sys = {};
-  const sys = (globalThis as any).sys;
+  // Ensure egret namespace is initialized (IIFE header does this, but be safe)
+  const g = globalThis as any;
+  if (!g.egret) g.egret = {};
+  if (!g.egret.sys) g.egret.sys = {};
+  const sys = g.egret.sys;
 
   // Hook canvas creation (used by CanvasRenderBuffer and engine internals)
   const sharedCanvas = adapter.createCanvas();
   (globalThis as any).canvas = sharedCanvas;
 
   sys.createCanvas = function (_width?: number, _height?: number) {
-    // Mini-game: always return the shared main canvas
-    // Width/height are managed via resize
+    // Create a new canvas for 2D operations (not the WebGL main canvas)
+    return adapter.createCanvas();
+  };
+
+  // mainCanvas is used by WebGLRenderContext to get the main surface
+  sys.mainCanvas = function (_width?: number, _height?: number) {
+    if (!sharedCanvas.addEventListener) {
+      sharedCanvas.addEventListener = function () { /* no-op */ };
+      sharedCanvas.removeEventListener = function () { /* no-op */ };
+    }
     return sharedCanvas;
+  };
+
+  // WebGL context getter for mini-games
+  sys.getContextWebGL = function (canvas: any) {
+    return canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
   };
 
   sys.createCanvasRenderBufferSurface = function (
@@ -71,6 +87,18 @@ export function runMiniGame(options: MiniGameOptions = {}): void {
     if (width) canvas.width = width;
     if (height) canvas.height = height;
     return canvas;
+  };
+
+  // === Text measurement: mini-games need a 2D context ===
+  const measureCanvas = adapter.createCanvas();
+  const measureCtx = measureCanvas.getContext('2d');
+  sys.measureTextWith = function (ctx: any, text: string): number {
+    if (ctx && ctx.measureText) return ctx.measureText(text).width;
+    if (measureCtx) {
+      measureCtx.font = ctx?.font || '16px sans-serif';
+      return measureCtx.measureText(text).width;
+    }
+    return text.length * 8; // fallback estimate
   };
 
   // === Storage: override localStorage with mini-game storage ===
@@ -93,61 +121,118 @@ export function runMiniGame(options: MiniGameOptions = {}): void {
   // === Audio: set up mini-game sound system ===
   setupMiniGameAudio(adapter, sys);
 
+  // === Renderer ===
+  // systemRenderer: real WebGL for display
+  // canvasRenderer: mock for hit-test (avoids WebGL issues)
+  if (!systemRenderer && (globalThis as any).egret?.WebGLRenderer) {
+    const RendererClass = (globalThis as any).egret.WebGLRenderer;
+    setSystemRenderer(new RendererClass());
+  }
+  if (!canvasRenderer) {
+    const dummy: any = {
+      render() {}, drawNodeToBuffer() {},
+    };
+    setCanvasRenderer(dummy);
+  }
+
   // --- Get screen info ---
   const info = adapter.getSystemInfo();
-  const cw = options.contentWidth || info.screenWidth;
-  const ch = options.contentHeight || info.screenHeight;
+  const cw = options.contentWidth || sharedCanvas.width || info.screenWidth;
+  const ch = options.contentHeight || sharedCanvas.height || info.screenHeight;
 
   // --- Create Stage ---
   const stage = new Stage();
   stage.$screen = {
+    updateScreenSize() {},
+    updateMaxTouches() {},
+    setContentSize() {},
     screenWidth: info.screenWidth,
     screenHeight: info.screenHeight,
     pixelRatio: info.pixelRatio,
-  };
-  stage.stageWidth = cw;
-  stage.stageHeight = ch;
+  } as any;
+  stage.$stageWidth = cw;
+  stage.$stageHeight = ch;
   stage.frameRate = 60;
 
-  // --- Create Player ---
-  if (!sys.RenderBuffer) {
-    // Default: use WebGL render buffer (assumes webgl context is available)
-    sys.RenderBuffer = (globalThis as any).egret?.WebGLRenderBuffer;
+  // --- Create RenderBuffer using engine's WebGL pipeline ---
+  const RenderBufferClass = (globalThis as any).egret?.WebGLRenderBuffer || (globalThis as any).egret?.CanvasRenderBuffer;
+
+  let buffer: any;
+  if (RenderBufferClass) {
+    sys.RenderBuffer = RenderBufferClass;
+    buffer = new RenderBufferClass(cw, ch, true);
+  } else {
+    // Fallback: minimal buffer
+    const gl = sharedCanvas.getContext('webgl') || sharedCanvas.getContext('experimental-webgl');
+    if (!gl) throw new Error('WebGL not available');
+    buffer = {
+      surface: sharedCanvas, context: gl, width: cw, height: ch,
+      resize(w: number, h: number) { this.width = w; this.height = h; },
+      getPixels() { return []; }, toDataURL() { return ''; },
+      clear() { gl.clear(gl.COLOR_BUFFER_BIT); }, destroy() {},
+    };
   }
 
-  const player = new Player(stage);
+  // Set up hit-test buffer — MUST be separate from main buffer!
+  // Hit-testing calls resize(3,3) which would shrink the main canvas.
+  const hitTestCanvas = adapter.createCanvas();
+  const hitTestGl = hitTestCanvas.getContext('webgl') || hitTestCanvas.getContext('experimental-webgl');
+  const hitBuffer: any = {
+    surface: hitTestCanvas, context: hitTestGl, width: 3, height: 3,
+    resize(w: number, h: number) { this.width = w; this.height = h; },
+    getPixels() { return []; }, toDataURL() { return ''; },
+    clear() { hitTestGl?.clear(hitTestGl.COLOR_BUFFER_BIT); }, destroy() {},
+  };
+  setCustomHitTestBuffer(hitBuffer);
+  setCanvasHitTestBuffer(hitBuffer);
+
+  // --- Create Player ---
+  const player = new Player(buffer, stage, options.entryClass || 'Main');
   (stage as any).$player = player;
+  player.start();
 
   // --- Touch Handler ---
-  const touchHandler = new TouchHandler(stage, sharedCanvas);
-  adapter.onTouchStart((e: any) => touchHandler.onTouchStart(e));
-  adapter.onTouchMove((e: any) => touchHandler.onTouchMove(e));
-  adapter.onTouchEnd((e: any) => touchHandler.onTouchEnd(e));
-  adapter.onTouchCancel((e: any) => touchHandler.onTouchCancel(e));
+  const touchHandler = new TouchHandler(stage);
+  touchHandler.$initMaxTouches();
+
+const handleTouchEvent = (type: string) => (e: any) => {
+    // Use changedTouches only — contains just the touches that triggered this event
+    const touches = e.changedTouches || e.touches || [];
+    for (let i = 0; i < touches.length; i++) {
+      const t = touches[i];
+      const tx = t.clientX ?? t.x ?? t.pageX ?? 0;
+      const ty = t.clientY ?? t.y ?? t.pageY ?? 0;
+      const id = t.identifier ?? i;
+      if (type === 'begin') touchHandler.onTouchBegin(tx, ty, id);
+      else if (type === 'move') touchHandler.onTouchMove(tx, ty, id);
+      else if (type === 'end') touchHandler.onTouchEnd(tx, ty, id);
+    }
+  };
+
+  adapter.onTouchStart(handleTouchEvent('begin'));
+  adapter.onTouchMove(handleTouchEvent('move'));
+  adapter.onTouchEnd(handleTouchEvent('end'));
+  adapter.onTouchCancel(handleTouchEvent('end'));
 
   // --- Lifecycle ---
   adapter.onShow?.(() => {
-    ticker.$startTick();
+    const s = (globalThis as any).egret?.sys;
+    if (s?.$ticker) s.$ticker.resume();
   });
   adapter.onHide?.(() => {
-    ticker.$stopTick();
+    const s = (globalThis as any).egret?.sys;
+    if (s?.$ticker) s.$ticker.pause();
   });
 
   // --- Entry Class ---
-  if (options.entryClass) {
-    const clazz = (globalThis as any)[options.entryClass];
-    if (clazz) {
-      const instance = new clazz();
-      stage.addChild(instance);
-    } else {
-      adapter.warn("Entry class not found: " + options.entryClass);
-    }
-  }
+  // Player.initialize() will create the entry class via egret.getDefinitionByName()
+  // Don't add it here — let the engine handle it.
 
   // --- Frame Loop ---
   function loop(): void {
     adapter.requestAnimationFrame(loop);
-    ticker.$tick();
+    const s = (globalThis as any).egret?.sys;
+    if (s?.$ticker) s.$ticker.update();
   }
   loop();
 
