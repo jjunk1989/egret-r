@@ -28,7 +28,7 @@ loader.dataFormat = game.URLLoaderDataFormat.TEXT;
 loader.load(new game.URLRequest('https://example.com/data.txt'));
 ```
 
-🔗 [Source Code](https://jjunk1989.github.io/egret-r) · 📖 [API Docs](https://jjunk1989.github.io/egret-r/docs/api/)
+🔗 [Source Code](https://github.com/jjunk1989/egret-r) · 🎮 [Demos](https://jjunk1989.github.io/egret-r) · 📖 [API Docs](https://jjunk1989.github.io/egret-r/docs/api/)
 
 ## License
 

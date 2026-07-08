@@ -39,7 +39,7 @@ class Main extends egret.DisplayObjectContainer {
 | Kuaishou Mini Game | `KsAdapter` |
 | QQ Mini Game | `QqAdapter` |
 
-🔗 [Source Code](https://jjunk1989.github.io/egret-r) · 📖 [API Docs](https://jjunk1989.github.io/egret-r/docs/api/)
+🔗 [Source Code](https://github.com/jjunk1989/egret-r) · 🎮 [Demos](https://jjunk1989.github.io/egret-r) · 📖 [API Docs](https://jjunk1989.github.io/egret-r/docs/api/)
 
 ## License
 
