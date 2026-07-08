@@ -114,6 +114,7 @@ Standalone playable games in `examples/`:
 | 🚀 **Shooter** | `examples/shooter/` | `npm -w examples/shooter run dev` → http://localhost:3006 |
 | 💎 **Match-3** | `examples/match3/` | `npm -w examples/match3 run dev` → http://localhost:3008 |
 | 🔗 **Link** | `examples/link/` | `npm -w examples/link run dev` → http://localhost:3009 |
+| 📱 **Mini-Game** | `examples/minigame/` | Multi-platform Flappy Bird (WeChat/Douyin/Kuaishou/QQ) |
 
 ### Recommended Development Workflow
 
@@ -160,6 +161,106 @@ The template (`templates/vite-game/`) includes a ready-to-run game skeleton with
   // ...
 </script>
 ```
+
+---
+
+## Mini-Game Development
+
+Egret Engine R supports **WeChat**, **Douyin**, **Kuaishou**, and **QQ** mini-games out of the box. A single codebase can target all four platforms.
+
+### Quick Start
+
+```bash
+# Copy the multi-platform template
+cp -r examples/minigame my-minigame
+cd my-minigame
+
+# Install & build for WeChat
+npm install
+npm run build:wx     # → dist/wx/
+
+# Or build for all platforms at once
+npm run build:all    # → dist/wx/ dist/tt/ dist/ks/ dist/qq/
+```
+
+Then import the `dist/{platform}/` folder into the corresponding developer tool.
+
+### Project Structure
+
+```
+minigame/
+├── package.json              # @egret-r/core + @egret-r/game
+├── build.mjs                 # Multi-platform bundler (--platform wx|tt|ks|qq)
+├── platforms/                # Per-platform config files
+│   ├── wx/  game.json + project.config.json
+│   └── tt/  game.json + project.config.json
+├── src/
+│   └── game.ts               # Platform-agnostic game code
+└── dist/
+    ├── wx/  ← import in WeChat DevTools
+    └── tt/  ← import in Douyin DevTools
+```
+
+### Entry Point
+
+```typescript
+// src/game.ts
+import { egret } from '@egret-r/core';
+import '@egret-r/game';
+
+class Main extends egret.DisplayObjectContainer {
+  constructor() {
+    super();
+    this.addEventListener(egret.Event.ADDED_TO_STAGE, () => {
+      const stage = this.stage!;
+      // stage.$stageWidth / stage.$stageHeight = actual screen size
+      // ... your game setup ...
+    }, this);
+  }
+}
+
+(globalThis as any).Main = Main;
+egret.startMiniGame({ entryClass: 'Main' });
+```
+
+`egret.startMiniGame()` auto-detects the platform (`wx`/`tt`/`ks`/`qq` global) and sets up canvas, touch, WebGL rendering, and the game loop for you.
+
+### Build Commands
+
+| Command | Target |
+|---------|--------|
+| `npm run build:wx` | WeChat Mini Game → `dist/wx/` |
+| `npm run build:tt` | Douyin Mini Game → `dist/tt/` |
+| `npm run build:ks` | Kuaishou Mini Game → `dist/ks/` |
+| `npm run build:qq` | QQ Mini Game → `dist/qq/` |
+| `npm run build:all` | All four platforms at once |
+
+Or use the build script directly:
+
+```bash
+node build.mjs --platform wx
+node build.mjs --platform tt
+node build.mjs --all
+```
+
+### Audio: `egret.playTone()`
+
+The engine provides a cross-platform sound effect API that works on Web (Web Audio API) and all mini-game platforms (WAV file playback):
+
+```typescript
+// Play a simple tone
+egret.playTone(440, 100);   // 440 Hz (A4), 100ms
+egret.playTone(800, 150);   // 800 Hz, 150ms
+```
+
+No platform-specific code needed — the engine selects the right playback method automatically.
+
+### Adding a New Platform
+
+1. Create `platforms/{name}/game.json` and `platforms/{name}/project.config.json`
+2. Add a `build:{name}` script in `package.json`
+
+The engine's adapter system handles the rest. See [src/egret/platform/](./src/egret/platform/) for details.
 
 ---
 
@@ -274,7 +375,7 @@ egret-r/
 │   └── resource/      # @egret-r/resource
 ├── src/               # ESM source (namespace→ESM migration)
 ├── scripts/           # Build tooling (ESM .mjs)
-├── examples/          # 8 game demos + testbed
+├── examples/          # 9 game demos + testbed + mini-game template
 ├── docs/api/          # API reference (TypeDoc)
 └── package.json       # Monorepo root (npm workspaces)
 ```
