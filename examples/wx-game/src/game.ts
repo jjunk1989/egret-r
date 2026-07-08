@@ -3,42 +3,6 @@ import { egret } from '@egret-r/core';
 import '@egret-r/game';
 import { createStartButton } from './startButton';
 
-// Simple sound helper using WeChat mini-game audio API
-let _beepId = 0;
-function playBeep(freq: number = 800, duration: number = 100) {
-  try {
-    const wx = (globalThis as any).wx;
-    if (!wx) return;
-    const ctx = wx.createInnerAudioContext();
-    if (!ctx) return;
-    // Generate WAV data
-    const sampleRate = 8000;
-    const samples = Math.floor(sampleRate * duration / 1000);
-    const buffer = new ArrayBuffer(44 + samples * 2);
-    const view = new DataView(buffer);
-    writeString(view, 0, 'RIFF'); view.setUint32(4, 36 + samples * 2, true); writeString(view, 8, 'WAVE');
-    writeString(view, 12, 'fmt '); view.setUint32(16, 16, true); view.setUint16(20, 1, true);
-    view.setUint16(22, 1, true); view.setUint32(24, sampleRate, true);
-    view.setUint32(28, sampleRate * 2, true); view.setUint16(32, 2, true); view.setUint16(34, 16, true);
-    writeString(view, 36, 'data'); view.setUint32(40, samples * 2, true);
-    for (let i = 0; i < samples; i++) {
-      const t = i / sampleRate;
-      const vol = Math.max(0, 1 - i / samples);
-      const v = Math.sin(2 * Math.PI * freq * t) * 0.3 * vol;
-      view.setInt16(44 + i * 2, v * 32767, true);
-    }
-    // Write to temp file (WeChat mini-game doesn't support Blob/URL)
-    const filePath = `${wx.env.USER_DATA_PATH}/beep_${_beepId++}_${Date.now()}.wav`;
-    wx.getFileSystemManager().writeFile({ filePath, data: buffer, success: () => {
-      ctx.src = filePath; ctx.play();
-    } });
-    setTimeout(() => { ctx.destroy(); }, duration + 300);
-  } catch (_) { /* silent */ }
-}
-function writeString(view: DataView, offset: number, str: string) {
-  for (let i = 0; i < str.length; i++) view.setUint8(offset + i, str.charCodeAt(i));
-}
-
 const COLS = 8, ROWS = 8, GAP = 4;
 let CELL = 44;
 let OX = 10, OY = 90;
@@ -149,7 +113,7 @@ class Main extends egret.DisplayObjectContainer {
 
   private async swap(c1: number, r1: number, c2: number, r2: number): Promise<void> {
     this.busy = true;
-    playBeep(440, 60);
+    egret.playTone(440, 60);
     [this.grid[r1][c1], this.grid[r2][c2]] = [this.grid[r2][c2], this.grid[r1][c1]];
     [this.gems[r1][c1], this.gems[r2][c2]] = [this.gems[r2][c2], this.gems[r1][c1]];
     await this.anim(c1, r1, c2, r2);
@@ -196,7 +160,7 @@ class Main extends egret.DisplayObjectContainer {
         if (this.gems[p][q]) { this.gameLayer.removeChild(this.gems[p][q]); this.gems[p][q] = null!; }
         this.grid[p][q] = -1; });
       this.score += rm.size * 10; this.scoreText.text = 'Score: ' + this.score;
-      if (rm.size >= 4) playBeep(1000, 150); else playBeep(600, 100);
+      if (rm.size >= 4) egret.playTone(1000, 150); else egret.playTone(600, 100);
       const mv: { g: egret.Shape; r: number; c: number; fr: number }[] = [];
       for (let c = 0; c < COLS; c++) { let wr = ROWS - 1;
         for (let r = ROWS - 1; r >= 0; r--) { if (this.grid[r][c] !== -1) {

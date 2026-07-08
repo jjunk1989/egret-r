@@ -39,6 +39,8 @@ export interface MiniGameAdapter {
   // === Audio ===
   /** Create an inner audio context for sound playback */
   createInnerAudioContext(): any;
+  /** Play a simple tone (beep) at given frequency and duration in ms */
+  playTone(frequency: number, duration: number): void;
 
   // === Network ===
   /** Send an HTTP request (XMLHttpRequest-like API) */

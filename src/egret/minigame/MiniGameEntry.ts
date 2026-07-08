@@ -377,3 +377,13 @@ export function startMiniGame(options: MiniGameOptions = {}): void {
   else throw new Error("No mini-game platform detected (wx/tt/ks/qq global not found)");
   runMiniGame(options);
 }
+
+/**
+ * Play a simple tone (beep) across all platforms.
+ * Uses Web Audio API on browser, file-based WAV playback on mini-games.
+ * @param frequency Tone frequency in Hz (e.g. 440 = A4)
+ * @param duration Duration in milliseconds (e.g. 100)
+ */
+export function playTone(frequency: number, duration: number): void {
+  getPlatform().playTone(frequency, duration);
+}

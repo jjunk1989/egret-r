@@ -89,6 +89,39 @@ export class GenericMiniGameAdapter implements MiniGameAdapter {
     return this.api.createInnerAudioContext();
   }
 
+  playTone(frequency: number, duration: number): void {
+    try {
+      // Generate WAV data
+      const sampleRate = 8000;
+      const samples = Math.floor(sampleRate * duration / 1000);
+      const buffer = new ArrayBuffer(44 + samples * 2);
+      const view = new DataView(buffer);
+      const ws = (off: number, s: string) => { for (let i = 0; i < s.length; i++) view.setUint8(off + i, s.charCodeAt(i)); };
+      ws(0, 'RIFF'); view.setUint32(4, 36 + samples * 2, true); ws(8, 'WAVE');
+      ws(12, 'fmt '); view.setUint32(16, 16, true); view.setUint16(20, 1, true);
+      view.setUint16(22, 1, true); view.setUint32(24, sampleRate, true);
+      view.setUint32(28, sampleRate * 2, true); view.setUint16(32, 2, true); view.setUint16(34, 16, true);
+      ws(36, 'data'); view.setUint32(40, samples * 2, true);
+      for (let i = 0; i < samples; i++) {
+        const t = i / sampleRate;
+        const vol = Math.max(0, 1 - i / samples);
+        const v = Math.sin(2 * Math.PI * frequency * t) * 0.3 * vol;
+        view.setInt16(44 + i * 2, v * 32767, true);
+      }
+      // Write to temp file and play
+      const filePath = `${this.getUserDataPath()}/egret_tone_${Date.now()}.wav`;
+      const api = this.api;
+      api.getFileSystemManager().writeFile({
+        filePath, data: buffer,
+        success: () => {
+          const ctx = api.createInnerAudioContext();
+          ctx.src = filePath; ctx.play();
+          setTimeout(() => ctx.destroy(), duration + 300);
+        },
+      });
+    } catch (_) { /* silent */ }
+  }
+
   // === Network ===
   createHttpRequest(): any {
     // Mini games use wx.request-style API, not XMLHttpRequest

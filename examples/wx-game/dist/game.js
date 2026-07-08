@@ -223,6 +223,23 @@
       createInnerAudioContext() {
         return new Audio();
       }
+      playTone(frequency, duration) {
+        try {
+          const ctx = new (window.AudioContext || window.webkitAudioContext)();
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = "sine";
+          osc.frequency.value = frequency;
+          gain.gain.setValueAtTime(0.3, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(1e-3, ctx.currentTime + duration / 1e3);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start();
+          osc.stop(ctx.currentTime + duration / 1e3);
+          osc.onended = () => ctx.close();
+        } catch (_) {
+        }
+      }
       // === Network ===
       createHttpRequest() {
         return new XMLHttpRequest();
@@ -324,6 +341,49 @@
       // === Audio ===
       createInnerAudioContext() {
         return this.api.createInnerAudioContext();
+      }
+      playTone(frequency, duration) {
+        try {
+          const sampleRate = 8e3;
+          const samples = Math.floor(sampleRate * duration / 1e3);
+          const buffer = new ArrayBuffer(44 + samples * 2);
+          const view = new DataView(buffer);
+          const ws = /* @__PURE__ */ __name((off, s) => {
+            for (let i = 0; i < s.length; i++) view.setUint8(off + i, s.charCodeAt(i));
+          }, "ws");
+          ws(0, "RIFF");
+          view.setUint32(4, 36 + samples * 2, true);
+          ws(8, "WAVE");
+          ws(12, "fmt ");
+          view.setUint32(16, 16, true);
+          view.setUint16(20, 1, true);
+          view.setUint16(22, 1, true);
+          view.setUint32(24, sampleRate, true);
+          view.setUint32(28, sampleRate * 2, true);
+          view.setUint16(32, 2, true);
+          view.setUint16(34, 16, true);
+          ws(36, "data");
+          view.setUint32(40, samples * 2, true);
+          for (let i = 0; i < samples; i++) {
+            const t = i / sampleRate;
+            const vol = Math.max(0, 1 - i / samples);
+            const v = Math.sin(2 * Math.PI * frequency * t) * 0.3 * vol;
+            view.setInt16(44 + i * 2, v * 32767, true);
+          }
+          const filePath = `${this.getUserDataPath()}/egret_tone_${Date.now()}.wav`;
+          const api = this.api;
+          api.getFileSystemManager().writeFile({
+            filePath,
+            data: buffer,
+            success: /* @__PURE__ */ __name(() => {
+              const ctx = api.createInnerAudioContext();
+              ctx.src = filePath;
+              ctx.play();
+              setTimeout(() => ctx.destroy(), duration + 300);
+            }, "success")
+          });
+        } catch (_) {
+        }
       }
       // === Network ===
       createHttpRequest() {
@@ -15420,6 +15480,10 @@ let convertResponseBodyToText = function (binary) {\r
       runMiniGame(options);
     }
     __name(startMiniGame, "startMiniGame");
+    function playTone(frequency, duration) {
+      getPlatform().playTone(frequency, duration);
+    }
+    __name(playTone, "playTone");
     var HttpMethod;
     ((HttpMethod2) => {
       HttpMethod2.GET = "GET";
@@ -26964,6 +27028,7 @@ let convertResponseBodyToText = function (binary) {\r
     _ns(egret, "WebVideo", WebVideo);
     _ns(egret, "runMiniGame", runMiniGame);
     _ns(egret, "startMiniGame", startMiniGame);
+    _ns(egret, "playTone", playTone);
     _ns(egret, "GET", void 0);
     _ns(egret, "POST", void 0);
     _ns(egret, "setHttpRequest", setHttpRequest);
@@ -27394,6 +27459,23 @@ let convertResponseBodyToText = function (binary) {\r
         createInnerAudioContext() {
           return new Audio();
         }
+        playTone(frequency, duration) {
+          try {
+            const ctx = new (window.AudioContext || window.webkitAudioContext)();
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = "sine";
+            osc.frequency.value = frequency;
+            gain.gain.setValueAtTime(0.3, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(1e-3, ctx.currentTime + duration / 1e3);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start();
+            osc.stop(ctx.currentTime + duration / 1e3);
+            osc.onended = () => ctx.close();
+          } catch (_) {
+          }
+        }
         // === Network ===
         createHttpRequest() {
           return new XMLHttpRequest();
@@ -27495,6 +27577,49 @@ let convertResponseBodyToText = function (binary) {\r
         // === Audio ===
         createInnerAudioContext() {
           return this.api.createInnerAudioContext();
+        }
+        playTone(frequency, duration) {
+          try {
+            const sampleRate = 8e3;
+            const samples = Math.floor(sampleRate * duration / 1e3);
+            const buffer = new ArrayBuffer(44 + samples * 2);
+            const view = new DataView(buffer);
+            const ws = /* @__PURE__ */ __name2((off, s) => {
+              for (let i = 0; i < s.length; i++) view.setUint8(off + i, s.charCodeAt(i));
+            }, "ws");
+            ws(0, "RIFF");
+            view.setUint32(4, 36 + samples * 2, true);
+            ws(8, "WAVE");
+            ws(12, "fmt ");
+            view.setUint32(16, 16, true);
+            view.setUint16(20, 1, true);
+            view.setUint16(22, 1, true);
+            view.setUint32(24, sampleRate, true);
+            view.setUint32(28, sampleRate * 2, true);
+            view.setUint16(32, 2, true);
+            view.setUint16(34, 16, true);
+            ws(36, "data");
+            view.setUint32(40, samples * 2, true);
+            for (let i = 0; i < samples; i++) {
+              const t = i / sampleRate;
+              const vol = Math.max(0, 1 - i / samples);
+              const v = Math.sin(2 * Math.PI * frequency * t) * 0.3 * vol;
+              view.setInt16(44 + i * 2, v * 32767, true);
+            }
+            const filePath = `${this.getUserDataPath()}/egret_tone_${Date.now()}.wav`;
+            const api = this.api;
+            api.getFileSystemManager().writeFile({
+              filePath,
+              data: buffer,
+              success: /* @__PURE__ */ __name2(() => {
+                const ctx = api.createInnerAudioContext();
+                ctx.src = filePath;
+                ctx.play();
+                setTimeout(() => ctx.destroy(), duration + 300);
+              }, "success")
+            });
+          } catch (_) {
+          }
         }
         // === Network ===
         createHttpRequest() {
@@ -42671,6 +42796,11 @@ let convertResponseBodyToText = function (binary) {\r
       }
       __name(startMiniGame, "startMiniGame");
       __name2(startMiniGame, "startMiniGame");
+      function playTone(frequency, duration) {
+        getPlatform().playTone(frequency, duration);
+      }
+      __name(playTone, "playTone");
+      __name2(playTone, "playTone");
       var HttpMethod2;
       ((HttpMethod22) => {
         HttpMethod22.GET = "GET";
@@ -54286,6 +54416,7 @@ let convertResponseBodyToText = function (binary) {\r
       _ns2(egret22, "WebVideo", WebVideo);
       _ns2(egret22, "runMiniGame", runMiniGame);
       _ns2(egret22, "startMiniGame", startMiniGame);
+      _ns2(egret22, "playTone", playTone);
       _ns2(egret22, "GET", void 0);
       _ns2(egret22, "POST", void 0);
       _ns2(egret22, "setHttpRequest", setHttpRequest);
@@ -57721,50 +57852,6 @@ let convertResponseBodyToText = function (binary) {\r
   }
 
   // src/game.ts
-  var _beepId = 0;
-  function playBeep(freq = 800, duration = 100) {
-    try {
-      const wx = globalThis.wx;
-      if (!wx) return;
-      const ctx = wx.createInnerAudioContext();
-      if (!ctx) return;
-      const sampleRate = 8e3;
-      const samples = Math.floor(sampleRate * duration / 1e3);
-      const buffer = new ArrayBuffer(44 + samples * 2);
-      const view = new DataView(buffer);
-      writeString(view, 0, "RIFF");
-      view.setUint32(4, 36 + samples * 2, true);
-      writeString(view, 8, "WAVE");
-      writeString(view, 12, "fmt ");
-      view.setUint32(16, 16, true);
-      view.setUint16(20, 1, true);
-      view.setUint16(22, 1, true);
-      view.setUint32(24, sampleRate, true);
-      view.setUint32(28, sampleRate * 2, true);
-      view.setUint16(32, 2, true);
-      view.setUint16(34, 16, true);
-      writeString(view, 36, "data");
-      view.setUint32(40, samples * 2, true);
-      for (let i = 0; i < samples; i++) {
-        const t = i / sampleRate;
-        const vol = Math.max(0, 1 - i / samples);
-        const v = Math.sin(2 * Math.PI * freq * t) * 0.3 * vol;
-        view.setInt16(44 + i * 2, v * 32767, true);
-      }
-      const filePath = `${wx.env.USER_DATA_PATH}/beep_${_beepId++}_${Date.now()}.wav`;
-      wx.getFileSystemManager().writeFile({ filePath, data: buffer, success: () => {
-        ctx.src = filePath;
-        ctx.play();
-      } });
-      setTimeout(() => {
-        ctx.destroy();
-      }, duration + 300);
-    } catch (_) {
-    }
-  }
-  function writeString(view, offset, str) {
-    for (let i = 0; i < str.length; i++) view.setUint8(offset + i, str.charCodeAt(i));
-  }
   var COLS = 8;
   var ROWS = 8;
   var GAP = 4;
@@ -57904,7 +57991,7 @@ let convertResponseBodyToText = function (binary) {\r
     }
     async swap(c1, r1, c2, r2) {
       this.busy = true;
-      playBeep(440, 60);
+      egret.playTone(440, 60);
       [this.grid[r1][c1], this.grid[r2][c2]] = [this.grid[r2][c2], this.grid[r1][c1]];
       [this.gems[r1][c1], this.gems[r2][c2]] = [this.gems[r2][c2], this.gems[r1][c1]];
       await this.anim(c1, r1, c2, r2);
@@ -57986,8 +58073,8 @@ let convertResponseBodyToText = function (binary) {\r
         });
         this.score += rm.size * 10;
         this.scoreText.text = "Score: " + this.score;
-        if (rm.size >= 4) playBeep(1e3, 150);
-        else playBeep(600, 100);
+        if (rm.size >= 4) egret.playTone(1e3, 150);
+        else egret.playTone(600, 100);
         const mv = [];
         for (let c = 0; c < COLS; c++) {
           let wr = ROWS - 1;
