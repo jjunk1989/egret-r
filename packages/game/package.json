@@ -2,6 +2,12 @@
   "name": "@egret-r/game",
   "version": "6.0.0",
   "description": "Egret Engine R Game Extension - Display, Net, Player, Utils",
+  "homepage": "https://jjunk1989.github.io/egret-r",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jjunk1989/egret-r.git",
+    "directory": "packages/game"
+  },
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

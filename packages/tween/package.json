@@ -2,6 +2,12 @@
   "name": "@egret-r/tween",
   "version": "6.0.0",
   "description": "Egret Engine R Tween - Easing Animation Library",
+  "homepage": "https://jjunk1989.github.io/egret-r",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jjunk1989/egret-r.git",
+    "directory": "packages/tween"
+  },
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
