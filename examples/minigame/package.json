@@ -1,0 +1,20 @@
+{
+  "name": "egret-r-minigame",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:wx": "node build.mjs --platform wx",
+    "build:tt": "node build.mjs --platform tt",
+    "build:ks": "node build.mjs --platform ks",
+    "build:qq": "node build.mjs --platform qq",
+    "build:all": "node build.mjs --all"
+  },
+  "dependencies": {
+    "@egret-r/core": "*",
+    "@egret-r/game": "*"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.0"
+  }
+}
