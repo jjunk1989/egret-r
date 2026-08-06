@@ -393,6 +393,12 @@ npm run clean         # Remove all dist/ directories
 npm test              # Run all tests
 ```
 
+### publish
+
+```bash
+npm publish --workspaces
+```
+
 ### Build Pipeline
 
 ```

@@ -1,6 +1,6 @@
 {
   "name": "egret-r",
-  "version": "6.0.0",
+  "version": "6.1.0",
   "private": true,
   "description": "Egret Engine R - Modern HTML5 Game Engine",
   "scripts": {
@@ -35,6 +35,7 @@
     "eslint": "^10.5.0",
     "eslint-config-prettier": "^10.1.8",
     "prettier": "^3.8.4",
+    "puppeteer": "^25.3.0",
     "typedoc": "^0.28.20",
     "typescript": "^5.9.0",
     "typescript-eslint": "^8.62.0"
