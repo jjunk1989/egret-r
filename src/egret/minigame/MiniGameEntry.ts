@@ -28,8 +28,8 @@ import { systemRenderer, canvasRenderer, setSystemRenderer, setCanvasRenderer } 
  * Options for running a mini-game.
  */
 export interface MiniGameOptions {
-  /** Entry class name (e.g. "Main", "Game") */
-  entryClass?: string;
+  /** 入口类构造器引用（推荐）或类名字符串（向后兼容） */
+  entryClass?: string | (new (...args: any[]) => any);
   /** Render mode: "webgl" | "canvas" */
   renderMode?: "webgl" | "canvas";
   /** Content width (default: screen width) */
@@ -67,6 +67,11 @@ export function runMiniGame(options: MiniGameOptions = {}): void {
       sharedCanvas.addEventListener = function () { /* no-op */ };
       sharedCanvas.removeEventListener = function () { /* no-op */ };
     }
+    // ★ Fix A: 真机按传入物理尺寸设置 canvas；devtools 模拟器保持逻辑尺寸
+    const __plat = (adapter as any).platformId || '';
+    const __isDev = __plat === 'devtools';
+    if (!__isDev && _width && _width !== sharedCanvas.width) sharedCanvas.width = _width;
+    if (!__isDev && _height && _height !== sharedCanvas.height) sharedCanvas.height = _height;
     return sharedCanvas;
   };
 
@@ -102,12 +107,15 @@ export function runMiniGame(options: MiniGameOptions = {}): void {
   };
 
   // === Storage: override localStorage with mini-game storage ===
-  if (typeof localStorage === "undefined") {
+  // ★ Fix D: 有平台存储 API 就强制覆盖（即使 localStorage 已定义）
+  // iOS 微信沙箱提供真实 localStorage 但其 getItem 同步挂起
+  const _hasStorageApi = typeof adapter.getStorageSync === 'function';
+  if (_hasStorageApi) {
     (globalThis as any).localStorage = {
       getItem: (key: string) => adapter.getStorageSync(key),
-      setItem: (key: string, value: string) => { adapter.setStorageSync(key, value); },
-      removeItem: (key: string) => { adapter.removeStorageSync(key); },
-      clear: () => { /* no-op: mini-game storage can't be cleared */ },
+      setItem: (key: string, value: string) => { try { adapter.setStorageSync(key, value); } catch (_) {} },
+      removeItem: (key: string) => { try { adapter.removeStorageSync(key); } catch (_) {} },
+      clear: () => { /* no-op */ },
       get length() { return 0; },
       key: (_index: number) => null,
     };
@@ -137,8 +145,21 @@ export function runMiniGame(options: MiniGameOptions = {}): void {
 
   // --- Get screen info ---
   const info = adapter.getSystemInfo();
+  const dpr = info.pixelRatio || 1;
+  // ★ Fix B: 真机渲染放大 dpr 倍（devtools 保持 1x）
+  const __plat2 = (adapter as any).platformId || info.platform || '';
+  const __isDev2 = __plat2 === 'devtools';
+  if (!__isDev2) {
+    try {
+      DisplayList.$canvasScaleFactor = dpr;
+      DisplayList.$setCanvasScale(dpr, dpr);
+    } catch (_) {}
+  }
   const cw = options.contentWidth || sharedCanvas.width || info.screenWidth;
   const ch = options.contentHeight || sharedCanvas.height || info.screenHeight;
+  // ★ Fix C: 物理尺寸（RenderBuffer 用）
+  const pw = __isDev2 ? cw : Math.ceil(cw * dpr);
+  const ph = __isDev2 ? ch : Math.ceil(ch * dpr);
 
   // --- Create Stage ---
   const stage = new Stage();
@@ -160,7 +181,7 @@ export function runMiniGame(options: MiniGameOptions = {}): void {
   let buffer: any;
   if (RenderBufferClass) {
     sys.RenderBuffer = RenderBufferClass;
-    buffer = new RenderBufferClass(cw, ch, true);
+    buffer = new RenderBufferClass(pw, ph, true);  // ★ Fix C: 物理尺寸
   } else {
     // Fallback: minimal buffer
     const gl = sharedCanvas.getContext('webgl') || sharedCanvas.getContext('experimental-webgl');

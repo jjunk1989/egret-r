@@ -9235,16 +9235,22 @@ let convertResponseBodyToText = function (binary) {\r
     var $TempStage;
     var _Player = class _Player extends HashObject {
       /**
-       * @private
-       * 实例化一个播放器对象。
-       */
-      constructor(buffer, stage2, entryClassName) {
+          * @private
+          * 实例化一个播放器对象。
+      * @param entryClass 入口类构造器引用或类名字符串（优先引用）
+      */
+      constructor(buffer, stage2, entryClass) {
         super();
+        this.entryClassRef = null;
         this.isPlaying = false;
         if (DEBUG2 && !buffer) {
           $error2(1003, "buffer");
         }
-        this.entryClassName = entryClassName;
+        if (typeof entryClass === "function") {
+          this.entryClassRef = entryClass;
+        } else if (typeof entryClass === "string" && entryClass) {
+          this.entryClassName = entryClass;
+        }
         this.stage = stage2;
         this.screenDisplayList = this.createDisplayList(stage2, buffer);
         this.showFPS = false;
@@ -9283,7 +9289,9 @@ let convertResponseBodyToText = function (binary) {\r
        */
       initialize() {
         let rootClass;
-        if (this.entryClassName) {
+        if (this.entryClassRef) {
+          rootClass = this.entryClassRef;
+        } else if (this.entryClassName) {
           rootClass = egret.getDefinitionByName(this.entryClassName);
         }
         if (rootClass) {
@@ -36526,16 +36534,22 @@ let convertResponseBodyToText = function (binary) {\r
       var $TempStage2;
       var _Player = (_Y = class extends HashObject5 {
         /**
-         * @private
-         * 实例化一个播放器对象。
-         */
-        constructor(buffer, stage2, entryClassName) {
+            * @private
+            * 实例化一个播放器对象。
+        * @param entryClass 入口类构造器引用或类名字符串（优先引用）
+        */
+        constructor(buffer, stage2, entryClass) {
           super();
+          this.entryClassRef = null;
           this.isPlaying = false;
           if (DEBUG222 && !buffer) {
             $error22(1003, "buffer");
           }
-          this.entryClassName = entryClassName;
+          if (typeof entryClass === "function") {
+            this.entryClassRef = entryClass;
+          } else if (typeof entryClass === "string" && entryClass) {
+            this.entryClassName = entryClass;
+          }
           this.stage = stage2;
           this.screenDisplayList = this.createDisplayList(stage2, buffer);
           this.showFPS = false;
@@ -36574,7 +36588,9 @@ let convertResponseBodyToText = function (binary) {\r
          */
         initialize() {
           let rootClass;
-          if (this.entryClassName) {
+          if (this.entryClassRef) {
+            rootClass = this.entryClassRef;
+          } else if (this.entryClassName) {
             rootClass = egret22.getDefinitionByName(this.entryClassName);
           }
           if (rootClass) {
@@ -58120,5 +58136,5 @@ let convertResponseBodyToText = function (binary) {\r
     }
   };
   globalThis.Main = Main;
-  egret.startMiniGame({ entryClass: "Main" });
+  egret.startMiniGame({ entryClass: Main });
 })();

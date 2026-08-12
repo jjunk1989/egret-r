@@ -29,15 +29,20 @@ import { Event } from "../events/Event";
         /**
          * @private
          * 实例化一个播放器对象。
-         */
-        public constructor(buffer: RenderBuffer, stage: Stage, entryClassName: string) {
-            super();
-            if (DEBUG && !buffer) {
-                $error(1003, "buffer");
-            }
-            this.entryClassName = entryClassName;
-            this.stage = stage;
-            this.screenDisplayList = this.createDisplayList(stage, buffer);
+     * @param entryClass 入口类构造器引用或类名字符串（优先引用）
+     */
+    public constructor(buffer: RenderBuffer, stage: Stage, entryClass: string | (new () => DisplayObject)) {
+        super();
+        if (DEBUG && !buffer) {
+            $error(1003, "buffer");
+        }
+        if (typeof entryClass === 'function') {
+            this.entryClassRef = entryClass;
+        } else if (typeof entryClass === 'string' && entryClass) {
+            this.entryClassName = entryClass;
+        }
+        this.stage = stage;
+        this.screenDisplayList = this.createDisplayList(stage, buffer);
 
 
             this.showFPS = false;
@@ -66,7 +71,12 @@ import { Event } from "../events/Event";
         private screenDisplayList: DisplayList;
         /**
          * @private
-         * 入口类的完整类名
+         * 入口类构造器引用（直接传引用，推荐方式）
+         */
+        private entryClassRef: (new () => DisplayObject) | null = null;
+        /**
+         * @private
+         * 入口类的完整类名（字符串方式，向后兼容）
          */
         private entryClassName: string;
         /**
@@ -108,7 +118,10 @@ import { Event } from "../events/Event";
          */
         private initialize(): void {
             let rootClass;
-            if (this.entryClassName) {
+            // 优先级：① 传引用 → ② getDefinitionByName
+            if (this.entryClassRef) {
+                rootClass = this.entryClassRef;
+            } else if (this.entryClassName) {
                 rootClass = egret.getDefinitionByName(this.entryClassName);
             }
             if (rootClass) {
