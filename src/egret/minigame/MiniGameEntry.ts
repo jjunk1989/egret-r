@@ -48,18 +48,26 @@ export function runMiniGame(options: MiniGameOptions = {}): void {
 
   // === Mini-game Image polyfill ===
   // Mini-game devices have no global Image constructor, but the engine's Web
-  // ImageLoader hard-codes `new Image()`. Also Alipay's Image fires onload
-  // WITHOUT an event argument (e=undefined), which crashes the engine's
-  // e.target read. Wrap onload/onerror to always provide { target: img }.
+  // ImageLoader hard-codes `new Image()`.
+  // Alipay's Image fires onload WITHOUT an event argument (e=undefined), which
+  // crashes the engine's e.target read — wrap its onload/onerror to always
+  // provide { target: img }. Other platforms (wx/tt/ks/qq) manage the onload
+  // property internally: redefining it there would BREAK their event pipeline
+  // (images never report loaded), so they get the raw platform Image.
+  // NOTE: use instanceof instead of platformId check — on the Alipay simulator
+  // the adapter reports platformId='devtools', not 'my'.
   if (
     typeof (globalThis as any).Image === "undefined" &&
     typeof adapter.createImage === "function"
   ) {
     const createImage = adapter.createImage.bind(adapter);
+    const wrapEvents = adapter instanceof AlipayAdapter;
     (globalThis as any).Image = function ImagePolyfill() {
       const img = createImage();
-      wrapMiniImageEvent(img, "onload");
-      wrapMiniImageEvent(img, "onerror");
+      if (wrapEvents) {
+        wrapMiniImageEvent(img, "onload");
+        wrapMiniImageEvent(img, "onerror");
+      }
       return img;
     };
   }
