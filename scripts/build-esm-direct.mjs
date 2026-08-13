@@ -375,12 +375,18 @@ async function buildPkg(pkg) {
     bundled = lines.join('\n');
 
     var header = 'var egret = globalThis.egret || {sys:{}, pro:{}}, eui = globalThis.eui || {}, sys = egret.sys;\n';
+    header += 'var __global = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : {};\n';
+    // Runtime env fallback (must run BEFORE any module top-level code:
+    // Capabilities.detect() reads navigator directly and the IIFE ends with
+    // .call(window) — both crash on mini-game real devices without these globals).
+    header += 'if(typeof window==="undefined"){try{__global.window=__global;}catch(e){}}\n';
+    header += 'if(typeof navigator==="undefined"){try{var __api0=__global.wx||__global.tt||__global.ks||__global.qq||__global.my;var __info0=__api0&&__api0.getSystemInfoSync?__api0.getSystemInfoSync():null;var __plat0=(__info0&&__info0.platform)||"web";var __sys0=(__info0&&__info0.system)||"";var __lang0=(__info0&&__info0.language)||"zh_CN";__global.navigator={userAgent:(__plat0+(__sys0?" "+__sys0:"")+" mobile").toLowerCase(),platform:__plat0,language:__lang0,browserLanguage:__lang0,maxTouchPoints:1};}catch(e){__global.navigator={userAgent:"mobile",platform:"web",language:"zh_CN",browserLanguage:"zh_CN",maxTouchPoints:1};}}\n';
+    header += 'if(__global.devicePixelRatio===undefined){try{var __api1=__global.wx||__global.tt||__global.ks||__global.qq||__global.my;var __info1=__api1&&__api1.getSystemInfoSync?__api1.getSystemInfoSync():null;__global.devicePixelRatio=(__info1&&__info1.pixelRatio)||1;}catch(e){__global.devicePixelRatio=1;}}\n';
     // Polyfill DOMParser for mini-game platforms (harmless on Web)
     header += 'if(typeof DOMParser==="undefined")globalThis.DOMParser=function(){this.parseFromString=function(){return{childNodes:[],documentElement:null,getElementsByTagName:function(){return[]}}}};\n';
     // Polyfill localStorage for mini-game platforms (harmless on Web)
     header += 'if(typeof localStorage==="undefined")globalThis.localStorage={_d:{},getItem:function(k){return this._d[k]||null},setItem:function(k,v){this._d[k]=v},removeItem:function(k){delete this._d[k]},clear:function(){this._d={}}};\n';
     header += 'var RES = globalThis.RES || {};\n';
-    header += 'var __global = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : {};\n';
     header += 'var global = __global;\n';
     header += 'var DEBUG = true, RELEASE = false;\n';
     header += 'var warn = typeof console !== "undefined" ? console.warn.bind(console) : function() {};\n';

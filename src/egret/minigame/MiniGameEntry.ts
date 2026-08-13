@@ -46,6 +46,24 @@ export interface MiniGameOptions {
 export function runMiniGame(options: MiniGameOptions = {}): void {
   const adapter = getPlatform();
 
+  // === Mini-game Image polyfill ===
+  // Mini-game devices have no global Image constructor, but the engine's Web
+  // ImageLoader hard-codes `new Image()`. Also Alipay's Image fires onload
+  // WITHOUT an event argument (e=undefined), which crashes the engine's
+  // e.target read. Wrap onload/onerror to always provide { target: img }.
+  if (
+    typeof (globalThis as any).Image === "undefined" &&
+    typeof adapter.createImage === "function"
+  ) {
+    const createImage = adapter.createImage.bind(adapter);
+    (globalThis as any).Image = function ImagePolyfill() {
+      const img = createImage();
+      wrapMiniImageEvent(img, "onload");
+      wrapMiniImageEvent(img, "onerror");
+      return img;
+    };
+  }
+
   // --- Setup sys hooks for mini-game canvas ---
   // Ensure egret namespace is initialized (IIFE header does this, but be safe)
   const g = globalThis as any;
@@ -263,6 +281,25 @@ const handleTouchEvent = (type: string) => (e: any) => {
 }
 
 // === Mini-Game XMLHttpRequest Polyfill ===
+/** Wrap mini-game Image onload/onerror: missing event argument gets a fake { target } */
+function wrapMiniImageEvent(img: any, prop: "onload" | "onerror"): void {
+  let handler: ((e?: any) => void) | null = null;
+  try {
+    Object.defineProperty(img, prop, {
+      configurable: true,
+      enumerable: true,
+      get: () => handler,
+      set: (fn: any) => {
+        handler = typeof fn === "function"
+          ? (e?: any) => fn(e ?? { target: img, type: prop === "onload" ? "load" : "error" })
+          : fn;
+      },
+    });
+  } catch (_) {
+    /* some platforms may not allow redefining Image event props — keep native behavior */
+  }
+}
+
 function createMiniGameXHR(adapter: any): any {
   return class MiniGameXHR {
     private _url = "";
