@@ -16,6 +16,7 @@
 import { registerPlatform } from "../platform/PlatformRegistry";
 import { WxAdapter } from "../platform/WxAdapter";
 import { TtAdapter, KsAdapter, QqAdapter } from "../platform/OtherAdapters";
+import { AlipayAdapter } from "../platform/AlipayAdapter";
 import { getPlatform } from "../platform/PlatformRegistry";
 import { Stage } from "../display/Stage";
 import { Player } from "../player/Player";
@@ -308,14 +309,15 @@ function createMiniGameXHR(adapter: any): any {
       this._readyState = 2;
       this.onreadystatechange?.();
 
-      const requestTask = (globalThis as any).wx?.request?.({
+      const g: any = globalThis;
+      const api = (adapter as any)?.api || g.wx || g.tt || g.ks || g.qq || g.my;
+      const isAlipay = (adapter as any)?.platformId === "my" || api === g.my;
+      const requestOptions: any = {
         url: this._url,
         method: this._method as any,
-        header: this._headers,
         data: this._data,
-        responseType: this._responseType || "text",
         success: (res: any) => {
-          this._status = res.statusCode || 200;
+          this._status = isAlipay ? (res.status ?? 200) : (res.statusCode ?? 200);
           this._response = this._responseType === "arraybuffer"
             ? res.data
             : (typeof res.data === "string" ? res.data : JSON.stringify(res.data));
@@ -329,7 +331,16 @@ function createMiniGameXHR(adapter: any): any {
           this.onreadystatechange?.();
           this.onerror?.();
         },
-      });
+      };
+      if (isAlipay) {
+        // my.request: `headers` (not `header`), `dataType` (not `responseType`)
+        requestOptions.headers = this._headers;
+        requestOptions.dataType = this._responseType === "arraybuffer" ? "arraybuffer" : "text";
+      } else {
+        requestOptions.header = this._headers;
+        requestOptions.responseType = this._responseType || "text";
+      }
+      const requestTask = api?.request?.(requestOptions);
     }
 
     abort() { this._readyState = 4; }
@@ -395,7 +406,8 @@ export function startMiniGame(options: MiniGameOptions = {}): void {
   else if (g.tt) registerPlatform(new TtAdapter());
   else if (g.ks) registerPlatform(new KsAdapter());
   else if (g.qq) registerPlatform(new QqAdapter());
-  else throw new Error("No mini-game platform detected (wx/tt/ks/qq global not found)");
+  else if (g.my) registerPlatform(new AlipayAdapter());
+  else throw new Error("No mini-game platform detected (wx/tt/ks/qq/my global not found)");
   runMiniGame(options);
 }
 

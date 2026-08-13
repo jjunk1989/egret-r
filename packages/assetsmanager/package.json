@@ -1,12 +1,14 @@
 {
   "name": "@egret-r/assetsmanager",
-  "version": "6.1.7",
-  "description": "Egret Engine R Assets Manager - Resource Loading & Management",  "homepage": "https://jjunk1989.github.io/egret-r",
+  "version": "6.2.0",
+  "description": "Egret Engine R Assets Manager - Resource Loading & Management",
+  "homepage": "https://jjunk1989.github.io/egret-r",
   "repository": {
     "type": "git",
     "url": "https://github.com/jjunk1989/egret-r.git",
     "directory": "packages/assetsmanager"
-  },  "type": "module",
+  },
+  "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {

@@ -316,7 +316,11 @@ src/egret/*.ts src/extension/*.ts（ESM 源码）
 | Chrome、Edge、Firefox、Safari | ✅ 完全支持 |
 | iOS Safari、Android Chrome | ✅ 完全支持 |
 | 微信小游戏 | ✅（通过 Web API） |
-| Facebook Instant Games | ✅ |
+| 抖音小游戏 | ✅ `TtAdapter` |
+| 快手小游戏 | ✅ `KsAdapter` |
+| QQ 小游戏 | ✅ `QqAdapter` |
+| 支付宝小游戏 | ✅ `AlipayAdapter` |
+| Facebook Instant Games | ⬜ 规划中 |
 
 ---
 

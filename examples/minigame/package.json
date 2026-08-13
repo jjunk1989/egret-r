@@ -8,6 +8,7 @@
     "build:tt": "node build.mjs --platform tt",
     "build:ks": "node build.mjs --platform ks",
     "build:qq": "node build.mjs --platform qq",
+    "build:my": "node build.mjs --platform my",
     "build:all": "node build.mjs --all"
   },
   "dependencies": {

@@ -166,7 +166,7 @@ The template (`templates/vite-game/`) includes a ready-to-run game skeleton with
 
 ## Mini-Game Development
 
-Egret Engine R supports **WeChat**, **Douyin**, **Kuaishou**, and **QQ** mini-games out of the box. A single codebase can target all four platforms.
+Egret Engine R supports **WeChat**, **Douyin**, **Kuaishou**, **QQ**, and **Alipay** mini-games out of the box. A single codebase can target all five platforms.
 
 ### Quick Start
 
@@ -180,7 +180,7 @@ npm install
 npm run build:wx     # → dist/wx/
 
 # Or build for all platforms at once
-npm run build:all    # → dist/wx/ dist/tt/ dist/ks/ dist/qq/
+npm run build:all    # → dist/wx/ dist/tt/ dist/ks/ dist/qq/ dist/my/
 ```
 
 Then import the `dist/{platform}/` folder into the corresponding developer tool.
@@ -223,7 +223,7 @@ class Main extends egret.DisplayObjectContainer {
 egret.startMiniGame({ entryClass: 'Main' });
 ```
 
-`egret.startMiniGame()` auto-detects the platform (`wx`/`tt`/`ks`/`qq` global) and sets up canvas, touch, WebGL rendering, and the game loop for you.
+`egret.startMiniGame()` auto-detects the platform (`wx`/`tt`/`ks`/`qq`/`my` global) and sets up canvas, touch, WebGL rendering, and the game loop for you.
 
 ### Build Commands
 
@@ -233,7 +233,8 @@ egret.startMiniGame({ entryClass: 'Main' });
 | `npm run build:tt` | Douyin Mini Game → `dist/tt/` |
 | `npm run build:ks` | Kuaishou Mini Game → `dist/ks/` |
 | `npm run build:qq` | QQ Mini Game → `dist/qq/` |
-| `npm run build:all` | All four platforms at once |
+| `npm run build:my` | Alipay Mini Game → `dist/my/` |
+| `npm run build:all` | All five platforms at once |
 
 Or use the build script directly:
 
@@ -427,6 +428,7 @@ src/egret/*.ts src/extension/*.ts (ESM source)
 | Douyin Mini Game | ✅ | `TtAdapter` |
 | Kuaishou Mini Game | ✅ | `KsAdapter` |
 | QQ Mini Game | ✅ | `QqAdapter` |
+| Alipay Mini Game | ✅ | `AlipayAdapter` |
 | Facebook Instant Games | ⬜ | Planned |
 
 > All mini-game adapters share the same `GenericMiniGameAdapter` base class.

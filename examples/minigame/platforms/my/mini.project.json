@@ -1,0 +1,6 @@
+{
+  "miniprogramRoot": ".",
+  "enableAppxNg": true,
+  "appid": "",
+  "projectname": "egret-r-flappy-bird"
+}

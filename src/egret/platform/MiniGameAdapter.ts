@@ -7,7 +7,7 @@
  * The Web platform also implements this interface via WebAdapter.
  */
 export interface MiniGameAdapter {
-  /** Platform identifier: "web" | "wx" | "tt" | "ks" | "qq" | "fb" */
+  /** Platform identifier: "web" | "wx" | "tt" | "ks" | "qq" | "my" | "fb" */
   readonly platformId: string;
 
   // === System Info ===

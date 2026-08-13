@@ -14,4 +14,5 @@ export { WebAdapter } from "./WebAdapter";
 export { GenericMiniGameAdapter } from "./GenericMiniGameAdapter";
 export { WxAdapter } from "./WxAdapter";
 export { TtAdapter, KsAdapter, QqAdapter } from "./OtherAdapters";
+export { AlipayAdapter } from "./AlipayAdapter";
 export { registerPlatform, getPlatform, hasPlatform, getPlatformId } from "./PlatformRegistry";
