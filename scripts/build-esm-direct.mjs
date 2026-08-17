@@ -305,6 +305,14 @@ async function buildPkg(pkg) {
       tsconfigRaw: { compilerOptions: { preserveConstEnums: false, useDefineForClassFields: false, experimentalDecorators: true } },
     };
 
+    // Non-core packages consume @egret-r/core at runtime via globalThis.egret
+    // (consumer bundles load core first). Aliasing core to a tiny shim avoids
+    // embedding a full second copy of core inside every extension package,
+    // while letting esbuild handle all binding/renaming normally.
+    if (!hasEgret) {
+      esbuildOpts.alias = { '@egret-r/core': path.join(ROOT, 'scripts/shims/core_shim.js') };
+    }
+
     // Mini-game: add conditional compilation defines
     if (miniGameMode) {
       esbuildOpts.define = {
@@ -323,10 +331,17 @@ async function buildPkg(pkg) {
     // unqualified name X is still used as a bare global in other modules.
     // Auto-detect all X->X2 mappings from _ns calls and fix bare references.
     var renames = [];
-    // Also add hardcoded ones that don't follow X->X2 pattern exactly
+    // Also add hardcoded ones that don't follow X->X2 pattern exactly.
+    // These exist because of naming conflicts INSIDE the core bundle
+    // (e.g. `_is` is renamed to `_is2` by esbuild there). Extension packages
+    // no longer embed core, so the same replacement would corrupt their
+    // destructuring of egret._is from the runtime namespace.
     var extraRenames = [
       { orig: '_is', renamed: '_is2' },
     ];
+    if (!hasEgret) {
+      extraRenames = [];
+    }
     var nsRe = /_ns\(egret,\s*"(\w+)",\s*(\w+2)\)/g;
     var nsMatch;
     while ((nsMatch = nsRe.exec(bundled)) !== null) {
@@ -374,7 +389,7 @@ async function buildPkg(pkg) {
     }
     bundled = lines.join('\n');
 
-    var header = 'var egret = globalThis.egret || {sys:{}, pro:{}}, eui = globalThis.eui || {}, sys = egret.sys;\n';
+    var header = 'var egret = globalThis.egret || (globalThis.egret = {sys:{}, pro:{}}), eui = globalThis.eui || (globalThis.eui = {}), sys = egret.sys;\n';
     header += 'var __global = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : {};\n';
     // Runtime env fallback (must run BEFORE any module top-level code:
     // Capabilities.detect() reads navigator directly and the IIFE ends with

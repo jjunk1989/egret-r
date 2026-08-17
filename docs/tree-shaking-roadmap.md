@@ -4,6 +4,7 @@
 > **记录日期**：2026-08-13
 > **目标版本**：下一个发布版本（当前 6.1.7 之后）
 > **关联问题**：微信小游戏后台警告「代码注入耗时过长」「代码包下载耗时较长」
+> **前置优化 A5/A6 已完成**（2026-08-14，详见下文「已完成的前置优化」）
 
 ---
 
@@ -52,6 +53,27 @@
 **关键结论**：`DisplayObject.ts` 已 `import { Event }` 却仍写 `egret.Event.ENTER_FRAME`——
 114 处 `egret.Event` 引用大多是**迁移不完整的历史遗留，而非循环依赖规避**
 （Event 不反向 import DisplayObject）。残留清理是机械劳动，不是架构难题。
+
+---
+
+### 已完成的前置优化（2026-08-14）
+
+在阶段 1 之前先行完成两项低风险优化：
+
+**A6：移除 IE9 兼容层（零风险纯删除）**
+- 删除 `WebCapability.ts` 的 `injectUIntFixOnIE9()`（含 76KB VBScript 字符串与 `document.write`）
+- 删除 `WebHttpRequest.ts` 的 `/msie 9.0/i` arraybuffer 分支
+
+**A5：扩展包不再重复打包 core（构建产物外部化）**
+- 方案：esbuild `alias` 将 `@egret-r/core` 映射到 `scripts/shims/core_shim.js`（`export const egret = globalThis.egret`），扩展包 IIFE 运行时从 `globalThis.egret` 取命名空间（core 先执行）
+- 收益：`@egret-r/game` 981 KB → **106.6 KB**，eui 等六包同样大幅缩小；`match` 的 `game.js` 857 KB → **525 KB（-39%）**
+- 顺带修复三个构建时代遗留 bug：
+  1. header 创建对象后未立即写回 `globalThis`，导致 `SysData.ts` 的 `globalThis.egret?.sys || {}` 在 core 首载时分裂出幽灵 sys 对象（`sys.$ticker` 丢失，旧版靠扩展包内嵌 core 重复执行掩盖）
+  2. `SystemTicker.ts` 补 `import { sys } from "../system/SysData"`，消除 bare `sys` 幽灵引用
+  3. `extraRenames`（`_is`→`_is2`）仅对 core 包生效，否则会破坏扩展包对 `egret._is` 的解构
+- 验证：88/88 单测、8 个 Web example 构建、浏览器运行时（core/eui/tween/game 用例零报错）、match/tea 五平台构建全过
+
+**行为变化**：扩展包不再内嵌 core，下游必须显式 `import '@egret-r/core'`（peerDependency 语义，match/tea 已满足）。
 
 ---
 

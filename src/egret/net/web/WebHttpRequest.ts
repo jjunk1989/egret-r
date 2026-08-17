@@ -49,11 +49,6 @@ import { IOErrorEvent } from "../../events/IOErrorEvent";
                 return this._xhr.responseText;
             }
 
-            if (this._responseType == "arraybuffer" && /msie 9.0/i.test(navigator.userAgent)) {
-                let w: any = window;
-                return w.convertResponseBodyToText(this._xhr["responseBody"]);
-            }
-
             if (this._responseType == "document") {
                 return this._xhr.responseXML;
             }

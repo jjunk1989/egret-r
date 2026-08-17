@@ -9,6 +9,7 @@ import { Player } from "./Player";
 import { Event } from "../events/Event";
 import { $error } from "../../Defines.debug";
 import { DEBUG } from "../../Defines.debug";
+import { sys } from "../system/SysData";
 
     /**
      * @private
