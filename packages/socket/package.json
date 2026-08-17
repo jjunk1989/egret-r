@@ -1,6 +1,6 @@
 {
   "name": "@egret-r/socket",
-  "version": "6.2.4",
+  "version": "6.2.5",
   "description": "Egret Engine R Socket - WebSocket Communication Library",
   "homepage": "https://jjunk1989.github.io/egret-r",
   "repository": {
