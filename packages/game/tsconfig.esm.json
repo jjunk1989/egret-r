@@ -1,0 +1,18 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "dist/esm",
+    "rootDir": "../../src",
+    "composite": false,
+    "declaration": false,
+    "incremental": false,
+    "strict": false,
+    "sourceMap": false,
+    "declarationMap": false,
+    "isolatedModules": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler"
+  },
+  "include": ["../../src/extension/game/**/*.ts", "../../src/egret/global.d.ts"],
+  "exclude": ["node_modules", "dist", "src"]
+}

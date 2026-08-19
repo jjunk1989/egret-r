@@ -229,7 +229,7 @@ import { CustomFilter } from "../filters/CustomFilter";
         $onRemoveFromStage(): void {
             let self = this;
             self.$nestLevel = 0;
-            Sprite.$EVENT_REMOVE_FROM_STAGE_LIST.push(self);
+            DisplayObject.$EVENT_REMOVE_FROM_STAGE_LIST.push(self);
         }
 
         /**

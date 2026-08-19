@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "packages/core/dist/esm",
+    "composite": false,
+    "declaration": false,
+    "incremental": false,
+    "strict": false,
+    "sourceMap": false,
+    "declarationMap": false,
+    "isolatedModules": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler"
+  },
+  "include": ["src/egret/**/*.ts", "src/Defines.debug.ts", "src/Defines.release.ts"],
+  "exclude": ["node_modules", "packages", "examples", "dist"]
+}

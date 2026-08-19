@@ -131,12 +131,11 @@ Spike 实证的必须修复点（障碍 #4 的两个具体实例）：
 
 ### 阶段 2：新增 shakeable ESM 产物（2–3 天，核心阶段）
 
-- [ ] `build-esm-direct.mjs` 新增 `packages/*/dist/esm/`：`format: 'esm'` + `splitting: true`，
-      不 IIFE wrap、不注入 `_ns`；release 构建移除 `keepNames`
-- [ ] header 初始化拆出 `dist/esm/init.js`：`egret.sys` 创建、Defines（esbuild `define`）、平台 polyfill
-- [ ] package.json：新增 `"./esm"` / `"./minigame"` 导出子路径；`sideEffects` 精确数组
-- [ ] d.ts 用 `export as namespace egret` 保持老类型写法兼容
-- [ ] 验收：只 import `Bitmap` 的最小摇树实验，产物中 `WebPlayer` / `HtmlSound` 等消失
+- [x] **多文件 ESM 产物**（2026-08-19，`npm run build:esm`）：tsc 编译 `src/egret` → `packages/core/dist/esm/`、`src/extension/game` → `packages/game/dist/esm/`（保留模块边界）；`dist/esm/init.mjs` 创建全局 `egret`（含 window/navigator/dpr/DOMParser/localStorage polyfill）；`dist/esm/index.mjs` 按需 re-export
+- [x] **index.mjs 过滤 web DOM 专属**（`Html5Capatibility`/`WebHideHandler`/`HtmlSound`/`WebVideo`/`WebImageLoader` 等，保留 `rendering/**` + `WebSysImpl` + `WebGLRenderer`）——否则 Html5Capatibility→WebHideHandler→HtmlSound 副作用链阻止摇树
+- [x] package.json：`"./esm"` 导出子路径（core/game）；非 core 包跨包 import 自动改写 `@egret-r/core` → `@egret-r/core/esm`
+- [ ] d.ts：`export as namespace egret` 兼容层（暂缓，match 迁移时再定）
+- [x] 验收（`match/scripts/spike-tree-shaking.mjs` ESM_MODE=1）：match 具名导入 `@egret-r/core/esm` → **525.1 → 380.2 KB（-28%）**，WebPlayer/HtmlSound/WebVideo/KTXContainer 全部摇掉；源码直连上限 325KB（差额 = 副作用注册模块 + CanvasRenderer，阶段 3 优化）
 
 ### 阶段 3：minigame / release 变体（1–2 天）
 
