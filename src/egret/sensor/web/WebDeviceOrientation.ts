@@ -31,7 +31,7 @@ import { OrientationEvent } from "../../events/OrientationEvent";
          * @private
          */
         protected onChange = (e: DeviceOrientationEvent) => {
-            let event = new OrientationEvent(egret.Event.CHANGE);
+            let event = new OrientationEvent(Event.CHANGE);
             event.beta = e.beta;
             event.gamma = e.gamma;
             event.alpha = e.alpha;

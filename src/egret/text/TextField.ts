@@ -2,6 +2,7 @@
 // Copyright (c) 2014-present, Egret Technology.
 
 import { ITextStyle, ITextElement, ILineElement, IWTextElement } from "./ITextElement";
+import { CapsStyle } from "../display/CapsStyle";
 import { Event } from "../events/Event";
 import { FocusEvent } from "../events/FocusEvent";
 import { nativeRender } from "../player/Player";

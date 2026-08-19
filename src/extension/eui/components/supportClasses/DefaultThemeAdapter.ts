@@ -37,7 +37,7 @@ import { IThemeAdapter } from "../../core/IThemeAdapter";
                 errorFunc.call(thisObject);
             }
             let loader:HttpRequest = new HttpRequest();
-            loader.addEventListener(egret.Event.COMPLETE,onGet,thisObject);
+            loader.addEventListener(Event.COMPLETE,onGet,thisObject);
             loader.addEventListener(IOErrorEvent.IO_ERROR,onError,thisObject);
             loader.responseType = HttpResponseType.TEXT;
             loader.open(url);

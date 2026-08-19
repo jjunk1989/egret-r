@@ -38,7 +38,7 @@ import { $getVirtualUrl } from "../Resource";
                 return;
             }
             let sound = new Sound();
-            sound.addEventListener(egret.Event.COMPLETE, this.onLoadFinish, this);
+            sound.addEventListener(Event.COMPLETE, this.onLoadFinish, this);
             sound.addEventListener(IOErrorEvent.IO_ERROR, this.onLoadFinish, this);
             this.resItemDic[sound.$hashCode] = {item: resItem, func: callBack, thisObject: thisObject};
             sound.load($getVirtualUrl(resItem.url));
@@ -52,13 +52,13 @@ import { $getVirtualUrl } from "../Resource";
          */
         protected onLoadFinish(event:Event):void {
             let sound = <Sound> (event.$target);
-            sound.removeEventListener(egret.Event.COMPLETE, this.onLoadFinish, this);
+            sound.removeEventListener(Event.COMPLETE, this.onLoadFinish, this);
             sound.removeEventListener(IOErrorEvent.IO_ERROR, this.onLoadFinish, this);
             let data:any = this.resItemDic[sound.$hashCode];
             delete this.resItemDic[sound.$hashCode];
             let resItem:ResourceItem = data.item;
             let compFunc:Function = data.func;
-            resItem.loaded = (event.$type == egret.Event.COMPLETE);
+            resItem.loaded = (event.$type == Event.COMPLETE);
             if (resItem.loaded) {
                 this.analyzeData(resItem, sound)
             }

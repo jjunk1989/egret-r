@@ -239,7 +239,7 @@ import { DEBUG } from "../../../Defines.debug";
         private onLoaded(classes?: any[], urls?: string[]) {
             this.initialized = true;
             this.handleDelayList();
-            this.dispatchEventWith(egret.Event.COMPLETE);
+            this.dispatchEventWith(Event.COMPLETE);
         }
 
         /**

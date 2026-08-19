@@ -65,7 +65,7 @@ interface BrowerGeolocation extends Geolocation { }
          * @private
          */
         private onUpdate = (position: Position) => {
-            let event = new GeolocationEvent(egret.Event.CHANGE);
+            let event = new GeolocationEvent(Event.CHANGE);
             let coords = position.coords;
             event.altitude = coords.altitude;
             event.heading = coords.heading;

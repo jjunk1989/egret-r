@@ -429,7 +429,7 @@ import { registerProperty } from "../utils/registerProperty";
                 viewport.addEventListener(TouchEvent.TOUCH_BEGIN, this.onTouchBeginCapture, this, true);
                 viewport.addEventListener(TouchEvent.TOUCH_END, this.onTouchEndCapture, this, true);
                 viewport.addEventListener(TouchEvent.TOUCH_TAP, this.onTouchTapCapture, this, true);
-                viewport.addEventListener(egret.Event.REMOVED, this.onViewPortRemove, this);
+                viewport.addEventListener(Event.REMOVED, this.onViewPortRemove, this);
             }
             if (this.horizontalScrollBar) {
                 this.horizontalScrollBar.viewport = viewport;
@@ -456,7 +456,7 @@ import { registerProperty } from "../utils/registerProperty";
                 viewport.removeEventListener(TouchEvent.TOUCH_BEGIN, this.onTouchBeginCapture, this, true);
                 viewport.removeEventListener(TouchEvent.TOUCH_END, this.onTouchEndCapture, this, true);
                 viewport.removeEventListener(TouchEvent.TOUCH_TAP, this.onTouchTapCapture, this, true);
-                viewport.removeEventListener(egret.Event.REMOVED, this.onViewPortRemove, this);
+                viewport.removeEventListener(Event.REMOVED, this.onViewPortRemove, this);
                 if (this.$Scroller[Keys.viewprotRemovedEvent] == false) {
                     this.removeChild(viewport);
                 }
@@ -618,7 +618,7 @@ import { registerProperty } from "../utils/registerProperty";
             this.addEventListener(TouchEvent.TOUCH_MOVE, this.onTouchMove, this);
             stage.addEventListener(TouchEvent.TOUCH_END, this.onTouchEnd, this, true);
             this.addEventListener(TouchEvent.TOUCH_CANCEL, this.onTouchCancel, this);
-            this.addEventListener(egret.Event.REMOVED_FROM_STAGE, this.onRemoveListeners, this);
+            this.addEventListener(Event.REMOVED_FROM_STAGE, this.onRemoveListeners, this);
             this.tempStage = stage;
         }
 
@@ -788,7 +788,7 @@ import { registerProperty } from "../utils/registerProperty";
             stage.removeEventListener(TouchEvent.TOUCH_END, this.onTouchEnd, this, true);
             stage.removeEventListener(TouchEvent.TOUCH_MOVE, this.onTouchMove, this);
             this.removeEventListener(TouchEvent.TOUCH_CANCEL, this.onTouchCancel, this);
-            this.removeEventListener(egret.Event.REMOVED_FROM_STAGE, this.onRemoveListeners, this);
+            this.removeEventListener(Event.REMOVED_FROM_STAGE, this.onRemoveListeners, this);
 
             let values = this.$Scroller;
             let viewport:IViewport = values[Keys.viewport];
@@ -811,7 +811,7 @@ import { registerProperty } from "../utils/registerProperty";
             if (viewport) {
                 viewport.scrollH = scrollPos;
             }
-            this.dispatchEventWith(egret.Event.CHANGE);
+            this.dispatchEventWith(Event.CHANGE);
         }
 
         /**
@@ -824,7 +824,7 @@ import { registerProperty } from "../utils/registerProperty";
             if (viewport) {
                 viewport.scrollV = scrollPos;
             }
-            this.dispatchEventWith(egret.Event.CHANGE);
+            this.dispatchEventWith(Event.CHANGE);
         }
 
         /**

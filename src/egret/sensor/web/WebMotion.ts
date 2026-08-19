@@ -30,7 +30,7 @@ import { MotionEvent } from "../../events/MotionEvent";
          * @private
          */
         protected onChange = (e: DeviceMotionEvent) => {
-            let event = new MotionEvent(egret.Event.CHANGE);
+            let event = new MotionEvent(Event.CHANGE);
             let acceleration: DeviceAcceleration = {
                 x: e.acceleration.x,
                 y: e.acceleration.y,

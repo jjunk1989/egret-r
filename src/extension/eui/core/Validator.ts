@@ -173,8 +173,8 @@ import { UIComponent } from "./UIComponent";
          * 添加事件监听
          */
         private attachListeners():void {
-            this.eventDisplay.addEventListener(egret.Event.ENTER_FRAME, this.doPhasedInstantiationCallBack, this);
-            this.eventDisplay.addEventListener(egret.Event.RENDER, this.doPhasedInstantiationCallBack, this);
+            this.eventDisplay.addEventListener(Event.ENTER_FRAME, this.doPhasedInstantiationCallBack, this);
+            this.eventDisplay.addEventListener(Event.RENDER, this.doPhasedInstantiationCallBack, this);
             sys.$invalidateRenderFlag = true;
             this.listenersAttached = true;
         }
@@ -184,8 +184,8 @@ import { UIComponent } from "./UIComponent";
          * 执行属性应用
          */
         private doPhasedInstantiationCallBack(event?:Event):void {
-            this.eventDisplay.removeEventListener(egret.Event.ENTER_FRAME, this.doPhasedInstantiationCallBack, this);
-            this.eventDisplay.removeEventListener(egret.Event.RENDER, this.doPhasedInstantiationCallBack, this);
+            this.eventDisplay.removeEventListener(Event.ENTER_FRAME, this.doPhasedInstantiationCallBack, this);
+            this.eventDisplay.removeEventListener(Event.RENDER, this.doPhasedInstantiationCallBack, this);
             this.doPhasedInstantiation();
         }
 

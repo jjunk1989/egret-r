@@ -237,7 +237,7 @@ import { IOErrorEvent } from "../../events/IOErrorEvent";
                         self.dispatchEventWith(IOErrorEvent.IO_ERROR);
                     }
                     else {
-                        self.dispatchEventWith(egret.Event.COMPLETE);
+                        self.dispatchEventWith(Event.COMPLETE);
                     }
                 }, 0)
 
@@ -270,7 +270,7 @@ import { IOErrorEvent } from "../../events/IOErrorEvent";
                     self.dispatchEventWith(IOErrorEvent.IO_ERROR);
                 }
                 else {
-                    self.dispatchEventWith(egret.Event.COMPLETE);
+                    self.dispatchEventWith(Event.COMPLETE);
                 }
             }, 0);
         }

@@ -324,7 +324,7 @@ import { DEBUG } from "../../Defines.debug";
             this.$stageWidth = width;
             this.$stageHeight = height;
             this.$displayList.renderBuffer.resize(width, height);
-            this.dispatchEventWith(egret.Event.RESIZE);
+            this.dispatchEventWith(Event.RESIZE);
         };
     }
 

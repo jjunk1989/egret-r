@@ -309,7 +309,7 @@ import { PropertyEvent } from "../events/PropertyEvent";
          * 添加单选按钮到组内
          */
         $addInstance(instance:RadioButton):void {
-            instance.addEventListener(egret.Event.REMOVED_FROM_STAGE, this.removedHandler, this);
+            instance.addEventListener(Event.REMOVED_FROM_STAGE, this.removedHandler, this);
             let buttons = this.radioButtons;
             buttons.push(instance);
             buttons.sort(breadthOrderCompare);
@@ -342,7 +342,7 @@ import { PropertyEvent } from "../events/PropertyEvent";
                     }
                     else if (rb == instance) {
                         if (addListener)
-                            instance.addEventListener(egret.Event.ADDED_TO_STAGE, this.addedHandler, this);
+                            instance.addEventListener(Event.ADDED_TO_STAGE, this.addedHandler, this);
                         if (instance == this._selection)
                             this._selection = null;
                         instance.$radioButtonGroup = null;
@@ -369,7 +369,7 @@ import { PropertyEvent } from "../events/PropertyEvent";
                     this._selection.selected = false;
                     this._selection = null;
                     if (fireChange)
-                        this.dispatchEventWith(egret.Event.CHANGE);
+                        this.dispatchEventWith(Event.CHANGE);
                 }
             }
             else {
@@ -398,7 +398,7 @@ import { PropertyEvent } from "../events/PropertyEvent";
                 this._selection = rb;
                 this._selection.selected = true;
                 if (fireChange)
-                    this.dispatchEventWith(egret.Event.CHANGE);
+                    this.dispatchEventWith(Event.CHANGE);
             }
         }
 
@@ -409,7 +409,7 @@ import { PropertyEvent } from "../events/PropertyEvent";
         private addedHandler(event:Event):void {
             let rb:RadioButton = event.target;
             if (rb == event.currentTarget) {
-                rb.removeEventListener(egret.Event.ADDED_TO_STAGE, this.addedHandler, this);
+                rb.removeEventListener(Event.ADDED_TO_STAGE, this.addedHandler, this);
                 this.$addInstance(rb);
             }
         }
@@ -421,7 +421,7 @@ import { PropertyEvent } from "../events/PropertyEvent";
         private removedHandler(event:Event):void {
             let rb:RadioButton = event.target;
             if (rb == event.currentTarget) {
-                rb.removeEventListener(egret.Event.REMOVED_FROM_STAGE, this.removedHandler, this);
+                rb.removeEventListener(Event.REMOVED_FROM_STAGE, this.removedHandler, this);
                 this.$removeInstance(rb, true);
             }
         }

@@ -105,12 +105,12 @@ import { JustifyAlign } from "../layouts/JustifyAlign";
             let dp = this.$dataProvider;
             if(dp&&dp instanceof ViewStack){
                 dp.removeEventListener(PropertyEvent.PROPERTY_CHANGE,this.onViewStackIndexChange,this);
-                this.removeEventListener(egret.Event.CHANGE,this.onIndexChanged,this);
+                this.removeEventListener(Event.CHANGE,this.onIndexChanged,this);
             }
 
             if(value&&value instanceof ViewStack){
                 value.addEventListener(PropertyEvent.PROPERTY_CHANGE,this.onViewStackIndexChange,this);
-                this.addEventListener(egret.Event.CHANGE,this.onIndexChanged,this);
+                this.addEventListener(Event.CHANGE,this.onIndexChanged,this);
             }
             return super.$setDataProvider(value);
         }

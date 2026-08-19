@@ -71,9 +71,16 @@ async function buildPkg(pkg) {
   }
   files = files.filter(function(f) {
     if (/[\\\/]native[\\\/]/.test(f) || /NativeContext\.ts$/.test(f)) return false;
-    // Mini-game: exclude web-specific files (DOM APIs)
+    // Mini-game: exclude DOM-specific web files. Keep the WebGL rendering
+    // pipeline (rendering/ + WebSysImpl) — mini-game runtimes provide the
+    // same canvas/webgl APIs, and MiniGameEntry now imports WebGLRenderer
+    // statically, so it must be present in mini-game bundles too.
     if (miniGameMode) {
-      if (/[\\\/]web[\\\/]/.test(f)) return false;
+      if (/[\\/]web[\\/]/.test(f)) {
+        const isWebGLPipeline = /[\\/]web[\\/]rendering[\\/]/.test(f) ||
+          /[\\/]web[\\/]WebSysImpl\.ts$/.test(f);
+        if (!isWebGLPipeline) return false;
+      }
       if (/HtmlSound\.ts$/.test(f) || /WebAudioSound\.ts$/.test(f)) return false;
       if (/WebTouchHandler\.ts$/.test(f)) return false;
       if (/WebVideo\.ts$/.test(f) || /WebAudio\.ts/.test(f)) return false;

@@ -24,6 +24,7 @@ import { DisplayList } from "../player/DisplayList";
 import { TouchHandler } from "../player/TouchHandler";
 import { customHitTestBuffer, canvasHitTestBuffer, setCustomHitTestBuffer, setCanvasHitTestBuffer } from "../player/RenderBuffer";
 import { systemRenderer, canvasRenderer, setSystemRenderer, setCanvasRenderer } from "../player/SystemRenderer";
+import { WebGLRenderer } from "../web/rendering/webgl/WebGLRenderer";
 
 /**
  * Options for running a mini-game.
@@ -159,9 +160,10 @@ export function runMiniGame(options: MiniGameOptions = {}): void {
   // === Renderer ===
   // systemRenderer: real WebGL for display
   // canvasRenderer: mock for hit-test (avoids WebGL issues)
-  if (!systemRenderer && (globalThis as any).egret?.WebGLRenderer) {
-    const RendererClass = (globalThis as any).egret.WebGLRenderer;
-    setSystemRenderer(new RendererClass());
+  // WebGLRenderer is statically imported (not looked up via globalThis.egret)
+  // so tree-shaking can keep it in the bundle.
+  if (!systemRenderer) {
+    setSystemRenderer(new WebGLRenderer());
   }
   if (!canvasRenderer) {
     const dummy: any = {

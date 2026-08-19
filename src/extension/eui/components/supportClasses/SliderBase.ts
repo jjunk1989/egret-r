@@ -302,11 +302,11 @@ import { RangeKeys, Range } from "./Range";
 
             if (instance == this.thumb) {
                 this.thumb.addEventListener(TouchEvent.TOUCH_BEGIN, this.onThumbTouchBegin, this);
-                this.thumb.addEventListener(egret.Event.RESIZE, this.onTrackOrThumbResize, this);
+                this.thumb.addEventListener(Event.RESIZE, this.onTrackOrThumbResize, this);
             }
             else if (instance == this.track) {
                 this.track.addEventListener(TouchEvent.TOUCH_BEGIN, this.onTrackTouchBegin, this);
-                this.track.addEventListener(egret.Event.RESIZE, this.onTrackOrThumbResize, this);
+                this.track.addEventListener(Event.RESIZE, this.onTrackOrThumbResize, this);
             }
             else if (instance === this.trackHighlight) {
                 this.trackHighlight.touchEnabled = false;
@@ -328,11 +328,11 @@ import { RangeKeys, Range } from "./Range";
 
             if (instance == this.thumb) {
                 this.thumb.removeEventListener(TouchEvent.TOUCH_BEGIN, this.onThumbTouchBegin, this);
-                this.thumb.removeEventListener(egret.Event.RESIZE, this.onTrackOrThumbResize, this);
+                this.thumb.removeEventListener(Event.RESIZE, this.onTrackOrThumbResize, this);
             }
             else if (instance == this.track) {
                 this.track.removeEventListener(TouchEvent.TOUCH_BEGIN, this.onTrackTouchBegin, this);
-                this.track.removeEventListener(egret.Event.RESIZE, this.onTrackOrThumbResize, this);
+                this.track.removeEventListener(Event.RESIZE, this.onTrackOrThumbResize, this);
             }
         }
 
@@ -418,7 +418,7 @@ import { RangeKeys, Range } from "./Range";
             if (newValue != this.$SliderBase[Keys.pendingValue]) {
                 if (this.liveDragging) {
                     this.setValue(newValue);
-                    this.dispatchEventWith(egret.Event.CHANGE);
+                    this.dispatchEventWith(Event.CHANGE);
                 }
                 else {
                     this.pendingValue = newValue;
@@ -454,7 +454,7 @@ import { RangeKeys, Range } from "./Range";
             let values = this.$SliderBase;
             if (!this.liveDragging && this.value != values[Keys.pendingValue]) {
                 this.setValue(values[Keys.pendingValue]);
-                this.dispatchEventWith(egret.Event.CHANGE);
+                this.dispatchEventWith(Event.CHANGE);
             }
         }
 
@@ -496,7 +496,7 @@ import { RangeKeys, Range } from "./Range";
          */
         private animationEndHandler(animation:Animation):void {
             this.setValue(this.$SliderBase[Keys.slideToValue]);
-            this.dispatchEventWith(egret.Event.CHANGE);
+            this.dispatchEventWith(Event.CHANGE);
             UIEvent.dispatchUIEvent(this, UIEvent.CHANGE_END);
         }
 
@@ -507,7 +507,7 @@ import { RangeKeys, Range } from "./Range";
         private stopAnimation():void {
             this.$SliderBase[Keys.animation].stop();
             this.setValue(this.nearestValidValue(this.pendingValue, this.snapInterval));
-            this.dispatchEventWith(egret.Event.CHANGE);
+            this.dispatchEventWith(Event.CHANGE);
             UIEvent.dispatchUIEvent(this, UIEvent.CHANGE_END);
         }
 
@@ -563,7 +563,7 @@ import { RangeKeys, Range } from "./Range";
                 }
                 else {
                     this.setValue(newValue);
-                    this.dispatchEventWith(egret.Event.CHANGE);
+                    this.dispatchEventWith(Event.CHANGE);
                 }
             }
         }

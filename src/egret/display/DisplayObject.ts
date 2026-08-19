@@ -18,6 +18,7 @@ import { systemRenderer } from "../player/SystemRenderer";
 import { EventDispatcher } from "../events/EventDispatcher";
 import { Stage } from "./Stage";
 import { Bitmap } from "./Bitmap";
+import { Sprite } from "./Sprite";
 import { Filter } from "../filters/Filter";
 import { Point } from "../geom/Point";
 import { BlurFilter } from "../filters/BlurFilter";
@@ -2198,8 +2199,8 @@ import { CustomFilter } from "../filters/CustomFilter";
          */
         $addListener(type: string, listener: Function, thisObject: any, useCapture?: boolean, priority?: number, dispatchOnce?: boolean): void {
             super.$addListener(type, listener, thisObject, useCapture, priority, dispatchOnce);
-            let isEnterFrame = (type == egret.Event.ENTER_FRAME);
-            if (isEnterFrame || type == egret.Event.RENDER) {
+            let isEnterFrame = (type == Event.ENTER_FRAME);
+            if (isEnterFrame || type == Event.RENDER) {
                 let list = isEnterFrame ? DisplayObject.$sharedEnterFrameList : DisplayObject.$sharedRenderList;
                 if (list.indexOf(this) == -1) {
                     list.push(this);
@@ -2214,8 +2215,8 @@ import { CustomFilter } from "../filters/CustomFilter";
          */
         public removeEventListener(type: string, listener: Function, thisObject: any, useCapture?: boolean): void {
             super.removeEventListener(type, listener, thisObject, useCapture);
-            let isEnterFrame: boolean = (type == egret.Event.ENTER_FRAME);
-            if ((isEnterFrame || type == egret.Event.RENDER) && !this.hasEventListener(type)) {
+            let isEnterFrame: boolean = (type == Event.ENTER_FRAME);
+            if ((isEnterFrame || type == Event.RENDER) && !this.hasEventListener(type)) {
                 let list = isEnterFrame ? DisplayObject.$sharedEnterFrameList : DisplayObject.$sharedRenderList;
                 let index = list.indexOf(this);
                 if (index !== -1) {

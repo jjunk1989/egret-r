@@ -881,7 +881,7 @@ import { DEBUG } from "../../../Defines.debug";
         protected commitProperties(): void {
             let values = this.$UIComponent;
             if (values[UIKeys.oldWidth] != values[UIKeys.width] || values[UIKeys.oldHeight] != values[UIKeys.height]) {
-                this.dispatchEventWith(egret.Event.RESIZE);
+                this.dispatchEventWith(Event.RESIZE);
                 values[UIKeys.oldWidth] = values[UIKeys.width];
                 values[UIKeys.oldHeight] = values[UIKeys.height];
             }
@@ -1322,7 +1322,7 @@ import { DEBUG } from "../../../Defines.debug";
             }
             if (change) {
                 this.invalidateDisplayList();
-                this.dispatchEventWith(egret.Event.RESIZE);
+                this.dispatchEventWith(Event.RESIZE);
             }
         }
 

@@ -171,9 +171,9 @@ import { URLRequestMethod } from "./URLRequestMethod";
                 let urlRequestHeader: URLRequestHeader = request.requestHeaders[i];
                 httpRequest.setRequestHeader(urlRequestHeader.name, urlRequestHeader.value);
             }
-            httpRequest.addEventListener(egret.Event.COMPLETE, function () {
+            httpRequest.addEventListener(Event.COMPLETE, function () {
                 loader.data = httpRequest.response;
-                Event.dispatchEvent(loader, egret.Event.COMPLETE);
+                Event.dispatchEvent(loader, Event.COMPLETE);
             }, this);
             httpRequest.addEventListener(IOErrorEvent.IO_ERROR, function () {
                 IOErrorEvent.dispatchIOErrorEvent(loader);
@@ -209,7 +209,7 @@ import { URLRequestMethod } from "./URLRequestMethod";
 
             let sound: Sound = new Sound();
             this.sound = sound;
-            sound.addEventListener(egret.Event.COMPLETE, this.onSoundoadComplete, this);
+            sound.addEventListener(Event.COMPLETE, this.onSoundoadComplete, this);
             sound.addEventListener(IOErrorEvent.IO_ERROR, this.onSoundLoaderError, this);
             sound.addEventListener(ProgressEvent.PROGRESS, this.onSoundLoaderPostProgress, this);
             sound.load(virtualUrl);
@@ -218,7 +218,7 @@ import { URLRequestMethod } from "./URLRequestMethod";
             this.removeSoundLoaderListeners();
             this.data = this.sound;
             window.setTimeout(()=> {
-                this.dispatchEventWith(egret.Event.COMPLETE);
+                this.dispatchEventWith(Event.COMPLETE);
             }, 0);
         }
         private onSoundLoaderPostProgress(event: ProgressEvent): void {
@@ -228,7 +228,7 @@ import { URLRequestMethod } from "./URLRequestMethod";
             this.dispatchEvent(event);
         }
         private removeSoundLoaderListeners(): void {
-            this.sound.removeEventListener(egret.Event.COMPLETE, this.onSoundoadComplete, this);
+            this.sound.removeEventListener(Event.COMPLETE, this.onSoundoadComplete, this);
             this.sound.removeEventListener(IOErrorEvent.IO_ERROR, this.onSoundLoaderError, this);
             this.sound.removeEventListener(ProgressEvent.PROGRESS, this.onSoundLoaderPostProgress, this);
         }
@@ -249,7 +249,7 @@ import { URLRequestMethod } from "./URLRequestMethod";
             this.virtualUrl = loader._request.url;
             let imageLoader: ImageLoader = new ImageLoader();
             this.imageLoader = imageLoader;
-            imageLoader.addEventListener(egret.Event.COMPLETE, this.onImageLoadComplete, this);
+            imageLoader.addEventListener(Event.COMPLETE, this.onImageLoadComplete, this);
             imageLoader.addEventListener(IOErrorEvent.IO_ERROR, this.onImageLoaderError, this);
             imageLoader.addEventListener(ProgressEvent.PROGRESS, this.onImageLoaderPostProgress, this);
             imageLoader.load(this.virtualUrl);
@@ -264,7 +264,7 @@ import { URLRequestMethod } from "./URLRequestMethod";
             texture._setBitmapData(bitmapData);
             this.data = texture;
             window.setTimeout(()=> {
-                this.dispatchEventWith(egret.Event.COMPLETE);
+                this.dispatchEventWith(Event.COMPLETE);
             }, 0);
         }
         private onImageLoaderPostProgress(event: ProgressEvent): void {
@@ -274,7 +274,7 @@ import { URLRequestMethod } from "./URLRequestMethod";
             this.dispatchEvent(event);
         }
         private removeImageLoaderListeners(): void {
-            this.imageLoader.removeEventListener(egret.Event.COMPLETE, this.onImageLoadComplete, this);
+            this.imageLoader.removeEventListener(Event.COMPLETE, this.onImageLoadComplete, this);
             this.imageLoader.removeEventListener(IOErrorEvent.IO_ERROR, this.onImageLoaderError, this);
             this.imageLoader.removeEventListener(ProgressEvent.PROGRESS, this.onImageLoaderPostProgress, this);
         }

@@ -267,7 +267,7 @@ import { ItemTapEvent } from "../events/ItemTapEvent";
 
             if (dispatchChangedEvents && retVal) {
                 if (values[ListBaseKeys.dispatchChangeAfterSelection]) {
-                    this.dispatchEventWith(egret.Event.CHANGE)
+                    this.dispatchEventWith(Event.CHANGE)
                     values[ListBaseKeys.dispatchChangeAfterSelection] = false;
                 }
                 PropertyEvent.dispatchPropertyEvent(this,PropertyEvent.PROPERTY_CHANGE,"selectedIndex");

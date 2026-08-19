@@ -138,7 +138,7 @@ import { PropertyEvent } from "../events/PropertyEvent";
 			if(!this.$autoSelected)
 				return;
 			this.selected = !this.$selected;
-			this.dispatchEventWith(egret.Event.CHANGE);
+			this.dispatchEventWith(Event.CHANGE);
 		}
 	}
 	registerBindable(ToggleButton.prototype,"selected");

@@ -253,7 +253,7 @@ import { HashObject } from "../utils/HashObject";
             this.resetText();
 
             //抛出change事件
-            this._text.dispatchEvent(new Event(egret.Event.CHANGE, true));
+            this._text.dispatchEvent(new Event(Event.CHANGE, true));
         }
 
         /**

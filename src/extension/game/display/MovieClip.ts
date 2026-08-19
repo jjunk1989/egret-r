@@ -502,18 +502,18 @@ import { $error } from "../../../Defines.debug";
                 self.$nextFrameNum++;
                 if (self.$nextFrameNum > self.$totalFrames || (self.$frameLabelStart > 0 && self.$nextFrameNum > self.$frameLabelEnd)) {
                     if (self.playTimes == -1) {
-                        self.$eventPool.push(egret.Event.LOOP_COMPLETE);
+                        self.$eventPool.push(Event.LOOP_COMPLETE);
                         self.$nextFrameNum = 1;
                     }
                     else {
                         self.playTimes--;
                         if (self.playTimes > 0) {
-                            self.$eventPool.push(egret.Event.LOOP_COMPLETE);
+                            self.$eventPool.push(Event.LOOP_COMPLETE);
                             self.$nextFrameNum = 1;
                         }
                         else {
                             self.$nextFrameNum = self.$totalFrames;
-                            self.$eventPool.push(egret.Event.COMPLETE);
+                            self.$eventPool.push(Event.COMPLETE);
                             self.stop();
                             break;
                         }
@@ -616,9 +616,9 @@ import { $error } from "../../../Defines.debug";
 
                 for (let i = 0; i < length; i++) {
                     let event: string = eventPool.pop();
-                    if (event == egret.Event.LOOP_COMPLETE) {
+                    if (event == Event.LOOP_COMPLETE) {
                         isLoopComplete = true;
-                    } else if (event == egret.Event.COMPLETE) {
+                    } else if (event == Event.COMPLETE) {
                         isComplete = true;
                     } else {
                         this.dispatchEventWith(event);
@@ -626,10 +626,10 @@ import { $error } from "../../../Defines.debug";
                 }
 
                 if (isLoopComplete) {
-                    this.dispatchEventWith(egret.Event.LOOP_COMPLETE);
+                    this.dispatchEventWith(Event.LOOP_COMPLETE);
                 }
                 if (isComplete) {
-                    this.dispatchEventWith(egret.Event.COMPLETE);
+                    this.dispatchEventWith(Event.COMPLETE);
                 }
             }
         }

@@ -83,7 +83,7 @@ import { HtmlSound } from "./HtmlSound";
             if (this.$loops == 1) {
                 this.stop();
 
-                this.dispatchEventWith(egret.Event.SOUND_COMPLETE);
+                this.dispatchEventWith(Event.SOUND_COMPLETE);
                 return;
             }
 

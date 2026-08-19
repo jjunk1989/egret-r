@@ -109,7 +109,7 @@ import { ResourceInfo } from "../core/ResourceConfig";
                 let e = new ResourceManagerError(1001, resource.url);
                 reject(e);
             }
-            loader.addEventListener(egret.Event.COMPLETE, onSuccess, this);
+            loader.addEventListener(Event.COMPLETE, onSuccess, this);
             loader.addEventListener(IOErrorEvent.IO_ERROR, onError, this);
         })
     }

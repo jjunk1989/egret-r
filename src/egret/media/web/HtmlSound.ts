@@ -127,7 +127,7 @@ import { DEBUG } from "../../../Defines.debug";
                 }
 
                 self.loaded = true;
-                self.dispatchEventWith(egret.Event.COMPLETE);
+                self.dispatchEventWith(Event.COMPLETE);
             }
 
             function onAudioError(): void {

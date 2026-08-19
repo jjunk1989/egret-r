@@ -2,6 +2,7 @@
 // Copyright (c) 2014-present, Egret Technology.
 
 import { BitmapData } from "../display/BitmapData";
+import { Stage } from "../display/Stage";
 import { nativeRender } from "./Player";
 import { RenderNode } from "./nodes/RenderNode";
 import { systemRenderer } from "./SystemRenderer";

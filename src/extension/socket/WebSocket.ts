@@ -170,7 +170,7 @@ import { $warn } from "../../Defines.debug";
         private onConnect(): void {
             this._connected = true;
             this._connecting = false;
-            this.dispatchEventWith(egret.Event.CONNECT);
+            this.dispatchEventWith(Event.CONNECT);
         }
 
         /**
@@ -179,7 +179,7 @@ import { $warn } from "../../Defines.debug";
          */
         private onClose(): void {
             this._connected = false;
-            this.dispatchEventWith(egret.Event.CLOSE);
+            this.dispatchEventWith(Event.CLOSE);
         }
 
         /**

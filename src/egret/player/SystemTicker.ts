@@ -311,7 +311,7 @@ import { sys } from "../system/SysData";
             if (length == 0) { return; }
             list = list.concat();
             for (let i = 0; i < length; i++) {
-                list[i].dispatchEventWith(egret.Event.ENTER_FRAME);
+                list[i].dispatchEventWith(Event.ENTER_FRAME);
             }
         }
 
@@ -326,7 +326,7 @@ import { sys } from "../system/SysData";
             if (length == 0) { return; }
             list = list.concat();
             for (let i = 0; i < length; i++) {
-                list[i].dispatchEventWith(egret.Event.RENDER);
+                list[i].dispatchEventWith(Event.RENDER);
             }
         }
 
@@ -440,7 +440,7 @@ if (callAsyncState.functionList.length > 0) {
             pause() {
                 if (isActivate) {
                     isActivate = false;
-                    stage.dispatchEvent(new Event(egret.Event.DEACTIVATE));
+                    stage.dispatchEvent(new Event(Event.DEACTIVATE));
                     if (onPause) {
                         onPause();
                     }
@@ -450,7 +450,7 @@ if (callAsyncState.functionList.length > 0) {
             resume() {
                 if (!isActivate) {
                     isActivate = true;
-                    stage.dispatchEvent(new Event(egret.Event.ACTIVATE));
+                    stage.dispatchEvent(new Event(Event.ACTIVATE));
                     if (onResume) {
                         onResume();
                     }

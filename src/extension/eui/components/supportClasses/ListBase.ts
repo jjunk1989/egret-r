@@ -548,7 +548,7 @@ import { CollectionEventKind } from "../../events/CollectionEventKind";
             }
 
             if (values[ListBaseKeys.dispatchChangeAfterSelection]) {
-                let result = this.dispatchEventWith(egret.Event.CHANGING, false, true, true);
+                let result = this.dispatchEventWith(Event.CHANGING, false, true, true);
                 if (!result) {
                     this.itemSelected(values[ListBaseKeys.proposedSelectedIndex], false);
                     values[ListBaseKeys.proposedSelectedIndex] = ListBase.NO_PROPOSED_SELECTION;
@@ -569,7 +569,7 @@ import { CollectionEventKind } from "../../events/CollectionEventKind";
             //子类若需要自身抛出Change事件，而不是在此处抛出，可以设置dispatchChangedEvents为false
             if (dispatchChangedEvents) {
                 if (values[ListBaseKeys.dispatchChangeAfterSelection]) {
-                    this.dispatchEventWith(egret.Event.CHANGE);
+                    this.dispatchEventWith(Event.CHANGE);
                     values[ListBaseKeys.dispatchChangeAfterSelection] = false;
                 }
                 PropertyEvent.dispatchPropertyEvent(this, PropertyEvent.PROPERTY_CHANGE, "selectedIndex");

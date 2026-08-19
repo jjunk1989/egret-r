@@ -290,7 +290,7 @@ import { DEBUG } from "../../../Defines.debug";
             }
             this.invalidateSize();
             this.invalidateDisplayList();
-            this.dispatchEventWith(egret.Event.COMPLETE);
+            this.dispatchEventWith(Event.COMPLETE);
         }
 
         /**

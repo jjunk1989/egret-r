@@ -80,7 +80,7 @@ import { Html5Capatibility } from "../../web/Html5Capatibility";
                 let request = this.request;
                 if (!request) {
                     request = this.request = new WebHttpRequest();
-                    request.addEventListener(egret.Event.COMPLETE, this.onBlobLoaded, this);
+                    request.addEventListener(Event.COMPLETE, this.onBlobLoaded, this);
                     request.addEventListener(IOErrorEvent.IO_ERROR, this.onBlobError, this);
                     request.responseType = "blob";
                 }
@@ -150,7 +150,7 @@ import { Html5Capatibility } from "../../web/Html5Capatibility";
             this.data = new BitmapData(image);
             let self = this;
             window.setTimeout(function ():void {
-                self.dispatchEventWith(egret.Event.COMPLETE);
+                self.dispatchEventWith(Event.COMPLETE);
             }, 0);
         }
 

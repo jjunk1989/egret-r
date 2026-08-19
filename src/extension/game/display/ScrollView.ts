@@ -361,7 +361,7 @@ import { $error } from "../../../Defines.debug";
             let width = this.width;
             //这里将坐标取整，避免有些浏览器精度低产生“黑线”问题
             this.scrollRect = new Rectangle(Math.round(this._ScrV_Props_._scrollLeft), Math.round(this._ScrV_Props_._scrollTop), width, height);
-            this.dispatchEvent(new Event(egret.Event.CHANGE));
+            this.dispatchEvent(new Event(Event.CHANGE));
         }
 
         /**
@@ -440,7 +440,7 @@ import { $error } from "../../../Defines.debug";
             this._tempStage.addEventListener(TouchEvent.TOUCH_MOVE, this._onTouchMove, this);
             this._tempStage.addEventListener(TouchEvent.TOUCH_END, this._onTouchEnd, this);
             this._tempStage.addEventListener(TouchEvent.LEAVE_STAGE, this._onTouchEnd, this);
-            this.addEventListener(egret.Event.ENTER_FRAME, this._onEnterFrame, this);
+            this.addEventListener(Event.ENTER_FRAME, this._onEnterFrame, this);
 
             this._logTouchEvent(e);
             e.preventDefault();
@@ -586,7 +586,7 @@ import { $error } from "../../../Defines.debug";
             this._tempStage.removeEventListener(TouchEvent.TOUCH_MOVE, this._onTouchMove, this);
             this._tempStage.removeEventListener(TouchEvent.TOUCH_END, this._onTouchEnd, this);
             this._tempStage.removeEventListener(TouchEvent.LEAVE_STAGE, this._onTouchEnd, this);
-            this.removeEventListener(egret.Event.ENTER_FRAME, this._onEnterFrame, this);
+            this.removeEventListener(Event.ENTER_FRAME, this._onEnterFrame, this);
 
             this._moveAfterTouchEnd();
         }
@@ -784,7 +784,7 @@ import { $error } from "../../../Defines.debug";
             this._ScrV_Props_._vScrollTween = null;
             this._ScrV_Props_._isHTweenPlaying = false;
             this._ScrV_Props_._isVTweenPlaying = false
-            this.dispatchEvent(new Event(egret.Event.COMPLETE));
+            this.dispatchEvent(new Event(Event.COMPLETE));
         }
 
         /**

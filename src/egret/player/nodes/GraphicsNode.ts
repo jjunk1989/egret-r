@@ -2,6 +2,7 @@
 // Copyright (c) 2014-present, Egret Technology.
 
 import { Matrix } from "../../geom/Matrix";
+import { CapsStyle } from "../../display/CapsStyle";
 import { FillPath } from "../paths/FillPath";
 import { GradientFillPath } from "../paths/GradientFillPath";
 import { RenderNode, RenderNodeType } from "./RenderNode";

@@ -77,6 +77,27 @@
 
 ---
 
+### Spike 实测：类级摇树收益验证（2026-08-17）
+
+脚本：`match/scripts/spike-tree-shaking.mjs`（模拟阶段 1/2 完成后的形态：match 源码副本 codemod `egret.X` → 具名导入 + esbuild 直接以引擎源码为入口）。
+
+| 口径 | minified 体积 | 节省 |
+|------|--------------|------|
+| 现状 match game.js | 525.4 KB | — |
+| 乐观口径（不含 WebGLRenderer） | 285.5 KB | -46% |
+| **修正口径（静态 import WebGLRenderer）** | **325.4 KB** | **-38%（200KB）** |
+| keepNames 版 | 332.3 KB | -37% |
+
+**结论：阶段 1/2 值得投入（预期 ~200KB 收益，与阶段 0 预估一致）。**
+
+Spike 实证的必须修复点（障碍 #4 的两个具体实例）：
+1. `MiniGameEntry` L162 `globalThis.egret?.WebGLRenderer` 动态查找——摇树后渲染器消失，必须改静态 import
+2. `startMiniGame({ entryClass: 'Main' })` 字符串查找——`class Main` 被 esbuild 摇掉，需 `registerClass` 或注册表机制
+
+额外可裁项（阶段 3）：WebGLRenderer 连带拉入 CanvasRenderer（63.5KB 源码）、Texture 链中的 KTXContainer（10KB）、Tt/Ks/Qq 适配器类。
+
+---
+
 ## 四、主要障碍
 
 | # | 障碍 | 难度 | 说明 |
@@ -102,12 +123,11 @@
 
 ### 阶段 1：清理命名空间残留（1–2 天，纯源码，不碰发布格式）
 
-- [ ] Codemod：`egret.Event.X` → `Event.X`（114 处，跨 6 包；未 import 的文件补 import）
-- [ ] 内部全局收编：新建 `src/egret/internal/globals.ts` 导出 `$markCannotUse`、`$callAsync`、
-      `$hashCount`、`$TextureScaleFactor`；`$locale_strings` 归入 i18n 模块；
-      resource 包 `VersionController` 注册改为显式导出
-- [ ] `MiniGameEntry` 的 `globalThis.egret.WebGLRenderer` → `import { WebGLRenderer }`
-- [ ] 验收：`npm run build` 全绿、`verify-bundle.mjs` 通过、examples 全跑通（体积不变属预期）
+- [x] Codemod：`egret.Event.X` → `Event.X`（**114 处全部完成**，2026-08-19，脚本 `scripts/codemod-ns.mjs`；含 `Sprite`/`Stage`/`CapsStyle` 5 处 + 补 import）
+- [x] `MiniGameEntry` 的 `globalThis.egret.WebGLRenderer` → **静态 `import { WebGLRenderer }`**（同时修正 minigame 构建过滤：`web/` 目录仅排除 DOM 专属文件，豁免 `rendering/` 与 `WebSysImpl.ts`，WebGL 管线进入小游戏产物）
+- [ ] 内部全局收编：`$markCannotUse`/`$callAsync`/`$hashCount`/`$TextureScaleFactor`/`$locale_strings`
+      （22 处，**并入阶段 2 与 namespace 移除一起处理**——namespace 存在时它们仍走 `_ns` 导出，收编过早无收益）
+- [x] 验收：88/88 单测、8 examples、match 五平台构建全绿；`game.js` 525.1 KB（≈525.4 不变，符合预期）
 
 ### 阶段 2：新增 shakeable ESM 产物（2–3 天，核心阶段）
 

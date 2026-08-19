@@ -55,7 +55,7 @@ import { ResourceItem } from "../core/ResourceItem";
             let request:HttpRequest = this.recycler.pop();
             if (!request) {
                 request = new HttpRequest();
-                request.addEventListener(egret.Event.COMPLETE, this.onLoadFinish, this);
+                request.addEventListener(Event.COMPLETE, this.onLoadFinish, this);
                 request.addEventListener(IOErrorEvent.IO_ERROR, this.onLoadFinish, this);
             }
             request.responseType = this._dataFormat;
@@ -71,7 +71,7 @@ import { ResourceItem } from "../core/ResourceItem";
             delete this.resItemDic[request.hashCode];
             let resItem:ResourceItem = data.item;
             let compFunc:Function = data.func;
-            resItem.loaded = (event.type == egret.Event.COMPLETE);
+            resItem.loaded = (event.type == Event.COMPLETE);
             if (resItem.loaded) {
                 this.analyzeData(resItem, request.response)
             }

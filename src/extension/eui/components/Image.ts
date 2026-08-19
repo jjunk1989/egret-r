@@ -219,7 +219,7 @@ import { getAssets } from "../core/UIComponent";
                     }
                     this.$setTexture(data);
                     if (data) {
-                        this.dispatchEventWith(egret.Event.COMPLETE);
+                        this.dispatchEventWith(Event.COMPLETE);
                     }
                     else if (DEBUG) {
                         $warn(2301, source);

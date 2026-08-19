@@ -319,7 +319,7 @@ import { Label } from "./Label";
             if (instance === this.thumb) {
                 if(this.thumb.x) this.thumbInitX = this.thumb.x;
                 if(this.thumb.y) this.thumbInitY = this.thumb.y;
-                this.thumb.addEventListener(egret.Event.RESIZE, this.onThumbResize, this);
+                this.thumb.addEventListener(Event.RESIZE, this.onThumbResize, this);
             }
         }
 
@@ -333,7 +333,7 @@ import { Label } from "./Label";
         protected partRemoved(partName:string, instance:any):void {
             super.partRemoved(partName, instance);
             if (instance === this.thumb) {
-                this.thumb.removeEventListener(egret.Event.RESIZE, this.onThumbResize, this);
+                this.thumb.removeEventListener(Event.RESIZE, this.onThumbResize, this);
             }
         }
 
