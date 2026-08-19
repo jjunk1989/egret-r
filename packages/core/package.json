@@ -20,6 +20,13 @@
       "import": "./dist/esm/index.mjs"
     }
   },
+  "sideEffects": [
+    "./dist/esm/index.mjs",
+    "./dist/esm/init.mjs",
+    "./dist/esm/Defines.debug.js",
+    "./dist/esm/egret/net/web/WebImageLoader.js",
+    "./dist/esm/egret/text/web/WebTextMeasurer.js"
+  ],
   "files": [
     "dist",
     "README.md",

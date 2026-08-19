@@ -102,7 +102,7 @@ function buildPkg(pkgName) {
   const exports = []; // { sym, rel }
   const seen = new Set();
   for (const f of walkJs(esmDir)) {
-    if (f.endsWith('init.mjs') || f.endsWith('index.mjs')) continue;
+    if (f.endsWith('init.mjs') || f.endsWith('index.mjs') || f.endsWith('shakeable.mjs')) continue;
     let rel = path.relative(esmDir, f).replace(/\\/g, '/').replace(/\.js$/, '');
     if (!rel.startsWith('.')) rel = './' + rel;
     if (isWebDomModule(rel)) continue;
@@ -148,15 +148,22 @@ function buildPkg(pkgName) {
       index += `import { ${sym} } from "${e.rel}";\nglobalThis.egret.${sym} = ${sym};\n`;
     }
   }
-  for (const e of exports) {
-    index += `export { ${e.sym} } from "${e.rel}";\n`;
-  }
+  // re-export 拆到独立 shakeable.mjs（sideEffects:false，可被下游按需摇树）。
+  // index.mjs 自身在 sideEffects 白名单 → esbuild 会保守保留它的全部依赖，
+  // 若把 re-export 直接放 index.mjs，所有导出模块都会被打进下游 bundle。
+  index += "export * from './shakeable.mjs';\n";
   fs.writeFileSync(path.join(esmDir, 'index.mjs'), index);
+
+  let shakeable = "// Auto-generated re-exports (sideEffects: false — fully shakeable downstream).\n";
+  for (const e of exports) {
+    shakeable += `export { ${e.sym} } from "${e.rel}";\n`;
+  }
+  fs.writeFileSync(path.join(esmDir, 'shakeable.mjs'), shakeable);
 
   // 非 core 包：跨包 import 指向 shakeable 子路径，保证下游可摇树
   if (pkgName !== 'core') {
     for (const f of walkJs(esmDir)) {
-      if (f.endsWith('init.mjs') || f.endsWith('index.mjs')) continue;
+      if (f.endsWith('init.mjs') || f.endsWith('index.mjs') || f.endsWith('shakeable.mjs')) continue;
       let text = fs.readFileSync(f, 'utf8');
       const next = text.replace(/(['"])@egret-r\/core\1/g, "'@egret-r/core/esm'");
       if (next !== text) {
