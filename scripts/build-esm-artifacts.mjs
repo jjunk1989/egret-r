@@ -31,8 +31,6 @@ try { if (typeof g.RELEASE === "undefined") g.RELEASE = false; } catch (e) {}
 try { if (typeof g.warn === "undefined") g.warn = (typeof console !== "undefined" ? console.warn.bind(console) : function () {}); } catch (e) {}
 try { if (typeof g.nativeRender === "undefined") g.nativeRender = false; } catch (e) {}
 try { g.egret.nativeRender = false; } catch (e) {}
-try { if (typeof g.nativeRender === "undefined") g.nativeRender = false; } catch (e) {}
-try { g.egret.nativeRender = false; } catch (e) {}
 if (typeof g.window === "undefined") { try { g.window = g; } catch (e) {} }
 if (typeof g.navigator === "undefined") {
   try {
@@ -136,7 +134,14 @@ function buildPkg(pkgName) {
   // 引擎内部有少量裸 `egret.X` 读取（如 DisplayList 的 `(egret as any).Stage`），
   // esm 没有 _ns 挂载，需显式挂到全局 egret 对象（白名单，避免全量挂载破坏摇树）。
   // WebGLRenderBuffer/CanvasRenderBuffer：MiniGameEntry 从 egret.X 选主渲染缓冲类。
-  const GLOBAL_MOUNT = ['Stage', 'Sprite', 'WebGLRenderBuffer', 'CanvasRenderBuffer', 'EgretShaderLib'];
+  // log/warn/error/assert：Console.ts 的全局日志方法（WebGLRenderContext 等裸 egret.log）。
+  // utils 命名空间函数：DisplayObject/事件等裸 egret.getQualifiedClassName/getDefinitionByName/...
+  const GLOBAL_MOUNT = [
+    'Stage', 'Sprite', 'WebGLRenderBuffer', 'CanvasRenderBuffer', 'EgretShaderLib',
+    'log', 'warn', 'error', 'assert',
+    'getQualifiedClassName', 'getQualifiedSuperclassName', 'getDefinitionByName',
+    'hasDefinition', 'registerClass', 'superGetter', 'superSetter',
+  ];
   for (const sym of GLOBAL_MOUNT) {
     const e = exports.find((x) => x.sym === sym);
     if (e) {
