@@ -9,7 +9,8 @@ import { Screen } from "../player/Screen";
 import { DisplayObjectContainer } from "./DisplayObjectContainer";
 import { Sprite } from "./Sprite";
 import { invalidateRenderFlag, ticker } from "../player/SystemTicker";
-import { DEBUG } from "../../Defines.debug";
+import { DEBUG, $markCannotUse } from "../../Defines.debug";
+import { $TextureScaleFactor } from "./Texture";
 
     /**
      * The Stage class represents the main drawing area.The Stage object is not globally accessible. You need to access
@@ -247,11 +248,11 @@ import { DEBUG } from "../../Defines.debug";
          * @language zh_CN
          */
         public get textureScaleFactor(): number {
-            return egret.$TextureScaleFactor;
+            return $TextureScaleFactor.value;
         }
 
         public set textureScaleFactor(value: number) {
-            egret.$TextureScaleFactor = value;
+            $TextureScaleFactor.value = value;
         }
 
         $maxTouches: number = 99;
@@ -330,17 +331,17 @@ import { DEBUG } from "../../Defines.debug";
 
     if (DEBUG) {
 
-        egret.$markCannotUse(Stage, "alpha", 1);
-        egret.$markCannotUse(Stage, "visible", true);
-        egret.$markCannotUse(Stage, "x", 0);
-        egret.$markCannotUse(Stage, "y", 0);
-        egret.$markCannotUse(Stage, "scaleX", 1);
-        egret.$markCannotUse(Stage, "scaleY", 1);
-        egret.$markCannotUse(Stage, "rotation", 0);
-        egret.$markCannotUse(Stage, "cacheAsBitmap", false);
-        egret.$markCannotUse(Stage, "scrollRect", null);
-        egret.$markCannotUse(Stage, "filters", null);
-        egret.$markCannotUse(Stage, "blendMode", null);
-        egret.$markCannotUse(Stage, "touchEnabled", true);
-        egret.$markCannotUse(Stage, "matrix", null);
+        $markCannotUse(Stage, "alpha", 1);
+        $markCannotUse(Stage, "visible", true);
+        $markCannotUse(Stage, "x", 0);
+        $markCannotUse(Stage, "y", 0);
+        $markCannotUse(Stage, "scaleX", 1);
+        $markCannotUse(Stage, "scaleY", 1);
+        $markCannotUse(Stage, "rotation", 0);
+        $markCannotUse(Stage, "cacheAsBitmap", false);
+        $markCannotUse(Stage, "scrollRect", null);
+        $markCannotUse(Stage, "filters", null);
+        $markCannotUse(Stage, "blendMode", null);
+        $markCannotUse(Stage, "touchEnabled", true);
+        $markCannotUse(Stage, "matrix", null);
     }

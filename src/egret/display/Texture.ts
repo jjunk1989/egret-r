@@ -9,7 +9,7 @@ import { HashObject } from "../utils/HashObject";
 import { registerClass } from "../utils/registerClass";
 
 
-    export let $TextureScaleFactor: number = 1;
+    export const $TextureScaleFactor: { value: number } = { value: 1 };
     /**
      * The Texture class encapsulates different image resources on different platforms.
      * In HTML5, resource is an HTMLElement object
@@ -151,11 +151,11 @@ import { registerClass } from "../utils/registerClass";
         }
 
         $getScaleBitmapWidth(): number {
-            return this.$bitmapWidth * $TextureScaleFactor;
+            return this.$bitmapWidth * $TextureScaleFactor.value;
         }
 
         $getScaleBitmapHeight(): number {
-            return this.$bitmapHeight * $TextureScaleFactor;
+            return this.$bitmapHeight * $TextureScaleFactor.value;
         }
 
         /**
@@ -218,7 +218,7 @@ import { registerClass } from "../utils/registerClass";
          */
         public _setBitmapData(value: BitmapData) {
             this.$bitmapData = value;
-            let scale = $TextureScaleFactor;
+            let scale = $TextureScaleFactor.value;
             let w = value.width * scale;
             let h = value.height * scale;
             this.$initData(0, 0, w, h, 0, 0, w, h, value.width, value.height);
@@ -291,7 +291,7 @@ import { registerClass } from "../utils/registerClass";
          */
         public $initData(bitmapX: number, bitmapY: number, bitmapWidth: number, bitmapHeight: number, offsetX: number, offsetY: number,
             textureWidth: number, textureHeight: number, sourceWidth: number, sourceHeight: number, rotated: boolean = false): void {
-            let scale = $TextureScaleFactor;
+            let scale = $TextureScaleFactor.value;
             this.$bitmapX = bitmapX / scale;
             this.$bitmapY = bitmapY / scale;
             this.$bitmapWidth = bitmapWidth / scale;

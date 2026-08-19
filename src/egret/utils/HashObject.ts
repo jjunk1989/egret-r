@@ -50,7 +50,7 @@ let __define = globalThis && (globalThis).__define || function (o, p, g, s) { Ob
      * @private
      * 哈希计数
      */
-    export let $hashCount: number = 1;
+    export const $hashCount: { value: number } = { value: 1 };
 
     /**
      * The HashObject class is the base class for all objects in the Egret framework.The HashObject
@@ -80,7 +80,7 @@ let __define = globalThis && (globalThis).__define || function (o, p, g, s) { Ob
          * @language zh_CN
          */
         public constructor() {
-            this.$hashCode = $hashCount++;
+            this.$hashCode = $hashCount.value++;
         }
 
         /**

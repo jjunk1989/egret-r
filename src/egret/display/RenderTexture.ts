@@ -66,7 +66,7 @@ import { systemRenderer } from "../player/SystemRenderer";
                 return false;
             }
 
-            scale /= $TextureScaleFactor;
+            scale /= $TextureScaleFactor.value;
             let width = (bounds.x + bounds.width) * scale;
             let height = (bounds.y + bounds.height) * scale;
             if (clipBounds) {
@@ -124,7 +124,7 @@ import { systemRenderer } from "../player/SystemRenderer";
         public getPixel32(x: number, y: number): number[] {
             let data: number[];
             if (this.$renderBuffer) {
-                let scale = $TextureScaleFactor;
+                let scale = $TextureScaleFactor.value;
                 x = Math.round(x / scale);
                 y = Math.round(y / scale);
                 data = this.$renderBuffer.getPixels(x, y, 1, 1);

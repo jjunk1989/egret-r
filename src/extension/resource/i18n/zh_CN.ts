@@ -1,7 +1,8 @@
 
 
 import { egret } from '@egret-r/core';
-var _loc = egret.$locale_strings;
+const { $locale_strings } = egret;
+var _loc = $locale_strings;
     _loc["zh_CN"] = _loc["zh_CN"] || {};
     let locale_strings = _loc["zh_CN"];
 

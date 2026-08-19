@@ -16,9 +16,8 @@ import { customHitTestBuffer } from "../player/RenderBuffer";
 import { tr } from "../i18n/tr";
 import { systemRenderer } from "../player/SystemRenderer";
 import { EventDispatcher } from "../events/EventDispatcher";
-import { Stage } from "./Stage";
-import { Bitmap } from "./Bitmap";
-import { Sprite } from "./Sprite";
+import type { Stage } from "./Stage";
+import type { Bitmap } from "./Bitmap";
 import { Filter } from "../filters/Filter";
 import { Point } from "../geom/Point";
 import { BlurFilter } from "../filters/BlurFilter";
@@ -107,6 +106,15 @@ import { CustomFilter } from "../filters/CustomFilter";
      * @language zh_CN
      */
     export class DisplayObject extends EventDispatcher {
+
+        /**
+         * @private
+         */
+        static $EVENT_ADD_TO_STAGE_LIST: DisplayObject[] = [];
+        /**
+         * @private
+         */
+        static $EVENT_REMOVE_FROM_STAGE_LIST: DisplayObject[] = [];
 
         /**
          * Initializes a DisplayObject object
@@ -211,7 +219,7 @@ import { CustomFilter } from "../filters/CustomFilter";
             self.$stage = stage;
             self.$nestLevel = nestLevel;
             self.$hasAddToStage = true;
-            egret.Sprite.$EVENT_ADD_TO_STAGE_LIST.push(self);
+            DisplayObject.$EVENT_ADD_TO_STAGE_LIST.push(self);
         }
 
         /**
@@ -221,7 +229,7 @@ import { CustomFilter } from "../filters/CustomFilter";
         $onRemoveFromStage(): void {
             let self = this;
             self.$nestLevel = 0;
-            egret.Sprite.$EVENT_REMOVE_FROM_STAGE_LIST.push(self);
+            Sprite.$EVENT_REMOVE_FROM_STAGE_LIST.push(self);
         }
 
         /**

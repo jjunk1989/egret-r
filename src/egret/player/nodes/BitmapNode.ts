@@ -85,7 +85,7 @@ import { ColorMatrixFilter } from "../../filters/ColorMatrixFilter";
             if (!image) {
                 return;
             }
-            let scale = $TextureScaleFactor;
+            let scale = $TextureScaleFactor.value;
             node.smoothing = smoothing;
             node.image = image;
             node.imageWidth = sourceWidth;
@@ -133,17 +133,17 @@ import { ColorMatrixFilter } from "../../filters/ColorMatrixFilter";
             let imageWidth: number = bitmapWidth;
             let imageHeight: number = bitmapHeight;
 
-            destW = destW - (textureWidth - bitmapWidth * $TextureScaleFactor);
-            destH = destH - (textureHeight - bitmapHeight * $TextureScaleFactor);
+            destW = destW - (textureWidth - bitmapWidth * $TextureScaleFactor.value);
+            destH = destH - (textureHeight - bitmapHeight * $TextureScaleFactor.value);
 
 
             let targetW0 = scale9Grid.x - offsetX;
             let targetH0 = scale9Grid.y - offsetY;
 
-            let sourceW0 = targetW0 / $TextureScaleFactor;
-            let sourceH0 = targetH0 / $TextureScaleFactor;
-            let sourceW1 = scale9Grid.width / $TextureScaleFactor;
-            let sourceH1 = scale9Grid.height / $TextureScaleFactor;
+            let sourceW0 = targetW0 / $TextureScaleFactor.value;
+            let sourceH0 = targetH0 / $TextureScaleFactor.value;
+            let sourceW1 = scale9Grid.width / $TextureScaleFactor.value;
+            let sourceH1 = scale9Grid.height / $TextureScaleFactor.value;
 
 
             //防止空心的情况出现。
@@ -169,10 +169,10 @@ import { ColorMatrixFilter } from "../../filters/ColorMatrixFilter";
             let sourceY2 = sourceY1 + sourceH1;
             let sourceH2 = imageHeight - sourceH0 - sourceH1;
 
-            let targetW2 = sourceW2 * $TextureScaleFactor;
-            let targetH2 = sourceH2 * $TextureScaleFactor;
+            let targetW2 = sourceW2 * $TextureScaleFactor.value;
+            let targetH2 = sourceH2 * $TextureScaleFactor.value;
 
-            if ((sourceW0 + sourceW2) * $TextureScaleFactor > destW || (sourceH0 + sourceH2) * $TextureScaleFactor > destH) {
+            if ((sourceW0 + sourceW2) * $TextureScaleFactor.value > destW || (sourceH0 + sourceH2) * $TextureScaleFactor.value > destH) {
                 node.drawImage(bitmapX, bitmapY, bitmapWidth, bitmapHeight, offsetX, offsetY, destW, destH);
                 return;
             }

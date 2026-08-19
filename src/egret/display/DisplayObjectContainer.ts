@@ -28,15 +28,6 @@ import { registerClass } from "../utils/registerClass";
     export class DisplayObjectContainer extends DisplayObject {
 
         /**
-         * @private
-         */
-        static $EVENT_ADD_TO_STAGE_LIST: DisplayObject[] = [];
-        /**
-         * @private
-         */
-        static $EVENT_REMOVE_FROM_STAGE_LIST: DisplayObject[] = [];
-
-        /**
          * Creates a new DisplayObjectContainer instance.
          * @version Egret 2.4
          * @platform Web

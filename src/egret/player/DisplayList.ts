@@ -2,7 +2,6 @@
 // Copyright (c) 2014-present, Egret Technology.
 
 import { BitmapData } from "../display/BitmapData";
-import { Stage } from "../display/Stage";
 import { nativeRender } from "./Player";
 import { RenderNode } from "./nodes/RenderNode";
 import { systemRenderer } from "./SystemRenderer";
@@ -48,7 +47,9 @@ import { BitmapNode } from "./nodes/BitmapNode";
         public constructor(root: DisplayObject) {
             super();
             this.root = root;
-            this.isStage = (root instanceof egret.Stage);
+            // Accessed via the runtime egret namespace to avoid a static import
+            // cycle (DisplayObject -> DisplayList -> Stage -> Sprite -> ... -> DisplayObject).
+            this.isStage = (root instanceof (egret as any).Stage);
         }
 
         private isStage: boolean = false;

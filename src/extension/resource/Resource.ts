@@ -3,10 +3,14 @@
 
 
 import { egret } from '@egret-r/core';
-const { BitmapData, EventDispatcher, callLater, Texture, HtmlSound } = egret;
+const { BitmapData, EventDispatcher, callLater, Texture, HtmlSound, $callAsync } = egret;
 import { ResourceItem } from "./core/ResourceItem";
 import { AnalyzerBase } from "./analyzer/AnalyzerBase";
 import { VersionController } from "./version/IVersionController";
+// Side-effect: registers egret.VersionController (Html5VersionController) so
+// Resource can construct it. Without this static import the module is dropped
+// from the bundle and egret.VersionController stays undefined.
+import "./version/Html5VersionController";
 
 import { ResourceLoader } from "./core/ResourceLoader";
 import { ResourceConfig } from "./core/ResourceConfig";
@@ -797,14 +801,14 @@ import { $warn } from "../../Defines.debug";
                 name = AnalyzerBase.getStringPrefix(key);
                 type = this.resConfig.getType(name);
                 if(type==""){
-                    egret.$callAsync(compFunc, thisObject);
+                    $callAsync(compFunc, thisObject);
                     return;
                 }
             }
             let analyzer:AnalyzerBase = this.$getAnalyzerByType(type);
             let res:any = analyzer.getRes(key);
             if(res){
-                egret.$callAsync(compFunc, thisObject, res, key);
+                $callAsync(compFunc, thisObject, res, key);
                 return;
             }
             let args:any = {key:key,compFunc:compFunc,thisObject:thisObject};
@@ -829,7 +833,7 @@ import { $warn } from "../../Defines.debug";
          */
         public getResByUrl(url:string,compFunc:Function,thisObject:any,type:string=""):void{
             if(!url){
-                egret.$callAsync(compFunc, thisObject);
+                $callAsync(compFunc, thisObject);
                 return;
             }
             if(!type)
@@ -845,7 +849,7 @@ import { $warn } from "../../Defines.debug";
             let name:string = url;
             let res:any = analyzer.getRes(name);
             if(res){
-                egret.$callAsync(compFunc, thisObject, res, url);
+                $callAsync(compFunc, thisObject, res, url);
                 return;
             }
             let args:any = {key:name,compFunc:compFunc,thisObject:thisObject};

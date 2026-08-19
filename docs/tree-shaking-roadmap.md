@@ -125,8 +125,8 @@ Spike 实证的必须修复点（障碍 #4 的两个具体实例）：
 
 - [x] Codemod：`egret.Event.X` → `Event.X`（**114 处全部完成**，2026-08-19，脚本 `scripts/codemod-ns.mjs`；含 `Sprite`/`Stage`/`CapsStyle` 5 处 + 补 import）
 - [x] `MiniGameEntry` 的 `globalThis.egret.WebGLRenderer` → **静态 `import { WebGLRenderer }`**（同时修正 minigame 构建过滤：`web/` 目录仅排除 DOM 专属文件，豁免 `rendering/` 与 `WebSysImpl.ts`，WebGL 管线进入小游戏产物）
-- [ ] 内部全局收编：`$markCannotUse`/`$callAsync`/`$hashCount`/`$TextureScaleFactor`/`$locale_strings`
-      （22 处，**并入阶段 2 与 namespace 移除一起处理**——namespace 存在时它们仍走 `_ns` 导出，收编过早无收益）
+- [x] 内部全局收编（2026-08-19）：`$markCannotUse`(13)/`$callAsync`(4)/`$hashCount`(1)/`$TextureScaleFactor`(2)/`$locale_strings`(2) 共 22 处改为模块导入/解构；其中 `$hashCount`/`$TextureScaleFactor` 因 ESM import 绑定只读改为**容器对象**（`{ value }`，跨模块赋值合法）；运行时 `egret.X` 残留仅剩 3 处注册写入（`Sound`/`Video`/`VersionController`）
+- [x] **循环依赖修复**（2026-08-19，roadmap 障碍 #5 前置）：`DisplayObject` 的 `Stage`/`Bitmap`/`DisplayObjectContainer` 改 `import type`；`$EVENT_ADD_TO_STAGE_LIST` 静态数组上移至 `DisplayObject`（消除 `DisplayObject→Sprite` 边）；`DisplayList` 的 `instanceof Stage` 改全局 namespace 访问（消除 `DisplayList→Stage` 边）；**构建排序 Kahn → DFS 后序**（环内顺序确定性，杜绝「加一条 import 边就随机重排环成员导致 Class extends undefined」）
 - [x] 验收：88/88 单测、8 examples、match 五平台构建全绿；`game.js` 525.1 KB（≈525.4 不变，符合预期）
 
 ### 阶段 2：新增 shakeable ESM 产物（2–3 天，核心阶段）

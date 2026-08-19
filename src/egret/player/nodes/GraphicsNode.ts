@@ -108,7 +108,7 @@ import { StrokePath } from "../paths/StrokePath";
             path.lineWidth = thickness;
             path.lineColor = color;
             path.lineAlpha = alpha;
-            path.caps = caps || egret.CapsStyle.ROUND;
+            path.caps = caps || CapsStyle.ROUND;
             path.joints = joints;
             path.miterLimit = miterLimit;
             path.lineDash = lineDash;

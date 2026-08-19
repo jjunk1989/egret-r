@@ -3,7 +3,7 @@
 
 
 import { egret } from '@egret-r/core';
-const { Event, _is, DisplayObject, Rectangle, $TempRectangle } = egret;
+const { Event, _is, DisplayObject, Rectangle, $TempRectangle, $hashCount } = egret;
 import { registerProperty } from "../utils/registerProperty";
 
 import { Group } from "./Group";
@@ -744,7 +744,7 @@ import { JustifyAlign } from "../layouts/JustifyAlign";
                 rendererClass = ItemRenderer;
             }
             if (!rendererClass.$hashCode) {
-                rendererClass.$hashCode = egret.$hashCount++;
+                rendererClass.$hashCode = $hashCount.value++;
             }
             return rendererClass;
         }

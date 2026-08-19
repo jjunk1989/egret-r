@@ -37,7 +37,7 @@ import { Rectangle } from "../geom/Rectangle";
                 return;
             }
 
-            let scale = $TextureScaleFactor;
+            let scale = $TextureScaleFactor.value;
             let node = <MeshNode>this.$renderNode;
             node.smoothing = this.$smoothing;
             node.image = image;

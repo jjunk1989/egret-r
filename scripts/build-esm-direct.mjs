@@ -167,61 +167,37 @@ async function buildPkg(pkg) {
     fileRelToPath[relj] = files[fj];
   }
 
-  // Kahn's algorithm for topological sort
-  // Build in-degree map
-  var inDegree = {};
-  var adjList = {}; // file -> [files that depend on it]
-  for (var fi2 = 0; fi2 < files.length; fi2++) {
-    var r2 = path.relative(path.dirname(entryPath), files[fi2]).replace(/\\/g, '/').replace(/\.ts$/, '');
-    if (!r2.startsWith('.')) r2 = './' + r2;
-    if (!(r2 in inDegree)) inDegree[r2] = 0;
-    if (!adjList[r2]) adjList[r2] = [];
-  }
-  for (var fi3 = 0; fi3 < files.length; fi3++) {
-    var r3 = path.relative(path.dirname(entryPath), files[fi3]).replace(/\\/g, '/').replace(/\.ts$/, '');
-    if (!r3.startsWith('.')) r3 = './' + r3;
-    var deps = fileDeps[r3] || [];
-    for (var di = 0; di < deps.length; di++) {
-      if (deps[di] in inDegree) {
-        if (!adjList[deps[di]]) adjList[deps[di]] = [];
-        adjList[deps[di]].push(r3);
-        inDegree[r3] = (inDegree[r3] || 0) + 1;
-      }
-    }
-  }
-
-  // Kahn's: start with nodes that have 0 in-degree
-  var queue = [];
-  for (var r4 in inDegree) {
-    if (inDegree[r4] === 0) queue.push(r4);
-  }
-  var sorted = [];
-  while (queue.length > 0) {
-    var node = queue.shift();
-    sorted.push(node);
-    var neighbors = adjList[node] || [];
-    for (var ni = 0; ni < neighbors.length; ni++) {
-      inDegree[neighbors[ni]]--;
-      if (inDegree[neighbors[ni]] === 0) queue.push(neighbors[ni]);
-    }
-  }
-
-  // Build new files array in sorted order
-  var sortedFiles = [];
+  // DFS post-order topological sort.
+  // Deterministic and robust with cyclic imports: each module is emitted after
+  // all modules it imports; cycle members keep a stable order (first-encounter
+  // during DFS). The previous Kahn's implementation relied on queue insertion
+  // order for cycle members, so adding a single import edge could silently
+  // reorder them and crash with "Class extends value undefined".
   var fileByRel = {};
   for (var fi4 = 0; fi4 < files.length; fi4++) {
     var r5 = path.relative(path.dirname(entryPath), files[fi4]).replace(/\\/g, '/').replace(/\.ts$/, '');
     if (!r5.startsWith('.')) r5 = './' + r5;
     fileByRel[r5] = files[fi4];
   }
-  for (var si = 0; si < sorted.length; si++) {
-    if (fileByRel[sorted[si]]) sortedFiles.push(fileByRel[sorted[si]]);
+  var dfsVisited = {};
+  var postOrder = [];
+  function dfs(rel) {
+    if (dfsVisited[rel]) return;
+    dfsVisited[rel] = true;
+    var deps = fileDeps[rel] || [];
+    for (var di = 0; di < deps.length; di++) {
+      if (deps[di] in fileByRel) dfs(deps[di]);
+    }
+    postOrder.push(rel);
   }
-  // Add any remaining files not in sorted (e.g., part of cycles)
   for (var fi5 = 0; fi5 < files.length; fi5++) {
     var r6 = path.relative(path.dirname(entryPath), files[fi5]).replace(/\\/g, '/').replace(/\.ts$/, '');
     if (!r6.startsWith('.')) r6 = './' + r6;
-    if (sorted.indexOf(r6) < 0) sortedFiles.push(files[fi5]);
+    dfs(r6);
+  }
+  var sortedFiles = [];
+  for (var si = 0; si < postOrder.length; si++) {
+    if (fileByRel[postOrder[si]]) sortedFiles.push(fileByRel[postOrder[si]]);
   }
 
   // CRITICAL: For non-core packages, ensure all core files come BEFORE extension files
