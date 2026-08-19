@@ -4,10 +4,10 @@
 import { StageText } from "./StageText";
 import { TouchEvent } from "../events/TouchEvent";
 import { FocusEvent } from "../events/FocusEvent";
-import { TextField } from "./TextField";
+import type { TextField } from "./TextField";
 import { Stage } from "../display/Stage";
 import { callLater } from "../utils/callLater";
-import { nativeRender } from "../player/Player";
+
 import { Event } from "../events/Event";
 import { TextKeys } from "./TextField";
 import { HashObject } from "../utils/HashObject";

@@ -4,7 +4,7 @@
 import { HashObject } from "../utils/HashObject";
 import { Capabilities } from "../system/Capabilities";
 import { Stage } from "../display/Stage";
-import { nativeRender, Player } from "../player/Player";
+import { Player } from "../player/Player";
 import { StageOrientationEvent } from "../events/StageOrientationEvent";
 import { StageScaleMode } from "../player/StageScaleMode";
 import { OrientationMode } from "../display/OrientationMode";

@@ -1,14 +1,10 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-declare var global;
-declare var __global;
-if (typeof global == 'undefined') {
-    var global: any = window;
-}
-if (typeof __global == 'undefined') {
-    var __global = global;
-}
+// NOTE: the IIFE-era fallbacks (`var global = window` / `var __global = global`)
+// were removed — they became module-level `var` declarations that esbuild hoists
+// into the shared IIFE scope when bundling the multi-file ESM build, corrupting
+// bare `global`/`__global` references elsewhere. init.mjs now provides both.
 
 let __define = globalThis && (globalThis).__define || function (o, p, g, s) { Object.defineProperty(o, p, { configurable: true, enumerable: true, get: g, set: s }) };
 

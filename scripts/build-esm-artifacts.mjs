@@ -15,6 +15,24 @@ const INIT_TEMPLATE = `// Auto-generated runtime bootstrap for the shakeable ESM
 const g = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : global;
 if (!g.egret) { try { g.egret = { sys: {}, pro: {} }; } catch (e) { g.egret = {}; } }
 if (!g.egret.sys) { try { g.egret.sys = {}; } catch (e) {} }
+// Node-style \`global\` alias (IIFE build used \`var global = __global\`);
+// SystemTicker/getDefinitionByName/HashObject reference bare \`global\`.
+if (typeof g.global === "undefined") { try { g.global = g; } catch (e) {} }
+// Node-style \`__global\` alias (IIFE build used \`var __global = ...\`);
+// Player.ts references bare \`__global\`.
+if (typeof g.__global === "undefined") { try { g.__global = g; } catch (e) {} }
+// Node-style \`sys\` alias (IIFE build used \`var sys = egret.sys\`);
+// MiniGameEntry etc. reference bare \`sys\`.
+if (g.egret.sys) { try { g.sys = g.egret.sys; } catch (e) {} }
+// DEBUG / RELEASE / warn globals (IIFE build used \`var DEBUG = true, RELEASE = false, warn = console.warn...\`);
+// Defines.debug.ts references bare \`warn\` and some modules use bare \`DEBUG\`.
+try { if (typeof g.DEBUG === "undefined") g.DEBUG = true; } catch (e) {}
+try { if (typeof g.RELEASE === "undefined") g.RELEASE = false; } catch (e) {}
+try { if (typeof g.warn === "undefined") g.warn = (typeof console !== "undefined" ? console.warn.bind(console) : function () {}); } catch (e) {}
+try { if (typeof g.nativeRender === "undefined") g.nativeRender = false; } catch (e) {}
+try { g.egret.nativeRender = false; } catch (e) {}
+try { if (typeof g.nativeRender === "undefined") g.nativeRender = false; } catch (e) {}
+try { g.egret.nativeRender = false; } catch (e) {}
 if (typeof g.window === "undefined") { try { g.window = g; } catch (e) {} }
 if (typeof g.navigator === "undefined") {
   try {
@@ -103,6 +121,27 @@ function buildPkg(pkgName) {
   // Defines.debug 副作用：挂载 $error/$warn/$markCannotUse 等到全局 egret
   if (fs.existsSync(path.join(esmDir, 'Defines.debug.js'))) {
     index += "import './Defines.debug.js';\n";
+  }
+  // WebImageLoader 副作用：注册 ImageLoader 具体实现（setImageLoader(WebImageLoader)）。
+  // 它位于 net/web/ 被 isWebDomModule 过滤（不进 re-export），但小游戏依赖它经
+  // Image polyfill 加载位图，必须保留下副作用 import 以执行注册。
+  if (fs.existsSync(path.join(esmDir, 'egret/net/web/WebImageLoader.js'))) {
+    index += "import './egret/net/web/WebImageLoader';\n";
+  }
+  // WebTextMeasurer 副作用：注册 sys.measureText（TextField 文本测量必需，
+  // 小游戏用 canvas 测量，非 DOM 专属）。位于 text/web/ 被 isWebDomModule 过滤。
+  if (fs.existsSync(path.join(esmDir, 'egret/text/web/WebTextMeasurer.js'))) {
+    index += "import './egret/text/web/WebTextMeasurer';\n";
+  }
+  // 引擎内部有少量裸 `egret.X` 读取（如 DisplayList 的 `(egret as any).Stage`），
+  // esm 没有 _ns 挂载，需显式挂到全局 egret 对象（白名单，避免全量挂载破坏摇树）。
+  // WebGLRenderBuffer/CanvasRenderBuffer：MiniGameEntry 从 egret.X 选主渲染缓冲类。
+  const GLOBAL_MOUNT = ['Stage', 'Sprite', 'WebGLRenderBuffer', 'CanvasRenderBuffer', 'EgretShaderLib'];
+  for (const sym of GLOBAL_MOUNT) {
+    const e = exports.find((x) => x.sym === sym);
+    if (e) {
+      index += `import { ${sym} } from "${e.rel}";\nglobalThis.egret.${sym} = ${sym};\n`;
+    }
   }
   for (const e of exports) {
     index += `export { ${e.sym} } from "${e.rel}";\n`;

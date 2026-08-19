@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { nativeRender } from "../../../player/Player";
+
 import { setWebGLRenderContext } from "../../../player/Player";
 import { Capabilities } from "../../../system/Capabilities";
 import { Rectangle } from "../../../geom/Rectangle";
@@ -279,8 +279,12 @@ import { DEBUG } from "../../../../Defines.debug";
         private initWebGL(context?: WebGLRenderingContext): void {
             this.onResize();
 
-            this.surface.addEventListener("webglcontextlost", this.handleContextLost.bind(this), false);
-            this.surface.addEventListener("webglcontextrestored", this.handleContextRestored.bind(this), false);
+            // 小游戏 canvas（wx/tt 等）的 WebGL surface 无 addEventListener，需 guard
+            const surface: any = this.surface;
+            if (surface.addEventListener) {
+                surface.addEventListener("webglcontextlost", this.handleContextLost.bind(this), false);
+                surface.addEventListener("webglcontextrestored", this.handleContextRestored.bind(this), false);
+            }
 
             context ? this.setContext(context) : this.getWebGLContext()
 
@@ -880,27 +884,27 @@ import { DEBUG } from "../../../../Defines.debug";
                             if (data.texture[sys.etc_alpha_mask]) {
                                 gl.activeTexture(gl.TEXTURE1);
                                 gl.bindTexture(gl.TEXTURE_2D, data.texture[sys.etc_alpha_mask]);
-                                program = EgretWebGLProgram.getProgram(gl, EgretShaderLib.default_vert, EgretShaderLib.colorTransform_frag_etc_alphamask_frag, "colorTransform_frag_etc_alphamask_frag");
+                                program = EgretWebGLProgram.getProgram(gl, (egret as any).EgretShaderLib.default_vert, (egret as any).EgretShaderLib.colorTransform_frag_etc_alphamask_frag, "colorTransform_frag_etc_alphamask_frag");
                             }
                             else {
-                                program = EgretWebGLProgram.getProgram(gl, EgretShaderLib.default_vert, EgretShaderLib.colorTransform_frag, "colorTransform");
+                                program = EgretWebGLProgram.getProgram(gl, (egret as any).EgretShaderLib.default_vert, (egret as any).EgretShaderLib.colorTransform_frag, "colorTransform");
                             }
                         } else if (filter.type === "blurX") {
-                            program = EgretWebGLProgram.getProgram(gl, EgretShaderLib.default_vert, EgretShaderLib.blur_frag, "blur");
+                            program = EgretWebGLProgram.getProgram(gl, (egret as any).EgretShaderLib.default_vert, (egret as any).EgretShaderLib.blur_frag, "blur");
                         } else if (filter.type === "blurY") {
-                            program = EgretWebGLProgram.getProgram(gl, EgretShaderLib.default_vert, EgretShaderLib.blur_frag, "blur");
+                            program = EgretWebGLProgram.getProgram(gl, (egret as any).EgretShaderLib.default_vert, (egret as any).EgretShaderLib.blur_frag, "blur");
                         } else if (filter.type === "glow") {
-                            program = EgretWebGLProgram.getProgram(gl, EgretShaderLib.default_vert, EgretShaderLib.glow_frag, "glow");
+                            program = EgretWebGLProgram.getProgram(gl, (egret as any).EgretShaderLib.default_vert, (egret as any).EgretShaderLib.glow_frag, "glow");
                         }
                     } else {
                         if (data.texture[sys.etc_alpha_mask]) {
-                            program = EgretWebGLProgram.getProgram(gl, EgretShaderLib.default_vert, EgretShaderLib.texture_etc_alphamask_frag, sys.etc_alpha_mask);
+                            program = EgretWebGLProgram.getProgram(gl, (egret as any).EgretShaderLib.default_vert, (egret as any).EgretShaderLib.texture_etc_alphamask_frag, sys.etc_alpha_mask);
                             ///need refactor
                             gl.activeTexture(gl.TEXTURE1);
                             gl.bindTexture(gl.TEXTURE_2D, data.texture[sys.etc_alpha_mask]);
                         }
                         else {
-                            program = EgretWebGLProgram.getProgram(gl, EgretShaderLib.default_vert, EgretShaderLib.texture_frag, "texture");
+                            program = EgretWebGLProgram.getProgram(gl, (egret as any).EgretShaderLib.default_vert, (egret as any).EgretShaderLib.texture_frag, "texture");
                         }
                     }
 
@@ -911,7 +915,7 @@ import { DEBUG } from "../../../../Defines.debug";
                     break;
                 case DRAWABLE_TYPE.RECT:
 
-                    program = EgretWebGLProgram.getProgram(gl, EgretShaderLib.default_vert, EgretShaderLib.primitive_frag, "primitive");
+                    program = EgretWebGLProgram.getProgram(gl, (egret as any).EgretShaderLib.default_vert, (egret as any).EgretShaderLib.primitive_frag, "primitive");
                     this.activeProgram(gl, program);
                     this.syncUniforms(program, filter, data.textureWidth, data.textureHeight);
 
@@ -919,7 +923,7 @@ import { DEBUG } from "../../../../Defines.debug";
                     break;
                 case DRAWABLE_TYPE.PUSH_MASK:
 
-                    program = EgretWebGLProgram.getProgram(gl, EgretShaderLib.default_vert, EgretShaderLib.primitive_frag, "primitive");
+                    program = EgretWebGLProgram.getProgram(gl, (egret as any).EgretShaderLib.default_vert, (egret as any).EgretShaderLib.primitive_frag, "primitive");
                     this.activeProgram(gl, program);
                     this.syncUniforms(program, filter, data.textureWidth, data.textureHeight);
 
@@ -927,7 +931,7 @@ import { DEBUG } from "../../../../Defines.debug";
                     break;
                 case DRAWABLE_TYPE.POP_MASK:
 
-                    program = EgretWebGLProgram.getProgram(gl, EgretShaderLib.default_vert, EgretShaderLib.primitive_frag, "primitive");
+                    program = EgretWebGLProgram.getProgram(gl, (egret as any).EgretShaderLib.default_vert, (egret as any).EgretShaderLib.primitive_frag, "primitive");
                     this.activeProgram(gl, program);
                     this.syncUniforms(program, filter, data.textureWidth, data.textureHeight);
 

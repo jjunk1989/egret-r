@@ -2,7 +2,7 @@
 // Copyright (c) 2014-present, Egret Technology.
 
 import { Point } from "../geom/Point";
-import { nativeRender } from "../player/Player";
+
 import { Matrix } from "../geom/Matrix";
 import { GraphicsNode } from "../player/nodes/GraphicsNode";
 import { Path2D } from "../player/paths/Path2D";
@@ -13,7 +13,6 @@ import { tr } from "../i18n/tr";
 import { HashObject } from "../utils/HashObject";
 import { DisplayObject } from "./DisplayObject";
 import { GradientType } from "./GradientType";
-import { Sprite } from "./Sprite";
 import { Rectangle } from "../geom/Rectangle";
 
 
@@ -171,7 +170,7 @@ import { Rectangle } from "../geom/Rectangle";
             }
             target.$renderNode = this.$renderNode;
             this.$targetDisplay = target;
-            this.$targetIsSprite = target instanceof Sprite;
+            this.$targetIsSprite = target instanceof (egret as any).Sprite;
         }
 
         /**

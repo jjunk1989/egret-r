@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { Bitmap } from "./Bitmap";
-import { nativeRender } from "../player/Player";
+
 import { Base64Util } from "../utils/Base64Util";
 import { WebGLUtils } from "../web/rendering/webgl/WebGLUtils";
 import { createMap } from "../utils/DataStructure";

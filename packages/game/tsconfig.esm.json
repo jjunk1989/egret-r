@@ -9,7 +9,6 @@
     "strict": false,
     "sourceMap": false,
     "declarationMap": false,
-    "isolatedModules": true,
     "module": "ESNext",
     "moduleResolution": "bundler"
   },

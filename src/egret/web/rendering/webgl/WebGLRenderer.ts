@@ -25,6 +25,7 @@ import { TextBlock, Page } from "./TextAtlasStrategy";
 import { CustomFilter } from "../../../filters/CustomFilter";
 import { ColorMatrixFilter } from "../../../filters/ColorMatrixFilter";
 import { BitmapData } from "../../../display/BitmapData";
+import { WebGLUtils } from "./WebGLUtils";
 
 
     let blendModes = ["source-over", "lighter", "destination-out"];

@@ -2,6 +2,7 @@
 // Copyright (c) 2014-present, Egret Technology.
 
 import { WebGLRenderBuffer } from "./WebGLRenderBuffer";
+import { WebGLUtils } from "./WebGLUtils";
 
 
     /**

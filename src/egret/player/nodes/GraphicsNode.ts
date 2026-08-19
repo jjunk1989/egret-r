@@ -8,6 +8,7 @@ import { GradientFillPath } from "../paths/GradientFillPath";
 import { RenderNode, RenderNodeType } from "./RenderNode";
 import { Path2D } from "../paths/Path2D";
 import { StrokePath } from "../paths/StrokePath";
+import { WebGLUtils } from "../../web/rendering/webgl/WebGLUtils";
 
 
     let CAPS_STYLES = ["none", "round", "square"];

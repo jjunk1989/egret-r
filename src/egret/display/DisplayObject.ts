@@ -4,7 +4,7 @@
 import { Event } from "../events/Event";
 import { EventPhase } from "../events/EventPhase";
 import { TouchEvent } from "../events/TouchEvent";
-import { nativeRender } from "../player/Player";
+
 import { Matrix, $TempMatrix } from "../geom/Matrix";
 import { Rectangle, $TempRectangle } from "../geom/Rectangle";
 import type { DisplayObjectContainer } from "./DisplayObjectContainer";

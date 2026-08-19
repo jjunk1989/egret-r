@@ -2,7 +2,7 @@
 // Copyright (c) 2014-present, Egret Technology.
 
 import { Texture } from "./Texture";
-import { nativeRender } from "../player/Player";
+
 import { Rectangle } from "../geom/Rectangle";
 import { BitmapFillMode } from "./BitmapFillMode";
 import { NormalBitmapNode } from "../player/nodes/NormalBitmapNode";

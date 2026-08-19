@@ -510,10 +510,8 @@ export let WebGLRenderContext: { new(width?: number, height?: number, context?: 
 /**
  * @private
  */
-    /**
-     * @private
-     */
-    export var nativeRender: boolean = __global.nativeRender;
+    // nativeRender is a global platform flag (init.mjs provides it); bare
+    // references resolve to the global, avoiding a Player import cycle.
 
     //检测版本是否匹配，不匹配改用非原生加速渲染方式
     if (nativeRender) {
@@ -521,13 +519,13 @@ export let WebGLRenderContext: { new(width?: number, height?: number, context?: 
         const nrMinEgretVersion = egret_native.nrMinEgretVersion;
         const requiredNrABIVersion = 5;
         if (nrABIVersion < requiredNrABIVersion) {
-            nativeRender = false;
+            (globalThis as any).nativeRender = false;
             const msg = "需要升级微端版本到 0.1.14 才可以开启原生渲染加速";
             sys.$warnToFPS(msg);
             egret.warn(msg);
         }
         else if (nrABIVersion > requiredNrABIVersion) {
-            nativeRender = false;
+            (globalThis as any).nativeRender = false;
             const msg = `需要升级引擎版本到 ${nrMinEgretVersion} 才可以开启原生渲染加速`;
             sys.$warnToFPS(msg);
             egret.warn(msg);

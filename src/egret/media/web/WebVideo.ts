@@ -9,7 +9,7 @@ import { stopTick } from "../../utils/stopTick";
 import { startTick } from "../../utils/startTick";
 import { IOErrorEvent } from "../../events/IOErrorEvent";
 import { ImageLoader } from "../../net/ImageLoader";
-import { nativeRender } from "../../player/Player";
+
 import { Texture } from "../../display/Texture";
 import { BitmapNode } from "../../player/nodes/BitmapNode";
 import { BitmapData } from "../../display/BitmapData";

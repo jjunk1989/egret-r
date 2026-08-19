@@ -5,7 +5,7 @@ import { ITextStyle, ITextElement, ILineElement, IWTextElement } from "./ITextEl
 import { CapsStyle } from "../display/CapsStyle";
 import { Event } from "../events/Event";
 import { FocusEvent } from "../events/FocusEvent";
-import { nativeRender } from "../player/Player";
+
 import { HorizontalAlign } from "./HorizontalAlign";
 import { VerticalAlign } from "./VerticalAlign";
 import { InputController } from "./InputController";

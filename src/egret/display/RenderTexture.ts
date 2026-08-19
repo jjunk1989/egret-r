@@ -6,7 +6,7 @@ import { BitmapData } from "./BitmapData";
 import { DisplayObject } from "./DisplayObject";
 import { Rectangle } from "../geom/Rectangle";
 import { Matrix } from "../geom/Matrix";
-import { nativeRender } from "../player/Player";
+
 import { RenderBuffer } from "../player/RenderBuffer";
 import { systemRenderer } from "../player/SystemRenderer";
 

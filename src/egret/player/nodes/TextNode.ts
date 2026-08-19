@@ -3,6 +3,7 @@
 
 import { RenderNode, RenderNodeType } from "./RenderNode";
 import { TextFormat } from "./TextFormat";
+import { WebGLUtils } from "../../web/rendering/webgl/WebGLUtils";
 
 
     /**

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: BSD-2-Clause
 // Copyright (c) 2014-present, Egret Technology.
 
-import { nativeRender } from "../player/Player";
+
 import { HashObject } from "../utils/HashObject";
 
     /**

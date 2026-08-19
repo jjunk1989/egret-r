@@ -2,7 +2,7 @@
 // Copyright (c) 2014-present, Egret Technology.
 
 import { ChildrenSortMode } from "./native/ChildrenSortMode";
-import { nativeRender } from "../player/Player";
+
 import { DisplayObject } from "./DisplayObject";
 import { Stage } from "./Stage";
 import { Rectangle, $TempRectangle } from "../geom/Rectangle";
