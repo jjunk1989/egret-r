@@ -375,6 +375,25 @@ import { TextFieldType } from "./TextFieldType";
         public static default_size: number = 30;
 
         /**
+         * 垂直居中的「视觉补偿」系数（单位：em，默认 0 = 保持旧行为）。
+         *
+         * 背景：verticalAlign = MIDDLE 是把**字号方框**（size × size）居中到行框里，
+         * 而行框的高度来自字体的 ascent + descent。多数中文字体的 descent 是留给拉丁字母
+         * 下伸部（g / y）的，中文墨迹用不到，所以纯中文文本在视觉上会**偏高**。
+         *
+         * 真机量测（微信小游戏，系统默认字体）：18px 文字偏高约 1.2px、24px 约 2.5px、
+         * 34px 约 3.1px，约等于 0.07 ~ 0.1em。把本系数设为 0.1 可以让中文字形落在视觉中线上。
+         *
+         * 这是**全局**开关，会影响所有 TextField（含拉丁文本，拉丁字母会因此略低），
+         * 所以默认 0 保持向后兼容，由各项目按自己的文案语言自行开启：
+         *   TextField.$opticalCenterFactor = 0.1;
+         *
+         * @version Egret R
+         * @language zh_CN
+         */
+        public static $opticalCenterFactor: number = 0;
+
+        /**
          * default color of the text.
          * @version Egret 3.2.1
          * @platform Web
@@ -2375,7 +2394,10 @@ import { TextFieldType } from "./TextFieldType";
                     let element: IWTextElement = line.elements[j];
                     let size: number = typeof element.style.size == "number" ? element.style.size : values[sys.TextKeys.fontSize];
 
-                    node.drawText(drawX, drawY + (h - size) / 2, element.text, element.style);
+                    // $opticalCenterFactor：中文等 CJK 字体的墨迹在字号方框里天然偏高
+                    // （方框的 descent 是留给拉丁字母下伸部的），按字号做一点视觉补偿。
+                    // 默认 0，行为与旧版完全一致。
+                    node.drawText(drawX, drawY + (h - size) / 2 + size * TextField.$opticalCenterFactor, element.text, element.style);
 
                     if (element.style.underline) {
                         underLineData.push(
