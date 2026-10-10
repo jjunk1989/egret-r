@@ -38,7 +38,25 @@ export interface MiniGameOptions {
   contentWidth?: number;
   /** Content height (default: screen height) */
   contentHeight?: number;
+  /**
+   * 开发者工具（模拟器）里的渲染倍率，默认 2；设成 1 可关掉。
+   *
+   * 模拟器没有 dpr 概念 —— getSystemInfoSync() 报的是 pixelRatio 1，引擎照它按
+   * 1x 渲染；但模拟器最后一定还要把这块画布缩放显示（实测抖音工具把 393px 的逻辑屏
+   * 显示成 359px，缩放 0.913）。1x 的画面再被缩放，小字和 1px 描边就会明显发虚，
+   * 而真机（dpr 2~3）是清楚的 —— 结果就是"模拟器看着糊、真机正常"。
+   *
+   * 这里在模拟器上按 devRenderScale 超采样：画布背板按放大后的物理尺寸绘制，
+   * CSS 尺寸钉回逻辑像素，由浏览器降采样显示，预览清晰度就和真机一致。
+   * 真机不受影响，仍然用 dpr。
+   */
+  devRenderScale?: number;
 }
+
+/** 模拟器默认超采样倍率（真机按 dpr 渲染，与这个值无关） */
+const DEFAULT_DEV_RENDER_SCALE = 2;
+/** 超采样上限：再高对预览没有收益，只会拖慢模拟器 */
+const MAX_DEV_RENDER_SCALE = 3;
 
 /**
  * Initialize and run a mini-game.
@@ -84,6 +102,31 @@ export function runMiniGame(options: MiniGameOptions = {}): void {
   const sharedCanvas = adapter.createCanvas();
   (globalThis as any).canvas = sharedCanvas;
 
+  // --- 屏幕信息 / 渲染倍率 ---
+  // 真机：dpr 就是物理像素比，按 dpr 放大渲染。
+  // 模拟器：getSystemInfoSync() 报 pixelRatio 1，但画布最终会被开发者工具缩放显示，
+  //         1x 的画面被缩放后小字和细描边会发虚，所以按 devRenderScale 超采样
+  //         （见 MiniGameOptions.devRenderScale 的说明）。
+  // 只有"能钉 CSS 尺寸"的画布才敢超采样：背板放大后如果没人把 CSS 尺寸钉回逻辑像素，
+  // canvas 元素会按背板尺寸撑开显示 —— 画面变大，触摸坐标（CSS px）也会和舞台坐标对不上。
+  const info = adapter.getSystemInfo();
+  const dpr = info.pixelRatio || 1;
+  const devtoolsPlatform =
+    (adapter as any).platformId === "devtools" || info.platform === "devtools";
+  const canPinCssSize = !!(sharedCanvas as any).style;
+  const supersampleDevtools = devtoolsPlatform && canPinCssSize;
+  const renderScale = supersampleDevtools
+    ? Math.min(
+        MAX_DEV_RENDER_SCALE,
+        Math.max(dpr, options.devRenderScale ?? DEFAULT_DEV_RENDER_SCALE)
+      )
+    : dpr;
+
+  const cw = options.contentWidth || sharedCanvas.width || info.screenWidth;
+  const ch = options.contentHeight || sharedCanvas.height || info.screenHeight;
+  const pw = Math.ceil(cw * renderScale);
+  const ph = Math.ceil(ch * renderScale);
+
   sys.createCanvas = function (_width?: number, _height?: number) {
     // Create a new canvas for 2D operations (not the WebGL main canvas)
     return adapter.createCanvas();
@@ -95,11 +138,15 @@ export function runMiniGame(options: MiniGameOptions = {}): void {
       sharedCanvas.addEventListener = function () { /* no-op */ };
       sharedCanvas.removeEventListener = function () { /* no-op */ };
     }
-    // ★ Fix A: 真机按传入物理尺寸设置 canvas；devtools 模拟器保持逻辑尺寸
-    const __plat = (adapter as any).platformId || '';
-    const __isDev = __plat === 'devtools';
-    if (!__isDev && _width && _width !== sharedCanvas.width) sharedCanvas.width = _width;
-    if (!__isDev && _height && _height !== sharedCanvas.height) sharedCanvas.height = _height;
+    // 按传入的物理尺寸设置画布背板（真机 = 逻辑尺寸 × dpr；模拟器 = 逻辑尺寸 × 渲染倍率）
+    if (_width && _width !== sharedCanvas.width) sharedCanvas.width = _width;
+    if (_height && _height !== sharedCanvas.height) sharedCanvas.height = _height;
+    // 超采样时把 CSS 尺寸钉回逻辑像素，让浏览器把放大的背板缩回来显示。
+    // 这同时保证触摸坐标（CSS px）能对上舞台坐标：CSS 尺寸 == 舞台尺寸。
+    if (renderScale !== 1 && (sharedCanvas as any).style) {
+      (sharedCanvas as any).style.width = cw + "px";
+      (sharedCanvas as any).style.height = ch + "px";
+    }
     return sharedCanvas;
   };
 
@@ -172,23 +219,12 @@ export function runMiniGame(options: MiniGameOptions = {}): void {
     setCanvasRenderer(dummy);
   }
 
-  // --- Get screen info ---
-  const info = adapter.getSystemInfo();
-  const dpr = info.pixelRatio || 1;
-  // ★ Fix B: 真机渲染放大 dpr 倍（devtools 保持 1x）
-  const __plat2 = (adapter as any).platformId || info.platform || '';
-  const __isDev2 = __plat2 === 'devtools';
-  if (!__isDev2) {
-    try {
-      DisplayList.$canvasScaleFactor = dpr;
-      DisplayList.$setCanvasScale(dpr, dpr);
-    } catch (_) {}
-  }
-  const cw = options.contentWidth || sharedCanvas.width || info.screenWidth;
-  const ch = options.contentHeight || sharedCanvas.height || info.screenHeight;
-  // ★ Fix C: 物理尺寸（RenderBuffer 用）
-  const pw = __isDev2 ? cw : Math.ceil(cw * dpr);
-  const ph = __isDev2 ? ch : Math.ceil(ch * dpr);
+  // --- 渲染倍率落到引擎（屏幕信息 / cw / ch / pw / ph 在上面已经算好）---
+  // 真机 = dpr（和改动前一致）；模拟器 = devRenderScale，用来抵消"画布还要被缩放显示"。
+  try {
+    DisplayList.$canvasScaleFactor = renderScale;
+    DisplayList.$setCanvasScale(renderScale, renderScale);
+  } catch (_) {}
 
   // --- Create Stage ---
   const stage = new Stage();
